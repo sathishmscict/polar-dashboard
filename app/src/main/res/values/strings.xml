@@ -1,0 +1,61 @@
+<resources>
+
+    <!-- App Strings -->
+    <string name="app_name">Polar</string>
+    <string name="app_name_wallpaper">Polar Wallpaper</string>
+
+    <string name="wallpapers">Wallpapers</string>
+    <string name="icons">Icons</string>
+    <string name="wallpaper">Wallpaper</string>
+    <string name="saved_to_x">Saved to %1$s!</string>
+    <string name="wallpaper_set">Wallpaper set!</string>
+    <string name="apply">Apply</string>
+    <string name="save_to_device">Save to Device</string>
+
+    <string name="finish_apply">Select your options and press Apply to finalize!</string>
+    <string name="finish_holo_apply">Go To Appearance settings -> Icon Packs and select this icon pack from the list.</string>
+    <string name="finish_go_apply">Go theme applied!</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="muzei_description">Polar wallpapers.</string>
+    <string name="changelog" translatable="false">Changelog</string>
+    <string name="view">View</string>
+    <string name="error">Error</string>
+    <string name="search_icons">Search icons…</string>
+    <string name="no_results">No results</string>
+    <string name="about">About</string>
+    <string name="request_icons">Request Icons</string>
+    <string name="request_icons_x">Request Icons (%1$d)</string>
+    <string name="preparing_to_load">Preparing to load…</string>
+    <string name="loading_progress_x">Loading… %1$d%%</string>
+    <string name="no_apps">No apps</string>
+    <string name="tap_apps_to_select_them">Tap apps to select them!</string>
+    <string name="icon_request">Icon Request</string>
+    <string name="preparing_icon_request">Preparing icon request…</string>
+    <string name="building_icon_request">Building icon request… %1$d%%</string>
+    <string name="icon_request_error">Icon request failed…</string>
+    <string name="write_storage_permission_denied">Write external storage permission denied!</string>
+    <string name="website">Website</string>
+    <string name="google_plus">Google+</string>
+    <string name="linkedin">LinkedIn</string>
+    <string name="no_wallpapers">No wallpapers</string>
+    <string name="search_wallpapers">Search wallpapers…</string>
+    <string name="reload_from_web">Reload from Web</string>
+    <string name="downloading_wallpaper">Downloading wallpaper…</string>
+    <string name="not_installed">Not Installed</string>
+    <string name="not_installed_prompt"><![CDATA[<b>%1$s Launcher</b> is not installed. Would you like to view it in the Play Store?]]></string>
+    <string name="more">MORE</string>
+    <string name="more_x">MORE (%1$d)</string>
+    <string name="select_all">Select All</string>
+    <string name="cool">Cool</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="invalid_drawable_error"><![CDATA[Invalid drawable <b>%1$s</b>, the developer needs to fix this in <b>/res/xml/drawable.xml</b> and <b>/assets/drawable.xml</b>.]]></string>
+    <string name="set_wallpaper_using">Set Wallpaper Using…</string>
+    <string name="quick_apply">Quick Apply</string>
+    <string name="quick_apply_desc">Tap to apply to your default launcher</string>
+
+    <string-array name="wallpaper_options" translatable="false">
+        <item>@string/apply</item>
+        <item>@string/save_to_device</item>
+    </string-array>
+
+</resources>

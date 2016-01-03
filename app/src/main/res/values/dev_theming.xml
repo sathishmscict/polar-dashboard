@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
+
+    <!-- OPTIONS -->
+
+    <bool name="allow_theme_switching">true</bool>
+    <bool name="dark_theme_default">false</bool>
+
+    <!-- LIGHT THEME -->
+
+    <color name="primary_1_light">@color/default_primary_lighttheme</color>
+    <color name="primary_2_light">@color/default_primarydark_lighttheme</color>
+    <color name="accent_1_light">@color/default_accent_lighttheme</color>
+    <color name="accent_2_light">@color/default_accentdark_lighttheme</color>
+    <color name="accent_translucent_light">@color/default_accenttrans_lighttheme</color>
+    <color name="window_bg_cards_light">@color/default_window_bg_cards_lighttheme</color>
+    <color name="tab_indicator_color_light">@color/default_tab_indicator_color_lighttheme</color>
+    <color name="tab_icon_color_light">@color/default_tab_icon_color_lighttheme</color>
+    <color name="card_background_light">@color/default_card_background_lighttheme</color>
+
+    <!-- DARK THEME -->
+
+    <color name="primary_1_dark">@color/default_primary_darktheme</color>
+    <color name="primary_2_dark">@color/default_primarydark_darktheme</color>
+    <color name="accent_1_dark">@color/default_accent_darktheme</color>
+    <color name="accent_2_dark">@color/default_accentdark_darktheme</color>
+    <color name="accent_translucent_dark">@color/default_accenttrans_darktheme</color>
+    <color name="window_bg_cards_dark">@color/default_window_bg_cards_darktheme</color>
+    <color name="tab_indicator_color_dark">@color/default_tab_indicator_color_darktheme</color>
+    <color name="tab_icon_color_dark">@color/default_tab_icon_color_darktheme</color>
+    <color name="card_background_dark">@color/default_card_background_darktheme</color>
+
+    <!-- Default theme colors, don't change these -->
+
+    <color name="default_primary_lighttheme">#81D4FA</color>
+    <color name="default_primarydark_lighttheme">#4FC3F7</color>
+    <color name="default_accent_lighttheme">#81D4FA</color>
+    <color name="default_accenttrans_lighttheme">#4003A9F4</color>
+    <color name="default_accentdark_lighttheme">#4FC3F7</color>
+    <color name="default_window_bg_cards_lighttheme">#EAEAEA</color>
+    <color name="default_tab_indicator_color_lighttheme">#E1F5FE</color>
+    <color name="default_tab_icon_color_lighttheme">#F5F5F5</color>
+    <color name="default_card_background_lighttheme">#F5F5F5</color>
+
+    <color name="default_primary_darktheme">#607D8B</color>
+    <color name="default_primarydark_darktheme">#546E7A</color>
+    <color name="default_accent_darktheme">#4DB6AC</color>
+    <color name="default_accenttrans_darktheme">#8000796B</color>
+    <color name="default_accentdark_darktheme">#009688</color>
+    <color name="default_window_bg_cards_darktheme">#546E7A</color>
+    <color name="default_tab_indicator_color_darktheme">#F5F5F5</color>
+    <color name="default_tab_icon_color_darktheme">#F5F5F5</color>
+    <color name="default_card_background_darktheme">#607D8B</color>
+
+</resources>

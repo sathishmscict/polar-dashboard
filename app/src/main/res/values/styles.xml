@@ -1,0 +1,63 @@
+<resources>
+
+    <!-- Light Theme -->
+
+    <style name="AppTheme.Light" parent="Base_AppTheme_Light">
+        <item name="button_accent_selector">@drawable/selector_button_accent_light</item>
+        <item name="activatable_card_selector">@drawable/selector_activatable_card_light</item>
+    </style>
+
+    <style name="AppTheme.Light.White" parent="AppTheme.Light">
+        <item name="toolbar_theme">@style/ToolbarLight</item>
+        <item name="toolbar_title_color">#000</item>
+    </style>
+
+    <style name="AppTheme.Light.Translucent" parent="AppTheme.Light">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="AppTheme.Light.White.Translucent" parent="AppTheme.Light.White">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!-- Dark Theme -->
+
+    <style name="AppTheme.Dark" parent="Base_AppTheme_Dark">
+        <item name="button_accent_selector">@drawable/selector_button_accent_dark</item>
+        <item name="activatable_card_selector">@drawable/selector_activatable_card_dark</item>
+    </style>
+
+    <style name="AppTheme.Dark.Translucent" parent="AppTheme.Dark">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!-- Misc -->
+
+    <style name="AppTheme.Light.Cropper" parent="AppTheme.Dark" />
+
+    <style name="AppTheme.Viewer" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="toolbar_shadow">@drawable/toolbar_shadow</item>
+    </style>
+
+    <style name="Card">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginLeft">-2dp</item>
+        <item name="android:layout_marginRight">-2dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:foreground">?activatable_card_selector</item>
+        <item name="cardBackgroundColor">?card_background</item>
+        <item name="cardCornerRadius">@dimen/cardview_default_radius</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
+        <item name="cardUseCompatPadding">true</item>
+    </style>
+
+</resources>

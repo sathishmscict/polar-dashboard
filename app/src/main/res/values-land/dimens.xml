@@ -1,0 +1,7 @@
+<resources>
+
+    <dimen name="fab_bottom_margin">24dp</dimen>
+    <dimen name="fab_bottom_margin_list">88dp</dimen>
+    <dimen name="nav_bar_offset">0dp</dimen>
+
+</resources>

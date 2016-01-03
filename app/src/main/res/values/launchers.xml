@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="launcher_names">
+        <item>Nova</item>
+        <item>Action</item>
+        <item>Apex</item>
+        <item>Aviate</item>
+        <item>Smart</item>
+        <item>Next</item>
+        <item>Go</item>
+        <item>Solo</item>
+        <item>KK</item>
+        <item>Atom</item>
+    </string-array>
+
+    <string-array name="launcher_colors_primary">
+        <item>#C72D15</item>
+        <item>#2A3238</item>
+        <item>#336AEC</item>
+        <item>#7D0098</item>
+        <item>#3CA8F5</item>
+        <item>#3AA090</item>
+        <item>#379B32</item>
+        <item>#F23046</item>
+        <item>#24B0C9</item>
+        <item>#E0E0E0</item>
+    </string-array>
+
+    <string-array name="launcher_packages">
+        <item>com.teslacoilsw.launcher</item>
+        <item>com.actionlauncher.playstore|com.chrislacy.actionlauncher.pro</item>
+        <item>com.anddoes.launcher</item>
+        <item>com.tul.aviate</item>
+        <item>ginlemon.flowerpro|ginlemon.flowerfree</item>
+        <item>com.gtp.nextlauncher</item>
+        <item>com.gau.go.launcherex</item>
+        <item>home.solo.launcher.free</item>
+        <item>com.kk.launcher</item>
+        <item>com.dlto.atom.launcher</item>
+    </string-array>
+
+    <integer-array name="launcher_icons">
+        <item>@drawable/ic_launcher_nova</item>
+        <item>@drawable/ic_launcher_action</item>
+        <item>@drawable/ic_launcher_apex</item>
+        <item>@drawable/ic_launcher_aviate</item>
+        <item>@drawable/ic_launcher_smart</item>
+        <item>@drawable/ic_launcher_next</item>
+        <item>@drawable/ic_launcher_go</item>
+        <item>@drawable/ic_launcher_solo</item>
+        <item>@drawable/ic_launcher_kk</item>
+        <item>@drawable/ic_launcher_atom</item>
+    </integer-array>
+
+</resources>
