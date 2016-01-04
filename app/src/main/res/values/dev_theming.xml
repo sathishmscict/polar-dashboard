@@ -32,8 +32,8 @@
 
     <!-- Default theme colors, don't change these -->
 
-    <color name="default_primary_lighttheme">#81D4FA</color>
-    <color name="default_primarydark_lighttheme">#4FC3F7</color>
+    <color name="default_primary_lighttheme">#4FC3F7</color>
+    <color name="default_primarydark_lighttheme">#29B6F6</color>
     <color name="default_accent_lighttheme">#81D4FA</color>
     <color name="default_accenttrans_lighttheme">#4003A9F4</color>
     <color name="default_accentdark_lighttheme">#4FC3F7</color>
