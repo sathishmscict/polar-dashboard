@@ -7,8 +7,7 @@
     android:layout_height="?actionBarSize"
     android:background="?colorPrimary"
     android:elevation="@dimen/toolbar_elevation"
-    android:theme="?toolbar_theme"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:transitionName="Toolbar"
     app:contentInsetStart="@dimen/content_inset"
-    app:popupTheme="?toolbar_popup_theme"
     tools:ignore="NewApi,Overdraw,UnusedAttribute" />

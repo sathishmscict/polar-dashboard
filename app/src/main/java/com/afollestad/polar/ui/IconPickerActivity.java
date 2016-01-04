@@ -22,6 +22,11 @@ public class IconPickerActivity extends BelowStatusBarActivity {
     Toolbar toolbar;
 
     @Override
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
+
+    @Override
     @LayoutRes
     public int getLayout() {
         return R.layout.activity_picker;

@@ -4,9 +4,6 @@
     <attr name="colorAccentDark" format="color" />
     <attr name="colorAccentTranslucent" format="color" />
 
-    <attr name="toolbar_theme" format="reference" />
-    <attr name="toolbar_popup_theme" format="reference" />
-    <attr name="toolbar_title_color" format="color" />
     <attr name="toolbar_shadow" format="reference" />
 
     <attr name="tab_indicator_color" format="color" />

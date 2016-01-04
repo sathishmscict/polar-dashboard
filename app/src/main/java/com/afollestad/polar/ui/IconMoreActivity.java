@@ -40,6 +40,11 @@ public class IconMoreActivity extends BelowStatusBarActivity implements IconMore
     private IconMoreAdapter mAdapter;
 
     @Override
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
+
+    @Override
     @LayoutRes
     public int getLayout() {
         return R.layout.activity_icons_more;

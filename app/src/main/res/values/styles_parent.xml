@@ -11,10 +11,6 @@
         <item name="colorAccentDark">@color/accent_2_light</item>
         <item name="colorAccentTranslucent">@color/accent_translucent_light</item>
 
-        <item name="toolbar_theme">@style/ToolbarDark</item>
-        <!--<item name="toolbar_popup_theme">@style/ThemeOverlay.AppCompat.Light</item>-->
-        <item name="toolbar_popup_theme">@style/ThemeOverlay.AppCompat</item>
-        <item name="toolbar_title_color">#fff</item>
         <item name="toolbar_shadow">@drawable/toolbar_shadow</item>
 
         <item name="window_background_cards">@color/window_bg_cards_light</item>
@@ -32,12 +28,6 @@
         <item name="android:textColorSecondary">#191919</item>
         <item name="android:textColorPrimaryInverse">#ffffff</item>
         <item name="android:textColorSecondaryInverse">#ffffff</item>
-    </style>
-
-    <style name="ToolbarLight" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:textColorPrimary">?toolbar_title_color</item>
-        <item name="android:textColorSecondary">?toolbar_title_color</item>
-        <item name="android:textColor">?toolbar_title_color</item>
     </style>
 
     <!-- Dark -->
@@ -58,9 +48,6 @@
         <item name="tab_indicator_color">@color/tab_indicator_color_dark</item>
         <item name="tab_icon_color">@color/tab_icon_color_dark</item>
 
-        <item name="toolbar_theme">@style/ToolbarDark</item>
-        <item name="toolbar_popup_theme">@style/ThemeOverlay.AppCompat</item>
-        <item name="toolbar_title_color">#fff</item>
         <item name="toolbar_shadow">@drawable/toolbar_shadow</item>
 
         <item name="button_accent_selector">@drawable/selector_button_accent</item>
@@ -70,12 +57,6 @@
         <item name="android:textColorSecondary">#ffffff</item>
         <item name="android:textColorPrimaryInverse">#000000</item>
         <item name="android:textColorSecondaryInverse">#191919</item>
-    </style>
-
-    <style name="ToolbarDark" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:textColorPrimary">?toolbar_title_color</item>
-        <item name="android:textColorSecondary">?toolbar_title_color</item>
-        <item name="android:textColor">?toolbar_title_color</item>
     </style>
 
 </resources>

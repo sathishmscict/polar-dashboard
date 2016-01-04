@@ -1,18 +1,19 @@
 package com.afollestad.polar.ui.base;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.afollestad.assent.AssentActivity;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
+import com.afollestad.polar.util.Utils;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -23,11 +24,31 @@ public abstract class BaseThemedActivity extends AssentActivity {
 
     private boolean mLastDarkTheme = false;
 
+    public abstract Toolbar getToolbar();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mLastDarkTheme = darkTheme();
         setTheme(getCurrentTheme());
         super.onCreate(savedInstanceState);
+    }
+
+    @SuppressLint("PrivateResource")
+    @Override
+    protected void onStart() {
+        super.onStart();
+        final Toolbar toolbar = getToolbar();
+        if (toolbar != null) {
+            final int tintColor = DialogUtils.resolveColor(this, R.attr.tab_icon_color);
+            toolbar.setTitleTextColor(tintColor);
+            Utils.setOverflowButtonColor(this, tintColor);
+
+            if (Utils.isColorLight(tintColor)) {
+                toolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light);
+            } else {
+                toolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat);
+            }
+        }
     }
 
     @Override
@@ -50,24 +71,12 @@ public abstract class BaseThemedActivity extends AssentActivity {
     @StyleRes
     private int getCurrentTheme() {
         if (isTranslucent()) {
-            if (!mLastDarkTheme) {
-                if (ContextCompat.getColor(this, R.color.primary_1_light) ==
-                        ContextCompat.getColor(this, R.color.default_primary_lighttheme)) {
-                    return R.style.AppTheme_Light_White_Translucent;
-                } else {
-                    return R.style.AppTheme_Light_Translucent;
-                }
-            }
+            if (!mLastDarkTheme)
+                return R.style.AppTheme_Light_Translucent;
             return R.style.AppTheme_Dark_Translucent;
         } else {
-            if (!mLastDarkTheme) {
-                if (ContextCompat.getColor(this, R.color.primary_1_light) ==
-                        ContextCompat.getColor(this, R.color.default_primary_lighttheme)) {
-                    return R.style.AppTheme_Light_White;
-                } else {
-                    return R.style.AppTheme_Light;
-                }
-            }
+            if (!mLastDarkTheme)
+                return R.style.AppTheme_Light;
             return R.style.AppTheme_Dark;
         }
     }
@@ -89,7 +98,7 @@ public abstract class BaseThemedActivity extends AssentActivity {
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
             if (item.getIcon() != null)
-                item.getIcon().setColorFilter(tintColor, PorterDuff.Mode.SRC_ATOP);
+                item.setIcon(Utils.tintDrawable(item.getIcon(), tintColor));
         }
     }
 }

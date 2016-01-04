@@ -49,6 +49,11 @@ public class MainActivity extends BelowStatusBarActivity {
     public RecyclerView mRecyclerView;
 
     @Override
+    public Toolbar getToolbar() {
+        return mToolbar;
+    }
+
+    @Override
     public int getLayout() {
         return R.layout.activity_main;
     }
