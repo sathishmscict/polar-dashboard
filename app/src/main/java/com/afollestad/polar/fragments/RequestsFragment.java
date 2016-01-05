@@ -354,7 +354,7 @@ public class RequestsFragment extends BaseTabFragment implements
     @OnClick(R.id.fab)
     public void onClickFab() {
         if (getString(R.string.icon_request_email).trim().isEmpty()) {
-            Utils.showError(getActivity(), new Exception("The developer has not set a icon requests email address yet."));
+            Utils.showError(getActivity(), new Exception("The developer has not set an email for icon requests yet."));
             return;
         }
         synchronized (LOCK) {
