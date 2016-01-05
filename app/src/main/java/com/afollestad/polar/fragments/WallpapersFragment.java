@@ -15,9 +15,10 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -332,7 +333,8 @@ public class WallpapersFragment extends BaseTabFragment implements
                 }
             }
         });
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), getResources().getInteger(R.integer.wallpaper_grid_width)));
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(
+                getResources().getInteger(R.integer.wallpaper_grid_width), StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
 
         if (savedInstanceState != null)
