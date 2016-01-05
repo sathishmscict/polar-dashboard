@@ -5,6 +5,6 @@
     <string name="wallpapers_json_url" formatted="false">
         https://raw.githubusercontent.com/TWellington/JSON-for-Gaufrer/master/wallpapers.json
     </string>
-    <string name="icon_request_email">wellingtomworks@gmail.com</string>
+    <string name="icon_request_email"></string>
 
 </resources>

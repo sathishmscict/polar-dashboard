@@ -2,6 +2,7 @@ package com.afollestad.polar.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,6 +30,7 @@ import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.RequestsAdapter;
 import com.afollestad.polar.fragments.base.BaseTabFragment;
 import com.afollestad.polar.ui.MainActivity;
+import com.afollestad.polar.util.Utils;
 import com.pk.requestmanager.AppLoadListener;
 import com.pk.requestmanager.PkRequestManager;
 import com.pk.requestmanager.RequestSettings;
@@ -246,6 +248,7 @@ public class RequestsFragment extends BaseTabFragment implements
         }
     }
 
+    @SuppressLint("StringFormatInvalid")
     private void reload() {
         synchronized (LOCK) {
             if (mRequestManager == null) {
@@ -350,6 +353,10 @@ public class RequestsFragment extends BaseTabFragment implements
 
     @OnClick(R.id.fab)
     public void onClickFab() {
+        if (getString(R.string.icon_request_email).trim().isEmpty()) {
+            Utils.showError(getActivity(), new Exception("The developer has not set a icon requests email address yet."));
+            return;
+        }
         synchronized (LOCK) {
             if (getActivity() == null) return;
             mRequestManager.setActivity(getActivity());
