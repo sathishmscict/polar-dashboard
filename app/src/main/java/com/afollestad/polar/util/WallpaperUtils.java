@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -74,6 +75,11 @@ public class WallpaperUtils {
         @Body
         @Column
         public String name;
+
+        @ColorInt
+        public int mutedDarkColor;
+        @ColorInt
+        public int vibrantColor;
     }
 
     @SuppressLint("CommitPrefEdits")

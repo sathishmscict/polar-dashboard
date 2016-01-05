@@ -1,6 +1,5 @@
 package com.afollestad.polar.adapters;
 
-import android.support.annotation.ColorInt;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,12 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.github.florent37.glidepalette.GlidePalette;
 import com.afollestad.polar.R;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.views.WallpaperColorFrame;
 import com.afollestad.polar.views.WallpaperNameView;
+import com.bumptech.glide.Glide;
+import com.github.florent37.glidepalette.GlidePalette;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -88,11 +87,6 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
         final WallpaperNameView name;
         final TextView author;
 
-        @ColorInt
-        public int mutedDarkColor;
-        @ColorInt
-        public int vibrantColor;
-
         @Override
         public void onClick(View v) {
             mListener.onClick(v, getAdapterPosition(), false);
@@ -118,13 +112,13 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
 
         ViewCompat.setTransitionName(holder.image, "view_" + index);
 
-        holder.name.setViewHolder(holder);
-        holder.colorFrame.setViewHolder(holder);
+        holder.name.setWallpaper(wallpaper);
+        holder.colorFrame.setWallpaper(wallpaper);
 
         // Color caches, set from the associated views
-        if (holder.mutedDarkColor != 0 && holder.vibrantColor != 0) {
-            holder.name.setTextColor(holder.mutedDarkColor);
-            holder.colorFrame.setBackgroundColor(holder.vibrantColor);
+        if (wallpaper.mutedDarkColor != 0 && wallpaper.vibrantColor != 0) {
+            holder.name.setTextColor(wallpaper.mutedDarkColor);
+            holder.colorFrame.setBackgroundColor(wallpaper.vibrantColor);
             Glide.with(holder.itemView.getContext())
                     .load(wallpaper.url)
                     .into(holder.image);

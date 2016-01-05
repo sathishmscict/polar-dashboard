@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.afollestad.polar.adapters.WallpaperAdapter;
+import com.afollestad.polar.util.WallpaperUtils;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -23,16 +23,16 @@ public class WallpaperNameView extends TextView {
         super(context, attrs, defStyleAttr);
     }
 
-    private WallpaperAdapter.WallpaperViewHolder mViewHolder;
+    private WallpaperUtils.Wallpaper mWallpaper;
 
-    public void setViewHolder(WallpaperAdapter.WallpaperViewHolder viewHolder) {
-        mViewHolder = viewHolder;
+    public void setWallpaper(WallpaperUtils.Wallpaper viewHolder) {
+        mWallpaper = viewHolder;
     }
 
     @Override
     public void setTextColor(int color) {
         super.setTextColor(color);
-        if (mViewHolder != null)
-            mViewHolder.mutedDarkColor = color;
+        if (mWallpaper != null)
+            mWallpaper.mutedDarkColor = color;
     }
 }

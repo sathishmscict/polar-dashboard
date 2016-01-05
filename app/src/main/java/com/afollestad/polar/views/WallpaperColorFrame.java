@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.afollestad.polar.adapters.WallpaperAdapter;
+import com.afollestad.polar.util.WallpaperUtils;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -26,10 +26,10 @@ public class WallpaperColorFrame extends LinearLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    private WallpaperAdapter.WallpaperViewHolder mViewHolder;
+    private WallpaperUtils.Wallpaper mWallpaper;
 
-    public void setViewHolder(WallpaperAdapter.WallpaperViewHolder viewHolder) {
-        mViewHolder = viewHolder;
+    public void setWallpaper(WallpaperUtils.Wallpaper wallpaper) {
+        mWallpaper = wallpaper;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class WallpaperColorFrame extends LinearLayout {
         ViewGroup parent = (ViewGroup) getParent();
         CardView card = (CardView) parent.getParent();
         card.setCardBackgroundColor(color);
-        if (mViewHolder != null)
-            mViewHolder.vibrantColor = color;
+        if (mWallpaper != null)
+            mWallpaper.vibrantColor = color;
     }
 }
