@@ -85,6 +85,16 @@
                         style="?borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:tag="https://dribbble.com/tomwellington"
+                        android:text="@string/dribbble"
+                        android:textColor="?colorAccent" />
+
+                    <Button
+                        style="?borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:tag="https://google.com/+TomWellington24"
                         android:text="@string/google_plus"
                         android:textColor="?colorAccent" />
