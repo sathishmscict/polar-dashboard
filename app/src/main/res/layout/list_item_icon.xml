@@ -3,14 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/grid_spacing"
-    android:foreground="?selectableItemBackground">
+    android:foreground="?selectableItemBackground"
+    android:padding="@dimen/grid_spacing">
 
     <com.afollestad.polar.views.SquareImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:background="#80000000"
         android:scaleType="fitXY"
         tools:ignore="ContentDescription" />
 

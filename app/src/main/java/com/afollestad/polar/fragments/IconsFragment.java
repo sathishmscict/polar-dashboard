@@ -71,6 +71,13 @@ public class IconsFragment extends BaseTabFragment implements
         final int gridWidth = getResources().getInteger(R.integer.icon_grid_width);
         final RecyclerView mRecyclerView = ButterKnife.findById(v, android.R.id.list);
         mRecyclerView.setClipToPadding(false);
+
+        final int gridSpacing = getResources().getDimensionPixelOffset(R.dimen.grid_spacing);
+        mRecyclerView.setPadding(mRecyclerView.getPaddingLeft() + gridSpacing,
+                mRecyclerView.getPaddingTop(),
+                mRecyclerView.getPaddingRight() + gridSpacing,
+                mRecyclerView.getPaddingBottom());
+
         mAdapter = new IconAdapter(getActivity(), gridWidth, new IconAdapter.ClickListener() {
             @Override
             public void onClick(View view, int section, int relative, int absolute) {

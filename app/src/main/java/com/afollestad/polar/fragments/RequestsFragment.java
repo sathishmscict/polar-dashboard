@@ -24,15 +24,15 @@ import com.afollestad.assent.Assent;
 import com.afollestad.assent.AssentCallback;
 import com.afollestad.assent.PermissionResultSet;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.pk.requestmanager.AppLoadListener;
-import com.pk.requestmanager.PkRequestManager;
-import com.pk.requestmanager.RequestSettings;
-import com.pk.requestmanager.SendRequestListener;
 import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.RequestsAdapter;
 import com.afollestad.polar.fragments.base.BaseTabFragment;
 import com.afollestad.polar.ui.MainActivity;
+import com.pk.requestmanager.AppLoadListener;
+import com.pk.requestmanager.PkRequestManager;
+import com.pk.requestmanager.RequestSettings;
+import com.pk.requestmanager.SendRequestListener;
 
 import java.io.File;
 import java.util.ConcurrentModificationException;
@@ -194,7 +194,6 @@ public class RequestsFragment extends BaseTabFragment implements
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        list.setClipToPadding(false);
         GridLayoutManager lm = new GridLayoutManager(getActivity(),
                 getResources().getInteger(R.integer.requests_grid_width));
         lm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -323,6 +322,7 @@ public class RequestsFragment extends BaseTabFragment implements
         progressText.post(new Runnable() {
             @Override
             public void run() {
+                if (!isAdded() || getActivity() == null) return;
                 progressText.setText(getString(R.string.loading_progress_x, progress));
             }
         });

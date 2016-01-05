@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/content_inset_quarter">
+                android:paddingBottom="@dimen/content_inset_eighth">
 
                 <com.afollestad.polar.views.AboutProfileImageView
                     android:id="@+id/image"
@@ -68,10 +68,11 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:gravity="center_horizontal"
+                    android:lineSpacingMultiplier="1.1"
                     android:paddingLeft="@dimen/content_inset"
                     android:paddingRight="@dimen/content_inset"
                     android:textColor="?android:textColorSecondary"
-                    android:textSize="@dimen/title_text_size"
+                    android:textSize="@dimen/content_text_size"
                     tools:text="Android and Backend Engineer, SkillFitness.\nLives in Minneapolis, MN" />
 
                 <LinearLayout

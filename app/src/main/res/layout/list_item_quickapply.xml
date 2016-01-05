@@ -15,12 +15,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|start"
-            android:minHeight="@dimen/quickapply_card_height"
+            android:minHeight="@dimen/quickapply_card_minheight"
             android:orientation="horizontal"
-            android:paddingBottom="@dimen/content_inset"
             android:paddingLeft="@dimen/content_inset_half"
             android:paddingRight="@dimen/content_inset_half"
-            android:paddingTop="@dimen/content_inset"
             tools:ignore="UseCompoundDrawables">
 
             <ImageView

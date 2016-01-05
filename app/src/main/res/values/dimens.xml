@@ -6,10 +6,12 @@
 
     <dimen name="icons_header_height">48dp</dimen>
 
+    <dimen name="content_inset_eighth">2dp</dimen>
     <dimen name="content_inset_quarter">4dp</dimen>
     <!-- Minus 2 for negative margin on cards -->
     <dimen name="content_inset_half_card">6dp</dimen>
     <dimen name="content_inset_half">8dp</dimen>
+    <!--<dimen name="content_inset_less">12dp</dimen>-->
     <dimen name="content_inset">16dp</dimen>
     <dimen name="content_inset_more">8dp</dimen>
 
@@ -32,6 +34,7 @@
     <dimen name="content_text_size">16sp</dimen>
     <dimen name="body_text_size">14sp</dimen>
 
-    <dimen name="quickapply_card_height">56dp</dimen>
+    <dimen name="quickapply_card_minheight">64dp</dimen>
+    <dimen name="apply_title_minheight">44dp</dimen>
 
 </resources>

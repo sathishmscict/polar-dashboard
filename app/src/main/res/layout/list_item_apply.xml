@@ -34,7 +34,7 @@
                 android:elevation="12dp"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
-                android:minHeight="42dp"
+                android:minHeight="@dimen/apply_title_minheight"
                 android:textColor="#fff"
                 android:textSize="@dimen/content_text_size"
                 tools:background="#21292E"

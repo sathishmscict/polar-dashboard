@@ -31,7 +31,7 @@
                 android:background="?android:textColorPrimary"
                 android:minHeight="48dp"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/content_inset_half"
+                android:paddingBottom="@dimen/content_inset_half_card"
                 android:paddingLeft="@dimen/content_inset"
                 android:paddingRight="@dimen/content_inset"
                 android:paddingTop="@dimen/content_inset_half">
