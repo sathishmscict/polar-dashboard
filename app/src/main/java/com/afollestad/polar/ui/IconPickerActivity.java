@@ -1,13 +1,12 @@
 package com.afollestad.polar.ui;
 
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.IconsFragment;
-import com.afollestad.polar.ui.base.BelowStatusBarActivity;
+import com.afollestad.polar.ui.base.BaseThemedActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -16,7 +15,7 @@ import butterknife.ButterKnife;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class IconPickerActivity extends BelowStatusBarActivity {
+public class IconPickerActivity extends BaseThemedActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -27,14 +26,10 @@ public class IconPickerActivity extends BelowStatusBarActivity {
     }
 
     @Override
-    @LayoutRes
-    public int getLayout() {
-        return R.layout.activity_picker;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_picker);
+
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);

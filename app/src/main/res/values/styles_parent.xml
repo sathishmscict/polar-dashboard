@@ -3,7 +3,7 @@
 
     <!-- Light -->
 
-    <style name="Base_AppTheme_Light" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Base.AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primary_1_light</item>
         <item name="colorPrimaryDark">@color/primary_2_light</item>
         <item name="colorAccent">@color/accent_1_light</item>
@@ -32,7 +32,7 @@
 
     <!-- Dark -->
 
-    <style name="Base_AppTheme_Dark" parent="Theme.AppCompat.NoActionBar">
+    <style name="Base.AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/primary_1_dark</item>
         <item name="colorPrimaryDark">@color/primary_2_dark</item>
         <item name="colorAccent">@color/accent_1_dark</item>

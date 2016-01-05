@@ -51,7 +51,7 @@ dependencies {
     compile 'com.github.florent37:glidepalette:1.0.4@aar'
 
     compile 'com.github.afollestad:bridge:3.1.1'
-    compile 'com.github.afollestad:sectioned-recyclerview:0.1.0'
+    compile 'com.github.afollestad:sectioned-recyclerview:0.2.0'
     compile 'com.github.afollestad:assent:0.2.0'
     compile 'com.github.afollestad:inquiry:1.4.0'
     compile('com.github.afollestad.material-dialogs:core:0.8.5.3@aar') {

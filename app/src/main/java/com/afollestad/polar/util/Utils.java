@@ -23,7 +23,7 @@ import java.util.ArrayList;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class Utils {
+public abstract class Utils {
 
 //    public static int resolveDrawable(Context context, int drawable) {
 //        TypedArray a = context.obtainStyledAttributes(new int[]{drawable});
@@ -129,9 +129,5 @@ public class Utils {
     public static boolean isColorLight(@ColorInt int color) {
         final double darkness = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255;
         return darkness < 0.4;
-    }
-
-    private Utils() {
-        // This utility class should not be instantiated.
     }
 }

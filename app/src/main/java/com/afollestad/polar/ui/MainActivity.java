@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.afollestad.bridge.Bridge;
 import com.afollestad.inquiry.Inquiry;
@@ -24,7 +25,7 @@ import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.MainPagerAdapter;
 import com.afollestad.polar.dialogs.ChangelogDialog;
 import com.afollestad.polar.fragments.WallpapersFragment;
-import com.afollestad.polar.ui.base.BelowStatusBarActivity;
+import com.afollestad.polar.ui.base.BaseThemedActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
 
 import butterknife.Bind;
@@ -37,7 +38,7 @@ import static com.afollestad.polar.viewer.ViewerActivity.STATE_CURRENT_POSITION;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MainActivity extends BelowStatusBarActivity {
+public class MainActivity extends BaseThemedActivity {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -45,6 +46,9 @@ public class MainActivity extends BelowStatusBarActivity {
     TabLayout mTabs;
     @Bind(R.id.pager)
     ViewPager mPager;
+    @Bind(R.id.root)
+    public
+    View root;
 
     public RecyclerView mRecyclerView;
 
@@ -53,16 +57,13 @@ public class MainActivity extends BelowStatusBarActivity {
         return mToolbar;
     }
 
-    @Override
-    public int getLayout() {
-        return R.layout.activity_main;
-    }
-
     @SuppressWarnings("ConstantConditions")
     @SuppressLint("MissingSuperCall")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
         setupPager();

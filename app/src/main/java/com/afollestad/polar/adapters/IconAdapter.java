@@ -1,28 +1,33 @@
 package com.afollestad.polar.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
-import com.bumptech.glide.Glide;
 import com.afollestad.polar.R;
 import com.afollestad.polar.ui.IconMoreActivity;
+import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
+import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainViewHolder>
-        implements View.OnClickListener {
+        implements View.OnClickListener, View.OnTouchListener {
 
     public final static int SEARCH_RESULT_LIMIT = 20;
 
@@ -36,19 +41,27 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
                         Integer.parseInt(tag[0]),
                         Integer.parseInt(tag[1]),
                         Integer.parseInt(tag[2]));
-            } else {
-                // 'More' button
-                final int index = (Integer) view.getTag();
-                final DrawableXmlParser.Category category = mFiltered != null ?
-                        mFiltered.get(index) : mCategories.get(index);
-                final int[] location = new int[2];
-                view.getLocationInWindow(location);
-                location[0] += view.getMeasuredWidth() / 2;
-                mContext.startActivity(new Intent(mContext, IconMoreActivity.class)
-                        .putExtra("category", category)
-                        .putExtra("button_location", location));
             }
         }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        //More button
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            final int index = (Integer) v.getTag();
+            final DrawableXmlParser.Category category = mFiltered != null ?
+                    mFiltered.get(index) : mCategories.get(index);
+            float[] value = getRelativeCoords((Activity) mContext, event);
+
+            Intent intent = new Intent(mContext, IconMoreActivity.class)
+                    .putExtra(IconMoreActivity.EXTRA_CATEGORY, category)
+                    .putExtra(IconMoreActivity.EXTRA_REVEAL_ANIM_LOCATION, value);
+
+            Bundle activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext).toBundle();
+            mContext.startActivity(intent, activityOptions);
+        }
+        return true;
     }
 
     public interface ClickListener {
@@ -62,11 +75,11 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
         mCategories = new ArrayList<>();
     }
 
-    private final Context mContext;
+    final Context mContext;
     private final int mIconsPerSection;
     private final ClickListener mListener;
-    private final ArrayList<DrawableXmlParser.Category> mCategories;
-    private ArrayList<DrawableXmlParser.Category> mFiltered;
+    final ArrayList<DrawableXmlParser.Category> mCategories;
+    ArrayList<DrawableXmlParser.Category> mFiltered;
 
     public void filter(String str) {
         if (str == null || str.trim().isEmpty()) {
@@ -145,9 +158,9 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
     }
 
     @Override
-    public MainViewHolder onCreateViewHolder(ViewGroup parent, boolean header) {
+    public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(
-                header ? R.layout.list_item_icon_header : R.layout.list_item_icon, parent, false);
+                viewType == VIEW_TYPE_HEADER ? R.layout.list_item_icon_header : R.layout.list_item_icon, parent, false);
         return new MainViewHolder(v);
     }
 
@@ -160,7 +173,7 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
         if (category.size() > mIconsPerSection) {
             holder.moreButton.setVisibility(View.VISIBLE);
             holder.moreButton.setTag(section);
-            holder.moreButton.setOnClickListener(this);
+            holder.moreButton.setOnTouchListener(this);
             holder.moreButton.setText(holder.itemView.getContext().getString(
                     R.string.more_x, category.size() - mIconsPerSection));
         } else {
@@ -168,6 +181,15 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
             holder.moreButton.setTag(null);
             holder.moreButton.setOnClickListener(null);
         }
+    }
+
+    public static float[] getRelativeCoords(Activity activity, MotionEvent e) {
+        View root = ((MainActivity) activity).root;
+        int[] locationOnScreen = new int[2];
+        root.getLocationOnScreen(locationOnScreen);
+        return new float[]{
+                e.getRawX() - locationOnScreen[0],
+                e.getRawY() - locationOnScreen[1]};
     }
 
     @Override

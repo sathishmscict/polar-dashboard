@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?window_background_cards"
-    android:orientation="vertical">
+    android:fitsSystemWindows="true"
+    android:transitionName="@string/transition_name_circular_reveal">
 
-    <include layout="@layout/include_toolbar_appbar" />
+    <FrameLayout
+        android:background="?window_background_cards"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/include_toolbar_appbar" />
+
+    </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
         android:clipToPadding="false"
         android:scrollbars="vertical" />
 
-</LinearLayout>
+</FrameLayout>

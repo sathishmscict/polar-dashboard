@@ -3,7 +3,7 @@
 
     <!-- Light Theme -->
 
-    <style name="AppTheme.Light" parent="Base_AppTheme_Light">
+    <style name="AppTheme.Light" parent="Base.AppTheme.Light">
         <item name="android:windowTranslucentNavigation">@bool/translucent_nav</item>
         <item name="android:colorControlHighlight">@color/accent_1_light</item>
         <item name="toolbar_shadow">@null</item>
@@ -11,7 +11,7 @@
 
     <!-- Dark Theme -->
 
-    <style name="AppTheme.Dark" parent="Base_AppTheme_Dark">
+    <style name="AppTheme.Dark" parent="Base.AppTheme.Dark">
         <item name="android:windowTranslucentNavigation">@bool/translucent_nav</item>
         <item name="android:colorControlHighlight">@color/accent_1_dark</item>
         <item name="toolbar_shadow">@null</item>
