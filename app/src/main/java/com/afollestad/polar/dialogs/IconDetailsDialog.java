@@ -6,10 +6,13 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.graphics.Palette;
 import android.text.Html;
 import android.widget.ImageView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.util.DrawableXmlParser;
 
@@ -44,7 +47,23 @@ public class IconDetailsDialog extends DialogFragment {
             dialog = builder.customView(R.layout.dialog_icon_view, false).build();
             assert dialog.getCustomView() != null;
             ImageView iconView = (ImageView) dialog.getCustomView().findViewById(R.id.icon);
-            iconView.setImageBitmap((Bitmap) getArguments().getParcelable("icon"));
+            final Bitmap bmp = getArguments().getParcelable("icon");
+            iconView.setImageBitmap(bmp);
+            if (bmp != null) {
+                Palette.from(bmp).generate(new Palette.PaletteAsyncListener() {
+                    @Override
+                    public void onGenerated(Palette palette) {
+                        if (getDialog() == null || !isAdded() || getActivity() == null) return;
+                        final MaterialDialog dialog = (MaterialDialog) getDialog();
+                        int color = palette.getVibrantColor(0);
+                        if (color == 0)
+                            color = palette.getMutedColor(0);
+                        if (color == 0)
+                            color = DialogUtils.resolveColor(getActivity(), R.attr.colorAccent);
+                        dialog.getActionButton(DialogAction.POSITIVE).setTextColor(color);
+                    }
+                });
+            }
         } else {
             dialog = builder
                     .content(Html.fromHtml(getString(R.string.invalid_drawable_error, icon.getDrawable())))
