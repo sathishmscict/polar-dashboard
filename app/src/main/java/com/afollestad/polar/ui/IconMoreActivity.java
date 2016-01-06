@@ -56,6 +56,16 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
         setContentView(R.layout.activity_icons_more);
         ButterKnife.bind(this);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // Compensate for translucent system UI
+            final int statusBarHeight = Utils.getStatusBarHeight(this);
+            final View root = findViewById(R.id.root);
+            root.setPadding(root.getPaddingLeft(),
+                    root.getPaddingTop() + statusBarHeight,
+                    root.getPaddingRight(),
+                    root.getPaddingBottom());
+        }
+
         final DrawableXmlParser.Category category = (DrawableXmlParser.Category) getIntent().getSerializableExtra(EXTRA_CATEGORY);
 
         setSupportActionBar(mToolbar);

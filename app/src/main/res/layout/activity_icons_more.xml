@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <FrameLayout
-        android:background="?window_background_cards"
         android:id="@+id/circular_reveal_view"
-        android:transitionName="@string/transition_name_circular_reveal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?window_background_cards"
+        android:transitionName="@string/transition_name_circular_reveal"
+        tools:ignore="UnusedAttribute">
 
         <include layout="@layout/include_toolbar_appbar" />
 
@@ -22,8 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"
-        android:padding="@dimen/grid_spacing"
         android:clipToPadding="false"
+        android:padding="@dimen/grid_spacing"
         android:scrollbars="vertical" />
 
 </FrameLayout>
