@@ -8,7 +8,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.graphics.Palette;
 import android.text.Html;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -38,6 +40,7 @@ public class IconDetailsDialog extends DialogFragment {
         assert getArguments() != null;
         DrawableXmlParser.Icon icon = (DrawableXmlParser.Icon) getArguments().getSerializable("iconobj");
         assert icon != null;
+
         final MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
                 .title(icon.getName())
                 .negativeText(R.string.dismiss);
@@ -49,6 +52,7 @@ public class IconDetailsDialog extends DialogFragment {
             ImageView iconView = (ImageView) dialog.getCustomView().findViewById(R.id.icon);
             final Bitmap bmp = getArguments().getParcelable("icon");
             iconView.setImageBitmap(bmp);
+            dialog.getActionButton(DialogAction.NEGATIVE).setVisibility(View.INVISIBLE);
             if (bmp != null) {
                 Palette.from(bmp).generate(new Palette.PaletteAsyncListener() {
                     @Override
@@ -60,7 +64,9 @@ public class IconDetailsDialog extends DialogFragment {
                             color = palette.getMutedColor(0);
                         if (color == 0)
                             color = DialogUtils.resolveColor(getActivity(), R.attr.colorAccent);
-                        dialog.getActionButton(DialogAction.NEGATIVE).setTextColor(color);
+                        final TextView negative = dialog.getActionButton(DialogAction.NEGATIVE);
+                        negative.setTextColor(color);
+                        negative.setVisibility(View.VISIBLE);
                     }
                 });
             }
