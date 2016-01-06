@@ -125,6 +125,7 @@ public class RequestsFragment extends BasePageFragment implements
             if (act != null) {
                 if (fab == null) {
                     act.setTitle(R.string.request_icons);
+                    act.invalidateOptionsMenu();
                     return;
                 }
 
@@ -148,6 +149,7 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         setHasOptionsMenu(true);
     }
 
@@ -164,7 +166,7 @@ public class RequestsFragment extends BasePageFragment implements
             inflater.inflate(R.menu.cab_requests, menu);
             MenuItem selectAll = menu.findItem(R.id.selectAll);
             try {
-                if (mRequestManager == null || mRequestManager.getNumSelected() == 0)
+                if (mAdapter == null || mAdapter.getSelectedCount() == 0)
                     selectAll.setIcon(R.drawable.ic_action_selectall);
                 else selectAll.setIcon(R.drawable.ic_action_close);
             } catch (ConcurrentModificationException e) {
@@ -180,7 +182,7 @@ public class RequestsFragment extends BasePageFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         synchronized (LOCK) {
             if (item.getItemId() == R.id.selectAll) {
-                if (mRequestManager.getNumSelected() == 0)
+                if (mAdapter.getSelectedCount() == 0)
                     mAdapter.selectAll();
                 else mAdapter.clearSelection();
                 return true;
