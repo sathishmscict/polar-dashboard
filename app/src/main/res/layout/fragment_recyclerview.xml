@@ -9,7 +9,8 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:padding="@dimen/grid_spacing"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay" />
 
     <LinearLayout
         android:id="@android:id/progress"

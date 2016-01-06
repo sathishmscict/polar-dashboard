@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
@@ -13,12 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.WallpapersFragment;
-import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.util.WallpaperUtils;
 
 import butterknife.Bind;
@@ -38,8 +34,6 @@ public class ViewerActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.statusFiller)
-    View mStatusFiller;
 
     public static final String STATE_CURRENT_POSITION = "state_current_position";
     private int mCurrentPosition;
@@ -77,19 +71,6 @@ public class ViewerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_viewer);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
-
-        final int statusBarHeight = Utils.getStatusBarHeight(this);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0, statusBarHeight, 0, 0);
-        mToolbar.setLayoutParams(params);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP || Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            mStatusFiller.setVisibility(View.GONE);
-        } else {
-            mStatusFiller.setVisibility(View.VISIBLE);
-            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mStatusFiller.getLayoutParams();
-            lp.height = statusBarHeight;
-            mStatusFiller.setLayoutParams(lp);
-        }
 
         mToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {

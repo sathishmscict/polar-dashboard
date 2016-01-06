@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="@dimen/icons_header_height"
-    android:paddingLeft="@dimen/content_inset"
-    android:paddingRight="@dimen/content_inset">
+    android:paddingStart="@dimen/content_inset_less"
+    android:paddingEnd="@dimen/content_inset_half">
 
     <TextView
         android:id="@+id/title"
