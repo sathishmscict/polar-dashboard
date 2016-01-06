@@ -24,6 +24,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.afollestad.bridge.Bridge;
 import com.afollestad.inquiry.Inquiry;
@@ -157,6 +158,20 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             getWindow().setStatusBarColor(Color.TRANSPARENT);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // Compensate for translucent system UI
+            final int statusBarHeight = Utils.getStatusBarHeight(this);
+            final View content = findViewById(R.id.content);
+            content.setPadding(content.getPaddingLeft(),
+                    content.getPaddingTop() + statusBarHeight,
+                    content.getPaddingRight(),
+                    content.getPaddingBottom());
+//            mNavView.setPadding(mNavView.getPaddingLeft(),
+//                    mNavView.getPaddingTop() + statusBarHeight,
+//                    mNavView.getPaddingRight(),
+//                    mNavView.getPaddingBottom());
+        }
+
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Drawable menuIcon = ContextCompat.getDrawable(this, R.drawable.ic_action_menu);
@@ -256,6 +271,16 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         addTab(R.drawable.tab_about);
 
         mTabs.setSelectedTabIndicatorColor(DialogUtils.resolveColor(this, R.attr.tab_indicator_color));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // Compensate for translucent system UI
+            final int statusBarHeight = Utils.getStatusBarHeight(this);
+            final View root = findViewById(R.id.root);
+            root.setPadding(root.getPaddingLeft(),
+                    root.getPaddingTop() + statusBarHeight,
+                    root.getPaddingRight(),
+                    root.getPaddingBottom());
+        }
     }
 
     @Override
