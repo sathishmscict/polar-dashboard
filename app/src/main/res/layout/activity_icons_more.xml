@@ -4,11 +4,12 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:transitionName="@string/transition_name_circular_reveal">
+    android:fitsSystemWindows="true">
 
     <FrameLayout
         android:background="?window_background_cards"
+        android:id="@+id/circular_reveal_view"
+        android:transitionName="@string/transition_name_circular_reveal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -21,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"
+        android:padding="@dimen/grid_spacing"
         android:clipToPadding="false"
         android:scrollbars="vertical" />
 

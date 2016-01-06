@@ -1,5 +1,6 @@
 package com.afollestad.polar.fragments.base;
 
+import android.app.Fragment;
 import android.support.annotation.StringRes;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -9,7 +10,7 @@ import com.afollestad.polar.ui.base.BaseThemedActivity;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public abstract class BaseTabFragment extends BaseNavBarOffsetFragment {
+public abstract class BaseTabFragment extends Fragment {
 
     @StringRes
     public abstract int getTitle();

@@ -1,15 +1,14 @@
 package com.afollestad.polar.fragments;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -40,7 +39,7 @@ import butterknife.ButterKnife;
 public class IconsFragment extends BaseTabFragment implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
-    private IconAdapter mAdapter;
+    IconAdapter mAdapter;
 
     public IconsFragment() {
     }
@@ -72,18 +71,12 @@ public class IconsFragment extends BaseTabFragment implements
         final RecyclerView mRecyclerView = ButterKnife.findById(v, android.R.id.list);
         mRecyclerView.setClipToPadding(false);
 
-        final int gridSpacing = getResources().getDimensionPixelOffset(R.dimen.grid_spacing);
-        mRecyclerView.setPadding(mRecyclerView.getPaddingLeft() + gridSpacing,
-                mRecyclerView.getPaddingTop(),
-                mRecyclerView.getPaddingRight() + gridSpacing,
-                mRecyclerView.getPaddingBottom());
-
         mAdapter = new IconAdapter(getActivity(), gridWidth, new IconAdapter.ClickListener() {
             @Override
             public void onClick(View view, int section, int relative, int absolute) {
                 selectItem(getActivity(), IconsFragment.this, mAdapter.getIcon(section, relative));
             }
-        });
+        }, mRecyclerView);
 
         final GridLayoutManager lm = new GridLayoutManager(getActivity(), gridWidth);
         mAdapter.setLayoutManager(lm);
@@ -92,12 +85,12 @@ public class IconsFragment extends BaseTabFragment implements
         return v;
     }
 
-    public static void selectItem(FragmentActivity context, Fragment context2, DrawableXmlParser.Icon icon) {
+    public static void selectItem(Activity context, Fragment context2, DrawableXmlParser.Icon icon) {
         Bitmap bmp = null;
-        if (icon.getId(context) != 0) {
+        if (icon.getDrawableId(context) != 0) {
             //noinspection ConstantConditions
             bmp = ((BitmapDrawable) ResourcesCompat.getDrawable(context.getResources(),
-                    icon.getId(context), null)).getBitmap();
+                    icon.getDrawableId(context), null)).getBitmap();
         }
         if (context instanceof IconPickerActivity) {
             context.setResult(Activity.RESULT_OK, new Intent().putExtra("icon", bmp));
@@ -105,7 +98,7 @@ public class IconsFragment extends BaseTabFragment implements
         } else {
             FragmentManager fm;
             if (context2 != null) fm = context2.getChildFragmentManager();
-            else fm = context.getSupportFragmentManager();
+            else fm = context.getFragmentManager();
             IconDetailsDialog.create(bmp, icon).show(fm, "ICON_DETAILS_DIALOG");
         }
     }

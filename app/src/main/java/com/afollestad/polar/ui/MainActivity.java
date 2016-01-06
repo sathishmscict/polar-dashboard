@@ -1,6 +1,5 @@
 package com.afollestad.polar.ui;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -61,8 +60,6 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         return mToolbar;
     }
 
-    @SuppressWarnings("ConstantConditions")
-    @SuppressLint("MissingSuperCall")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,13 +87,12 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         Utils.showError(this, new Exception("License checking error occurred, make sure everything is setup correctly. Error code: " + errorCode));
     }
 
-    @SuppressLint("CommitPrefEdits")
     public void showChangelogIfNecessary() {
         if (!getResources().getBoolean(R.bool.allow_changelog)) return;
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final int currentVersion = BuildConfig.VERSION_CODE;
         if (currentVersion != prefs.getInt("changelog_version", -1)) {
-            prefs.edit().putInt("changelog_version", currentVersion).commit();
+            prefs.edit().putInt("changelog_version", currentVersion).apply();
             ChangelogDialog.show(this);
         }
     }
@@ -135,7 +131,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     }
 
     private void setupPager() {
-        mPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager()));
+        mPager.setAdapter(new MainPagerAdapter(getFragmentManager()));
         mPager.setOffscreenPageLimit(6);
         mPager.setOffscreenPageLimit(6);
         mTabs.setSelectedTabIndicatorColor(DialogUtils.resolveColor(this, R.attr.tab_indicator_color));
@@ -196,10 +192,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0)
-            getSupportFragmentManager().popBackStack();
-        else
-            super.onBackPressed();
+        super.onBackPressed();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

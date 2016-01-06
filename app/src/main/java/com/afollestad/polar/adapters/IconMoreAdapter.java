@@ -2,40 +2,45 @@ package com.afollestad.polar.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.afollestad.polar.R;
 import com.afollestad.polar.util.DrawableXmlParser;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class IconMoreAdapter extends RecyclerView.Adapter<IconMoreAdapter.MainViewHolder>
-        implements View.OnClickListener {
+public class IconMoreAdapter extends RecyclerView.Adapter<IconMoreAdapter.MainViewHolder> {
 
-    @Override
-    public void onClick(View view) {
-        if (view.getTag() != null) {
-            mListener.onClick(view, Integer.parseInt(view.getTag().toString()));
-        }
-    }
+    private final int mIconsInAnimation;
 
     public interface ClickListener {
         void onClick(View view, int index);
     }
 
-    public IconMoreAdapter(ClickListener listener) {
+    public IconMoreAdapter(ClickListener listener, int gridWidth, Context context) {
         mListener = listener;
+        mContext = context;
         mIcons = new ArrayList<>();
+        mIconsInAnimation = gridWidth * 2;
+
+        setHasStableIds(true);
     }
 
-    private final ClickListener mListener;
-    private final ArrayList<DrawableXmlParser.Icon> mIcons;
+    @Override
+    public long getItemId(int position) {
+        return mIcons.get(position).getUniqueId();
+    }
+
+    final Context mContext;
+    final ClickListener mListener;
+    private final List<DrawableXmlParser.Icon> mIcons;
 
     public void set(List<DrawableXmlParser.Icon> icons) {
         mIcons.clear();
@@ -43,11 +48,17 @@ public class IconMoreAdapter extends RecyclerView.Adapter<IconMoreAdapter.MainVi
         notifyDataSetChanged();
     }
 
-    public static class MainViewHolder extends RecyclerView.ViewHolder {
+    public class MainViewHolder extends RecyclerView.ViewHolder {
 
         public MainViewHolder(View itemView) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.image);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onClick(v, getAdapterPosition());
+                }
+            });
         }
 
         final ImageView image;
@@ -71,7 +82,12 @@ public class IconMoreAdapter extends RecyclerView.Adapter<IconMoreAdapter.MainVi
     @Override
     public void onBindViewHolder(MainViewHolder holder, int position) {
         final Context c = holder.itemView.getContext();
-        final int res = mIcons.get(position).getId(c);
+        final int res = mIcons.get(position).getDrawableId(c);
+
+        if (position < mIconsInAnimation && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            String transitionName = mContext.getString(R.string.transition_name_recyclerview_item + position);
+            holder.itemView.setTransitionName(transitionName);
+        }
 
         if (res == 0) {
             holder.image.setBackgroundColor(Color.parseColor("#40000000"));
@@ -82,8 +98,5 @@ public class IconMoreAdapter extends RecyclerView.Adapter<IconMoreAdapter.MainVi
                     .load(res)
                     .into(holder.image);
         }
-
-        holder.itemView.setTag(position);
-        holder.itemView.setOnClickListener(this);
     }
 }

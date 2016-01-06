@@ -41,6 +41,10 @@ public class DrawableXmlParser {
         static int CAPS = 2;
         static int CAPS_LOCK = 3;
 
+        public long getUniqueId() {
+            return mName.hashCode();
+        }
+
         public String getName() {
             if (mName != null || mDrawable == null) return mName;
 
@@ -90,7 +94,7 @@ public class DrawableXmlParser {
             return mDrawable;
         }
 
-        public int getId(Context context) {
+        public int getDrawableId(Context context) {
             if (mDrawable == null)
                 return 0;
             return context.getResources().getIdentifier(mDrawable, "drawable", context.getPackageName());

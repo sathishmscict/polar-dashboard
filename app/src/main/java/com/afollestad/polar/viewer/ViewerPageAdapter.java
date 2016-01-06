@@ -1,6 +1,6 @@
 package com.afollestad.polar.viewer;
 
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 
@@ -16,7 +16,7 @@ public class ViewerPageAdapter extends FragmentStatePagerAdapter {
     private final WallpaperUtils.WallpapersHolder mWallpapers;
 
     public ViewerPageAdapter(AppCompatActivity context, int initialOffset, WallpaperUtils.WallpapersHolder wallpapers) {
-        super(context.getSupportFragmentManager());
+        super(context.getFragmentManager());
         mCurrentPage = initialOffset;
         mWallpapers = wallpapers;
     }
