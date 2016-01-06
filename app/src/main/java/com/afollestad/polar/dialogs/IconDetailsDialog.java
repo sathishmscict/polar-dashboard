@@ -60,7 +60,7 @@ public class IconDetailsDialog extends DialogFragment {
                             color = palette.getMutedColor(0);
                         if (color == 0)
                             color = DialogUtils.resolveColor(getActivity(), R.attr.colorAccent);
-                        dialog.getActionButton(DialogAction.POSITIVE).setTextColor(color);
+                        dialog.getActionButton(DialogAction.NEGATIVE).setTextColor(color);
                     }
                 });
             }
