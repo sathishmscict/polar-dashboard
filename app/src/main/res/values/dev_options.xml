@@ -2,7 +2,7 @@
 <resources>
 
     <bool name="allow_changelog">true</bool>
-    <bool name="use_navigation_drawer">true</bool>
+    <bool name="use_navigation_drawer">false</bool>
 
     <string name="wallpapers_json_url" formatted="false">
         https://raw.githubusercontent.com/TWellington/JSON-for-Gaufrer/master/wallpapers.json

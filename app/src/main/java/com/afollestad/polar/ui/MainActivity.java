@@ -160,16 +160,10 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // Compensate for translucent system UI
-            final int statusBarHeight = Utils.getStatusBarHeight(this);
             final View content = findViewById(R.id.content);
-            content.setPadding(content.getPaddingLeft(),
-                    content.getPaddingTop() + statusBarHeight,
-                    content.getPaddingRight(),
-                    content.getPaddingBottom());
-//            mNavView.setPadding(mNavView.getPaddingLeft(),
-//                    mNavView.getPaddingTop() + statusBarHeight,
-//                    mNavView.getPaddingRight(),
-//                    mNavView.getPaddingBottom());
+            final DrawerLayout.LayoutParams lp = (DrawerLayout.LayoutParams) content.getLayoutParams();
+            lp.topMargin = Utils.getStatusBarHeight(this);
+            content.setLayoutParams(lp);
         }
 
         assert getSupportActionBar() != null;
