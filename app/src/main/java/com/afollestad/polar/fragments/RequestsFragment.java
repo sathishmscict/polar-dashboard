@@ -9,7 +9,6 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +23,8 @@ import android.widget.Toast;
 import com.afollestad.assent.Assent;
 import com.afollestad.assent.AssentCallback;
 import com.afollestad.assent.PermissionResultSet;
+import com.afollestad.dragselectrecyclerview.DragSelectRecyclerView;
+import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
@@ -31,6 +32,7 @@ import com.afollestad.polar.adapters.RequestsAdapter;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.util.Utils;
+import com.pk.requestmanager.AppInfo;
 import com.pk.requestmanager.AppLoadListener;
 import com.pk.requestmanager.PkRequestManager;
 import com.pk.requestmanager.RequestSettings;
@@ -38,6 +40,7 @@ import com.pk.requestmanager.SendRequestListener;
 
 import java.io.File;
 import java.util.ConcurrentModificationException;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -45,7 +48,7 @@ import butterknife.OnClick;
 
 
 public class RequestsFragment extends BasePageFragment implements
-        AppLoadListener, SendRequestListener, RequestsAdapter.SelectionChangedListener, AssentCallback {
+        AppLoadListener, SendRequestListener, RequestsAdapter.SelectionChangedListener, AssentCallback, DragSelectRecyclerViewAdapter.SelectionListener {
 
     private static final Object LOCK = new Object();
 
@@ -62,7 +65,7 @@ public class RequestsFragment extends BasePageFragment implements
     private boolean mAppsLoaded = false;
 
     @Bind(android.R.id.list)
-    RecyclerView list;
+    DragSelectRecyclerView list;
     @Bind(android.R.id.progress)
     View progress;
     @Bind(R.id.progressText)
@@ -120,12 +123,12 @@ public class RequestsFragment extends BasePageFragment implements
         synchronized (LOCK) {
             MainActivity act = (MainActivity) getActivity();
             if (act != null) {
-                if (mRequestManager == null) {
-                    super.updateTitle();
+                if (fab == null) {
+                    act.setTitle(R.string.request_icons);
                     return;
                 }
 
-                final int numSelected = mRequestManager.getNumSelected();
+                final int numSelected = mAdapter != null ? mAdapter.getSelectedCount() : 0;
                 if (mLastNumSelected == numSelected) return;
                 mLastNumSelected = numSelected;
 
@@ -140,11 +143,6 @@ public class RequestsFragment extends BasePageFragment implements
                 act.invalidateOptionsMenu();
             }
         }
-    }
-
-    @Override
-    public void onSelectionChanged() {
-        updateTitle();
     }
 
     @Override
@@ -206,7 +204,10 @@ public class RequestsFragment extends BasePageFragment implements
                 return 1;
             }
         });
+
         mAdapter = new RequestsAdapter(this);
+        mAdapter.setSelectionListener(this);
+
         list.setLayoutManager(lm);
         list.setAdapter(mAdapter);
 
@@ -359,6 +360,9 @@ public class RequestsFragment extends BasePageFragment implements
         }
         synchronized (LOCK) {
             if (getActivity() == null) return;
+            final List<AppInfo> apps = mRequestManager.getApps();
+            for (int i = 0; i < apps.size(); i++)
+                apps.get(i).setSelected(mAdapter.isIndexSelected(i));
             mRequestManager.setActivity(getActivity());
             mRequestManager.sendRequestAsync();
         }
@@ -406,5 +410,19 @@ public class RequestsFragment extends BasePageFragment implements
                     Toast.makeText(getActivity(), R.string.icon_request_error, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onDragSelectionChanged(int count) {
+        updateTitle();
+    }
+
+    @Override
+    public void onClick(int index, boolean longClick) {
+        if (longClick) {
+            list.setDragSelectActive(true, index);
+        } else {
+            mAdapter.toggleSelected(index);
+        }
     }
 }

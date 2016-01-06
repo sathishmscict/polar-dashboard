@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.pk.requestmanager.AppInfo;
+import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
 import com.afollestad.polar.R;
+import com.pk.requestmanager.AppInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +20,10 @@ import butterknife.ButterKnife;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.RequestVH> {
+public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapter.RequestVH> {
 
     public interface SelectionChangedListener {
-        void onSelectionChanged();
+        void onClick(int index, boolean longClick);
     }
 
     private ArrayList<AppInfo> mApps;
@@ -35,6 +36,11 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
     public void setApps(List<AppInfo> apps) {
         mApps = (ArrayList<AppInfo>) apps;
         notifyDataSetChanged();
+    }
+
+    @Override
+    protected boolean isIndexSelectable(int index) {
+        return index > 0;
     }
 
     @Override
@@ -54,15 +60,18 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
 
     @Override
     public void onBindViewHolder(RequestVH holder, int position) {
+        super.onBindViewHolder(holder, position);
         if (position == 0) {
             holder.title.setText(R.string.tap_apps_to_select_them);
             return;
         }
+
         final AppInfo app = mApps.get(position - 1);
         holder.image.setImageDrawable(app.getImage());
         holder.title.setText(app.getName());
+
         if (holder.card != null)
-            holder.card.setActivated(app.isSelected());
+            holder.card.setActivated(isIndexSelected(position));
     }
 
     @Override
@@ -80,14 +89,12 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
 
     private void updateSelection(boolean select) {
         synchronized (mListener) {
-            for (AppInfo app : mApps)
-                app.setSelected(select);
-            notifyDataSetChanged();
-            mListener.onSelectionChanged();
+            for (int i = 1; i < getItemCount(); i++)
+                setSelected(i, select);
         }
     }
 
-    public class RequestVH extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class RequestVH extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         final CardView card;
         final TextView title;
@@ -98,17 +105,23 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.Reques
             card = ButterKnife.findById(itemView, R.id.card);
             title = ButterKnife.findById(itemView, R.id.title);
             image = ButterKnife.findById(itemView, R.id.image);
-            if (card != null)
+            if (card != null) {
                 card.setOnClickListener(this);
+                card.setOnLongClickListener(this);
+            }
         }
 
         @Override
         public void onClick(View v) {
-            AppInfo info = mApps.get(getAdapterPosition() - 1);
-            info.setSelected(!info.isSelected());
-            notifyItemChanged(getAdapterPosition());
             if (mListener != null)
-                mListener.onSelectionChanged();
+                mListener.onClick(getAdapterPosition(), false);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            if (mListener != null)
+                mListener.onClick(getAdapterPosition(), true);
+            return false;
         }
     }
 }
