@@ -415,6 +415,8 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onDragSelectionChanged(int count) {
         updateTitle();
+        if (getActivity() != null)
+            getActivity().invalidateOptionsMenu();
     }
 
     @Override
