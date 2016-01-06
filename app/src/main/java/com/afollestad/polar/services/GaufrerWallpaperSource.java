@@ -5,10 +5,10 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.google.android.apps.muzei.api.Artwork;
-import com.google.android.apps.muzei.api.RemoteMuzeiArtSource;
 import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.util.WallpaperUtils;
+import com.google.android.apps.muzei.api.Artwork;
+import com.google.android.apps.muzei.api.RemoteMuzeiArtSource;
 
 
 /**

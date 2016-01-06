@@ -15,8 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.afollestad.polar.R;
+import com.bumptech.glide.Glide;
 
 import butterknife.ButterKnife;
 
