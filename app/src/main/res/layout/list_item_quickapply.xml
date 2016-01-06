@@ -8,8 +8,8 @@
         android:id="@+id/card"
         style="@style/Card"
         android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/grid_spacing_card"
-        android:layout_marginRight="@dimen/grid_spacing_card">
+        android:layout_marginLeft="@dimen/grid_spacing_card_sides"
+        android:layout_marginRight="@dimen/grid_spacing_card_sides">
 
         <LinearLayout
             android:layout_width="match_parent"

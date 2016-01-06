@@ -11,7 +11,8 @@
     <!-- Minus 2 for negative margin on cards -->
     <dimen name="content_inset_half_card">6dp</dimen>
     <dimen name="content_inset_half">8dp</dimen>
-    <!--<dimen name="content_inset_less">12dp</dimen>-->
+
+    <dimen name="content_inset_less">12dp</dimen>
     <dimen name="content_inset">16dp</dimen>
     <dimen name="content_inset_more">8dp</dimen>
 
@@ -23,7 +24,8 @@
     <dimen name="grid_spacing">4dp</dimen>
 
     <!-- Takes into account that cards normally have -2dp margin -->
-    <dimen name="grid_spacing_card">2dp</dimen>
+    <dimen name="grid_spacing_card_sides">1.41dp</dimen>
+    <dimen name="grid_spacing_card_vertical">0.41dp</dimen>
 
     <dimen name="toolbar_inset_smaller">56dp</dimen>
 
