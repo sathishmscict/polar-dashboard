@@ -5,6 +5,11 @@
     <string name="wallpapers_json_url" formatted="false">
         https://raw.githubusercontent.com/TWellington/JSON-for-Gaufrer/master/wallpapers.json
     </string>
+
+    <!-- Email used to send icon requests, required -->
     <string name="icon_request_email"></string>
+
+    <!-- Public Base64 from the developer console for license checking, optional -->
+    <string name="licensing_public_key"></string>
 
 </resources>

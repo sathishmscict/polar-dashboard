@@ -24,9 +24,13 @@ import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.MainPagerAdapter;
 import com.afollestad.polar.dialogs.ChangelogDialog;
+import com.afollestad.polar.dialogs.InvalidLicenseDialog;
 import com.afollestad.polar.fragments.WallpapersFragment;
 import com.afollestad.polar.ui.base.BaseThemedActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
+import com.afollestad.polar.util.LicensingUtils;
+import com.afollestad.polar.util.Utils;
+import com.google.android.vending.licensing.Policy;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,7 +42,7 @@ import static com.afollestad.polar.viewer.ViewerActivity.STATE_CURRENT_POSITION;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MainActivity extends BaseThemedActivity {
+public class MainActivity extends BaseThemedActivity implements LicensingUtils.LicensingCallback {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -67,6 +71,23 @@ public class MainActivity extends BaseThemedActivity {
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
         setupPager();
+
+        retryLicenseCheck();
+    }
+
+    public void retryLicenseCheck() {
+        LicensingUtils.check(this, this);
+    }
+
+    @Override
+    public void onLicensingResult(boolean allow, int reason) {
+        if (!allow)
+            InvalidLicenseDialog.show(this, reason == Policy.RETRY);
+    }
+
+    @Override
+    public void onLicensingError(int errorCode) {
+        Utils.showError(this, new Exception("License checking error occurred, make sure everything is setup correctly. Error code: " + errorCode));
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -165,9 +186,12 @@ public class MainActivity extends BaseThemedActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Bridge.destroy();
-        Inquiry.deinit();
-        DrawableXmlParser.cleanup();
+        if (isFinishing()) {
+            Bridge.destroy();
+            Inquiry.deinit();
+            DrawableXmlParser.cleanup();
+            LicensingUtils.cleanup();
+        }
     }
 
     @Override

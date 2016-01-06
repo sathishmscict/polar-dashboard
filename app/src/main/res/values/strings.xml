@@ -55,6 +55,11 @@
     <string name="quick_apply_desc">Tap to apply to your default launcher</string>
 
     <string name="transition_name_circular_reveal" translatable="false">circularReveal</string>
+    <string name="invalid_license">Invalid License</string>
+    <string name="invalid_license_description"><![CDATA[Please download <b>%1$s</b> from the Google Play Store! :)]]></string>
+    <string name="invalid_license_description_retry">We were unable to verify your license, would you like to retry? If not, the app will close.</string>
+    <string name="retry">Retry</string>
+    <string name="checking_license">Checking your license…</string>
 
     <string-array name="wallpaper_options" translatable="false">
         <item>@string/apply</item>
