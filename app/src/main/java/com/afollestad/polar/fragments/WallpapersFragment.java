@@ -319,7 +319,11 @@ public class WallpapersFragment extends BasePageFragment implements
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        mRecyclerView.setClipToPadding(false);
+        mRecyclerView.setPadding(mRecyclerView.getPaddingLeft(),
+                mRecyclerView.getPaddingTop(),
+                mRecyclerView.getPaddingRight(),
+                mRecyclerView.getPaddingBottom() + getResources().getDimensionPixelSize(R.dimen.nav_bar_offset));
+
         mAdapter = new WallpaperAdapter(new WallpaperAdapter.ClickListener() {
             @Override
             public boolean onClick(View view, int index, boolean longPress) {

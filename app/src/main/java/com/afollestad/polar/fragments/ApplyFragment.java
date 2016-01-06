@@ -40,7 +40,7 @@ public class ApplyFragment extends BasePageFragment implements ApplyAdapter.Sele
         recyclerView.setPadding(sidePadding,
                 recyclerView.getPaddingTop(),
                 sidePadding,
-                recyclerView.getPaddingBottom());
+                recyclerView.getPaddingBottom() + getResources().getDimensionPixelSize(R.dimen.nav_bar_offset));
         recyclerView.setClipToPadding(false);
 
         final GridLayoutManager lm = new GridLayoutManager(getActivity(),

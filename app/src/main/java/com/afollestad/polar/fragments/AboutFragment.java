@@ -26,11 +26,15 @@ public class AboutFragment extends BasePageFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_recyclerview_bare, container, false);
-        RecyclerView recyclerView = ButterKnife.findById(v, android.R.id.list);
-        recyclerView.setClipToPadding(false);
-        LinearLayoutManager lm = new LinearLayoutManager(getActivity());
-        AboutAdapter mAdapter = new AboutAdapter(getActivity());
+        final View v = inflater.inflate(R.layout.fragment_recyclerview_bare, container, false);
+        final RecyclerView recyclerView = ButterKnife.findById(v, android.R.id.list);
+        recyclerView.setPadding(recyclerView.getPaddingLeft(),
+                recyclerView.getPaddingTop(),
+                recyclerView.getPaddingRight(),
+                recyclerView.getPaddingBottom() + getResources().getDimensionPixelSize(R.dimen.nav_bar_offset));
+
+        final LinearLayoutManager lm = new LinearLayoutManager(getActivity());
+        final AboutAdapter mAdapter = new AboutAdapter(getActivity());
         recyclerView.setLayoutManager(lm);
         recyclerView.setAdapter(mAdapter);
         return v;
