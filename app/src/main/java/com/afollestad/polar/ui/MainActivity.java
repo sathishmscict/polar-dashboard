@@ -3,18 +3,27 @@ package com.afollestad.polar.ui;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.afollestad.bridge.Bridge;
 import com.afollestad.inquiry.Inquiry;
@@ -25,6 +34,7 @@ import com.afollestad.polar.adapters.MainPagerAdapter;
 import com.afollestad.polar.dialogs.ChangelogDialog;
 import com.afollestad.polar.dialogs.InvalidLicenseDialog;
 import com.afollestad.polar.fragments.WallpapersFragment;
+import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.base.BaseThemedActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
 import com.afollestad.polar.util.LicensingUtils;
@@ -41,17 +51,18 @@ import static com.afollestad.polar.viewer.ViewerActivity.STATE_CURRENT_POSITION;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MainActivity extends BaseThemedActivity implements LicensingUtils.LicensingCallback {
+public class MainActivity extends BaseThemedActivity implements LicensingUtils.LicensingCallback, NavigationView.OnNavigationItemSelectedListener {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
+    @Nullable
     @Bind(R.id.tabs)
     TabLayout mTabs;
+    @Nullable
+    @Bind(R.id.navigation_view)
+    NavigationView mNavView;
     @Bind(R.id.pager)
     ViewPager mPager;
-    @Bind(R.id.root)
-    public
-    View root;
 
     public RecyclerView mRecyclerView;
 
@@ -63,11 +74,22 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        final boolean useNavDrawer = getResources().getBoolean(R.bool.use_navigation_drawer);
+        if (useNavDrawer)
+            setContentView(R.layout.activity_main_drawer);
+        else setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
+
         setupPager();
+        if (useNavDrawer)
+            setupNavDrawer();
+        else setupTabs();
+
+        // Restore last selected page, tab/nav-drawer-item
+        final int lastPage = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getInt("last_selected_page", 0);
+        mPager.setCurrentItem(lastPage);
 
         retryLicenseCheck();
     }
@@ -130,17 +152,98 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         return super.onOptionsItemSelected(item);
     }
 
+    private void setupNavDrawer() {
+        assert mNavView != null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Drawable menuIcon = ContextCompat.getDrawable(this, R.drawable.ic_action_menu);
+        menuIcon = Utils.tintDrawable(menuIcon, DialogUtils.resolveColor(this, R.attr.tab_icon_color));
+        getSupportActionBar().setHomeAsUpIndicator(menuIcon);
+
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.root);
+        drawer.setDrawerListener(new ActionBarDrawerToggle(this, drawer, mToolbar, R.string.drawer_open, R.string.drawer_close));
+        drawer.setStatusBarBackgroundColor(DialogUtils.resolveColor(this, R.attr.colorPrimaryDark));
+        mNavView.setNavigationItemSelectedListener(this);
+
+        final ColorDrawable navBg = (ColorDrawable) mNavView.getBackground();
+        final int selectedIconText = DialogUtils.resolveColor(this, R.attr.colorAccent);
+        int iconColor;
+        int titleColor;
+        int selectedBg;
+        if (Utils.isColorLight(navBg.getColor())) {
+            iconColor = ContextCompat.getColor(this, R.color.navigationview_normalicon_light);
+            titleColor = ContextCompat.getColor(this, R.color.navigationview_normaltext_light);
+            selectedBg = ContextCompat.getColor(this, R.color.navigationview_selectedbg_light);
+        } else {
+            iconColor = ContextCompat.getColor(this, R.color.navigationview_normalicon_dark);
+            titleColor = ContextCompat.getColor(this, R.color.navigationview_normaltext_dark);
+            selectedBg = ContextCompat.getColor(this, R.color.navigationview_selectedbg_dark);
+        }
+
+        final ColorStateList iconSl = new ColorStateList(
+                new int[][]{
+                        new int[]{-android.R.attr.state_checked},
+                        new int[]{android.R.attr.state_checked}
+                },
+                new int[]{iconColor, selectedIconText});
+        final ColorStateList textSl = new ColorStateList(
+                new int[][]{
+                        new int[]{-android.R.attr.state_checked},
+                        new int[]{android.R.attr.state_checked}
+                },
+                new int[]{titleColor, selectedIconText});
+        mNavView.setItemTextColor(textSl);
+        mNavView.setItemIconTintList(iconSl);
+
+        StateListDrawable bgDrawable = new StateListDrawable();
+        bgDrawable.addState(new int[]{android.R.attr.state_checked}, new ColorDrawable(selectedBg));
+        mNavView.setItemBackground(bgDrawable);
+
+        mNavView.getHeaderView(0).setBackgroundColor(DialogUtils.resolveColor(this, R.attr.colorAccent));
+        mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                final BasePageFragment frag = (BasePageFragment) getFragmentManager().findFragmentByTag("page:" + position);
+                if (frag != null) frag.updateTitle();
+                switch (position) {
+                    case 0:
+                        mNavView.setCheckedItem(R.id.drawer_icons);
+                        break;
+                    case 1:
+                        mNavView.setCheckedItem(R.id.drawer_wallpapers);
+                        break;
+                    case 2:
+                        mNavView.setCheckedItem(R.id.drawer_requestIcons);
+                        break;
+                    case 3:
+                        mNavView.setCheckedItem(R.id.drawer_apply);
+                        break;
+                    case 4:
+                        mNavView.setCheckedItem(R.id.drawer_about);
+                        break;
+                }
+            }
+        });
+    }
+
     private void setupPager() {
         mPager.setAdapter(new MainPagerAdapter(getFragmentManager()));
         mPager.setOffscreenPageLimit(6);
         mPager.setOffscreenPageLimit(6);
-        mTabs.setSelectedTabIndicatorColor(DialogUtils.resolveColor(this, R.attr.tab_indicator_color));
+    }
 
+    private void setupTabs() {
+        assert mTabs != null;
         mTabs.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mPager));
         mPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabs) {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
+                final BasePageFragment frag = (BasePageFragment) getFragmentManager().findFragmentByTag("page:" + position);
+                if (frag != null) frag.updateTitle();
                 PreferenceManager.getDefaultSharedPreferences(MainActivity.this)
                         .edit().putInt("last_selected_page", position).commit();
             }
@@ -152,11 +255,37 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         addTab(R.drawable.tab_apply);
         addTab(R.drawable.tab_about);
 
-        final int lastPage = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getInt("last_selected_page", 0);
-        mPager.setCurrentItem(lastPage);
+        mTabs.setSelectedTabIndicatorColor(DialogUtils.resolveColor(this, R.attr.tab_indicator_color));
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        ((DrawerLayout) findViewById(R.id.root)).closeDrawers();
+        int index;
+        switch (item.getItemId()) {
+            default:
+            case R.id.drawer_icons:
+                index = 0;
+                break;
+            case R.id.drawer_wallpapers:
+                index = 1;
+                break;
+            case R.id.drawer_requestIcons:
+                index = 2;
+                break;
+            case R.id.drawer_apply:
+                index = 3;
+                break;
+            case R.id.drawer_about:
+                index = 4;
+                break;
+        }
+        mPager.setCurrentItem(index);
+        return false;
     }
 
     private void addTab(@DrawableRes int icon) {
+        assert mTabs != null;
         TabLayout.Tab tab = mTabs.newTab().setIcon(icon);
         if (tab.getIcon() != null)
             tab.getIcon().setColorFilter(DialogUtils.resolveColor(this, R.attr.tab_icon_color), PorterDuff.Mode.SRC_ATOP);

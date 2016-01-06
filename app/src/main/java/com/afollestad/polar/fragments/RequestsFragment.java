@@ -28,7 +28,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.RequestsAdapter;
-import com.afollestad.polar.fragments.base.BaseTabFragment;
+import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.util.Utils;
 import com.pk.requestmanager.AppLoadListener;
@@ -44,7 +44,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class RequestsFragment extends BaseTabFragment implements
+public class RequestsFragment extends BasePageFragment implements
         AppLoadListener, SendRequestListener, RequestsAdapter.SelectionChangedListener, AssentCallback {
 
     private static final Object LOCK = new Object();

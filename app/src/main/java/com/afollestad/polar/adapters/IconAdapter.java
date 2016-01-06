@@ -57,7 +57,7 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
             final DrawableXmlParser.Category category = mFiltered != null ?
                     mFiltered.get(index) : mCategories.get(index);
 
-            View root = ((MainActivity) mContext).root;
+            View root = ((MainActivity) mContext).findViewById(R.id.root);
 
             //root.getPaddingTop() is the status bar (if any), calculated by fitsSystemWindows
 
@@ -67,7 +67,7 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
 
             int[] headerLocation = new int[2];
             ((View) v.getParent()).getLocationOnScreen(headerLocation);
-            int sectionLocation = headerLocation[1] + ((View) v.getParent()).getHeight();
+//            int sectionLocation = headerLocation[1] + ((View) v.getParent()).getHeight();
 
             final Intent intent = new Intent(mContext, IconMoreActivity.class)
                     .putExtra(IconMoreActivity.EXTRA_CATEGORY, category)

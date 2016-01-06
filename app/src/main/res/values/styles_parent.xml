@@ -24,10 +24,10 @@
         <item name="button_accent_selector">@drawable/selector_button_accent</item>
         <item name="activatable_card_selector">@drawable/selector_activatable_card</item>
 
-        <item name="android:textColorPrimary">#000000</item>
-        <item name="android:textColorSecondary">#191919</item>
-        <item name="android:textColorPrimaryInverse">#ffffff</item>
-        <item name="android:textColorSecondaryInverse">#ffffff</item>
+        <item name="android:textColorPrimary">@color/primary_text_selector_light</item>
+        <item name="android:textColorSecondary">@color/secondary_text_selector_light</item>
+        <item name="android:textColorPrimaryInverse">@color/primary_text_selector_dark</item>
+        <item name="android:textColorSecondaryInverse">@color/secondary_text_selector_dark</item>
     </style>
 
     <!-- Dark -->
@@ -53,10 +53,10 @@
         <item name="button_accent_selector">@drawable/selector_button_accent</item>
         <item name="activatable_card_selector">@drawable/selector_activatable_card</item>
 
-        <item name="android:textColorPrimary">#ffffff</item>
-        <item name="android:textColorSecondary">#ffffff</item>
-        <item name="android:textColorPrimaryInverse">#000000</item>
-        <item name="android:textColorSecondaryInverse">#191919</item>
+        <item name="android:textColorPrimary">@color/primary_text_selector_dark</item>
+        <item name="android:textColorSecondary">@color/secondary_text_selector_dark</item>
+        <item name="android:textColorPrimaryInverse">@color/primary_text_selector_light</item>
+        <item name="android:textColorSecondaryInverse">@color/secondary_text_selector_light</item>
     </style>
 
 </resources>

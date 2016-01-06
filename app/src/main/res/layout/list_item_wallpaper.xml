@@ -28,7 +28,6 @@
                 android:id="@+id/colorFrame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:textColorPrimary"
                 android:minHeight="48dp"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/content_inset_half_card"

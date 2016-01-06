@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/drawer_icons"
+            android:checkable="true"
+            android:checked="true"
+            android:icon="@drawable/tab_icons"
+            android:title="@string/icons" />
+        <item
+            android:id="@+id/drawer_wallpapers"
+            android:checkable="true"
+            android:checked="true"
+            android:icon="@drawable/tab_wallpapers"
+            android:title="@string/wallpapers" />
+        <item
+            android:id="@+id/drawer_requestIcons"
+            android:checkable="true"
+            android:checked="true"
+            android:icon="@drawable/tab_requests"
+            android:title="@string/request_icons" />
+        <item
+            android:id="@+id/drawer_apply"
+            android:checkable="true"
+            android:checked="true"
+            android:icon="@drawable/tab_apply"
+            android:title="@string/apply" />
+        <item
+            android:id="@+id/drawer_about"
+            android:checkable="true"
+            android:checked="true"
+            android:icon="@drawable/tab_about"
+            android:title="@string/about" />
+
+    </group>
+
+</menu>

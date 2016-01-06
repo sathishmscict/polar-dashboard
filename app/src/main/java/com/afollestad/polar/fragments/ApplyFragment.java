@@ -16,12 +16,12 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.ApplyAdapter;
-import com.afollestad.polar.fragments.base.BaseTabFragment;
+import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.util.ApplyUtil;
 
 import butterknife.ButterKnife;
 
-public class ApplyFragment extends BaseTabFragment implements ApplyAdapter.SelectionCallback {
+public class ApplyFragment extends BasePageFragment implements ApplyAdapter.SelectionCallback {
 
     public ApplyFragment() {
     }

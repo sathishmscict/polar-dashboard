@@ -37,4 +37,6 @@
     <dimen name="quickapply_card_minheight">64dp</dimen>
     <dimen name="apply_title_minheight">44dp</dimen>
 
+    <dimen name="drawer_header_height">196dp</dimen>
+
 </resources>

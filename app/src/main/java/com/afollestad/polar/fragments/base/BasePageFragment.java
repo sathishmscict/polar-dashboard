@@ -10,7 +10,7 @@ import com.afollestad.polar.ui.base.BaseThemedActivity;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public abstract class BaseTabFragment extends Fragment {
+public abstract class BasePageFragment extends Fragment {
 
     @StringRes
     public abstract int getTitle();

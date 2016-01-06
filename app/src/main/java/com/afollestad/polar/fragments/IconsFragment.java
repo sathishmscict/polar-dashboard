@@ -26,7 +26,7 @@ import android.widget.TextView;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.IconAdapter;
 import com.afollestad.polar.dialogs.IconDetailsDialog;
-import com.afollestad.polar.fragments.base.BaseTabFragment;
+import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.IconPickerActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
 
@@ -36,7 +36,7 @@ import java.util.TimerTask;
 import butterknife.ButterKnife;
 
 
-public class IconsFragment extends BaseTabFragment implements
+public class IconsFragment extends BasePageFragment implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     IconAdapter mAdapter;

@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.AboutAdapter;
-import com.afollestad.polar.fragments.base.BaseTabFragment;
+import com.afollestad.polar.fragments.base.BasePageFragment;
 
 import butterknife.ButterKnife;
 
 
-public class AboutFragment extends BaseTabFragment {
+public class AboutFragment extends BasePageFragment {
 
     public AboutFragment() {
     }

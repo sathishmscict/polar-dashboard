@@ -15,7 +15,6 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -42,7 +41,7 @@ import com.afollestad.bridge.Response;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.WallpaperAdapter;
-import com.afollestad.polar.fragments.base.BaseTabFragment;
+import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.viewer.ViewerActivity;
@@ -58,7 +57,7 @@ import static com.afollestad.polar.viewer.ViewerActivity.STATE_CURRENT_POSITION;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class WallpapersFragment extends BaseTabFragment implements
+public class WallpapersFragment extends BasePageFragment implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     @Bind(android.R.id.list)
