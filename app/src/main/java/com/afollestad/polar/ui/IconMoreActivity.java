@@ -1,7 +1,5 @@
 package com.afollestad.polar.ui;
 
-import android.animation.Animator;
-import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,19 +7,21 @@ import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.ChangeBounds;
+import android.transition.Slide;
 import android.transition.TransitionSet;
-import android.transition.TransitionValues;
-import android.transition.Visibility;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.IconMoreAdapter;
 import com.afollestad.polar.fragments.IconsFragment;
+import com.afollestad.polar.transitions.CircularRevealTransition;
 import com.afollestad.polar.ui.base.BaseThemedActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
+import com.afollestad.polar.util.Utils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,23 +32,22 @@ import butterknife.ButterKnife;
 public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdapter.ClickListener {
 
     public static final String EXTRA_REVEAL_ANIM_LOCATION = "com.afollestad.polar.REVEAL_ANIM_LOCATION";
-    public static final String EXTRA_ = "com.afollestad.polar.BUTTON_LOCATION";
 
     public static final String EXTRA_CATEGORY = "com.afollestad.polar.CATEGORY";
 
-    final static int REVEAL_ANIMATION_DURATION = 550;
-
 
     @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    Toolbar mToolbar;
     @Bind(R.id.list)
-    RecyclerView list;
+    RecyclerView mRecyclerView;
+    @Bind(R.id.circular_reveal_view)
+    ViewGroup mCircularRevealView;
 
     private IconMoreAdapter mAdapter;
 
     @Override
     public Toolbar getToolbar() {
-        return toolbar;
+        return mToolbar;
     }
 
     @Override
@@ -57,39 +56,81 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
         setContentView(R.layout.activity_icons_more);
         ButterKnife.bind(this);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            final float[] buttonLocation = getIntent().getFloatArrayExtra(EXTRA_REVEAL_ANIM_LOCATION);
-            final float x = buttonLocation[0];
-            final float y = buttonLocation[1];
-
-            TransitionSet set = new TransitionSet();
-            CircularRevealTransition circularRevealTransition = new CircularRevealTransition(x, y);
-            circularRevealTransition.addTarget("circularReveal");
-            //set.addTransition(circularRevealTransition);
-
-
-            getWindow().setEnterTransition(circularRevealTransition);
-            getWindow().setExitTransition(circularRevealTransition);
-        }
-
-
         final DrawableXmlParser.Category category = (DrawableXmlParser.Category) getIntent().getSerializableExtra(EXTRA_CATEGORY);
 
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(category.getName());
 
-        mAdapter = new IconMoreAdapter(this);
-        list.setLayoutManager(new GridLayoutManager(this,
-                getResources().getInteger(R.integer.icon_grid_width)));
-        list.setAdapter(mAdapter);
-        list.setClipToPadding(false);
-        list.setPadding(list.getPaddingLeft(),
-                list.getPaddingTop(),
-                list.getPaddingRight(),
-                list.getPaddingBottom() + getResources().getDimensionPixelOffset(R.dimen.nav_bar_offset));
+        int gridWidth = getResources().getInteger(R.integer.icon_grid_width);
+        mAdapter = new IconMoreAdapter(this, gridWidth, this);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, gridWidth));
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setClipToPadding(false);
         mAdapter.set(category.getIcons());
+
+        setUpTransitions();
+
+        supportPostponeEnterTransition();
+        Utils.waitForLayout(mRecyclerView, new Utils.LayoutCallback<RecyclerView>() {
+            @Override
+            public void onLayout(RecyclerView view) {
+                supportStartPostponedEnterTransition();
+            }
+        });
+    }
+
+    private void setUpTransitions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setSharedElementsUseOverlay(true);
+
+            final float[] buttonLocation = getIntent().getFloatArrayExtra(EXTRA_REVEAL_ANIM_LOCATION);
+            final float x = buttonLocation[0];
+            final float y = buttonLocation[1];
+
+            CircularRevealTransition circularRevealTransition = new CircularRevealTransition(x, y);
+            circularRevealTransition.addTarget(getString(R.string.transition_name_circular_reveal));
+            circularRevealTransition.setInterpolator(new FastOutSlowInInterpolator());
+
+            Slide enterSlide = new Slide();
+            enterSlide.setDuration(300);
+            enterSlide.setStartDelay(400);
+            enterSlide.setInterpolator(new FastOutSlowInInterpolator());
+            enterSlide.excludeTarget(getString(R.string.transition_name_circular_reveal), true);
+            enterSlide.excludeTarget(Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME, true);
+
+            Slide returnSide = new Slide();
+            returnSide.setDuration(300);
+            returnSide.setInterpolator(new FastOutSlowInInterpolator());
+            returnSide.excludeTarget(getString(R.string.transition_name_circular_reveal), true);
+            returnSide.excludeTarget(Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME, true);
+
+            mCircularRevealView.setTransitionGroup(true);
+
+            TransitionSet set = new TransitionSet()
+                    .addTransition(circularRevealTransition)
+                    .addTransition(enterSlide);
+
+            TransitionSet set2 = new TransitionSet()
+                    .addTransition(returnSide)
+                    .addTransition(circularRevealTransition);
+
+            getWindow().setEnterTransition(set);
+            getWindow().setReturnTransition(set2);
+
+            ChangeBounds enterBounds = new ChangeBounds();
+            enterBounds.setDuration(300);
+            enterBounds.setStartDelay(400);
+            enterBounds.setInterpolator(new FastOutSlowInInterpolator());
+
+            ChangeBounds returnBounds = new ChangeBounds();
+            returnBounds.setDuration(300);
+            returnBounds.setInterpolator(new FastOutSlowInInterpolator());
+
+            getWindow().setSharedElementEnterTransition(enterBounds);
+            getWindow().setSharedElementReturnTransition(returnBounds);
+        }
     }
 
     @Override
@@ -99,8 +140,11 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        finish();
-        return true;
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -114,39 +158,4 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
         IconsFragment.selectItem(this, null, mAdapter.getIcon(index));
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private static class CircularRevealTransition extends Visibility {
-
-        private float startX;
-        private float startY;
-
-        public CircularRevealTransition(float x, float y) {
-            super();
-            startX = x;
-            startY = y;
-        }
-
-        @Override
-        public Animator onAppear(ViewGroup sceneRoot, View view, TransitionValues startValues, TransitionValues endValues) {
-            return createAnimator(view, true);
-        }
-
-        @Override
-        public Animator onDisappear(ViewGroup sceneRoot, View view, TransitionValues startValues, TransitionValues endValues) {
-            return createAnimator(view, false);
-        }
-
-        public Animator createAnimator(View view, boolean appear) {
-            float dx = Math.max(view.getMeasuredWidth() - startX, startX);
-            float dy = Math.max(view.getMeasuredHeight() - startY, startY);
-
-            float radius = (float) Math.hypot(dx, dy);
-
-            Animator anim = ViewAnimationUtils.createCircularReveal(view, (int) startX, (int) startY, appear ? 0 : radius, appear ? radius : 0);
-            anim.setDuration(REVEAL_ANIMATION_DURATION);
-            anim.setInterpolator(new FastOutSlowInInterpolator());
-
-            return anim;
-        }
-    }
 }

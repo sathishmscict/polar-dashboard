@@ -1,8 +1,8 @@
 package com.afollestad.polar.viewer;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.afollestad.polar.R;
+import com.afollestad.polar.fragments.WallpapersFragment;
+import com.afollestad.polar.util.WallpaperUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.afollestad.polar.R;
-import com.afollestad.polar.fragments.WallpapersFragment;
-import com.afollestad.polar.util.WallpaperUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

@@ -1,7 +1,8 @@
 package com.afollestad.polar.adapters;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+
+import android.app.Fragment;
+import android.app.FragmentManager;
 
 import com.afollestad.polar.fragments.AboutFragment;
 import com.afollestad.polar.fragments.ApplyFragment;

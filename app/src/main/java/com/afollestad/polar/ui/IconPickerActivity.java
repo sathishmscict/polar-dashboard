@@ -37,7 +37,7 @@ public class IconPickerActivity extends BaseThemedActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_close);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new IconsFragment()).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container, new IconsFragment()).commit();
     }
 
     @Override

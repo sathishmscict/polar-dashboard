@@ -130,11 +130,11 @@ public class ViewerActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                ViewerPageFragment noActive = (ViewerPageFragment) getSupportFragmentManager().findFragmentByTag("page:" + mCurrentPosition);
+                ViewerPageFragment noActive = (ViewerPageFragment) getFragmentManager().findFragmentByTag("page:" + mCurrentPosition);
                 if (noActive != null)
                     noActive.setIsActive(false);
                 mCurrentPosition = position;
-                ViewerPageFragment active = (ViewerPageFragment) getSupportFragmentManager().findFragmentByTag("page:" + mCurrentPosition);
+                ViewerPageFragment active = (ViewerPageFragment) getFragmentManager().findFragmentByTag("page:" + mCurrentPosition);
                 if (active != null) {
                     active.setIsActive(true);
                 }
@@ -188,7 +188,7 @@ public class ViewerActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        ViewerPageFragment active = (ViewerPageFragment) getSupportFragmentManager().findFragmentByTag("page:" + mCurrentPosition);
+        ViewerPageFragment active = (ViewerPageFragment) getFragmentManager().findFragmentByTag("page:" + mCurrentPosition);
         if (active != null) {
             active.onOptionsItemSelected(item);
         }

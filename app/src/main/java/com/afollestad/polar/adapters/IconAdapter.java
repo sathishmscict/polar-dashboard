@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +22,7 @@ import com.afollestad.polar.R;
 import com.afollestad.polar.ui.IconMoreActivity;
 import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
+import com.afollestad.polar.util.Utils;
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.bumptech.glide.Glide;
 
@@ -52,34 +56,89 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
             final int index = (Integer) v.getTag();
             final DrawableXmlParser.Category category = mFiltered != null ?
                     mFiltered.get(index) : mCategories.get(index);
-            float[] value = getRelativeCoords((Activity) mContext, event);
 
-            Intent intent = new Intent(mContext, IconMoreActivity.class)
+            View root = ((MainActivity) mContext).root;
+
+            //root.getPaddingTop() is the status bar (if any), calculated by fitsSystemWindows
+
+            float[] pressedLocation = new float[]{
+                    event.getRawX(),
+                    event.getRawY() - root.getPaddingTop()};
+
+            int[] headerLocation = new int[2];
+            ((View) v.getParent()).getLocationOnScreen(headerLocation);
+            int sectionLocation = headerLocation[1] + ((View) v.getParent()).getHeight();
+
+            final Intent intent = new Intent(mContext, IconMoreActivity.class)
                     .putExtra(IconMoreActivity.EXTRA_CATEGORY, category)
-                    .putExtra(IconMoreActivity.EXTRA_REVEAL_ANIM_LOCATION, value);
+                    .putExtra(IconMoreActivity.EXTRA_REVEAL_ANIM_LOCATION, pressedLocation);
 
-            Bundle activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext).toBundle();
-            mContext.startActivity(intent, activityOptions);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mTransitionSection = index;
+                mTransitionViews = new SparseArray<>();
+
+                /*IconMoreTransitionCoordinator.get().setTransitionListener(new IconMoreTransitionCoordinator.IconMoreTransitionListener() {
+                    @Override
+                    public void onEnterTransitionStart() {
+                        notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onExitTransitionEnd() {
+                        clearHideSection();
+                    }
+                });*/
+
+                notifyDataSetChanged();
+                Utils.waitForLayout(mRecyclerView, new Utils.LayoutCallback<RecyclerView>() {
+                    @Override
+                    public void onLayout(RecyclerView view) {
+
+                        List<Pair<View, String>> pairs = asList(mTransitionViews);
+                        final Bundle activityOptions =
+                                ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
+                                        pairs.toArray(new Pair[pairs.size()])).toBundle();
+
+                        mContext.startActivity(intent, activityOptions);
+                    }
+                });
+            } else {
+                mContext.startActivity(intent);
+            }
         }
         return true;
+    }
+
+    public static <C> List<C> asList(SparseArray<C> sparseArray) {
+        if (sparseArray == null) return null;
+        List<C> arrayList = new ArrayList<>(sparseArray.size());
+        for (int i = 0; i < sparseArray.size(); i++)
+            arrayList.add(sparseArray.valueAt(i));
+        return arrayList;
     }
 
     public interface ClickListener {
         void onClick(View view, int section, int relative, int absolute);
     }
 
-    public IconAdapter(Context context, int gridWidth, ClickListener listener) {
+    public IconAdapter(Context context, int gridWidth, ClickListener listener, RecyclerView recyclerView) {
         mContext = context;
         mIconsPerSection = gridWidth * 2;
         mListener = listener;
         mCategories = new ArrayList<>();
+        mRecyclerView = recyclerView;
     }
 
     final Context mContext;
-    private final int mIconsPerSection;
+    private final RecyclerView mRecyclerView;
+    final int mIconsPerSection;
     private final ClickListener mListener;
     final ArrayList<DrawableXmlParser.Category> mCategories;
     ArrayList<DrawableXmlParser.Category> mFiltered;
+
+    private int mTransitionSection = -1;
+    SparseArray<Pair<View, String>> mTransitionViews;
 
     public void filter(String str) {
         if (str == null || str.trim().isEmpty()) {
@@ -183,21 +242,22 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
         }
     }
 
-    public static float[] getRelativeCoords(Activity activity, MotionEvent e) {
-        View root = ((MainActivity) activity).root;
-        int[] locationOnScreen = new int[2];
-        root.getLocationOnScreen(locationOnScreen);
-        return new float[]{
-                e.getRawX() - locationOnScreen[0],
-                e.getRawY() - locationOnScreen[1]};
-    }
-
     @Override
     public void onBindViewHolder(MainViewHolder holder, int section, int relativePos, int absolutePos) {
         final Context c = holder.itemView.getContext();
         final DrawableXmlParser.Category category = mFiltered != null ?
                 mFiltered.get(section) : mCategories.get(section);
-        final int res = category.getIcons().get(relativePos).getId(c);
+        final int res = category.getIcons().get(relativePos).getDrawableId(c);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (mTransitionSection == section) {
+                String transitionName = mContext.getString(R.string.transition_name_recyclerview_item + relativePos);
+                holder.itemView.setTransitionName(transitionName);
+                mTransitionViews.put(relativePos, new Pair<>(holder.itemView, transitionName));
+            } else {
+                holder.itemView.setTransitionName("");
+            }
+        }
 
         if (res == 0) {
             holder.image.setBackgroundColor(Color.parseColor("#40000000"));

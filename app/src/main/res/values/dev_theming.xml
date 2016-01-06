@@ -40,7 +40,7 @@
     <color name="default_window_bg_cards_lighttheme">#EAEAEA</color>
     <color name="default_tab_indicator_color_lighttheme">#E1F5FE</color>
     <color name="default_tab_icon_color_lighttheme">#F5F5F5</color>
-    <color name="default_card_background_lighttheme">#F5F5F5</color>
+    <color name="default_card_background_lighttheme">#FFFFFF</color>
 
     <color name="default_primary_darktheme">#607D8B</color>
     <color name="default_primarydark_darktheme">#546E7A</color>
@@ -50,6 +50,6 @@
     <color name="default_window_bg_cards_darktheme">#546E7A</color>
     <color name="default_tab_indicator_color_darktheme">#F5F5F5</color>
     <color name="default_tab_icon_color_darktheme">#F5F5F5</color>
-    <color name="default_card_background_darktheme">#607D8B</color>
+    <color name="default_card_background_darktheme">#424242</color>
 
 </resources>

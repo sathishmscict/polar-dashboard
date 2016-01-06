@@ -28,6 +28,7 @@
         android:layout_marginTop="@dimen/content_inset_quarter"
         android:background="?button_accent_selector"
         android:text="@string/more"
-        android:textColor="#fff" />
+        android:textColor="#fff"
+        android:clickable="true" />
 
 </RelativeLayout>
