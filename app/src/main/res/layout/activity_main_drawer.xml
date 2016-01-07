@@ -24,7 +24,7 @@
                 android:layout_height="5dp"
                 android:background="?toolbar_shadow" />
 
-            <android.support.v4.view.ViewPager
+            <com.afollestad.polar.views.DisableableViewPager
                 android:id="@+id/pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

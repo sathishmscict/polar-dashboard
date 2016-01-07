@@ -32,6 +32,7 @@ import com.afollestad.polar.adapters.RequestsAdapter;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.util.Utils;
+import com.afollestad.polar.views.DisableableViewPager;
 import com.pk.requestmanager.AppInfo;
 import com.pk.requestmanager.AppLoadListener;
 import com.pk.requestmanager.PkRequestManager;
@@ -75,6 +76,7 @@ public class RequestsFragment extends BasePageFragment implements
     TextView emptyText;
     @Bind(R.id.fab)
     FloatingActionButton fab;
+    DisableableViewPager mPager;
 
     public RequestsFragment() {
     }
@@ -221,6 +223,14 @@ public class RequestsFragment extends BasePageFragment implements
         progress.setVisibility(View.VISIBLE);
         progressText.setVisibility(View.VISIBLE);
         progressText.setText(R.string.preparing_to_load);
+
+        mPager = (DisableableViewPager) getActivity().findViewById(R.id.pager);
+        list.setFingerListener(new DragSelectRecyclerView.FingerListener() {
+            @Override
+            public void onDragSelectFingerAction(boolean dragActive) {
+                mPager.setPagingEnabled(!dragActive);
+            }
+        });
     }
 
     @Override
@@ -427,8 +437,7 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onClick(int index, boolean longClick) {
         if (longClick) {
-            if (mAdapter.isIndexSelected(index))
-                return;
+            if (mAdapter.isIndexSelected(index)) return;
             mInitialSelection = index;
             list.setDragSelectActive(true, index);
         } else {
