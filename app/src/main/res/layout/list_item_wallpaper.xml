@@ -15,13 +15,25 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.afollestad.polar.views.SquareImageView
-                android:id="@+id/image"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                tools:background="#80000000"
-                tools:ignore="ContentDescription" />
+                android:layout_height="wrap_content">
+
+                <com.afollestad.polar.views.WallpaperImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    tools:background="#80000000"
+                    tools:ignore="ContentDescription" />
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+            </FrameLayout>
 
             <com.afollestad.polar.views.WallpaperBgFrame
                 android:id="@+id/colorFrame"

@@ -7,12 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.afollestad.polar.R;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.views.WallpaperAuthorView;
 import com.afollestad.polar.views.WallpaperBgFrame;
+import com.afollestad.polar.views.WallpaperImageView;
 import com.afollestad.polar.views.WallpaperNameView;
 import com.bumptech.glide.Glide;
 import com.github.florent37.glidepalette.GlidePalette;
@@ -76,6 +77,7 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
             colorFrame = ButterKnife.findById(itemView, R.id.colorFrame);
             name = ButterKnife.findById(itemView, R.id.name);
             author = ButterKnife.findById(itemView, R.id.author);
+            progress = ButterKnife.findById(itemView, R.id.progress);
 
             card.setOnClickListener(this);
             card.setOnLongClickListener(this);
@@ -83,10 +85,11 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
 
         final ClickListener mListener;
         final CardView card;
-        final ImageView image;
+        final WallpaperImageView image;
         final WallpaperBgFrame colorFrame;
         final WallpaperNameView name;
         final WallpaperAuthorView author;
+        final ProgressBar progress;
 
         @Override
         public void onClick(View v) {
@@ -115,8 +118,9 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
 
         holder.name.setWallpaper(wallpaper);
         holder.colorFrame.setWallpaper(wallpaper);
+        holder.image.setProgressBar(holder.progress);
 
-        // Color caches, set from the associated views
+        holder.progress.setVisibility(View.VISIBLE);
         if (wallpaper.isPaletteComplete()) {
             holder.name.setTextColor(wallpaper.paletteNameColor);
             holder.author.setTextColor(wallpaper.paletteAuthorColor);
@@ -143,6 +147,6 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
     public int getItemCount() {
         if (mFiltered != null)
             return mFiltered.size();
-        return mWallpapers.length();
+        return mWallpapers != null ? mWallpapers.length() : 0;
     }
 }

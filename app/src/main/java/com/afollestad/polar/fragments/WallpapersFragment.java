@@ -363,13 +363,14 @@ public class WallpapersFragment extends BasePageFragment implements
             return;
         }
         setListShown(false);
+        Bridge.config().logging(true);
         WallpaperUtils.getAll(getActivity(), allowCached, new WallpaperUtils.WallpapersCallback() {
             @Override
-            public void onRetrievedWallpapers(WallpaperUtils.WallpapersHolder wallpapers, Exception error) {
+            public void onRetrievedWallpapers(WallpaperUtils.WallpapersHolder wallpapers, Exception error, boolean cancelled) {
                 if (error != null) {
                     mEmpty.setText(error.getMessage());
                 } else {
-                    mEmpty.setText(R.string.no_wallpapers);
+                    mEmpty.setText(cancelled ? R.string.request_cancelled : R.string.no_wallpapers);
                     mWallpapers = wallpapers;
                     mAdapter.set(mWallpapers);
                 }
@@ -381,9 +382,11 @@ public class WallpapersFragment extends BasePageFragment implements
     @Override
     public void onPause() {
         super.onPause();
-        Bridge.cancelAll()
-                .tag(WallpapersFragment.class.getName())
-                .commit();
+        if (getActivity() != null && getActivity().isFinishing()) {
+            Bridge.cancelAll()
+                    .tag(WallpapersFragment.class.getName())
+                    .commit();
+        }
     }
 
     // Search

@@ -33,7 +33,7 @@ public class WallpaperUtils {
     public static final int DATABASE_VERSION = 1;
 
     public interface WallpapersCallback {
-        void onRetrievedWallpapers(WallpapersHolder wallpapers, Exception error);
+        void onRetrievedWallpapers(WallpapersHolder wallpapers, Exception error, boolean cancelled);
     }
 
     @ContentType("application/json")
@@ -152,7 +152,7 @@ public class WallpaperUtils {
             Wallpaper[] cache = Inquiry.get().selectFrom(TABLE_NAME, Wallpaper.class).all();
             if (cache != null && cache.length > 0) {
                 Log.d("WallpaperUtils", String.format("Loaded %d wallpapers from cache.", cache.length));
-                callback.onRetrievedWallpapers(new WallpapersHolder(cache), null);
+                callback.onRetrievedWallpapers(new WallpapersHolder(cache), null, false);
                 return;
             }
         } else {
@@ -165,11 +165,10 @@ public class WallpaperUtils {
                     @Override
                     public void onResponse(@NonNull Response response, @Nullable WallpapersHolder holder, @Nullable BridgeException e) {
                         if (e != null) {
-                            if (e.reason() == BridgeException.REASON_REQUEST_CANCELLED) return;
-                            callback.onRetrievedWallpapers(null, e);
+                            callback.onRetrievedWallpapers(null, e, e.reason() == BridgeException.REASON_REQUEST_CANCELLED);
                         } else {
                             if (holder == null) {
-                                callback.onRetrievedWallpapers(null, new Exception("No wallpapers returned."));
+                                callback.onRetrievedWallpapers(null, new Exception("No wallpapers returned."), false);
                                 return;
                             }
                             try {
@@ -180,10 +179,10 @@ public class WallpaperUtils {
                                             .values(holder.wallpapers)
                                             .run();
                                 }
-                                callback.onRetrievedWallpapers(holder, null);
+                                callback.onRetrievedWallpapers(holder, null, false);
                             } catch (Exception e1) {
                                 Log.d("WallpaperUtils", String.format("Failed to load wallpapers... %s", e1.getMessage()));
-                                callback.onRetrievedWallpapers(null, e1);
+                                callback.onRetrievedWallpapers(null, e1, false);
                             } finally {
                                 Inquiry.deinit();
                             }
