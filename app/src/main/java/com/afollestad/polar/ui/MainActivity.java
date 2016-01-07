@@ -105,7 +105,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     @Override
     public void onLicensingResult(boolean allow, int reason) {
         if (allow)
-            showChangelogIfNecessary();
+            showChangelogIfNecessary(true);
         else InvalidLicenseDialog.show(this, reason == Policy.RETRY);
     }
 
@@ -114,10 +114,10 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         Utils.showError(this, new Exception("License checking error occurred, make sure everything is setup correctly. Error code: " + errorCode));
     }
 
-    public void showChangelogIfNecessary() {
+    public void showChangelogIfNecessary(boolean licenseAllowed) {
         if (!getResources().getBoolean(R.bool.changelog_enabled)) {
             retryLicenseCheck();
-        } else if (retryLicenseCheck()) {
+        } else if (licenseAllowed || retryLicenseCheck()) {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             final int currentVersion = BuildConfig.VERSION_CODE;
             if (currentVersion != prefs.getInt("changelog_version", -1)) {

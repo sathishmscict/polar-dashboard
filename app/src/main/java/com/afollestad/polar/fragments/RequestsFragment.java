@@ -250,7 +250,7 @@ public class RequestsFragment extends BasePageFragment implements
         } else {
             reload();
             if (getActivity() != null)
-                ((MainActivity) getActivity()).showChangelogIfNecessary();
+                ((MainActivity) getActivity()).showChangelogIfNecessary(false);
         }
     }
 
