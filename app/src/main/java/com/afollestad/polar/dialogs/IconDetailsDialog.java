@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.graphics.Palette;
 import android.text.Html;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,10 +48,16 @@ public class IconDetailsDialog extends DialogFragment {
         if (getArguments().containsKey("icon")) {
             dialog = builder.customView(R.layout.dialog_icon_view, false).build();
             assert dialog.getCustomView() != null;
+
             ImageView iconView = (ImageView) dialog.getCustomView().findViewById(R.id.icon);
             final Bitmap bmp = getArguments().getParcelable("icon");
             iconView.setImageBitmap(bmp);
-            dialog.getActionButton(DialogAction.NEGATIVE).setVisibility(View.INVISIBLE);
+
+            final TextView negative = dialog.getActionButton(DialogAction.NEGATIVE);
+            negative.setAlpha(0f);
+            negative.animate().setDuration(1000)
+                    .alpha(1f).start();
+
             if (bmp != null) {
                 Palette.from(bmp).generate(new Palette.PaletteAsyncListener() {
                     @Override
@@ -64,9 +69,7 @@ public class IconDetailsDialog extends DialogFragment {
                             color = palette.getMutedColor(0);
                         if (color == 0)
                             color = DialogUtils.resolveColor(getActivity(), R.attr.colorAccent);
-                        final TextView negative = dialog.getActionButton(DialogAction.NEGATIVE);
-                        negative.setTextColor(color);
-                        negative.setVisibility(View.VISIBLE);
+                        dialog.getActionButton(DialogAction.NEGATIVE).setTextColor(color);
                     }
                 });
             }
