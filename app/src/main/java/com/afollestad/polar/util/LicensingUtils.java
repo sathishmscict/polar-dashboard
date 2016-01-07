@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.BuildConfig;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.afollestad.polar.R;
 import com.afollestad.polar.dialogs.ProgressDialogFragment;
@@ -137,6 +138,7 @@ public class LicensingUtils {
                 mCb.onLicensingResult(true, policyReason);
             PreferenceManager.getDefaultSharedPreferences(mContext).edit()
                     .putBoolean(KEY_VALID, true).commit();
+            Toast.makeText(mContext, R.string.license_valid, Toast.LENGTH_SHORT).show();
         }
 
         @Override

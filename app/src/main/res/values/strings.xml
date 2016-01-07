@@ -65,6 +65,7 @@
     <string name="transition_name_recyclerview_item" translatable="false">recyclerViewItem_</string>
     <string name="drawer_open">Open nav drawer</string>
     <string name="drawer_close">Close nav drawer</string>
+    <string name="license_valid">Your license was verified, thank you!</string>
 
     <string-array name="wallpaper_options" translatable="false">
         <item>@string/apply</item>
