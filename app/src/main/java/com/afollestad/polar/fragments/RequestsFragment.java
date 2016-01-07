@@ -120,29 +120,27 @@ public class RequestsFragment extends BasePageFragment implements
 
     @Override
     public void updateTitle() {
-        synchronized (LOCK) {
-            MainActivity act = (MainActivity) getActivity();
-            if (act != null) {
-                if (fab == null) {
-                    act.setTitle(R.string.request_icons);
-                    act.invalidateOptionsMenu();
-                    return;
-                }
-
-                final int numSelected = mAdapter != null ? mAdapter.getSelectedCount() : 0;
-                if (mLastNumSelected == numSelected) return;
-                mLastNumSelected = numSelected;
-
-                if (numSelected == 0)
-                    act.setTitle(R.string.request_icons);
-                else act.setTitle(getString(R.string.request_icons_x, numSelected));
-
-                toggleFab(numSelected > 0);
-                // Work around for the icon sometimes being invisible?
-                fab.setImageResource(R.drawable.ic_action_apply);
-                // Update toolbar items
+        MainActivity act = (MainActivity) getActivity();
+        if (act != null) {
+            if (fab == null) {
+                act.setTitle(R.string.request_icons);
                 act.invalidateOptionsMenu();
+                return;
             }
+
+            final int numSelected = mAdapter != null ? mAdapter.getSelectedCount() : 0;
+            if (mLastNumSelected == numSelected) return;
+            mLastNumSelected = numSelected;
+
+            if (numSelected == 0)
+                act.setTitle(R.string.request_icons);
+            else act.setTitle(getString(R.string.request_icons_x, numSelected));
+
+            toggleFab(numSelected > 0);
+            // Work around for the icon sometimes being invisible?
+            fab.setImageResource(R.drawable.ic_action_apply);
+            // Update toolbar items
+            act.invalidateOptionsMenu();
         }
     }
 
