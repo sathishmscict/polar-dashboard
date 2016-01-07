@@ -244,19 +244,23 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
                 final BasePageFragment frag = (BasePageFragment) getFragmentManager().findFragmentByTag("page:" + position);
                 if (frag != null) frag.updateTitle();
                 switch (position) {
+                    default:
                     case 0:
-                        mNavView.setCheckedItem(R.id.drawer_icons);
+                        mNavView.setCheckedItem(R.id.drawer_home);
                         break;
                     case 1:
-                        mNavView.setCheckedItem(R.id.drawer_wallpapers);
+                        mNavView.setCheckedItem(R.id.drawer_icons);
                         break;
                     case 2:
-                        mNavView.setCheckedItem(R.id.drawer_requestIcons);
+                        mNavView.setCheckedItem(R.id.drawer_wallpapers);
                         break;
                     case 3:
-                        mNavView.setCheckedItem(R.id.drawer_apply);
+                        mNavView.setCheckedItem(R.id.drawer_requestIcons);
                         break;
                     case 4:
+                        mNavView.setCheckedItem(R.id.drawer_apply);
+                        break;
+                    case 5:
                         mNavView.setCheckedItem(R.id.drawer_about);
                         break;
                 }
@@ -297,6 +301,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
             }
         });
 
+        addTab(R.drawable.tab_home);
         addTab(R.drawable.tab_icons);
         addTab(R.drawable.tab_wallpapers);
         addTab(R.drawable.tab_requests);
@@ -304,7 +309,6 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         addTab(R.drawable.tab_about);
 
         mTabs.setSelectedTabIndicatorColor(DialogUtils.resolveColor(this, R.attr.tab_indicator_color));
-
         applyTopInset(findViewById(R.id.root));
     }
 
@@ -314,20 +318,23 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         int index;
         switch (item.getItemId()) {
             default:
-            case R.id.drawer_icons:
+            case R.id.drawer_home:
                 index = 0;
                 break;
-            case R.id.drawer_wallpapers:
+            case R.id.drawer_icons:
                 index = 1;
                 break;
-            case R.id.drawer_requestIcons:
+            case R.id.drawer_wallpapers:
                 index = 2;
                 break;
-            case R.id.drawer_apply:
+            case R.id.drawer_requestIcons:
                 index = 3;
                 break;
-            case R.id.drawer_about:
+            case R.id.drawer_apply:
                 index = 4;
+                break;
+            case R.id.drawer_about:
+                index = 5;
                 break;
         }
         mPager.setCurrentItem(index);

@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 
 import com.afollestad.polar.fragments.AboutFragment;
 import com.afollestad.polar.fragments.ApplyFragment;
+import com.afollestad.polar.fragments.HomeFragment;
 import com.afollestad.polar.fragments.IconsFragment;
 import com.afollestad.polar.fragments.RequestsFragment;
 import com.afollestad.polar.fragments.WallpapersFragment;
@@ -24,20 +25,23 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
     protected Fragment getItem(int position) {
         switch (position) {
             default:
-                return new IconsFragment();
+            case 0:
+                return new HomeFragment();
             case 1:
-                return new WallpapersFragment();
+                return new IconsFragment();
             case 2:
-                return new RequestsFragment();
+                return new WallpapersFragment();
             case 3:
-                return new ApplyFragment();
+                return new RequestsFragment();
             case 4:
+                return new ApplyFragment();
+            case 5:
                 return new AboutFragment();
         }
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return 6;
     }
 }
