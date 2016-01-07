@@ -5,8 +5,6 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?actionBarSize"
-    android:background="?colorPrimary"
-    android:elevation="@dimen/toolbar_elevation"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:transitionName="Toolbar"
     app:contentInsetStart="@dimen/content_inset"

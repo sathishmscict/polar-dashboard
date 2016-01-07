@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/include_toolbar_appbar" />
+        <include layout="@layout/toolbar_appbar" />
 
         <FrameLayout
             android:layout_width="match_parent"
