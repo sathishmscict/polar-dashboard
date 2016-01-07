@@ -115,7 +115,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     }
 
     public void showChangelogIfNecessary() {
-        if (!getResources().getBoolean(R.bool.allow_changelog)) {
+        if (!getResources().getBoolean(R.bool.changelog_enabled)) {
             retryLicenseCheck();
         } else if (retryLicenseCheck()) {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -131,7 +131,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
 
-        if (!getResources().getBoolean(R.bool.allow_changelog))
+        if (!getResources().getBoolean(R.bool.changelog_enabled))
             menu.findItem(R.id.changelog).setVisible(false);
 
         MenuItem darkTheme = menu.findItem(R.id.darkTheme);
