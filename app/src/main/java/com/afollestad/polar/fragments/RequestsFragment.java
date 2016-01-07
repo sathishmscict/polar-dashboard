@@ -55,13 +55,14 @@ public class RequestsFragment extends BasePageFragment implements
     private final static int PERM_RQ = 69;
     private final static int FAB_ANIMATION_DURATION = 250;
 
-    RequestsAdapter mAdapter;
-    PkRequestManager mRequestManager;
-    MaterialDialog mDialog;
+    private RequestsAdapter mAdapter;
+    private PkRequestManager mRequestManager;
+    private MaterialDialog mDialog;
+
     private boolean mRequestedPermission;
     private int mFabOffset = -1;
     private boolean mFabShown = false;
-    private int mLastNumSelected = -1;
+    private int mInitialSelection = -1;
     private boolean mAppsLoaded = false;
 
     @Bind(android.R.id.list)
@@ -130,9 +131,6 @@ public class RequestsFragment extends BasePageFragment implements
                 }
 
                 final int numSelected = mAdapter != null ? mAdapter.getSelectedCount() : 0;
-
-                mLastNumSelected = numSelected;
-
                 if (numSelected == 0) {
                     act.setTitle(R.string.request_icons);
                 } else {
@@ -429,8 +427,13 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onClick(int index, boolean longClick) {
         if (longClick) {
+            mInitialSelection = index;
             list.setDragSelectActive(true, index);
         } else {
+            if (index == mInitialSelection) {
+                list.setDragSelectActive(false, -1);
+                mInitialSelection = -1;
+            }
             mAdapter.toggleSelected(index);
         }
     }
