@@ -16,6 +16,8 @@ import butterknife.ButterKnife;
 
 public class AboutFragment extends BasePageFragment {
 
+    private RecyclerView mRecyclerView;
+
     public AboutFragment() {
     }
 
@@ -27,16 +29,19 @@ public class AboutFragment extends BasePageFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_recyclerview_bare, container, false);
-        final RecyclerView recyclerView = ButterKnife.findById(v, android.R.id.list);
-        recyclerView.setPadding(recyclerView.getPaddingLeft(),
-                recyclerView.getPaddingTop(),
-                recyclerView.getPaddingRight(),
-                recyclerView.getPaddingBottom() + getResources().getDimensionPixelSize(R.dimen.nav_bar_offset));
+        mRecyclerView = ButterKnife.findById(v, android.R.id.list);
 
         final LinearLayoutManager lm = new LinearLayoutManager(getActivity());
         final AboutAdapter mAdapter = new AboutAdapter(getActivity());
-        recyclerView.setLayoutManager(lm);
-        recyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(lm);
+        mRecyclerView.setAdapter(mAdapter);
         return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        applyInsetsToView(mRecyclerView);
     }
 }

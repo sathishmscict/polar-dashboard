@@ -38,7 +38,7 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.list)
+    @Bind(android.R.id.list)
     RecyclerView mRecyclerView;
     @Bind(R.id.circular_reveal_view)
     ViewGroup mCircularRevealView;
@@ -56,15 +56,7 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
         setContentView(R.layout.activity_icons_more);
         ButterKnife.bind(this);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // Compensate for translucent system UI
-            final int statusBarHeight = Utils.getStatusBarHeight(this);
-            final View root = findViewById(R.id.root);
-            root.setPadding(root.getPaddingLeft(),
-                    root.getPaddingTop() + statusBarHeight,
-                    root.getPaddingRight(),
-                    root.getPaddingBottom());
-        }
+        applyTopInset(findViewById(R.id.root));
 
         final DrawableXmlParser.Category category = (DrawableXmlParser.Category) getIntent().getSerializableExtra(EXTRA_CATEGORY);
 

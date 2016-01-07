@@ -57,17 +57,14 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
             final DrawableXmlParser.Category category = mFiltered != null ?
                     mFiltered.get(index) : mCategories.get(index);
 
-            View root = ((MainActivity) mContext).findViewById(R.id.root);
 
-            //root.getPaddingTop() is the status bar (if any), calculated by fitsSystemWindows
-
+            int topPadding = ((MainActivity) mContext).getLastStatusBarInsetHeight();
             float[] pressedLocation = new float[]{
                     event.getRawX(),
-                    event.getRawY() - root.getPaddingTop()};
+                    event.getRawY() - topPadding};
 
             int[] headerLocation = new int[2];
             ((View) v.getParent()).getLocationOnScreen(headerLocation);
-//            int sectionLocation = headerLocation[1] + ((View) v.getParent()).getHeight();
 
             final Intent intent = new Intent(mContext, IconMoreActivity.class)
                     .putExtra(IconMoreActivity.EXTRA_CATEGORY, category)
@@ -77,18 +74,6 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mTransitionSection = index;
                 mTransitionViews = new SparseArray<>();
-
-                /*IconMoreTransitionCoordinator.get().setTransitionListener(new IconMoreTransitionCoordinator.IconMoreTransitionListener() {
-                    @Override
-                    public void onEnterTransitionStart() {
-                        notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onExitTransitionEnd() {
-                        clearHideSection();
-                    }
-                });*/
 
                 notifyDataSetChanged();
                 Utils.waitForLayout(mRecyclerView, new Utils.LayoutCallback<RecyclerView>() {

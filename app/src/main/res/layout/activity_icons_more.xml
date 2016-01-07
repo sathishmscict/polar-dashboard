@@ -18,12 +18,13 @@
     </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
+        android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"
         android:clipToPadding="false"
-        android:padding="@dimen/grid_spacing"
-        android:scrollbars="vertical" />
+        android:padding="@dimen/grid_margin"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay" />
 
 </FrameLayout>

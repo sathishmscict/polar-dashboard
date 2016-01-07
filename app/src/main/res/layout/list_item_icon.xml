@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:foreground="?selectableItemBackground"
-    android:padding="@dimen/grid_spacing">
+    android:padding="@dimen/grid_margin">
 
     <com.afollestad.polar.views.SquareImageView
         android:id="@+id/image"

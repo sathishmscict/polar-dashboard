@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="nav_bar_offset">48dp</dimen>
-
     <dimen name="icons_header_height">56dp</dimen>
 
     <dimen name="content_inset_eighth">3dp</dimen>

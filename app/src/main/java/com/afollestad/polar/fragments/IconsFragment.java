@@ -65,14 +65,12 @@ public class IconsFragment extends BasePageFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_recyclerview, container, false);
-        ((TextView) v.findViewById(android.R.id.empty)).setText(R.string.no_results);
+
+        TextView emptyView = (TextView) v.findViewById(android.R.id.empty);
+        emptyView.setText(R.string.no_results);
 
         final int gridWidth = getResources().getInteger(R.integer.icon_grid_width);
         final RecyclerView mRecyclerView = ButterKnife.findById(v, android.R.id.list);
-        mRecyclerView.setPadding(mRecyclerView.getPaddingLeft(),
-                mRecyclerView.getPaddingTop(),
-                mRecyclerView.getPaddingRight(),
-                mRecyclerView.getPaddingBottom() + getResources().getDimensionPixelSize(R.dimen.nav_bar_offset));
 
         mAdapter = new IconAdapter(getActivity(), gridWidth, new IconAdapter.ClickListener() {
             @Override
@@ -106,7 +104,7 @@ public class IconsFragment extends BasePageFragment implements
         }
     }
 
-    private void setListShown(boolean shown) {
+    void setListShown(boolean shown) {
         final View v = getView();
         if (v != null) {
             v.findViewById(android.R.id.list).setVisibility(shown ?
@@ -127,6 +125,8 @@ public class IconsFragment extends BasePageFragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (getActivity() != null) load();
+
+        applyInsets((ViewGroup) view);
     }
 
     private void load() {

@@ -23,6 +23,8 @@ import butterknife.ButterKnife;
 
 public class ApplyFragment extends BasePageFragment implements ApplyAdapter.SelectionCallback {
 
+    private RecyclerView mRecyclerView;
+
     public ApplyFragment() {
     }
 
@@ -35,13 +37,7 @@ public class ApplyFragment extends BasePageFragment implements ApplyAdapter.Sele
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
-        final RecyclerView recyclerView = ButterKnife.findById(v, android.R.id.list);
-        final int sidePadding = getResources().getDimensionPixelOffset(R.dimen.grid_spacing);
-        recyclerView.setPadding(sidePadding,
-                recyclerView.getPaddingTop(),
-                sidePadding,
-                recyclerView.getPaddingBottom() + getResources().getDimensionPixelSize(R.dimen.nav_bar_offset));
-        recyclerView.setClipToPadding(false);
+        mRecyclerView = ButterKnife.findById(v, android.R.id.list);
 
         final GridLayoutManager lm = new GridLayoutManager(getActivity(),
                 getResources().getInteger(R.integer.apply_grid_width));
@@ -55,10 +51,17 @@ public class ApplyFragment extends BasePageFragment implements ApplyAdapter.Sele
         });
 
         final ApplyAdapter mAdapter = new ApplyAdapter(getActivity(), this);
-        recyclerView.setLayoutManager(lm);
-        recyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(lm);
+        mRecyclerView.setAdapter(mAdapter);
 
         return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        applyInsetsToView(mRecyclerView);
     }
 
     @Override

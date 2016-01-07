@@ -41,10 +41,10 @@
         <item name="android:layout_gravity">center</item>
 
         <!--4dp padding around the card-->
-        <item name="android:layout_marginLeft">@dimen/grid_spacing_card_sides</item>
-        <item name="android:layout_marginRight">@dimen/grid_spacing_card_sides</item>
-        <item name="android:layout_marginTop">@dimen/grid_spacing_card_vertical</item>
-        <item name="android:layout_marginBottom">@dimen/grid_spacing_card_vertical</item>
+        <item name="android:layout_marginLeft">@dimen/card_sides_margin</item>
+        <item name="android:layout_marginRight">@dimen/card_sides_margin</item>
+        <item name="android:layout_marginTop">@dimen/card_vertical_margin</item>
+        <item name="android:layout_marginBottom">@dimen/card_vertical_margin</item>
 
         <item name="android:clickable">true</item>
         <item name="android:foreground">?activatable_card_selector</item>

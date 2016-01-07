@@ -55,9 +55,9 @@ public class RequestsFragment extends BasePageFragment implements
     private final static int PERM_RQ = 69;
     private final static int FAB_ANIMATION_DURATION = 250;
 
-    private RequestsAdapter mAdapter;
-    private PkRequestManager mRequestManager;
-    private MaterialDialog mDialog;
+    RequestsAdapter mAdapter;
+    PkRequestManager mRequestManager;
+    MaterialDialog mDialog;
     private boolean mRequestedPermission;
     private int mFabOffset = -1;
     private boolean mFabShown = false;
@@ -195,6 +195,9 @@ public class RequestsFragment extends BasePageFragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+
+        applyInsets((ViewGroup) view);
+        applyInsetsToViewMargin(fab);
 
         GridLayoutManager lm = new GridLayoutManager(getActivity(),
                 getResources().getInteger(R.integer.requests_grid_width));

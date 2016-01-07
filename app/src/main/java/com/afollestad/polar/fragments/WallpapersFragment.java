@@ -71,7 +71,7 @@ public class WallpapersFragment extends BasePageFragment implements
     public static final int RQ_VIEWWALLPAPER = 2001;
 
     private WallpaperAdapter mAdapter;
-    private WallpaperUtils.WallpapersHolder mWallpapers;
+    WallpaperUtils.WallpapersHolder mWallpapers;
     private String mQueryText;
     private static Toast mToast;
 
@@ -133,7 +133,7 @@ public class WallpapersFragment extends BasePageFragment implements
         return super.onOptionsItemSelected(item);
     }
 
-    private void openViewer(View view, int index) {
+    void openViewer(View view, int index) {
         ImageView iv = (ImageView) view.findViewById(R.id.image);
 
         final Intent intent = new Intent(getActivity(), ViewerActivity.class);
@@ -289,7 +289,7 @@ public class WallpapersFragment extends BasePageFragment implements
         }
     }
 
-    private void showOptions(final int imageIndex) {
+    void showOptions(final int imageIndex) {
         new MaterialDialog.Builder(getActivity())
                 .title(R.string.wallpaper)
                 .items(R.array.wallpaper_options)
@@ -319,10 +319,7 @@ public class WallpapersFragment extends BasePageFragment implements
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        mRecyclerView.setPadding(mRecyclerView.getPaddingLeft(),
-                mRecyclerView.getPaddingTop(),
-                mRecyclerView.getPaddingRight(),
-                mRecyclerView.getPaddingBottom() + getResources().getDimensionPixelSize(R.dimen.nav_bar_offset));
+        applyInsets((ViewGroup) view);
 
         mAdapter = new WallpaperAdapter(new WallpaperAdapter.ClickListener() {
             @Override

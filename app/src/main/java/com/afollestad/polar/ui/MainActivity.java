@@ -25,6 +25,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowInsets;
 
 import com.afollestad.bridge.Bridge;
 import com.afollestad.inquiry.Inquiry;
@@ -67,6 +68,8 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
 
     public RecyclerView mRecyclerView;
 
+    WindowInsets mDrawerLastInsets;
+
     @Override
     public Toolbar getToolbar() {
         return mToolbar;
@@ -78,7 +81,8 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         final boolean useNavDrawer = getResources().getBoolean(R.bool.use_navigation_drawer);
         if (useNavDrawer)
             setContentView(R.layout.activity_main_drawer);
-        else setContentView(R.layout.activity_main);
+        else
+            setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
@@ -86,7 +90,8 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         setupPager();
         if (useNavDrawer)
             setupNavDrawer();
-        else setupTabs();
+        else
+            setupTabs();
 
         // Restore last selected page, tab/nav-drawer-item
         final int lastPage = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getInt("last_selected_page", 0);
@@ -155,15 +160,35 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
 
     private void setupNavDrawer() {
         assert mNavView != null;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             getWindow().setStatusBarColor(Color.TRANSPARENT);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // Compensate for translucent system UI
-            final View content = findViewById(R.id.content);
-            final DrawerLayout.LayoutParams lp = (DrawerLayout.LayoutParams) content.getLayoutParams();
-            lp.topMargin = Utils.getStatusBarHeight(this);
-            content.setLayoutParams(lp);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.root);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            drawer.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+
+                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+
+                    //TODO: Check if NavigationView needs bottom padding
+
+                    WindowInsets drawerLayoutInsets = insets.replaceSystemWindowInsets(
+                            insets.getSystemWindowInsetLeft(),
+                            insets.getSystemWindowInsetTop(),
+                            insets.getSystemWindowInsetRight(),
+                            0
+                    );
+
+                    mDrawerLastInsets = drawerLayoutInsets;
+
+                    ((DrawerLayout) v).setChildInsets(drawerLayoutInsets,
+                            drawerLayoutInsets.getSystemWindowInsetTop() > 0);
+                    return insets;
+                }
+            });
         }
 
         assert getSupportActionBar() != null;
@@ -171,8 +196,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         Drawable menuIcon = ContextCompat.getDrawable(this, R.drawable.ic_action_menu);
         menuIcon = Utils.tintDrawable(menuIcon, DialogUtils.resolveColor(this, R.attr.tab_icon_color));
         getSupportActionBar().setHomeAsUpIndicator(menuIcon);
-
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.root);
+        
         drawer.setDrawerListener(new ActionBarDrawerToggle(this, drawer, mToolbar, R.string.drawer_open, R.string.drawer_close));
         drawer.setStatusBarBackgroundColor(DialogUtils.resolveColor(this, R.attr.colorPrimaryDark));
         mNavView.setNavigationItemSelectedListener(this);
@@ -238,6 +262,19 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         });
     }
 
+    public int getLastStatusBarInsetHeight() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return 0;
+        }
+
+        boolean useNavDrawer = getResources().getBoolean(R.bool.use_navigation_drawer);
+        if (useNavDrawer) {
+            return mDrawerLastInsets.getSystemWindowInsetTop();
+        } else {
+            return findViewById(R.id.root).getPaddingTop();
+        }
+    }
+
     private void setupPager() {
         mPager.setAdapter(new MainPagerAdapter(getFragmentManager()));
         mPager.setOffscreenPageLimit(6);
@@ -266,15 +303,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
 
         mTabs.setSelectedTabIndicatorColor(DialogUtils.resolveColor(this, R.attr.tab_indicator_color));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // Compensate for translucent system UI
-            final int statusBarHeight = Utils.getStatusBarHeight(this);
-            final View root = findViewById(R.id.root);
-            root.setPadding(root.getPaddingLeft(),
-                    root.getPaddingTop() + statusBarHeight,
-                    root.getPaddingRight(),
-                    root.getPaddingBottom());
-        }
+        applyTopInset(findViewById(R.id.root));
     }
 
     @Override

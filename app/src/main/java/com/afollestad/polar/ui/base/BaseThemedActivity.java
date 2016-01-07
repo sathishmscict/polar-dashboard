@@ -6,9 +6,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
+import android.support.v4.view.OnApplyWindowInsetsListener;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.WindowInsetsCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.afollestad.assent.AssentActivity;
 import com.afollestad.materialdialogs.util.DialogUtils;
@@ -49,6 +53,18 @@ public abstract class BaseThemedActivity extends AssentActivity {
                 toolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat);
             }
         }
+    }
+
+    protected void applyTopInset(View view) {
+        ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
+            @Override
+            public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
+                int systemWindowInsetTop = insets.getSystemWindowInsetTop();
+                v.setPaddingRelative(0, systemWindowInsetTop, 0, 0);
+
+                return insets;
+            }
+        });
     }
 
     @Override
