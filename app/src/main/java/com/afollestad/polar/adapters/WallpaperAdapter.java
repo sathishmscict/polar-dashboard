@@ -1,5 +1,6 @@
 package com.afollestad.polar.adapters;
 
+import android.graphics.Color;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -7,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.afollestad.polar.R;
 import com.afollestad.polar.util.WallpaperUtils;
-import com.afollestad.polar.views.WallpaperColorFrame;
+import com.afollestad.polar.views.WallpaperAuthorView;
+import com.afollestad.polar.views.WallpaperBgFrame;
 import com.afollestad.polar.views.WallpaperNameView;
 import com.bumptech.glide.Glide;
 import com.github.florent37.glidepalette.GlidePalette;
@@ -83,9 +84,9 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
         final ClickListener mListener;
         final CardView card;
         final ImageView image;
-        final WallpaperColorFrame colorFrame;
+        final WallpaperBgFrame colorFrame;
         final WallpaperNameView name;
-        final TextView author;
+        final WallpaperAuthorView author;
 
         @Override
         public void onClick(View v) {
@@ -116,13 +117,17 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
         holder.colorFrame.setWallpaper(wallpaper);
 
         // Color caches, set from the associated views
-        if (wallpaper.mutedDarkColor != 0 && wallpaper.vibrantColor != 0) {
-            holder.name.setTextColor(wallpaper.mutedDarkColor);
-            holder.colorFrame.setBackgroundColor(wallpaper.vibrantColor);
+        if (wallpaper.isPaletteComplete()) {
+            holder.name.setTextColor(wallpaper.paletteNameColor);
+            holder.author.setTextColor(wallpaper.paletteAuthorColor);
+            holder.colorFrame.setBackgroundColor(wallpaper.paletteBgColor);
             Glide.with(holder.itemView.getContext())
                     .load(wallpaper.url)
                     .into(holder.image);
         } else {
+            holder.name.setTextColor(Color.WHITE, false);
+            holder.author.setTextColor(Color.WHITE, false);
+            holder.colorFrame.setBackgroundColor(Color.DKGRAY, false);
             Glide.with(holder.itemView.getContext())
                     .load(wallpaper.url)
                     .listener(GlidePalette.with(wallpaper.url)

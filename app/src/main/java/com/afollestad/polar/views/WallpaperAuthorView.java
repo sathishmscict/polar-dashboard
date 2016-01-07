@@ -9,17 +9,17 @@ import com.afollestad.polar.util.WallpaperUtils;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class WallpaperNameView extends TextView {
+public class WallpaperAuthorView extends TextView {
 
-    public WallpaperNameView(Context context) {
+    public WallpaperAuthorView(Context context) {
         super(context);
     }
 
-    public WallpaperNameView(Context context, AttributeSet attrs) {
+    public WallpaperAuthorView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public WallpaperNameView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public WallpaperAuthorView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -37,6 +37,6 @@ public class WallpaperNameView extends TextView {
     public void setTextColor(int color, boolean cache) {
         super.setTextColor(color);
         if (cache && mWallpaper != null)
-            mWallpaper.paletteNameColor = color;
+            mWallpaper.paletteAuthorColor = color;
     }
 }

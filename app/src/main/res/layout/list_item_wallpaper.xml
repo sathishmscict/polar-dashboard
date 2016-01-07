@@ -23,7 +23,7 @@
                 tools:background="#80000000"
                 tools:ignore="ContentDescription" />
 
-            <com.afollestad.polar.views.WallpaperColorFrame
+            <com.afollestad.polar.views.WallpaperBgFrame
                 android:id="@+id/colorFrame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,20 +39,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
-                    android:textColor="?android:textColorPrimaryInverse"
                     android:textSize="@dimen/title_text_size"
                     tools:text="Name" />
 
-                <TextView
+                <com.afollestad.polar.views.WallpaperAuthorView
                     android:id="@+id/author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:textColor="?android:textColorSecondaryInverse"
                     android:textSize="@dimen/body_text_size"
                     tools:text="Author" />
 
-            </com.afollestad.polar.views.WallpaperColorFrame>
+            </com.afollestad.polar.views.WallpaperBgFrame>
 
         </LinearLayout>
 

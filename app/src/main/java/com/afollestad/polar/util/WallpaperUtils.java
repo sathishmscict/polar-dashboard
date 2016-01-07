@@ -77,9 +77,15 @@ public class WallpaperUtils {
         public String name;
 
         @ColorInt
-        public int mutedDarkColor;
+        public int paletteNameColor;
         @ColorInt
-        public int vibrantColor;
+        public int paletteAuthorColor;
+        @ColorInt
+        public int paletteBgColor;
+
+        public boolean isPaletteComplete() {
+            return paletteNameColor != 0 && paletteAuthorColor != 0 && paletteBgColor != 0;
+        }
     }
 
     @SuppressLint("CommitPrefEdits")

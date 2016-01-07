@@ -12,17 +12,17 @@ import com.afollestad.polar.util.WallpaperUtils;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class WallpaperColorFrame extends LinearLayout {
+public class WallpaperBgFrame extends LinearLayout {
 
-    public WallpaperColorFrame(Context context) {
+    public WallpaperBgFrame(Context context) {
         super(context);
     }
 
-    public WallpaperColorFrame(Context context, AttributeSet attrs) {
+    public WallpaperBgFrame(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public WallpaperColorFrame(Context context, AttributeSet attrs, int defStyleAttr) {
+    public WallpaperBgFrame(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -34,11 +34,15 @@ public class WallpaperColorFrame extends LinearLayout {
 
     @Override
     public void setBackgroundColor(@ColorInt int color) {
+        setBackgroundColor(color, true);
+    }
+
+    public void setBackgroundColor(@ColorInt int color, boolean cache) {
         super.setBackgroundColor(color);
         ViewGroup parent = (ViewGroup) getParent();
         CardView card = (CardView) parent.getParent();
         card.setCardBackgroundColor(color);
-        if (mWallpaper != null)
-            mWallpaper.vibrantColor = color;
+        if (cache && mWallpaper != null)
+            mWallpaper.paletteBgColor = color;
     }
 }
