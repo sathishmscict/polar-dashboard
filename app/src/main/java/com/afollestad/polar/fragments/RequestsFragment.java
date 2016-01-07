@@ -427,6 +427,8 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onClick(int index, boolean longClick) {
         if (longClick) {
+            if (mAdapter.isIndexSelected(index))
+                return;
             mInitialSelection = index;
             list.setDragSelectActive(true, index);
         } else {
