@@ -100,6 +100,11 @@ public class LicensingUtils {
             return true;
         }
 
+        if (BuildConfig.DEBUG) {
+            Toast.makeText(context, "License checking is disabled for this debug build.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
         mProgress = ProgressDialogFragment.show(context, R.string.checking_license);
         final String deviceId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         // Library calls this when it's done.
