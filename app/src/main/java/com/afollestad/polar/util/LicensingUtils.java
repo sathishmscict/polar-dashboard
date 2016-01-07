@@ -90,14 +90,14 @@ public class LicensingUtils {
         return mSalt;
     }
 
-    public static void check(@NonNull AppCompatActivity context, @NonNull LicensingCallback cb) {
+    public static boolean check(@NonNull AppCompatActivity context, @NonNull LicensingCallback cb) {
         final String key = context.getString(R.string.licensing_public_key).trim();
         if (key.trim().isEmpty()) {
             LOG("License checking is disabled.");
-            return;
+            return true;
         } else if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KEY_VALID, false)) {
             LOG("License checking has already been done, and the license check was successful.");
-            return;
+            return true;
         }
 
         mProgress = ProgressDialogFragment.show(context, R.string.checking_license);
@@ -110,6 +110,7 @@ public class LicensingUtils {
                 new AESObfuscator(getSalt(context), context.getPackageName(), deviceId)),
                 key);
         mChecker.checkAccess(mLicenseCheckerCallback);
+        return false;
     }
 
     public static void cleanup() {

@@ -96,18 +96,17 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         // Restore last selected page, tab/nav-drawer-item
         final int lastPage = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getInt("last_selected_page", 0);
         mPager.setCurrentItem(lastPage);
-
-        retryLicenseCheck();
     }
 
-    public void retryLicenseCheck() {
-        LicensingUtils.check(this, this);
+    public boolean retryLicenseCheck() {
+        return LicensingUtils.check(this, this);
     }
 
     @Override
     public void onLicensingResult(boolean allow, int reason) {
-        if (!allow)
-            InvalidLicenseDialog.show(this, reason == Policy.RETRY);
+        if (allow)
+            showChangelogIfNecessary();
+        else InvalidLicenseDialog.show(this, reason == Policy.RETRY);
     }
 
     @Override
@@ -116,12 +115,15 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     }
 
     public void showChangelogIfNecessary() {
-        if (!getResources().getBoolean(R.bool.allow_changelog)) return;
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        final int currentVersion = BuildConfig.VERSION_CODE;
-        if (currentVersion != prefs.getInt("changelog_version", -1)) {
-            prefs.edit().putInt("changelog_version", currentVersion).apply();
-            ChangelogDialog.show(this);
+        if (!getResources().getBoolean(R.bool.allow_changelog)) {
+            retryLicenseCheck();
+        } else if (retryLicenseCheck()) {
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            final int currentVersion = BuildConfig.VERSION_CODE;
+            if (currentVersion != prefs.getInt("changelog_version", -1)) {
+                prefs.edit().putInt("changelog_version", currentVersion).apply();
+                ChangelogDialog.show(this);
+            }
         }
     }
 
