@@ -367,7 +367,7 @@ public class RequestsFragment extends BasePageFragment implements
             if (getActivity() == null) return;
             final List<AppInfo> apps = mRequestManager.getApps();
             for (int i = 0; i < apps.size(); i++)
-                apps.get(i).setSelected(mAdapter.isIndexSelected(i));
+                apps.get(i).setSelected(mAdapter.isIndexSelected(i + 1));
             mRequestManager.setActivity(getActivity());
             mRequestManager.sendRequestAsync();
         }
