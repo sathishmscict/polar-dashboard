@@ -32,8 +32,7 @@
                 android:id="@+id/cardFrame"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/content_inset_eighth">
+                android:orientation="vertical">
 
                 <com.afollestad.polar.views.AboutProfileImageView
                     android:id="@+id/image"
