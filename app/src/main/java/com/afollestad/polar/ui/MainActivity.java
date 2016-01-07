@@ -196,7 +196,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         Drawable menuIcon = ContextCompat.getDrawable(this, R.drawable.ic_action_menu);
         menuIcon = Utils.tintDrawable(menuIcon, DialogUtils.resolveColor(this, R.attr.tab_icon_color));
         getSupportActionBar().setHomeAsUpIndicator(menuIcon);
-        
+
         drawer.setDrawerListener(new ActionBarDrawerToggle(this, drawer, mToolbar, R.string.drawer_open, R.string.drawer_close));
         drawer.setStatusBarBackgroundColor(DialogUtils.resolveColor(this, R.attr.colorPrimaryDark));
         mNavView.setNavigationItemSelectedListener(this);

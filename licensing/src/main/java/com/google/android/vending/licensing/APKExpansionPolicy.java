@@ -1,4 +1,3 @@
-
 package com.google.android.vending.licensing;
 
 /*
@@ -21,16 +20,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.Vector;
 
@@ -39,12 +33,12 @@ import java.util.Vector;
  * from the licensing service. Specifically, the licensing server sends the
  * following information: response validity period, error retry period, and
  * error retry count.
- * <p/>
+ * <p>
  * These values will vary based on the the way the application is configured in
  * the Android Market publishing console, such as whether the application is
  * marked as free or is within its refund period, as well as how often an
  * application is checking with the licensing service.
- * <p/>
+ * <p>
  * Developers who need more fine grained control over their application's
  * licensing policy should implement a custom Policy.
  */
@@ -115,7 +109,7 @@ public class APKExpansionPolicy implements Policy {
 
     /**
      * Process a new response from the license server.
-     * <p/>
+     * <p>
      * This data will be used for computing future policy decisions. The
      * following parameters are processed:
      * <ul>

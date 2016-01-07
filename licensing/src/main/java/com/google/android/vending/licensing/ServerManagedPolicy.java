@@ -31,12 +31,12 @@ import java.util.Map;
  * from the licensing service. Specifically, the licensing server sends the
  * following information: response validity period, error retry period, and
  * error retry count.
- * <p/>
+ * <p>
  * These values will vary based on the the way the application is configured in
  * the Android Market publishing console, such as whether the application is
  * marked as free or is within its refund period, as well as how often an
  * application is checking with the licensing service.
- * <p/>
+ * <p>
  * Developers who need more fine grained control over their application's
  * licensing policy should implement a custom Policy.
  */
@@ -83,7 +83,7 @@ public class ServerManagedPolicy implements Policy {
 
     /**
      * Process a new response from the license server.
-     * <p/>
+     * <p>
      * This data will be used for computing future policy decisions. The
      * following parameters are processed:
      * <ul>
@@ -231,7 +231,7 @@ public class ServerManagedPolicy implements Policy {
 
     /**
      * {@inheritDoc}
-     * <p/>
+     * <p>
      * This implementation allows access if either:<br>
      * <ol>
      * <li>a LICENSED response was received within the validity period
