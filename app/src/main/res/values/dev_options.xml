@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- True enables the nav drawer layout -->
     <bool name="nav_drawer_mode_default">false</bool>
+
+    <!-- Good for testing to switch between tabs and nav drawer, true shows a checkbox option in the overflow menu -->
     <bool name="allow_nav_drawer_mode_switch">true</bool>
 
     <string name="wallpapers_json_url" formatted="false">
