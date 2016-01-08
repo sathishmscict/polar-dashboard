@@ -78,7 +78,8 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final boolean useNavDrawer = getResources().getBoolean(R.bool.use_navigation_drawer);
+        final boolean useNavDrawer = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("nav_drawer_mode", getResources().getBoolean(R.bool.nav_drawer_mode_default));
         if (useNavDrawer)
             setContentView(R.layout.activity_main_drawer);
         else
@@ -139,6 +140,14 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
             darkTheme.setVisible(false);
         else darkTheme.setChecked(darkTheme());
 
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        MenuItem navDrawerMode = menu.findItem(R.id.navDrawerMode);
+        if (getResources().getBoolean(R.bool.allow_nav_drawer_mode_switch)) {
+            navDrawerMode.setVisible(true);
+            navDrawerMode.setChecked(prefs.getBoolean("nav_drawer_mode",
+                    getResources().getBoolean(R.bool.nav_drawer_mode_default)));
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -156,17 +165,21 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
                 }
             }, 500);
             return true;
+        } else if (item.getItemId() == R.id.navDrawerMode) {
+            item.setChecked(!item.isChecked());
+            PreferenceManager.getDefaultSharedPreferences(this).edit()
+                    .putBoolean("nav_drawer_mode", item.isChecked()).commit();
+            recreate();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void setupNavDrawer() {
         assert mNavView != null;
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             getWindow().setStatusBarColor(Color.TRANSPARENT);
-
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.root);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             drawer.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
@@ -273,7 +286,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
             return 0;
         }
 
-        boolean useNavDrawer = getResources().getBoolean(R.bool.use_navigation_drawer);
+        boolean useNavDrawer = getResources().getBoolean(R.bool.nav_drawer_mode_default);
         if (useNavDrawer) {
             return mDrawerLastInsets.getSystemWindowInsetTop();
         } else {
@@ -314,7 +327,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        ((DrawerLayout) findViewById(R.id.root)).closeDrawers();
+        ((DrawerLayout) findViewById(R.id.drawer)).closeDrawers();
         int index;
         switch (item.getItemId()) {
             default:

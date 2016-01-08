@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <bool name="use_navigation_drawer">false</bool>
+    <bool name="nav_drawer_mode_default">false</bool>
+    <bool name="allow_nav_drawer_mode_switch">true</bool>
 
     <string name="wallpapers_json_url" formatted="false">
         https://raw.githubusercontent.com/TWellington/JSON-for-Gaufrer/master/wallpapers.json
