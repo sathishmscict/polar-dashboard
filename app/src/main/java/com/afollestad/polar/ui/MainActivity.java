@@ -271,10 +271,10 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         final int selectedId;
         assert mNavView != null;
         switch (position) {
-            default:
             case 0:
                 selectedId = R.id.drawer_home;
                 break;
+            default:
             case 1:
                 selectedId = R.id.drawer_icons;
                 break;
