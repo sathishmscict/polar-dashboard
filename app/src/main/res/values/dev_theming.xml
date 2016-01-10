@@ -50,6 +50,6 @@
     <color name="default_window_bg_cards_darktheme">#546E7A</color>
     <color name="default_tab_indicator_color_darktheme">#F5F5F5</color>
     <color name="default_tab_icon_color_darktheme">#F5F5F5</color>
-    <color name="default_card_background_darktheme">#424242</color>
+    <color name="default_card_background_darktheme">#607D8B</color>
 
 </resources>
