@@ -168,7 +168,7 @@ public class WallpapersFragment extends BasePageFragment implements
 
     private static Activity mContextCache;
     private static View mViewCache;
-    private static int mImageIndexCache;
+    private static int mActionIndexCache;
     private static WallpaperUtils.Wallpaper mWallpaperCache;
     private static File mFileCache;
 
@@ -176,7 +176,6 @@ public class WallpapersFragment extends BasePageFragment implements
     public static void resetOptionCache(boolean delete) {
         mContextCache = null;
         mViewCache = null;
-        mImageIndexCache = 0;
         mWallpaperCache = null;
         if (delete && mFileCache != null) {
             mFileCache.delete();
@@ -188,13 +187,13 @@ public class WallpapersFragment extends BasePageFragment implements
 
     public static void performOptionCached() {
         if (mContextCache != null)
-            performOption(mContextCache, mViewCache, mImageIndexCache, mWallpaperCache);
+            performOption(mContextCache, mViewCache, mActionIndexCache, mWallpaperCache);
     }
 
-    public static void performOption(final Activity context, final View view, final int imageIndex, final WallpaperUtils.Wallpaper wallpaper) {
+    public static void performOption(final Activity context, final View view, final int actionIndex, final WallpaperUtils.Wallpaper wallpaper) {
         mContextCache = context;
         mViewCache = view;
-        mImageIndexCache = imageIndex;
+        mActionIndexCache = actionIndex;
         mWallpaperCache = wallpaper;
 
         if (!Assent.isPermissionGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
@@ -216,7 +215,7 @@ public class WallpapersFragment extends BasePageFragment implements
 
         final String name;
         final String extension = wallpaper.url.toLowerCase(Locale.getDefault()).endsWith(".png") ? ".png" : ".jpeg";
-        if (imageIndex == 0) {
+        if (actionIndex == 0) {
             // Crop/Apply
             name = String.format("%s_%s_wallpaper.%s",
                     wallpaper.name.replace(" ", "_"),
@@ -249,7 +248,7 @@ public class WallpapersFragment extends BasePageFragment implements
                             } else {
                                 try {
                                     response.asFile(mFileCache);
-                                    finishOption(mContextCache, mImageIndexCache, dialog);
+                                    finishOption(mContextCache, mActionIndexCache, dialog);
                                 } catch (BridgeException e1) {
                                     dialog.dismiss();
                                     Utils.showError(context, e1);
@@ -258,11 +257,11 @@ public class WallpapersFragment extends BasePageFragment implements
                         }
                     });
         } else {
-            finishOption(context, imageIndex, null);
+            finishOption(context, actionIndex, null);
         }
     }
 
-    public static void finishOption(final Activity context, int imageIndex, @Nullable final MaterialDialog dialog) {
+    public static void finishOption(final Activity context, int actionIndex, @Nullable final MaterialDialog dialog) {
         MediaScannerConnection.scanFile(context,
                 new String[]{mFileCache.getAbsolutePath()}, null,
                 new MediaScannerConnection.OnScanCompletedListener() {
@@ -272,7 +271,7 @@ public class WallpapersFragment extends BasePageFragment implements
                     }
                 });
 
-        if (imageIndex == 0) {
+        if (actionIndex == 0) {
             // Apply
             if (dialog != null)
                 dialog.dismiss();
@@ -297,7 +296,7 @@ public class WallpapersFragment extends BasePageFragment implements
                     @Override
                     public void onSelection(MaterialDialog materialDialog, View view, final int i, CharSequence charSequence) {
                         final WallpaperUtils.Wallpaper wallpaper = mWallpapers.get(imageIndex);
-                        performOption(getActivity(), getView(), imageIndex, wallpaper);
+                        performOption(getActivity(), getView(), i, wallpaper);
                     }
                 }).show();
     }
@@ -348,7 +347,6 @@ public class WallpapersFragment extends BasePageFragment implements
         ButterKnife.unbind(this);
         mContextCache = null;
         mViewCache = null;
-        mImageIndexCache = 0;
         mWallpaperCache = null;
     }
 
