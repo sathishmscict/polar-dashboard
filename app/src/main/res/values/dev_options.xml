@@ -7,7 +7,7 @@
     <bool name="allow_nav_drawer_mode_switch">true</bool>
 
     <!-- True enables the homepage -->
-    <bool name="homepage_enabled">false</bool>
+    <bool name="homepage_enabled">true</bool>
     <string name="homepage_description">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sit amet pretium ex. Aenean eu semper ligula.
     </string>
