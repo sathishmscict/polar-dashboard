@@ -3,10 +3,17 @@
 
     <!-- True enables the nav drawer layout -->
     <bool name="nav_drawer_mode_default">false</bool>
-
     <!-- Good for testing to switch between tabs and nav drawer, true shows a checkbox option in the overflow menu -->
     <bool name="allow_nav_drawer_mode_switch">true</bool>
 
+    <!-- True enables the homepage -->
+    <bool name="homepage_enabled">false</bool>
+    <string name="homepage_description">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sit amet pretium ex. Aenean eu semper ligula.
+    </string>
+    <drawable name="homepage_landing_icon">@mipmap/ic_launcher</drawable>
+
+    <!-- URL to JSON file containing a map of wallpapers -->
     <string name="wallpapers_json_url" formatted="false">
         https://raw.githubusercontent.com/TWellington/JSON-for-Gaufrer/master/wallpapers.json
     </string>

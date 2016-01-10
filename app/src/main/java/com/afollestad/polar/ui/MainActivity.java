@@ -91,12 +91,12 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         setupPager();
         if (useNavDrawer)
             setupNavDrawer();
-        else
-            setupTabs();
+        else setupTabs();
 
         // Restore last selected page, tab/nav-drawer-item
         final int lastPage = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getInt("last_selected_page", 0);
         mPager.setCurrentItem(lastPage);
+        if (mNavView != null) invalidateNavViewSelection(lastPage);
     }
 
     public boolean retryLicenseCheck() {
@@ -177,6 +177,8 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
 
     private void setupNavDrawer() {
         assert mNavView != null;
+        mNavView.inflateMenu(R.menu.drawer);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer);
@@ -205,6 +207,8 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
                 }
             });
         }
+
+        mNavView.getMenu().findItem(R.id.drawer_home).setVisible(getResources().getBoolean(R.bool.homepage_enabled));
 
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -256,27 +260,41 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
             public void onPageSelected(int position) {
                 final BasePageFragment frag = (BasePageFragment) getFragmentManager().findFragmentByTag("page:" + position);
                 if (frag != null) frag.updateTitle();
-                switch (position) {
-                    default:
-                    case 0:
-                        mNavView.setCheckedItem(R.id.drawer_home);
-                        break;
-                    case 1:
-                        mNavView.setCheckedItem(R.id.drawer_icons);
-                        break;
-                    case 2:
-                        mNavView.setCheckedItem(R.id.drawer_wallpapers);
-                        break;
-                    case 3:
-                        mNavView.setCheckedItem(R.id.drawer_requestIcons);
-                        break;
-                    case 4:
-                        mNavView.setCheckedItem(R.id.drawer_apply);
-                        break;
-                    case 5:
-                        mNavView.setCheckedItem(R.id.drawer_about);
-                        break;
-                }
+                if (!getResources().getBoolean(R.bool.homepage_enabled))
+                    position++;
+                invalidateNavViewSelection(position);
+            }
+        });
+    }
+
+    private void invalidateNavViewSelection(int position) {
+        final int selectedId;
+        assert mNavView != null;
+        switch (position) {
+            default:
+            case 0:
+                selectedId = R.id.drawer_home;
+                break;
+            case 1:
+                selectedId = R.id.drawer_icons;
+                break;
+            case 2:
+                selectedId = R.id.drawer_wallpapers;
+                break;
+            case 3:
+                selectedId = R.id.drawer_requestIcons;
+                break;
+            case 4:
+                selectedId = R.id.drawer_apply;
+                break;
+            case 5:
+                selectedId = R.id.drawer_about;
+                break;
+        }
+        mNavView.post(new Runnable() {
+            @Override
+            public void run() {
+                mNavView.setCheckedItem(selectedId);
             }
         });
     }
@@ -295,7 +313,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     }
 
     private void setupPager() {
-        mPager.setAdapter(new MainPagerAdapter(getFragmentManager()));
+        mPager.setAdapter(new MainPagerAdapter(this, getFragmentManager()));
         mPager.setOffscreenPageLimit(6);
         mPager.setOffscreenPageLimit(6);
     }
@@ -309,12 +327,11 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
                 super.onPageSelected(position);
                 final BasePageFragment frag = (BasePageFragment) getFragmentManager().findFragmentByTag("page:" + position);
                 if (frag != null) frag.updateTitle();
-                PreferenceManager.getDefaultSharedPreferences(MainActivity.this)
-                        .edit().putInt("last_selected_page", position).commit();
             }
         });
 
-        addTab(R.drawable.tab_home);
+        if (getResources().getBoolean(R.bool.homepage_enabled))
+            addTab(R.drawable.tab_home);
         addTab(R.drawable.tab_icons);
         addTab(R.drawable.tab_wallpapers);
         addTab(R.drawable.tab_requests);
@@ -350,6 +367,8 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
                 index = 5;
                 break;
         }
+        if (!getResources().getBoolean(R.bool.homepage_enabled))
+            index--;
         mPager.setCurrentItem(index);
         return false;
     }
@@ -381,6 +400,8 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     @Override
     protected void onPause() {
         super.onPause();
+        PreferenceManager.getDefaultSharedPreferences(MainActivity.this)
+                .edit().putInt("last_selected_page", mPager.getCurrentItem()).commit();
         if (isFinishing()) {
             Bridge.destroy();
             Inquiry.deinit();

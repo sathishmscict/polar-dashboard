@@ -14,7 +14,7 @@
 
     <dimen name="content_inset_less">12dp</dimen>
     <dimen name="content_inset">16dp</dimen>
-    <dimen name="content_inset_more">8dp</dimen>
+    <dimen name="content_inset_more">24dp</dimen>
 
     <dimen name="fab_bottom_margin">16dp</dimen>
     <dimen name="fab_bottom_margin_list">84dp</dimen>
@@ -38,5 +38,6 @@
     <dimen name="apply_title_minheight">44dp</dimen>
 
     <dimen name="drawer_header_height">196dp</dimen>
+    <dimen name="landing_page_icon_size">236dp</dimen>
 
 </resources>

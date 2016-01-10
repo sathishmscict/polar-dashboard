@@ -3,7 +3,9 @@ package com.afollestad.polar.adapters;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 
+import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.AboutFragment;
 import com.afollestad.polar.fragments.ApplyFragment;
 import com.afollestad.polar.fragments.HomeFragment;
@@ -17,12 +19,17 @@ import com.afollestad.polar.viewer.FragmentStatePagerAdapter;
  */
 public class MainPagerAdapter extends FragmentStatePagerAdapter {
 
-    public MainPagerAdapter(FragmentManager fm) {
+    private final boolean mHomepageEnabled;
+
+    public MainPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
+        mHomepageEnabled = context.getResources().getBoolean(R.bool.homepage_enabled);
     }
 
     @Override
     protected Fragment getItem(int position) {
+        if (!mHomepageEnabled)
+            position++;
         switch (position) {
             default:
             case 0:
@@ -42,6 +49,8 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 6;
+        int count = 5;
+        if (mHomepageEnabled) count++;
+        return count;
     }
 }
