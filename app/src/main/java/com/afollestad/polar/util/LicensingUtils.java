@@ -5,11 +5,11 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.design.BuildConfig;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
 import com.afollestad.polar.dialogs.ProgressDialogFragment;
 import com.google.android.vending.licensing.AESObfuscator;
