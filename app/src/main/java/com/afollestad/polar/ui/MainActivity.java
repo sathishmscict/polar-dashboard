@@ -308,7 +308,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         if (useNavDrawer) {
             return mDrawerLastInsets.getSystemWindowInsetTop();
         } else {
-            return findViewById(R.id.root).getPaddingTop();
+            return findViewById(R.id.drawer).getPaddingTop();
         }
     }
 

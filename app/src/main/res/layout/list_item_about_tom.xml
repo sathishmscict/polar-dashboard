@@ -11,8 +11,7 @@
         android:id="@+id/card"
         style="@style/Card"
         android:layout_marginLeft="@dimen/content_inset_half_card"
-        android:layout_marginRight="@dimen/content_inset_half_card"
-        android:padding="@dimen/content_inset">
+        android:layout_marginRight="@dimen/content_inset_half_card">
 
         <FrameLayout
             android:layout_width="match_parent"
