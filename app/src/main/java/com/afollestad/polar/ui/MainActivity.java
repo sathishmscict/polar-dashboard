@@ -304,11 +304,12 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
             return 0;
         }
 
-        boolean useNavDrawer = getResources().getBoolean(R.bool.nav_drawer_mode_default);
+        boolean useNavDrawer = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("nav_drawer_mode", getResources().getBoolean(R.bool.nav_drawer_mode_default));
         if (useNavDrawer) {
             return mDrawerLastInsets.getSystemWindowInsetTop();
         } else {
-            return findViewById(R.id.drawer).getPaddingTop();
+            return findViewById(R.id.root).getPaddingTop();
         }
     }
 
