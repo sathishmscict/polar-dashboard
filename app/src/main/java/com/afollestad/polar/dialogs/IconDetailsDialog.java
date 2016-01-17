@@ -55,7 +55,7 @@ public class IconDetailsDialog extends DialogFragment {
 
             final TextView negative = dialog.getActionButton(DialogAction.NEGATIVE);
             negative.setAlpha(0f);
-            negative.animate().setDuration(1000)
+            negative.animate().setDuration(500)
                     .alpha(1f).start();
 
             if (bmp != null) {
