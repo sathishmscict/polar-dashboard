@@ -123,6 +123,7 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
 
         holder.name.setWallpaper(wallpaper);
         holder.colorFrame.setWallpaper(wallpaper);
+        holder.author.setWallpaper(wallpaper);
         holder.image.setProgressBar(holder.progress);
 
         holder.progress.setVisibility(View.VISIBLE);

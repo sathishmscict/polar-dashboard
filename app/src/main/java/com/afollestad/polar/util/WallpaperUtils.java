@@ -3,6 +3,7 @@ package com.afollestad.polar.util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -79,17 +80,13 @@ public class WallpaperUtils {
 
         @Column
         private int paletteNameColor;
-        private boolean setPaletteNameColor;
         @Column
         private int paletteAuthorColor;
-        private boolean setPaletteAuthorColor;
         @Column
         private int paletteBgColor;
-        private boolean setPaletteBgColor;
 
         public void setPaletteNameColor(@ColorInt int color) {
             this.paletteNameColor = color;
-            this.setPaletteNameColor = true;
         }
 
         @ColorInt
@@ -99,7 +96,6 @@ public class WallpaperUtils {
 
         public void setPaletteAuthorColor(@ColorInt int color) {
             this.paletteAuthorColor = color;
-            this.setPaletteAuthorColor = true;
         }
 
         @ColorInt
@@ -109,7 +105,6 @@ public class WallpaperUtils {
 
         public void setPaletteBgColor(@ColorInt int color) {
             this.paletteBgColor = color;
-            this.setPaletteBgColor = true;
         }
 
         @ColorInt
@@ -118,7 +113,7 @@ public class WallpaperUtils {
         }
 
         public boolean isPaletteComplete() {
-            return setPaletteBgColor && setPaletteAuthorColor && setPaletteNameColor;
+            return paletteNameColor != 0 && paletteAuthorColor != 0 && paletteBgColor != 0;
         }
     }
 
