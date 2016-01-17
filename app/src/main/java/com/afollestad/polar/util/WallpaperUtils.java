@@ -189,7 +189,7 @@ public class WallpaperUtils {
                 .run(new RunCallback<Long[]>() {
                     @Override
                     public void result(Long[] changed) {
-                        // Do nothing here
+                        Inquiry.deinit();
                     }
                 });
     }
