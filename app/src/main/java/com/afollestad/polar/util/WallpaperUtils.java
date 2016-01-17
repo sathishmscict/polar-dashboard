@@ -184,11 +184,11 @@ public class WallpaperUtils {
         if (context == null || holder == null || holder.length() == 0) return;
         Inquiry.init(context, DATABASE_NAME, DATABASE_VERSION);
         Inquiry.get().deleteFrom(TABLE_NAME, Wallpaper.class).run();
-        Inquiry.get().update(TABLE_NAME, Wallpaper.class)
+        Inquiry.get().insertInto(TABLE_NAME, Wallpaper.class)
                 .values(holder.wallpapers)
-                .run(new RunCallback<Integer>() {
+                .run(new RunCallback<Long[]>() {
                     @Override
-                    public void result(Integer changed) {
+                    public void result(Long[] changed) {
                         // Do nothing here
                     }
                 });
