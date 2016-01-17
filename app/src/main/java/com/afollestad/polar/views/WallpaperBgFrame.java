@@ -43,6 +43,6 @@ public class WallpaperBgFrame extends LinearLayout {
         CardView card = (CardView) parent.getParent();
         card.setCardBackgroundColor(color);
         if (cache && mWallpaper != null)
-            mWallpaper.paletteBgColor = color;
+            mWallpaper.setPaletteBgColor(color);
     }
 }

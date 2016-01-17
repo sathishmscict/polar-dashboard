@@ -37,6 +37,6 @@ public class WallpaperNameView extends TextView {
     public void setTextColor(int color, boolean cache) {
         super.setTextColor(color);
         if (cache && mWallpaper != null)
-            mWallpaper.paletteNameColor = color;
+            mWallpaper.setPaletteNameColor(color);
     }
 }

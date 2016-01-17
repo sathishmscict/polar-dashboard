@@ -380,10 +380,14 @@ public class WallpapersFragment extends BasePageFragment implements
     @Override
     public void onPause() {
         super.onPause();
-        if (getActivity() != null && getActivity().isFinishing()) {
-            Bridge.cancelAll()
-                    .tag(WallpapersFragment.class.getName())
-                    .commit();
+        if (getActivity() != null) {
+            if (mAdapter != null)
+                WallpaperUtils.save(getActivity(), mAdapter.getWallpapers());
+            if (getActivity().isFinishing()) {
+                Bridge.cancelAll()
+                        .tag(WallpapersFragment.class.getName())
+                        .commit();
+            }
         }
     }
 

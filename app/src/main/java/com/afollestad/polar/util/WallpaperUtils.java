@@ -17,6 +17,7 @@ import com.afollestad.bridge.annotations.Body;
 import com.afollestad.bridge.annotations.ContentType;
 import com.afollestad.inquiry.Inquiry;
 import com.afollestad.inquiry.annotations.Column;
+import com.afollestad.inquiry.callbacks.RunCallback;
 import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.WallpapersFragment;
@@ -28,7 +29,7 @@ import java.io.Serializable;
  */
 public class WallpaperUtils {
 
-    public static final String TABLE_NAME = "wallpaper_cache";
+    public static final String TABLE_NAME = "wallpapers";
     public static final String DATABASE_NAME = "data_cache";
     public static final int DATABASE_VERSION = 1;
 
@@ -76,15 +77,48 @@ public class WallpaperUtils {
         @Column
         public String name;
 
+        @Column
+        private int paletteNameColor;
+        private boolean setPaletteNameColor;
+        @Column
+        private int paletteAuthorColor;
+        private boolean setPaletteAuthorColor;
+        @Column
+        private int paletteBgColor;
+        private boolean setPaletteBgColor;
+
+        public void setPaletteNameColor(@ColorInt int color) {
+            this.paletteNameColor = color;
+            this.setPaletteNameColor = true;
+        }
+
         @ColorInt
-        public int paletteNameColor;
+        public int getPaletteNameColor() {
+            return paletteNameColor;
+        }
+
+        public void setPaletteAuthorColor(@ColorInt int color) {
+            this.paletteAuthorColor = color;
+            this.setPaletteAuthorColor = true;
+        }
+
         @ColorInt
-        public int paletteAuthorColor;
+        public int getPaletteAuthorColor() {
+            return paletteAuthorColor;
+        }
+
+        public void setPaletteBgColor(@ColorInt int color) {
+            this.paletteBgColor = color;
+            this.setPaletteBgColor = true;
+        }
+
         @ColorInt
-        public int paletteBgColor;
+        public int getPaletteBgColor() {
+            return paletteBgColor;
+        }
 
         public boolean isPaletteComplete() {
-            return paletteNameColor != 0 && paletteAuthorColor != 0 && paletteBgColor != 0;
+            return setPaletteBgColor && setPaletteAuthorColor && setPaletteNameColor;
         }
     }
 
@@ -144,6 +178,19 @@ public class WallpaperUtils {
         } finally {
             Inquiry.deinit();
         }
+    }
+
+    public static void save(@Nullable final Context context, @Nullable final WallpapersHolder holder) {
+        if (context == null || holder == null || holder.length() == 0) return;
+        Inquiry.init(context, DATABASE_NAME, DATABASE_VERSION);
+        Inquiry.get().update(TABLE_NAME, Wallpaper.class)
+                .values(holder.wallpapers)
+                .run(new RunCallback<Integer>() {
+                    @Override
+                    public void result(Integer changed) {
+                        // Do nothing here
+                    }
+                });
     }
 
     public static void getAll(final Context context, boolean allowCached, final WallpapersCallback callback) {

@@ -37,6 +37,6 @@ public class WallpaperAuthorView extends TextView {
     public void setTextColor(int color, boolean cache) {
         super.setTextColor(color);
         if (cache && mWallpaper != null)
-            mWallpaper.paletteAuthorColor = color;
+            mWallpaper.setPaletteAuthorColor(color);
     }
 }

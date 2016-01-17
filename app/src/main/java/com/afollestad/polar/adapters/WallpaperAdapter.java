@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,10 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
     private final ClickListener mListener;
     private WallpaperUtils.WallpapersHolder mWallpapers;
     private ArrayList<WallpaperUtils.Wallpaper> mFiltered;
+
+    public WallpaperUtils.WallpapersHolder getWallpapers() {
+        return mWallpapers;
+    }
 
     public void filter(String str) {
         if (str == null) {
@@ -122,13 +127,15 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
 
         holder.progress.setVisibility(View.VISIBLE);
         if (wallpaper.isPaletteComplete()) {
-            holder.name.setTextColor(wallpaper.paletteNameColor);
-            holder.author.setTextColor(wallpaper.paletteAuthorColor);
-            holder.colorFrame.setBackgroundColor(wallpaper.paletteBgColor);
+            Log.d("WallpaperAdapter", "Wallpaper " + index + ", palette is complete!");
+            holder.name.setTextColor(wallpaper.getPaletteNameColor());
+            holder.author.setTextColor(wallpaper.getPaletteAuthorColor());
+            holder.colorFrame.setBackgroundColor(wallpaper.getPaletteBgColor());
             Glide.with(holder.itemView.getContext())
                     .load(wallpaper.url)
                     .into(holder.image);
         } else {
+            Log.d("WallpaperAdapter", "Wallpaper " + index + ", palette is not complete...");
             holder.name.setTextColor(Color.WHITE, false);
             holder.author.setTextColor(Color.WHITE, false);
             holder.colorFrame.setBackgroundColor(Color.DKGRAY, false);
