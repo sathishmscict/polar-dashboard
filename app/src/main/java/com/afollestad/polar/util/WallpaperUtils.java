@@ -183,6 +183,7 @@ public class WallpaperUtils {
     public static void save(@Nullable final Context context, @Nullable final WallpapersHolder holder) {
         if (context == null || holder == null || holder.length() == 0) return;
         Inquiry.init(context, DATABASE_NAME, DATABASE_VERSION);
+        Inquiry.get().deleteFrom(TABLE_NAME, Wallpaper.class).run();
         Inquiry.get().update(TABLE_NAME, Wallpaper.class)
                 .values(holder.wallpapers)
                 .run(new RunCallback<Integer>() {
