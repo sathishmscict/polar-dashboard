@@ -56,7 +56,9 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
         setContentView(R.layout.activity_icons_more);
         ButterKnife.bind(this);
 
-        applyTopInset(findViewById(R.id.root));
+        final View root = findViewById(R.id.root);
+        applyTopInset(root);
+        applyBottomInset(root);
 
         final DrawableXmlParser.Category category = (DrawableXmlParser.Category) getIntent().getSerializableExtra(EXTRA_CATEGORY);
 

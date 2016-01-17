@@ -60,8 +60,18 @@ public abstract class BaseThemedActivity extends AssentActivity {
             @Override
             public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
                 int systemWindowInsetTop = insets.getSystemWindowInsetTop();
-                v.setPaddingRelative(0, systemWindowInsetTop, 0, 0);
+                v.setPaddingRelative(0, systemWindowInsetTop, 0, v.getPaddingBottom());
+                return insets;
+            }
+        });
+    }
 
+    protected void applyBottomInset(View view) {
+        ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
+            @Override
+            public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
+                int systemWindowInsetBottom = insets.getSystemWindowInsetBottom();
+                v.setPaddingRelative(0, v.getPaddingTop(), 0, systemWindowInsetBottom);
                 return insets;
             }
         });
