@@ -71,6 +71,7 @@ public class PagesBuilder implements Iterable<PagesBuilder.Page> {
         public void addToMenu(Menu menu) {
             MenuItem item = menu.add(Menu.NONE, drawerId, Menu.NONE, titleRes);
             item.setIcon(iconRes);
+            item.setCheckable(true);
         }
     }
 }
