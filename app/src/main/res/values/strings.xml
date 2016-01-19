@@ -69,6 +69,7 @@
     <string name="request_cancelled">Request cancelled</string>
     <string name="home">Home</string>
     <string name="nav_drawer_mode">Nav drawer mode</string>
+    <string name="zooper">Zooper</string>
 
     <string-array name="wallpaper_options" translatable="false">
         <item>@string/apply</item>

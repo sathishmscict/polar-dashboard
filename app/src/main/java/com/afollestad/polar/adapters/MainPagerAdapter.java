@@ -4,6 +4,7 @@ package com.afollestad.polar.adapters;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.res.Resources;
 
 import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.AboutFragment;
@@ -12,6 +13,8 @@ import com.afollestad.polar.fragments.HomeFragment;
 import com.afollestad.polar.fragments.IconsFragment;
 import com.afollestad.polar.fragments.RequestsFragment;
 import com.afollestad.polar.fragments.WallpapersFragment;
+import com.afollestad.polar.fragments.ZooperFragment;
+import com.afollestad.polar.util.PagesBuilder;
 import com.afollestad.polar.viewer.FragmentStatePagerAdapter;
 
 /**
@@ -19,38 +22,20 @@ import com.afollestad.polar.viewer.FragmentStatePagerAdapter;
  */
 public class MainPagerAdapter extends FragmentStatePagerAdapter {
 
-    private final boolean mHomepageEnabled;
+    private final PagesBuilder mPages;
 
-    public MainPagerAdapter(Context context, FragmentManager fm) {
+    public MainPagerAdapter(FragmentManager fm, PagesBuilder pages) {
         super(fm);
-        mHomepageEnabled = context.getResources().getBoolean(R.bool.homepage_enabled);
+        mPages = pages;
     }
 
     @Override
     protected Fragment getItem(int position) {
-        if (!mHomepageEnabled)
-            position++;
-        switch (position) {
-            default:
-            case 0:
-                return new HomeFragment();
-            case 1:
-                return new IconsFragment();
-            case 2:
-                return new WallpapersFragment();
-            case 3:
-                return new RequestsFragment();
-            case 4:
-                return new ApplyFragment();
-            case 5:
-                return new AboutFragment();
-        }
+        return mPages.get(position).fragment;
     }
 
     @Override
     public int getCount() {
-        int count = 5;
-        if (mHomepageEnabled) count++;
-        return count;
+        return mPages.size();
     }
 }

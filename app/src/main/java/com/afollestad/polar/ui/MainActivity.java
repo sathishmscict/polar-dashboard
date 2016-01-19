@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -35,11 +36,18 @@ import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.MainPagerAdapter;
 import com.afollestad.polar.dialogs.ChangelogDialog;
 import com.afollestad.polar.dialogs.InvalidLicenseDialog;
+import com.afollestad.polar.fragments.AboutFragment;
+import com.afollestad.polar.fragments.ApplyFragment;
+import com.afollestad.polar.fragments.HomeFragment;
+import com.afollestad.polar.fragments.IconsFragment;
+import com.afollestad.polar.fragments.RequestsFragment;
 import com.afollestad.polar.fragments.WallpapersFragment;
+import com.afollestad.polar.fragments.ZooperFragment;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.base.BaseThemedActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
 import com.afollestad.polar.util.LicensingUtils;
+import com.afollestad.polar.util.PagesBuilder;
 import com.afollestad.polar.util.Utils;
 import com.google.android.vending.licensing.Policy;
 
@@ -68,7 +76,8 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
 
     public RecyclerView mRecyclerView;
 
-    WindowInsets mDrawerLastInsets;
+    private WindowInsets mDrawerLastInsets;
+    private PagesBuilder mPages;
 
     @Override
     public Toolbar getToolbar() {
@@ -88,15 +97,32 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
 
+        setupPages();
         setupPager();
         if (useNavDrawer)
             setupNavDrawer();
         else setupTabs();
 
         // Restore last selected page, tab/nav-drawer-item
-        final int lastPage = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getInt("last_selected_page", 0);
+        int lastPage = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getInt("last_selected_page", 0);
+        if (lastPage > mPager.getAdapter().getCount() - 1) lastPage = 0;
         mPager.setCurrentItem(lastPage);
         if (mNavView != null) invalidateNavViewSelection(lastPage);
+    }
+
+    private void setupPages() {
+        final Resources r = getResources();
+        mPages = new PagesBuilder(7);
+        if (r.getBoolean(R.bool.homepage_enabled))
+            mPages.add(new PagesBuilder.Page(R.id.drawer_home, R.drawable.tab_home, R.string.home, new HomeFragment()));
+        mPages.add(new PagesBuilder.Page(R.id.drawer_icons, R.drawable.tab_icons, R.string.icons, new IconsFragment()));
+        mPages.add(new PagesBuilder.Page(R.id.drawer_wallpapers, R.drawable.tab_wallpapers, R.string.wallpapers, new WallpapersFragment()));
+        if (r.getBoolean(R.bool.icon_requests_enabled))
+            mPages.add(new PagesBuilder.Page(R.id.drawer_requestIcons, R.drawable.tab_requests, R.string.request_icons, new RequestsFragment()));
+        mPages.add(new PagesBuilder.Page(R.id.drawer_apply, R.drawable.tab_apply, R.string.apply, new ApplyFragment()));
+        if (r.getBoolean(R.bool.zooper_enabled))
+            mPages.add(new PagesBuilder.Page(R.id.drawer_zooper, R.drawable.tab_zooper, R.string.zooper, new ZooperFragment()));
+        mPages.add(new PagesBuilder.Page(R.id.drawer_about, R.drawable.tab_about, R.string.about, new AboutFragment()));
     }
 
     public boolean retryLicenseCheck() {
@@ -177,7 +203,9 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
 
     private void setupNavDrawer() {
         assert mNavView != null;
-        mNavView.inflateMenu(R.menu.drawer);
+        mNavView.getMenu().clear();
+        for (PagesBuilder.Page page : mPages)
+            page.addToMenu(mNavView.getMenu());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             getWindow().setStatusBarColor(Color.TRANSPARENT);
@@ -207,8 +235,6 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
                 }
             });
         }
-
-        mNavView.getMenu().findItem(R.id.drawer_home).setVisible(getResources().getBoolean(R.bool.homepage_enabled));
 
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -268,29 +294,8 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     }
 
     private void invalidateNavViewSelection(int position) {
-        final int selectedId;
         assert mNavView != null;
-        switch (position) {
-            case 0:
-                selectedId = R.id.drawer_home;
-                break;
-            default:
-            case 1:
-                selectedId = R.id.drawer_icons;
-                break;
-            case 2:
-                selectedId = R.id.drawer_wallpapers;
-                break;
-            case 3:
-                selectedId = R.id.drawer_requestIcons;
-                break;
-            case 4:
-                selectedId = R.id.drawer_apply;
-                break;
-            case 5:
-                selectedId = R.id.drawer_about;
-                break;
-        }
+        final int selectedId = mPages.get(position).drawerId;
         mNavView.post(new Runnable() {
             @Override
             public void run() {
@@ -314,7 +319,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     }
 
     private void setupPager() {
-        mPager.setAdapter(new MainPagerAdapter(this, getFragmentManager()));
+        mPager.setAdapter(new MainPagerAdapter(getFragmentManager(), mPages));
         mPager.setOffscreenPageLimit(6);
         mPager.setOffscreenPageLimit(6);
     }
@@ -331,14 +336,8 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
             }
         });
 
-        if (getResources().getBoolean(R.bool.homepage_enabled))
-            addTab(R.drawable.tab_home);
-        addTab(R.drawable.tab_icons);
-        addTab(R.drawable.tab_wallpapers);
-        addTab(R.drawable.tab_requests);
-        addTab(R.drawable.tab_apply);
-        addTab(R.drawable.tab_about);
-
+        for (PagesBuilder.Page page : mPages)
+            addTab(page.iconRes);
         mTabs.setSelectedTabIndicatorColor(DialogUtils.resolveColor(this, R.attr.tab_indicator_color));
         applyTopInset(findViewById(R.id.root));
     }
@@ -346,31 +345,9 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         ((DrawerLayout) findViewById(R.id.drawer)).closeDrawers();
-        int index;
-        switch (item.getItemId()) {
-            default:
-            case R.id.drawer_home:
-                index = 0;
-                break;
-            case R.id.drawer_icons:
-                index = 1;
-                break;
-            case R.id.drawer_wallpapers:
-                index = 2;
-                break;
-            case R.id.drawer_requestIcons:
-                index = 3;
-                break;
-            case R.id.drawer_apply:
-                index = 4;
-                break;
-            case R.id.drawer_about:
-                index = 5;
-                break;
-        }
-        if (!getResources().getBoolean(R.bool.homepage_enabled))
-            index--;
-        mPager.setCurrentItem(index);
+        final int index = mPages.findPositionForItem(item);
+        if (index > -1)
+            mPager.setCurrentItem(index);
         return false;
     }
 
