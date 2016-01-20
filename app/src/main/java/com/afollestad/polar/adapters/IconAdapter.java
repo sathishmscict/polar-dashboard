@@ -236,7 +236,7 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if (mTransitionSection == section) {
-                String transitionName = mContext.getString(R.string.transition_name_recyclerview_item + relativePos);
+                String transitionName = mContext.getString(R.string.transition_name_recyclerview_item) + relativePos;
                 holder.itemView.setTransitionName(transitionName);
                 mTransitionViews.put(relativePos, new Pair<>(holder.itemView, transitionName));
             } else {
