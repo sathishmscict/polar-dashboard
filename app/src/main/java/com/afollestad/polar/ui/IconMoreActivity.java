@@ -58,7 +58,7 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
 
         final View root = findViewById(R.id.root);
         applyTopInset(root);
-        applyBottomInset(root);
+        applyBottomInset(mRecyclerView);
 
         final DrawableXmlParser.Category category = (DrawableXmlParser.Category) getIntent().getSerializableExtra(EXTRA_CATEGORY);
 
@@ -161,5 +161,4 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
     public void onClick(View view, int index) {
         IconsFragment.selectItem(this, null, mAdapter.getIcon(index));
     }
-
 }
