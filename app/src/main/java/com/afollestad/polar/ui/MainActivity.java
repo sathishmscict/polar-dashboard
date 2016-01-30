@@ -320,8 +320,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
 
     private void setupPager() {
         mPager.setAdapter(new MainPagerAdapter(getFragmentManager(), mPages));
-        mPager.setOffscreenPageLimit(6);
-        mPager.setOffscreenPageLimit(6);
+        mPager.setOffscreenPageLimit(mPages.size());
     }
 
     private void setupTabs() {
