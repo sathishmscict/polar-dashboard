@@ -70,6 +70,7 @@
     <string name="home">Home</string>
     <string name="nav_drawer_mode">Nav drawer mode</string>
     <string name="zooper">Zooper</string>
+    <string name="zooper_coming_soon">Zooper support isn\'t ready yet, disable this tab in /res/values/dev_options.xml.</string>
 
     <string-array name="wallpaper_options" translatable="false">
         <item>@string/apply</item>
