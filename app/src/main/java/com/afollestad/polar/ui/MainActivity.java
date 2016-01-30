@@ -326,6 +326,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
 
     private void setupTabs() {
         assert mTabs != null;
+        mTabs.setTabMode(mPages.size() > 5 ? TabLayout.MODE_SCROLLABLE : TabLayout.MODE_FIXED);
         mTabs.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mPager));
         mPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabs) {
             @Override

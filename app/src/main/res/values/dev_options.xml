@@ -9,7 +9,7 @@
     <!-- True enables the homepage -->
     <bool name="homepage_enabled">true</bool>
     <string name="homepage_description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sit amet pretium ex. Aenean eu semper ligula.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sit amet pretium ex. Aenean eu semper ligula. Disable the homepage from /res/values/dev_options.xml.
     </string>
     <drawable name="homepage_landing_icon">@mipmap/ic_launcher</drawable>
 
