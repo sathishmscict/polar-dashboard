@@ -2,9 +2,10 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="48dp"
     android:fontFamily="sans-serif-light"
     android:gravity="center"
-    android:lineSpacingMultiplier="1.2"
-    android:padding="@dimen/content_inset"
+    android:lineSpacingMultiplier="1.4"
+    android:padding="@dimen/content_inset_more"
     android:text="@string/zooper_coming_soon"
     android:textSize="22sp" />
