@@ -18,7 +18,7 @@
         https://raw.githubusercontent.com/TWellington/JSON-for-Gaufrer/master/wallpapers.json
     </string>
 
-    <bool name="zooper_enabled">true</bool>
+    <bool name="zooper_enabled">false</bool>
 
     <bool name="icon_requests_enabled">true</bool>
     <!-- Email used to send icon requests, leave empty to disable this feature -->
