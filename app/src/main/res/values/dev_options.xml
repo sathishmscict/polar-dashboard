@@ -12,7 +12,7 @@
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sit amet pretium ex. Aenean eu semper ligula. Disable the homepage from /res/values/dev_options.xml.
     </string>
     <!-- The large icon displayed in the home page -->
-    <drawable name="homepage_landing_icon">@mipmap/ic_launcher</drawable>
+    <drawable name="homepage_landing_icon">@drawable/ic_web</drawable>
 
     <!-- URL to JSON file containing a map of wallpapers -->
     <string name="wallpapers_json_url" formatted="false">
