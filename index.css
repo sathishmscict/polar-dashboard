@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto+Mono:400);
+@import url(http://fonts.googleapis.com/css?family=Roboto+Mono:400,Roboto:300);
 
 html, body {
     margin: 0;
@@ -24,11 +24,15 @@ hr {
 .flow-text, p {
     font-size: 18px;
     /*color: #D5D5D5;*/
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
 }
 
 p ol li {
     margin-top: 28px;
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
 }
 
 td {
