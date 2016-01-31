@@ -16,62 +16,90 @@
 </head>
 
 <body>
-<header>
-    <nav class="top-nav">
-        <div class="nav-wrapper"><a href="/" class="page-title">Importing Your Icons</a>
-            <ul id="slide-out" class="side-nav fixed">
-                <li>
-                    <a href="//afollestad.github.io/polar-dashboard" class="waves-effect">Home</a>
-                </li>
-                <li class="active">
-                    <a href="//afollestad.github.io/polar-dashboard/importingyouricons.html" class="waves-effect">Importing Your Icons</a>
-                </li>
-                <li>
-                    <a href="//afollestad.github.io/polar-dashboard/importingyourwallpapers.html" class="waves-effect">Importing Your Wallpapers</a>
-                </li>
-                <li>
-                    <a href="//afollestad.github.io/polar-dashboard/makeityours.html" class="waves-effect">Make It Yours</a>
-                </li>
-                <li>
-                    <a href="//afollestad.github.io/polar-dashboard/upgrades.html" class="waves-effect">Upgrades</a>
-                </li>
-            </ul>
-            <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+    <header>
+        <nav class="top-nav">
+            <div class="nav-wrapper">
+                <a href="/" class="page-title">Importing Your Icons</a>
+                <ul id="slide-out" class="side-nav fixed">
+                    <li>
+                        <a href="//afollestad.github.io/polar-dashboard" class="waves-effect">Home</a>
+                    </li>
+                    <li class="active">
+                        <a href="//afollestad.github.io/polar-dashboard/importingyouricons.html" class="waves-effect">Importing Your Icons</a>
+                    </li>
+                    <li>
+                        <a href="//afollestad.github.io/polar-dashboard/importingyourwallpapers.html" class="waves-effect">Importing Your Wallpapers</a>
+                    </li>
+                    <li>
+                        <a href="//afollestad.github.io/polar-dashboard/makeityours.html" class="waves-effect">Make It Yours</a>
+                    </li>
+                    <li>
+                        <a href="//afollestad.github.io/polar-dashboard/upgrades.html" class="waves-effect">Upgrades</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/afollestad/polar-dashboard" class="waves-effect">Back to GitHub</a>
+                    </li>
+                </ul>
+                <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+            </div>
+        </nav>
+    </header>
+    <main class="mainContent">
+        <div class="container">
+            <h4>Copy in Files</h4>
+            <p class="flow-text">
+                First, you need to copy all of the PNGs for your icon pack into the <b>drawable-nodpi</b> folder of Polar.
+                You can remove the placeholder PNGs that are already in there initially.
+            </p><img src="https://raw.githubusercontent.com/afollestad/ui-showcase/master/skillfitness.png"
+                     class="app-image">
+            <p class="flow-text">
+                Polar has file naming conventions which allow you to specify how the app's name will be displayed in the dashboard. Here are the rules:
+                <ul>
+                    <li><b>No changes:</b> the first letter of the name will be capital.</li>
+                    <li><b>Single underscores:</b> will become a space in the middle of a word, the next letter is capital. If it's placed at the beginning of the name, it makes the first letter lowercase.</li>
+                    <li><b>Double underscores:</b> no space, makes the next letter capital.</li>
+                    <li><b>Triple underscores:</b> makes the next word all capital.</li>
+                </ul>
+                Here are some samples:
+                <ul>
+                    <li><b>betternet.png</b> will become <b>Betternet</b></li>
+                    <li><b>google_chrome.png</b> will become <b>Google Chrome</b></li>
+                    <li><b>pay__pal.png</b> will become <b>PayPal</b></li>
+                    <li><b>_kaip.png</b> will become <b>kaip</b></li>
+                    <li><b>___kaip.png</b> will become <b>KAIP</b></li>
+                    <li><b>___npr_one.png</b> will become <b>NPR One</b></li>
+                    <li><b>material___os.png</b> will become <b>Material OS</b></li>
+                </ul>
+            </p>
+            <hr />
+
+            <h4>Drawable.xml</h4>
+            <p class="flow-text">
+                Extempore is an app based on a heavily modified version of the SkillFitness&trade;
+                platform, made for Deeloh Technologies, LLC, a St. Paul based education software company. Extempore is
+                designed to heavily simplify language learning. See <a href='https://extemporeapp.com'>their website</a> for
+                more info. The app is available on both <a href='https://play.google.com/store/apps/details?id=com.extempore.extempore'>Android</a> and
+                <a href='https://itunes.apple.com/us/app/extempore/id1062018455?ls=1&mt=8'>iOS</a>, your school needs to be
+                signed up in order to have credentials to login.
+            </p><img src="https://raw.githubusercontent.com/afollestad/ui-showcase/master/sfextempore.png"
+                     class="app-image">
+            <hr>
+
+            <h4>App Filters</h4>
+            <p class="flow-text">
+                PhotoAffix makes it easy to stitch multiple photos together, horizontally or vertically.
+                The image below is an example of what it can do. It's currently in beta, you can <a href='https://play.google.com/apps/testing/com.afollestad.photoaffix'>
+                    opt-in to Google Play Beta
+                    Testing
+                </a>, or download an APK from the <a href='https://github.com/afollestad/photo-affix'>
+                    open source
+                    repository
+                </a>.
+            </p><img src="https://raw.githubusercontent.com/afollestad/photo-affix/master/art/showcase.png"
+                     class="app-image">
         </div>
-    </nav>
-</header>
-<main class="mainContent">
-    <div class="container">
-        <h4>The PNGs</h4>
-        <p class="flow-text">First, you need to copy all of the PNGs for your icon pack into the <b>drawable-nodpi</b> folder of Polar. 
-            You can remove the placeholder PNGs that are already in there initially.
-        </p><img src="https://raw.githubusercontent.com/afollestad/ui-showcase/master/skillfitness.png"
-                 class="app-image">
-        <hr>
-
-        <h4>Drawable.xml</h4>
-        <p class="flow-text">Extempore is an app based on a heavily modified version of the SkillFitness&trade;
-            platform, made for Deeloh Technologies, LLC, a St. Paul based education software company. Extempore is
-            designed to heavily simplify language learning. See <a href='https://extemporeapp.com'>their website</a> for
-            more info. The app is available on both <a
-                    href='https://play.google.com/store/apps/details?id=com.extempore.extempore'>Android</a> and
-            <a href='https://itunes.apple.com/us/app/extempore/id1062018455?ls=1&mt=8'>iOS</a>, your school needs to be
-            signed up in order to have credentials to login.
-        </p><img src="https://raw.githubusercontent.com/afollestad/ui-showcase/master/sfextempore.png"
-                 class="app-image">
-        <hr>
-
-        <h4>App Filters</h4>
-        <p class="flow-text">PhotoAffix makes it easy to stitch multiple photos together, horizontally or vertically.
-            The image below is an example of what it can do. It's currently in beta, you can <a
-                    href='https://play.google.com/apps/testing/com.afollestad.photoaffix'>opt-in to Google Play Beta
-                Testing</a>, or download an APK from the <a href='https://github.com/afollestad/photo-affix'>open source
-                repository</a>.
-        </p><img src="https://raw.githubusercontent.com/afollestad/photo-affix/master/art/showcase.png"
-                 class="app-image">
-    </div>
-</main>
-<script src="/init.js"></script>
+    </main>
+    <script src="/init.js"></script>
 </body>
 
 </html>
