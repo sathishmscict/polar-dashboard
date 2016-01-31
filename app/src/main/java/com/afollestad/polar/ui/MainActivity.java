@@ -117,7 +117,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
             mPages.add(new PagesBuilder.Page(R.id.drawer_home, R.drawable.tab_home, R.string.home, new HomeFragment()));
         mPages.add(new PagesBuilder.Page(R.id.drawer_icons, R.drawable.tab_icons, R.string.icons, new IconsFragment()));
         mPages.add(new PagesBuilder.Page(R.id.drawer_wallpapers, R.drawable.tab_wallpapers, R.string.wallpapers, new WallpapersFragment()));
-        if (r.getBoolean(R.bool.icon_requests_enabled))
+        if (!r.getString(R.string.icon_request_email).trim().isEmpty())
             mPages.add(new PagesBuilder.Page(R.id.drawer_requestIcons, R.drawable.tab_requests, R.string.request_icons, new RequestsFragment()));
         mPages.add(new PagesBuilder.Page(R.id.drawer_apply, R.drawable.tab_apply, R.string.apply, new ApplyFragment()));
         if (r.getBoolean(R.bool.zooper_enabled))
