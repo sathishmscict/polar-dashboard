@@ -85,7 +85,7 @@ public class IconMoreAdapter extends RecyclerView.Adapter<IconMoreAdapter.MainVi
         final int res = mIcons.get(position).getDrawableId(c);
 
         if (position < mIconsInAnimation && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            String transitionName = mContext.getString(R.string.transition_name_recyclerview_item + position);
+            String transitionName = mContext.getString(R.string.transition_name_recyclerview_item) + position;
             holder.itemView.setTransitionName(transitionName);
         }
 
