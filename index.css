@@ -26,6 +26,10 @@ hr {
     /*color: #D5D5D5;*/
 }
 
+p ul li {
+    line-height: 175%;
+}
+
 td {
     font-size: 16px;
     /*color: #D5D5D5;*/
