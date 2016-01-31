@@ -36,6 +36,7 @@
     <string name="write_storage_permission_denied">Write external storage permission denied!</string>
     <string name="website">Website</string>
     <string name="dribbble">Dribbble</string>
+    <string name="github">GitHub</string>
     <string name="google_plus">Google+</string>
     <string name="linkedin">LinkedIn</string>
     <string name="no_wallpapers">No wallpapers</string>
