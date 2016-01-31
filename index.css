@@ -26,7 +26,7 @@ hr {
     /*color: #D5D5D5;*/
 }
 
-p ul li {
+p ol, p ol li {
     line-height: 175%;
 }
 
