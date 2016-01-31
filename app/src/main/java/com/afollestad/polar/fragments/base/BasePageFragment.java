@@ -42,7 +42,7 @@ public abstract class BasePageFragment extends Fragment {
     /**
      * Applies window insets apart from the top inset to a ViewGroup's direct children, if they have
      * fitsSystemWindows set.
-     * <p>
+     * <p/>
      * Must be called in/after onViewCreated
      */
     protected void applyInsets(ViewGroup viewGroup) {
@@ -55,46 +55,47 @@ public abstract class BasePageFragment extends Fragment {
     }
 
     protected void applyInsetsToViewMargin(View view) {
-        ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
-            private int mInitialBottom = -1;
+        if (mInsets != null) {
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+            if (mInitialBottom == -1)
+                mInitialBottom = layoutParams.bottomMargin;
+            layoutParams.bottomMargin = mInitialBottom + mInsets.getSystemWindowInsetBottom();
+            return;
+        }
 
+        ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
             @Override
             public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
-                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-
-                if (mInitialBottom == -1) {
-                    mInitialBottom = layoutParams.bottomMargin;
-                }
-                layoutParams.bottomMargin = mInitialBottom + insets.getSystemWindowInsetBottom();
-
+                mInsets = insets;
+                applyInsetsToViewMargin(v);
                 return insets;
             }
         });
         ViewCompat.requestApplyInsets(view);
     }
 
+    private static int mInitialBottom = -1;
+    private static WindowInsetsCompat mInsets;
+
     /**
      * Applies any window insets apart from the top inset to the view.
-     * <p>
+     * <p/>
      * Must be called in/after onViewCreated
      */
     protected void applyInsetsToView(View view) {
-        ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
-            private int mInitialBottom = -1;
+        if (mInsets != null) {
+            if (mInitialBottom == -1)
+                mInitialBottom = view.getPaddingBottom();
+            view.setPaddingRelative(view.getPaddingStart(), view.getPaddingTop(),
+                    view.getPaddingEnd(), mInitialBottom + mInsets.getSystemWindowInsetBottom());
+            return;
+        }
 
+        ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
             @Override
             public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
-                if (mInitialBottom == -1) {
-                    mInitialBottom = v.getPaddingBottom();
-                }
-
-                v.setPaddingRelative(
-                        v.getPaddingStart(),
-                        v.getPaddingTop(),
-                        v.getPaddingEnd(),
-                        mInitialBottom + insets.getSystemWindowInsetBottom()
-                );
-
+                mInsets = insets;
+                applyInsetsToView(v);
                 return insets;
             }
         });

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -69,14 +70,29 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 1) return 1;
-        return 0;
+        return position;
     }
 
     @Override
     public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(
-                viewType == 1 ? R.layout.list_item_about_aidan : R.layout.list_item_about_tom, parent, false);
+        @LayoutRes
+        int layoutRes;
+        switch (viewType) {
+            case 1:
+                layoutRes = R.layout.list_item_about_aidan;
+                break;
+            case 2:
+                layoutRes = R.layout.list_item_about_tom;
+                break;
+            case 3:
+                layoutRes = R.layout.list_item_about_daniel;
+                break;
+            default:
+                layoutRes = R.layout.list_item_about_dev;
+                break;
+        }
+
+        View v = LayoutInflater.from(parent.getContext()).inflate(layoutRes, parent, false);
         return new MainViewHolder(v);
     }
 
