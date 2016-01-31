@@ -16,198 +16,56 @@
 </head>
 
 <body>
-<header>
-    <nav class="top-nav">
-        <div class="nav-wrapper"><a href="/" class="page-title">Upgrades</a>
-            <ul id="slide-out" class="side-nav fixed">
-                <li>
-                    <a href="//afollestad.github.io/polar-dashboard" class="waves-effect">Home</a>
-                </li>
-                <li>
-                    <a href="//afollestad.github.io/polar-dashboard/importingyouricons.html" class="waves-effect">Importing Your Icons</a>
-                </li>
-                <li>
-                    <a href="//afollestad.github.io/polar-dashboard/importingyourwallpapers.html" class="waves-effect">Importing Your Wallpapers</a>
-                </li>
-                <li>
-                    <a href="//afollestad.github.io/polar-dashboard/makeityours.html" class="waves-effect">Make It Yours</a>
-                </li>
-                <li class="active">
-                    <a href="//afollestad.github.io/polar-dashboard/upgrades.html" class="waves-effect">Upgrades</a>
-                </li>
-            </ul>
-            <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+    <header>
+        <nav class="top-nav">
+            <div class="nav-wrapper">
+                <a href="/" class="page-title">Upgrades</a>
+                <ul id="slide-out" class="side-nav fixed">
+                    <li>
+                        <a href="//afollestad.github.io/polar-dashboard" class="waves-effect">Home</a>
+                    </li>
+                    <li>
+                        <a href="//afollestad.github.io/polar-dashboard/importingyouricons.html" class="waves-effect">Importing Your Icons</a>
+                    </li>
+                    <li>
+                        <a href="//afollestad.github.io/polar-dashboard/importingyourwallpapers.html" class="waves-effect">Importing Your Wallpapers</a>
+                    </li>
+                    <li>
+                        <a href="//afollestad.github.io/polar-dashboard/makeityours.html" class="waves-effect">Make It Yours</a>
+                    </li>
+                    <li class="active">
+                        <a href="//afollestad.github.io/polar-dashboard/upgrades.html" class="waves-effect">Upgrades</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/afollestad/polar-dashboard" class="waves-effect">Back to GitHub</a>
+                    </li>
+                </ul>
+                <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+            </div>
+        </nav>
+    </header>
+    <main class="mainContent">
+        <div class="container">
+            <h4>New Releases</h4>
+
+            <p class="flow-text">
+                When there are new releases of Polar, it's <b><i>highly</i></b> recommend that you upgrade your own packs. New releases will contain a lot of bug fixes,
+                and probably some new shiny features. The important thing to remember during upgrades is that you want to update everything in the code base but maintain
+                all of the custom configuration you had before.<br />
+                <ol>
+                    <li>Copy all of the code (Java) files from the new release in your project (overwrite everything).</li>
+                    <li>
+                        Copy all of the resource files (everything inside of /res) in your project, but don't overwrite <b>/res/drawablenodpi</b>, <b>/res/xml</b>, or <b>/res/values</b>.
+                        It's likely some files in <b>/res/values</b> need updates, but avoid overwriting your own configuration in there.
+                    </li>
+                    <li>Copy over the <b>build.gradle</b> files (from the root of the project and inside the <b>app</b> module). Make sure you put back your application ID and versionName/versionCode.</li>
+                    <li>Copy over the <b>AndroidManifest.xml</b> file, put your packageName back, along with any other custom configuration.</li>
+                </ol>
+            </p>
+
         </div>
-    </nav>
-</header>
-<main class="mainContent">
-    <div class="container">
-        <h4>SkillFitness&trade;</h4>
-        <p class="flow-text">I adapted the already-existing iOS version to Android. SkillFitness&trade; helps
-            professionals reach their full potential through training, collaboration, and self-discovery. It's quickly
-            being developed to other professional and non-professional fields. It's available on both <a
-                    href='https://play.google.com/store/apps/details?id=com.skillfitness.skillfitness'>Android</a> and
-            <a href='https://itunes.apple.com/us/app/skillfitness/id787386054'>iOS</a>, your company needs to be signed
-            up in order to have credentials to login.
-        </p><img src="https://raw.githubusercontent.com/afollestad/ui-showcase/master/skillfitness.png"
-                 class="app-image">
-        <hr>
-        <h4>Extempore</h4>
-        <p class="flow-text">Extempore is an app based on a heavily modified version of the SkillFitness&trade;
-            platform, made for Deeloh Technologies, LLC, a St. Paul based education software company. Extempore is
-            designed to heavily simplify language learning. See <a href='https://extemporeapp.com'>their website</a> for
-            more info. The app is available on both <a
-                    href='https://play.google.com/store/apps/details?id=com.extempore.extempore'>Android</a> and
-            <a href='https://itunes.apple.com/us/app/extempore/id1062018455?ls=1&mt=8'>iOS</a>, your school needs to be
-            signed up in order to have credentials to login.
-        </p><img src="https://raw.githubusercontent.com/afollestad/ui-showcase/master/sfextempore.png"
-                 class="app-image">
-        <hr>
-        <h4>PhotoAffix</h4>
-        <p class="flow-text">PhotoAffix makes it easy to stitch multiple photos together, horizontally or vertically.
-            The image below is an example of what it can do. It's currently in beta, you can <a
-                    href='https://play.google.com/apps/testing/com.afollestad.photoaffix'>opt-in to Google Play Beta
-                Testing</a>, or download an APK from the <a href='https://github.com/afollestad/photo-affix'>open source
-                repository</a>.
-        </p><img src="https://raw.githubusercontent.com/afollestad/photo-affix/master/art/showcase.png"
-                 class="app-image">
-        <hr>
-        <h4>Cabinet</h4>
-        <p class="flow-text">Cabinet is a minimalist file manager that I designed for Android devices in order to
-            improve the availability of good file managers on Android that are up to date with Google's Material design
-            guidelines. It's available on <a target="_blank"
-                                             href="https://play.google.com/store/apps/details?id=com.afollestad.cabinet">Google
-                Play</a>, and there's a <a target="_blank"
-                                           href="https://plus.google.com/communities/110440751142118056139">
-                Google+ community</a>. Version 2.0 is coming soon with some big features.
-        </p><img src="https://raw.githubusercontent.com/afollestad/ui-showcase/master/cabinet.png" class="app-image">
-        <hr>
-        <h4>Impression</h4>
-        <p class="flow-text">Impression is a Material Gallery replacement for Android 4.0+. The source code and latest
-            APK can be found
-            <a href='https://github.com/afollestad/impression'>on the GitHub repository</a>, you can also opt-in to beta
-            testing through Google Play from the <a href='https://plus.google.com/communities/103090123257670799691'>Google+
-                community</a>.
-        </p><img src="https://raw.githubusercontent.com/afollestad/impression/master/art/showcase.png"
-                 class="app-image">
-        <hr>
-        <h4>Moonshine</h4>
-        <p class="flow-text">Moonshine is an icon pack designed by <a href='https://plus.google.com/+PedroPegueroJr'>Pedro
-            Peguero Jr.</a> He made the icons and wallpapers, I designed the dashboard interface and functionality.
-            Moonshine is
-            <a href='https://play.google.com/store/apps/details?id=nexbit.icons.moonshine'>available on Google Play</a>.
-        </p><img src="https://raw.githubusercontent.com/afollestad/ui-showcase/master/moonshine.png" class="app-image">
-        <hr>
-        <h4>CoupCash</h4>
-        <p class="flow-text">CoupCash is a digital coupon system owned by a former employer. It's available for both
-            <a target="_blank" href="https://play.google.com/store/apps/details?id=com.recoup.android">Android</a> and
-            <a target="_blank" href="https://itunes.apple.com/us/app/coupcash/id873106087">iOS</a>.
-        </p><img src="https://raw.githubusercontent.com/afollestad/ui-showcase/master/coupcash.png" class="app-image">
-        <hr>
-        <h4>Boid for Twitter</h4>
-        <p class="flow-text">This is the first major project I had worked on. I had originally been working on another
-            Twitter app called <em>Peeper</em> as an experiment, but <a target="_blank"
-                                                                        href="https://twitter.com/redbullcat">Philip
-                Oakley</a> and <a target="_blank" href="https://twitter.com/gmph">Graham MacPhee</a> contacted me over
-            email with design mockups and ideas for a new Twitter application for Android. I became their coder and we
-            worked on Boid for quite some time while it spread like a virus and got almost 50,000 downloads. <a
-                    target="_blank" href="https://twitter.com/kennydude">Joe
-                Simpson</a> joined our team as another coder to help me out. We eventually had to take the project down
-            from Google Play because Twitter changed their API policies and Boid became too much to maintain and update.
-            You can find information about this project by <a target="_blank"
-                                                              href="https://www.google.com/search?q=Boid+for+Android">searching
-                Google</a>.
-        </p><img src="https://raw.githubusercontent.com/afollestad/ui-showcase/master/boid.png" class="app-image">
-        <hr>
-        <h4>Overhear Music Player</h4>
-        <p class="flow-text">Overhear was an experimental music player I had developed to mess around with Android's
-            content provider system. It was published for a while but I decided I succeeded with my experiment and
-            unpublished it.
-        </p><img src="https://raw.githubusercontent.com/afollestad/ui-showcase/master/overhear.png" class="app-image">
-        <hr>
-        <h4>Material Dialogs</h4>
-        <p class="flow-text">This library is a solution I had to using Material design themed dialogs across all
-            versions of Android, not just Lollipop. It also makes building and theming dialogs easier. The project is <a
-                    href='https://github.com/afollestad/material-dialogs'>
-                available on GitHub</a>, and there's also a <a
-                    href='https://play.google.com/store/apps/details?id=com.afollestad.materialdialogssample'>sample on
-                Google Play</a>.
-        </p><img src="https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/mddemoshowcase.png"
-                 class="app-image">
-        <hr>
-        <h4>app-theme-engine</h4>
-        <p class="flow-text">app-theme-engine is an easy to use app-level theme engine for Android developers. It makes
-            creating themable apps similar to Cabinet and Impression easy. It can be <a
-                    href='https://github.com/afollestad/app-theme-engine'>found on GitHub</a>.
-        </p><img src="https://raw.githubusercontent.com/afollestad/app-theme-engine/master/art/showcase.png"
-                 class="app-image">
-        <hr>
-        <h4>Digitus</h4>
-        <p class="flow-text">Digitus is Latin for 'finger'. Digitus makes the use of Marshmallow's fingerprint APIs
-            super simple, and optionally allows you to use a pre-built authentication dialog that matches the
-            Fingerprints section of the Design Guidelines. The project is <a
-                    href='https://github.com/afollestad/digitus'>
-                available on GitHub</a>, and there's also a <a
-                    href='https://play.google.com/store/apps/details?id=com.afollestad.digitussample'>sample on Google
-                Play</a>.
-        </p><img src="https://raw.githubusercontent.com/afollestad/digitus/master/digitusshowcase.png"
-                 class="app-image">
-        <hr>
-        <h4>Material Camera</h4>
-        <p class="flow-text">Video recording is one of the hardest things to do for Android developers. Compatibility is
-            very inconsistent among many different devices (due to different Android versions, how manufacturers mount
-            camera sensors, etc.). This library is a result of research and testing done during development of
-            SkillFitness. The project is
-            <a href='https://github.com/afollestad/material-camera'>available on GitHub</a>, along with a tutorial and
-            Gradle dependency.
-        </p><img src="https://raw.githubusercontent.com/afollestad/material-camera/master/art/deviceart.png">
-        <hr>
-        <h4>Bridge</h4>
-        <p class="flow-text">Bridge is a simple but powerful networking library for Android. It features a Fluent
-            chainable API, and it's powered by Java/Android's URLConnection classes for maximum compatibility and speed.
-            It can be <a href='https://github.com/afollestad/bridge'>found on GitHub</a>.
-        </p>
-        <hr>
-        <h4>Inquiry</h4>
-        <p class="flow-text">Inquiry is a simple library for Android that simplifies construction and use of SQLite
-            databases on Android. It can be <a href='https://github.com/afollestad/inquiry'>found on GitHub</a>.
-        </p>
-        <hr>
-        <h4>DragSelectRecyclerView</h4>
-        <p class="flow-text">Google Photos made multi-selection by dragging your finger popular. I needed a solution to
-            do this in Photo Affix, so this was the result. The project is <a
-                    href='https://github.com/afollestad/drag-select-recyclerview'>
-                available on GitHub</a>, and there's also a <a
-                    href='https://play.google.com/store/apps/details?id=com.afollestad.dragselectrecyclerviewsample'>sample
-                on Google Play</a>.
-        </p>
-        <hr>
-        <h4>Sectioned-RecyclerView</h4>
-        <p class="flow-text">Inspired by iOS, Sectioned-RecyclerView makes displaying a RecyclerView that has sections
-            with headers easy. The library is <a href='https://github.com/afollestad/sectioned-recyclerview'>available
-                on GitHub</a>, along with a tutorial and Gradle dependency.
-        </p>
-        <hr>
-        <h4>Assent</h4>
-        <p class="flow-text">Assent makes using Android 6.0 Marshmallow's runtime permissions super easy. It's
-            <a href='https://github.com/afollestad/assent'>available on GitHub</a>, along with a tutorial and Gradle
-            dependency.
-        </p>
-        <hr>
-        <h4>Material CAB</h4>
-        <p class="flow-text">This library is a solution to an issue I had in Cabinet. The stock contextual action bar
-            (selection mode) on Android is limited in placement and dynamic customization (for Cabinet's theme engine).
-            This library allows the CAB to be dynamically themed and placed wherever you like. It can be <a
-                    href='https://github.com/afollestad/material-cab'>found on GitHub</a>.
-        </p>
-        <hr>
-        <h4>Other Projects and Contributions</h4>
-        <p class="flow-text">Check out my <a target="_blank" href="https://github.com/afollestad">GitHub page</a> to see
-            my other projects libraries, and contributions that aren't listed on this page.
-        </p>
-    </div>
-</main>
-<script src="/init.js"></script>
+    </main>
+    <script src="/init.js"></script>
 </body>
 
 </html>
