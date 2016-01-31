@@ -2,6 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- DO NOT REMOVE THESE 4 ARRAYS. -->
+    <!-- ONLY MODIFY THE FIRST ITEM IN EACH ARRAY FOR YOURSELF, OTHERWISE TERMS ARE VIOLATED. -->
 
     <string-array name="about_images" formatted="false" tools:ignore="TypographyDashes">
         <item>https://lh3.googleusercontent.com/-0mdcClKXlgM/AAAAAAAAAAI/AAAAAAAAAAA/xgdLWeAg7pM/s120-c/photo.jpg</item>
