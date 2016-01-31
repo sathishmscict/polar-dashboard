@@ -26,8 +26,8 @@ hr {
     /*color: #D5D5D5;*/
 }
 
-p ol, p ol li {
-    line-height: 175%;
+p ol li {
+    margin-top: 10px;
 }
 
 td {
