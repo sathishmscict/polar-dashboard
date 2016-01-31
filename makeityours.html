@@ -46,16 +46,51 @@
     </header>
     <main class="mainContent">
         <div class="container">
-            <h4>SkillFitness</h4>
+            <h4>Name and Package</h4>
 
             <p class="flow-text">
-                I adapted the already-existing iOS version to Android. SkillFitness&trade; helps
-                professionals reach their full potential through training, collaboration, and self-discovery. It's quickly
-                being developed to other professional and non-professional fields. It's available on both <a href='https://play.google.com/store/apps/details?id=com.skillfitness.skillfitness'>Android</a> and
-                <a href='https://itunes.apple.com/us/app/skillfitness/id787386054'>iOS</a>, your company needs to be signed
-                up in order to have credentials to login.
-            </p><img src="https://raw.githubusercontent.com/afollestad/ui-showcase/master/skillfitness.png"
-                     class="app-image">
+                First, you need to change the name of the dashboard to the name of your icon pack. This can be done from <b>/res/values/strings.xml</b> as seen in the image below. Make sure
+                you update the first two strings to replace "Polar".
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/appname.JPG" class="app-image">
+            <hr>
+
+            <h4>Theming</h4>
+
+            <p class="flow-text">
+                The first boolean in the image below (<b>allow_theme_switching</b>) determines whether or not users will be able to switch between the light and dark theme from the dashboard UI. 
+                When true, there will be a checkbox in the overflow menu. The second boolean (<b>dark_theme_default</b>) sets whether the dashboard will use the dark theme initially. By default, 
+                it will not; it will use the light theme initially.
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/themeswitch.JPG" class="app-image">
+
+            <p class="flow-text">
+                The values under the "light theme" and "dark theme" comments allow you to switch out the colors used throughout the dashboard. Initially, they are set to use the default 
+                colors that we decided to use for Polar. It's recommended you change theme colors to fit your icon pack's branding.
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/themeoptions.JPG" class="app-image" />
+
+            <hr>
+
+            <h4>Options</h4>
+
+            <p class="flow-text">
+                By default, Polar will use a tabbed UI. You can easily make Polar use a navigation drawer instead, just by setting <b>nav_drawer_mode_default</b> to true. The second option 
+                after that determines whether or not users can switch between tabs and a navigation drawer from within the dashboard UI.
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options1.JPG" class="app-image">
+
+            <p class="flow-text">
+                A lot of designers like to have a homepage that users will see when they first open the dashboard. We encourage you to try 
+                not using the homepage, but we included this function for those who really need it. You can enable or disable the homepage 
+                using the <b>homepage_enabled</b> boolean. The other settings should be self-explanatory.
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options2.JPG" class="app-image" />
+
+            <p class="flow-text">
+                Last but not least, the two settings discussed below are the only settings remaining that haven't been discussed on this page 
+                or elsewhere. <b>icon_request_email</b> is used as an email that icon requests are sent to; if this value is left empty, this 
+                functionality is disabled. If you fill <b>license_public_key</b> with the Base64 license key value from the Google Play Developer 
+                Console, it will enable license checking functionality. The dashboard will refuse to open if license checking is enabled and a user 
+                did not install the pack via Google Play. Note that launchers will still be able to see your icons; but users will not be able to 
+                see the dashboard or use your wallpapers.
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options3.JPG" class="app-image" />
+
             <hr>
 
         </div>
