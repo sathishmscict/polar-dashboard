@@ -4,24 +4,28 @@
     <!-- DO NOT REMOVE THESE 4 ARRAYS. -->
 
     <string-array name="about_images" formatted="false" tools:ignore="TypographyDashes">
+        <item>https://lh3.googleusercontent.com/-0mdcClKXlgM/AAAAAAAAAAI/AAAAAAAAAAA/xgdLWeAg7pM/s120-c/photo.jpg</item>
         <item>https://lh3.googleusercontent.com/-mMe9cCCcm3Q/AAAAAAAAAAI/AAAAAAAAh2g/900TLdhn7dA/s120-c/photo.jpg</item>
         <item>https://lh6.googleusercontent.com/-O7dc0DGPAqI/Vg32sOXsX3I/AAAAAAAAhZY/BjJsYr56mU4/s1134-no/902e6ff9-0742-4454-9100-f8fad3a3d94c</item>
         <item>https://lh3.googleusercontent.com/-uRfg9FW83s4/AAAAAAAAAAI/AAAAAAAAKts/0FaBag1wvds/s120-c/photo.jpg</item>
     </string-array>
 
     <string-array name="about_covers" formatted="false" tools:ignore="TypographyDashes">
+        <item>https://lh5.googleusercontent.com/-eAPognoXTwE/UYFKq101UyI/AAAAAAAABiY/REl1Ei8txP8/w1600-h900/default_cover_5_ff9ff46d48dc181084c9c23a120b68d8.jpg</item>
         <item>https://lh3.googleusercontent.com/8fKdUOrpAMr6MKZ3SFDDBWgi1XqRPiGhu6dDwqAHMtoL=s630-fcrop64=1,00002492ffffe6d0</item>
         <item>https://lh5.googleusercontent.com/-Dm3-UxmIOnQ/ViuobTLiMmI/AAAAAAAAjDQ/MC9Z2tL4eb8/w1914-h1078-no/Valiant%2B%252B%2BWellingtomWorks.png</item>
         <item>https://lh3.googleusercontent.com/yxKzdHQl92pYtMFHg9yLXsomPAmhjnQeAgIVh6qOT4jvqcChDrVlUazobAuaC00V4JFl=s640-fcrop64=1,002d0000ffd1ffff</item>
     </string-array>
 
     <string-array name="about_titles">
+        <item>Developer</item>
         <item>Aidan Follestad</item>
         <item>Tom Wellington</item>
         <item>Daniel Ciao</item>
     </string-array>
 
     <string-array name="about_descriptions">
+        <item formatted="false"><![CDATA[This is definitely a placeholder<br><i>This is where your contribution would go</i>]]></item>
         <item formatted="false"><![CDATA[I like rock/metal, programming, &amp; cars<br/><i>I made the dashboard happen &amp; helped design it</i>]]></item>
         <item formatted="false"><![CDATA[I like rap, coffee, &amp; UI design<br/><i>I made the icons &amp; designed the dashboard</i>]]></item>
         <item formatted="false"><![CDATA[I like playing piano, doing puzzles, &amp; making apps<br/><i>I primarily helped with animations</i>]]></item>
