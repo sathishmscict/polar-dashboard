@@ -53,10 +53,10 @@
                 and probably some new shiny features. The important thing to remember during upgrades is that you want to update everything in the code base but maintain
                 all of the custom configuration you had before.<br />
                 <ol>
-                    <li>Copy all of the code (Java) files from the new release in your project (overwrite everything).</li>
+                    <li>Copy all of the code (Java) files from the new release into your project (overwrite everything).</li>
                     <li>
                         Copy all of the resource files (everything inside of /res) in your project, but don't overwrite <b>/res/drawablenodpi</b>, <b>/res/xml</b>, or <b>/res/values</b>.
-                        It's likely some files in <b>/res/values</b> need updates, but avoid overwriting your own configuration in there.
+                        It's likely some files in <b>/res/values</b> need updates, but avoid overwriting your own configuration in there (copying invidiual files works better).
                     </li>
                     <li>Copy over the <b>build.gradle</b> files (from the root of the project and inside the <b>app</b> module). Make sure you put back your application ID and versionName/versionCode.</li>
                     <li>Copy over the <b>AndroidManifest.xml</b> file, put your packageName back, along with any other custom configuration.</li>
