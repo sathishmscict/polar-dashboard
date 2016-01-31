@@ -46,12 +46,18 @@
     </header>
     <main class="mainContent">
         <div class="container">
-            <h4>Name and Package</h4>
+            <h4>Name, Package, and Icon</h4>
 
             <p class="flow-text">
                 First, you need to change the name of the dashboard to the name of your icon pack. This can be done from <b>/res/values/strings.xml</b> as seen in the image below. Make sure
                 you update the first two strings to replace "Polar".
             </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/appname.JPG" class="app-image">
+
+            <p class="flow-text">
+                You will also need to update your <i>applicationId</i> (your pack's unique identifier which will also be used on Google Play) 
+                in <b>/app/build.gradle</b>. You also manage your app's version (<i>versionCode</i> and <i>versionName</i>) from this file.
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/appname.JPG" class="app-image">
+
             <hr>
 
             <h4>Theming</h4>
