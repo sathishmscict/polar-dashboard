@@ -40,6 +40,7 @@ public class IconsFragment extends BasePageFragment implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     IconAdapter mAdapter;
+    RecyclerView mRecyclerView;
 
     public IconsFragment() {
     }
@@ -70,7 +71,7 @@ public class IconsFragment extends BasePageFragment implements
         emptyView.setText(R.string.no_results);
 
         final int gridWidth = getResources().getInteger(R.integer.icon_grid_width);
-        final RecyclerView mRecyclerView = ButterKnife.findById(v, android.R.id.list);
+        mRecyclerView = ButterKnife.findById(v, android.R.id.list);
 
         mAdapter = new IconAdapter(getActivity(), gridWidth, new IconAdapter.ClickListener() {
             @Override
@@ -126,7 +127,7 @@ public class IconsFragment extends BasePageFragment implements
         super.onViewCreated(view, savedInstanceState);
         if (getActivity() != null) load();
 
-        applyInsets((ViewGroup) view);
+        applyInsetsToView(mRecyclerView);
     }
 
     private void load() {
