@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/fab_bottom_margin"
+        android:paddingBottom="@dimen/content_inset_quarter"
         android:paddingTop="@dimen/content_inset_quarter"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical" />
