@@ -50,8 +50,7 @@
             <p class="flow-text">
                 First, you need to copy all of the PNGs for your icon pack into the <b>drawable-nodpi</b> folder of Polar.
                 You can remove the placeholder PNGs that are already in there initially.
-            </p><img src="https://raw.githubusercontent.com/afollestad/ui-showcase/master/skillfitness.png"
-                     class="app-image">
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/drawablenodpi.jpg" class="app-image">
             <p class="flow-text">
                 Polar has file naming conventions which allow you to specify how the app's name will be displayed in the dashboard. Here are the rules:
                 <ul>
@@ -77,28 +76,20 @@
 
             <h4>Drawable.xml</h4>
             <p class="flow-text">
-                Extempore is an app based on a heavily modified version of the SkillFitness&trade;
-                platform, made for Deeloh Technologies, LLC, a St. Paul based education software company. Extempore is
-                designed to heavily simplify language learning. See <a href='https://extemporeapp.com'>their website</a> for
-                more info. The app is available on both <a href='https://play.google.com/store/apps/details?id=com.extempore.extempore'>Android</a> and
-                <a href='https://itunes.apple.com/us/app/extempore/id1062018455?ls=1&mt=8'>iOS</a>, your school needs to be
-                signed up in order to have credentials to login.
-            </p><img src="https://raw.githubusercontent.com/afollestad/ui-showcase/master/sfextempore.png"
-                     class="app-image">
+                The drawable.xml file is located at <b>/res/xml/drawable.xml</b> <i>and</i> <b>/assets/drawable.xml</b>. You need to make sure they are both updated at all times! This file
+                is used by launchers, and the dashboard to retrieve icons in your pack (along with categories they belong to).
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/drawable.jpg" class="app-image">
             <hr>
 
             <h4>App Filters</h4>
             <p class="flow-text">
-                PhotoAffix makes it easy to stitch multiple photos together, horizontally or vertically.
-                The image below is an example of what it can do. It's currently in beta, you can <a href='https://play.google.com/apps/testing/com.afollestad.photoaffix'>
-                    opt-in to Google Play Beta
-                    Testing
-                </a>, or download an APK from the <a href='https://github.com/afollestad/photo-affix'>
-                    open source
-                    repository
-                </a>.
-            </p><img src="https://raw.githubusercontent.com/afollestad/photo-affix/master/art/showcase.png"
-                     class="app-image">
+                The appfilter.xml file is located at <b>/res/xml/appfilter.xml</b> <i>and</i> <b>/assets/appfilter.xml</b>. You need to make sure they are both updated at all times! This is 
+                the most important file for an icon pack. It's used by launchers to associate your PNGs with actual apps. This file can also be used to apply masks along with other 
+                various configurations. There are apps like <a href="https://play.google.com/store/apps/details?id=com.mikepenz.applicationreader">ApplicationReader</a> by 
+                <a href="https://plus.google.com/+MikePenz">Mike Penz</a> which can aid in finding ComponentInfo for apps. But the most efficient way to get a list of ComponentInfos to
+                put in your appfilter would be to use the Icon Request tool within Polar since it can do batch selection and email them to you.
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/appfilter.jpg" class="app-image">
+            
         </div>
     </main>
     <script src="/init.js"></script>
