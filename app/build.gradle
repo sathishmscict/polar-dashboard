@@ -11,6 +11,8 @@ android {
         }
     }
 
+    // Note to dev, sample uses same keystore as Cabinet
+
     defaultConfig {
         applicationId "com.afollestad.polar"
         minSdkVersion 17
