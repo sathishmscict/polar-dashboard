@@ -4,10 +4,8 @@
     <bool name="changelog_enabled">true</bool>
 
     <string-array name="changelog" translatable="false">
-        <item><![CDATA[ <b>12/28/15</b> ]]></item>
-        <item><![CDATA[ Added 16 new icons. ]]></item>
-        <item><![CDATA[ New apply section design, as well as a new quick apply design.]]></item>
-        <item><![CDATA[ Vote for Pedro jk f u pedro <i>im never theming your icons</i>]]></item>
+        <item><![CDATA[ <b>Hello, world!</b> ]]></item>
+        <item><![CDATA[ Your changelog can go in here, you can use <i>HTML formatting</i>.. ]]></item>
     </string-array>
 
 </resources>
