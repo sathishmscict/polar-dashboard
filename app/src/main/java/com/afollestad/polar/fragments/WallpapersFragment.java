@@ -12,7 +12,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +38,7 @@ import com.afollestad.bridge.Callback;
 import com.afollestad.bridge.Request;
 import com.afollestad.bridge.Response;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.WallpaperAdapter;
 import com.afollestad.polar.fragments.base.BasePageFragment;
@@ -150,7 +150,8 @@ public class WallpapersFragment extends BasePageFragment implements
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //Somehow this works (setting status bar color in both MainActivity and here)
             //to avoid image glitching through on when ViewActivity is first created.
-            getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getActivity(), R.color.primary_2_light));
+            getActivity().getWindow().setStatusBarColor(
+                    DialogUtils.resolveColor(getActivity(), R.attr.colorPrimaryDark));
             View statusBar = getActivity().getWindow().getDecorView().findViewById(android.R.id.statusBarBackground);
             if (statusBar != null) {
                 statusBar.post(new Runnable() {
