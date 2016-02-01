@@ -39,8 +39,6 @@ public abstract class BasePageFragment extends Fragment {
             BaseThemedActivity.themeMenu(getActivity(), menu);
     }
 
-    private static int mInitialBottom = -1;
-    private static WindowInsetsCompat mInsets;
     private static final Object LOCK = new Object();
 
     /**
@@ -59,22 +57,17 @@ public abstract class BasePageFragment extends Fragment {
     }
 
     protected void applyInsetsToViewMargin(View view) {
-        if (mInsets != null) {
-            synchronized (LOCK) {
-                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
-                if (mInitialBottom == -1)
-                    mInitialBottom = layoutParams.bottomMargin;
-                layoutParams.bottomMargin = mInitialBottom + mInsets.getSystemWindowInsetBottom();
-                return;
-            }
-        }
-
         ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
+            private int mInitialBottom = -1;
+
             @Override
             public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
                 synchronized (LOCK) {
-                    mInsets = insets;
-                    applyInsetsToViewMargin(v);
+                    ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+                    if (mInitialBottom == -1)
+                        mInitialBottom = layoutParams.bottomMargin;
+                    layoutParams.bottomMargin = mInitialBottom + insets.getSystemWindowInsetBottom();
+                    v.setLayoutParams(layoutParams);
                     return insets;
                 }
             }
@@ -88,22 +81,16 @@ public abstract class BasePageFragment extends Fragment {
      * Must be called in/after onViewCreated
      */
     protected void applyInsetsToView(View view) {
-        if (mInsets != null) {
-            synchronized (LOCK) {
-                if (mInitialBottom == -1)
-                    mInitialBottom = view.getPaddingBottom();
-                view.setPaddingRelative(view.getPaddingStart(), view.getPaddingTop(),
-                        view.getPaddingEnd(), mInitialBottom + mInsets.getSystemWindowInsetBottom());
-                return;
-            }
-        }
-
         ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
+            private int mInitialBottom = -1;
+
             @Override
             public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
                 synchronized (LOCK) {
-                    mInsets = insets;
-                    applyInsetsToView(v);
+                    if (mInitialBottom == -1)
+                        mInitialBottom = v.getPaddingBottom();
+                    v.setPaddingRelative(v.getPaddingStart(), v.getPaddingTop(),
+                            v.getPaddingEnd(), mInitialBottom + insets.getSystemWindowInsetBottom());
                     return insets;
                 }
             }
