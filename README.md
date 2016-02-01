@@ -7,3 +7,8 @@
 # Tutorial
 
 A tutorial is available on [this repository's website](http://afollestad.github.io/polar-dashboard).
+
+<a href="https://play.google.com/store/apps/details?id=com.afollestad.materialdialogssample" target="_blank">
+  <img alt="Get it on Google Play"
+       src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="60"/>
+</a>
