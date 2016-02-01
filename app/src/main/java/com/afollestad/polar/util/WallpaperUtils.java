@@ -3,7 +3,6 @@ package com.afollestad.polar.util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -178,28 +177,36 @@ public class WallpaperUtils {
     public static void save(@Nullable final Context context, @Nullable final WallpapersHolder holder) {
         if (context == null || holder == null || holder.length() == 0) return;
         Inquiry.init(context, DATABASE_NAME, DATABASE_VERSION);
-        Inquiry.get().deleteFrom(TABLE_NAME, Wallpaper.class).run();
-        Inquiry.get().insertInto(TABLE_NAME, Wallpaper.class)
-                .values(holder.wallpapers)
-                .run(new RunCallback<Long[]>() {
-                    @Override
-                    public void result(Long[] changed) {
-                        Inquiry.deinit();
-                    }
-                });
+        try {
+            Inquiry.get().deleteFrom(TABLE_NAME, Wallpaper.class).run();
+            Inquiry.get().insertInto(TABLE_NAME, Wallpaper.class)
+                    .values(holder.wallpapers)
+                    .run(new RunCallback<Long[]>() {
+                        @Override
+                        public void result(Long[] changed) {
+                            Inquiry.deinit();
+                        }
+                    });
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 
     public static void getAll(final Context context, boolean allowCached, final WallpapersCallback callback) {
         Inquiry.init(context, DATABASE_NAME, DATABASE_VERSION);
-        if (allowCached) {
-            Wallpaper[] cache = Inquiry.get().selectFrom(TABLE_NAME, Wallpaper.class).all();
-            if (cache != null && cache.length > 0) {
-                Log.d("WallpaperUtils", String.format("Loaded %d wallpapers from cache.", cache.length));
-                callback.onRetrievedWallpapers(new WallpapersHolder(cache), null, false);
-                return;
+        try {
+            if (allowCached) {
+                Wallpaper[] cache = Inquiry.get().selectFrom(TABLE_NAME, Wallpaper.class).all();
+                if (cache != null && cache.length > 0) {
+                    Log.d("WallpaperUtils", String.format("Loaded %d wallpapers from cache.", cache.length));
+                    callback.onRetrievedWallpapers(new WallpapersHolder(cache), null, false);
+                    return;
+                }
+            } else {
+                Inquiry.get().deleteFrom(TABLE_NAME, Wallpaper.class).run();
             }
-        } else {
-            Inquiry.get().deleteFrom(TABLE_NAME, Wallpaper.class).run();
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
 
         Bridge.get(context.getString(R.string.wallpapers_json_url))
@@ -217,10 +224,14 @@ public class WallpaperUtils {
                             try {
                                 Log.d("WallpaperUtils", String.format("Loaded %d wallpapers from web.", holder.length()));
                                 if (holder.length() > 0) {
-                                    Inquiry.init(context, DATABASE_NAME, DATABASE_VERSION);
-                                    Inquiry.get().insertInto(TABLE_NAME, Wallpaper.class)
-                                            .values(holder.wallpapers)
-                                            .run();
+                                    try {
+                                        Inquiry.init(context, DATABASE_NAME, DATABASE_VERSION);
+                                        Inquiry.get().insertInto(TABLE_NAME, Wallpaper.class)
+                                                .values(holder.wallpapers)
+                                                .run();
+                                    } catch (Throwable t) {
+                                        t.printStackTrace();
+                                    }
                                 }
                                 callback.onRetrievedWallpapers(holder, null, false);
                             } catch (Exception e1) {

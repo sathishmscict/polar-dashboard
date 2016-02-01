@@ -105,6 +105,11 @@ public class LicensingUtils {
             return true;
         }
 
+        if (context.getContentResolver() == null) {
+            if (!context.isFinishing())
+                context.finish();
+            return false;
+        }
         mProgress = ProgressDialogFragment.show(context, R.string.checking_license);
         final String deviceId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         // Library calls this when it's done.
