@@ -142,14 +142,18 @@ public class WallpaperUtils {
 
     public static WallpapersHolder getAll(final Context context, boolean allowCached) throws Exception {
         Inquiry.init(context, DATABASE_NAME, DATABASE_VERSION);
-        if (allowCached) {
-            Wallpaper[] cache = Inquiry.get().selectFrom(TABLE_NAME, Wallpaper.class).all();
-            if (cache != null && cache.length > 0) {
-                Log.d("WallpaperUtils", String.format("Loaded %d wallpapers from cache.", cache.length));
-                return new WallpapersHolder(cache);
+        try {
+            if (allowCached) {
+                Wallpaper[] cache = Inquiry.get().selectFrom(TABLE_NAME, Wallpaper.class).all();
+                if (cache != null && cache.length > 0) {
+                    Log.d("WallpaperUtils", String.format("Loaded %d wallpapers from cache.", cache.length));
+                    return new WallpapersHolder(cache);
+                }
+            } else {
+                Inquiry.get().deleteFrom(TABLE_NAME, Wallpaper.class).run();
             }
-        } else {
-            Inquiry.get().deleteFrom(TABLE_NAME, Wallpaper.class).run();
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
 
         try {
@@ -160,10 +164,14 @@ public class WallpaperUtils {
                 throw new Exception("No wallpapers returned.");
             Log.d("WallpaperUtils", String.format("Loaded %d wallpapers from web.", holder.length()));
             if (holder.length() > 0) {
-                Inquiry.init(context, DATABASE_NAME, DATABASE_VERSION);
-                Inquiry.get().insertInto(TABLE_NAME, Wallpaper.class)
-                        .values(holder.wallpapers)
-                        .run();
+                try {
+                    Inquiry.init(context, DATABASE_NAME, DATABASE_VERSION);
+                    Inquiry.get().insertInto(TABLE_NAME, Wallpaper.class)
+                            .values(holder.wallpapers)
+                            .run();
+                } catch (Throwable t) {
+                    t.printStackTrace();
+                }
             }
             return holder;
         } catch (Exception e1) {
