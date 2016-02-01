@@ -154,6 +154,7 @@ public class WallpaperUtils {
             }
         } catch (Throwable t) {
             t.printStackTrace();
+            return null;
         }
 
         try {
