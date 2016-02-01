@@ -61,7 +61,7 @@ dependencies {
     compile 'com.github.afollestad:bridge:3.1.1'
     compile 'com.github.afollestad:sectioned-recyclerview:0.2.0'
     compile 'com.github.afollestad:assent:0.2.0'
-    compile 'com.github.afollestad:inquiry:6df76ffc0d'
+    compile 'com.github.afollestad:inquiry:b13a58b902'
 
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
