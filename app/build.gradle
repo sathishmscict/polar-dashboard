@@ -13,6 +13,10 @@ android {
 
     // Note to dev, sample uses same keystore as Cabinet
 
+    lintOptions {
+        abortOnError false
+    }
+
     defaultConfig {
         applicationId "com.afollestad.polar"
         minSdkVersion 17
