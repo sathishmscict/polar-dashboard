@@ -55,18 +55,10 @@ public abstract class BaseThemedActivity extends AssentActivity {
         }
     }
 
-    private static WindowInsetsCompat mInsets;
-
     protected void applyTopInset(View view) {
-        if (mInsets != null) {
-            int systemWindowInsetTop = mInsets.getSystemWindowInsetTop();
-            view.setPaddingRelative(0, systemWindowInsetTop, 0, view.getPaddingBottom());
-            return;
-        }
         ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
             @Override
             public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
-                mInsets = insets;
                 int systemWindowInsetTop = insets.getSystemWindowInsetTop();
                 v.setPaddingRelative(0, systemWindowInsetTop, 0, v.getPaddingBottom());
                 return insets;
@@ -75,15 +67,9 @@ public abstract class BaseThemedActivity extends AssentActivity {
     }
 
     protected void applyBottomInset(View view) {
-        if (mInsets != null) {
-            int systemWindowInsetBottom = mInsets.getSystemWindowInsetBottom();
-            view.setPaddingRelative(0, view.getPaddingTop(), 0, systemWindowInsetBottom);
-            return;
-        }
         ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
             @Override
             public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
-                mInsets = insets;
                 int systemWindowInsetBottom = insets.getSystemWindowInsetBottom();
                 v.setPaddingRelative(0, v.getPaddingTop(), 0, systemWindowInsetBottom);
                 return insets;

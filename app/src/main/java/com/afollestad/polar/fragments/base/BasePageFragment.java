@@ -39,7 +39,7 @@ public abstract class BasePageFragment extends Fragment {
             BaseThemedActivity.themeMenu(getActivity(), menu);
     }
 
-    private static final Object LOCK = new Object();
+    static final Object LOCK = new Object();
 
     /**
      * Applies window insets apart from the top inset to a ViewGroup's direct children, if they have
