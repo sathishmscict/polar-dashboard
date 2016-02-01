@@ -28,8 +28,8 @@
     <string-array name="about_descriptions">
         <item formatted="false"><![CDATA[This is definitely a placeholder<br><i>This is where your contribution would go</i>]]></item>
         <item formatted="false"><![CDATA[I like rock/metal, programming, &amp; cars<br/><i>I made the dashboard happen &amp; helped design it</i>]]></item>
-        <item formatted="false"><![CDATA[I like rap, coffee, &amp; UI design<br/><i>I made the icons &amp; designed the dashboard</i>]]></item>
-        <item formatted="false"><![CDATA[I like playing piano, doing puzzles, &amp; making apps<br/><i>I primarily helped with animations and UI</i>]]></item>
+        <item formatted="false"><![CDATA[I like rap, coffee, &amp; UI design<br/><i>I designed the dashboard</i>]]></item>
+        <item formatted="false"><![CDATA[I like playing piano, doing puzzles, &amp; making apps<br/><i>I primarily helped with animations</i>]]></item>
     </string-array>
 
 </resources>
