@@ -337,6 +337,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     private void setupPager() {
         mPager.setAdapter(new MainPagerAdapter(getFragmentManager(), mPages));
         mPager.setOffscreenPageLimit(mPages.size());
+        // Paging is only enabled in tab mode
         mPager.setPagingEnabled(!Config.get().navDrawerModeEnabled());
     }
 
@@ -395,8 +396,10 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     @Override
     protected void onPause() {
         super.onPause();
-        PreferenceManager.getDefaultSharedPreferences(MainActivity.this)
-                .edit().putInt("last_selected_page", mPager.getCurrentItem()).commit();
+        if (Config.get().persistSelectedPage()) {
+            PreferenceManager.getDefaultSharedPreferences(MainActivity.this)
+                    .edit().putInt("last_selected_page", mPager.getCurrentItem()).commit();
+        }
         if (isFinishing()) {
             Config.deinit();
             Bridge.destroy();
