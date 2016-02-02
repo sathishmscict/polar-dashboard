@@ -21,6 +21,7 @@ import android.view.ViewTreeObserver;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
+import com.afollestad.polar.config.Config;
 
 import java.util.ArrayList;
 
@@ -133,8 +134,9 @@ public abstract class Utils {
 
     public static Drawable createCardSelector(Context context) {
         final int accentColor = DialogUtils.resolveColor(context, R.attr.colorAccent);
-        final int activated = TintUtils.adjustAlpha(accentColor, 0.3f);
-        final int pressed = TintUtils.adjustAlpha(accentColor, 0.6f);
+        final boolean darkTheme = Config.get().darkTheme();
+        final int activated = TintUtils.adjustAlpha(accentColor, darkTheme ? 0.5f : 0.3f);
+        final int pressed = TintUtils.adjustAlpha(accentColor, darkTheme ? 0.75f : 0.6f);
 
         final StateListDrawable baseSelector = new StateListDrawable();
         baseSelector.addState(new int[]{android.R.attr.state_activated}, new ColorDrawable(activated));
