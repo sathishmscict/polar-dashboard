@@ -109,6 +109,26 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         if (lastPage > mPager.getAdapter().getCount() - 1) lastPage = 0;
         mPager.setCurrentItem(lastPage);
         if (mNavView != null) invalidateNavViewSelection(lastPage);
+
+        processIntent(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        processIntent(intent);
+    }
+
+    private void processIntent(Intent intent) {
+        if (Intent.ACTION_SET_WALLPAPER.equals(intent.getAction())) {
+            for (int i = 0; i < mPages.size(); i++) {
+                PagesBuilder.Page page = mPages.get(i);
+                if (page.drawerId == R.id.drawer_wallpapers) {
+                    mPager.setCurrentItem(i);
+                    break;
+                }
+            }
+        }
     }
 
     private void setupPages() {
