@@ -13,12 +13,12 @@ html, body {
 }
 
 code {
-    background-color: #EEEEEE;
+    background-color: #F5F5F5;
     font-family: 'Roboto Mono', sans-serif;
     font-weight: 400;
     font-size: 16px;
     padding: 6px;
-    border-width: medium;
+    border-width: 8px;
     border-color: #BDBDBD;
 }
 
