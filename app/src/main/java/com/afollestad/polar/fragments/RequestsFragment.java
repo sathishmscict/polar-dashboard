@@ -200,6 +200,7 @@ public class RequestsFragment extends BasePageFragment implements
 
         applyInsets((ViewGroup) view);
         applyInsetsToViewMargin(fab);
+        applyInsetsToViewMargin(emptyText);
 
         GridLayoutManager lm = new GridLayoutManager(getActivity(),
                 getResources().getInteger(R.integer.requests_grid_width));
@@ -230,6 +231,13 @@ public class RequestsFragment extends BasePageFragment implements
             @Override
             public void onDragSelectFingerAction(boolean dragActive) {
                 mPager.setPagingEnabled(!dragActive);
+            }
+        });
+
+        emptyText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Assent.requestPermissions(RequestsFragment.this, PERM_RQ, Assent.WRITE_EXTERNAL_STORAGE);
             }
         });
     }
@@ -294,6 +302,7 @@ public class RequestsFragment extends BasePageFragment implements
                 mRequestManager.setActivity(getActivity());
             }
 
+            emptyText.setOnClickListener(null);
             mRequestManager.addAppLoadListener(this);
             mRequestManager.addSendRequestListener(this);
             mRequestManager.setDebugging(BuildConfig.DEBUG);
@@ -364,6 +373,8 @@ public class RequestsFragment extends BasePageFragment implements
                     emptyText.setVisibility(mAdapter.getItemCount() == 0 ?
                             View.VISIBLE : View.GONE);
                     progress.setVisibility(View.GONE);
+                    list.setVisibility(mAdapter.getItemCount() == 0 ?
+                            View.GONE : View.VISIBLE);
                 }
             });
         }
