@@ -23,6 +23,7 @@
 
         <item name="button_accent_selector">@drawable/selector_button_accent</item>
         <item name="activatable_card_selector">@drawable/selector_activatable_card</item>
+        <item name="force_light_status_bar">@bool/force_light_statusbar_icons_light</item>
 
         <item name="android:textColorPrimary">@color/primary_text_selector_light</item>
         <item name="android:textColorSecondary">@color/secondary_text_selector_light</item>
@@ -52,6 +53,7 @@
 
         <item name="button_accent_selector">@drawable/selector_button_accent</item>
         <item name="activatable_card_selector">@drawable/selector_activatable_card</item>
+        <item name="force_light_status_bar">@bool/force_light_statusbar_icons_dark</item>
 
         <item name="android:textColorPrimary">@color/primary_text_selector_dark</item>
         <item name="android:textColorSecondary">@color/secondary_text_selector_dark</item>

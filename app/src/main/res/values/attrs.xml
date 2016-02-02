@@ -15,4 +15,6 @@
     <attr name="button_accent_selector" format="reference" />
     <attr name="activatable_card_selector" format="reference" />
 
+    <attr name="force_light_status_bar" format="boolean" />
+
 </resources>
