@@ -223,6 +223,7 @@ public class RequestsFragment extends BasePageFragment implements
         progress.setVisibility(View.VISIBLE);
         progressText.setVisibility(View.VISIBLE);
         progressText.setText(R.string.preparing_to_load);
+        list.setVisibility(View.GONE);
 
         mPager = (DisableableViewPager) getActivity().findViewById(R.id.pager);
         list.setFingerListener(new DragSelectRecyclerView.FingerListener() {
@@ -257,6 +258,7 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onPermissionResult(PermissionResultSet permissionResultSet) {
         if (!permissionResultSet.isGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
+            list.setVisibility(View.GONE);
             progress.setVisibility(View.GONE);
             toggleFab(false);
             emptyText.setVisibility(View.VISIBLE);
@@ -302,6 +304,7 @@ public class RequestsFragment extends BasePageFragment implements
                 emptyText.setVisibility(mAdapter.getItemCount() == 0 ?
                         View.VISIBLE : View.GONE);
                 progress.setVisibility(View.GONE);
+                list.setVisibility(View.VISIBLE);
             }
             mRequestManager.loadAppsIfEmptyAsync();
         }
@@ -330,6 +333,7 @@ public class RequestsFragment extends BasePageFragment implements
             public void run() {
                 emptyText.setVisibility(View.GONE);
                 progress.setVisibility(View.VISIBLE);
+                list.setVisibility(View.GONE);
                 progressText.setText(R.string.preparing_to_load);
             }
         });
