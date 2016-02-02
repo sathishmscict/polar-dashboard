@@ -143,7 +143,11 @@ public class IconsFragment extends BasePageFragment implements
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final List<DrawableXmlParser.Category> categories = DrawableXmlParser.parse(getActivity(), R.xml.drawable);
+                int id = R.xml.drawable;
+                int drawableDashboard = getResources().getIdentifier("drawable_dashboard", "xml", getActivity().getPackageName());
+                if (drawableDashboard != 0)
+                    id = drawableDashboard;
+                final List<DrawableXmlParser.Category> categories = DrawableXmlParser.parse(getActivity(), id);
                 mHandler.post(new TimerTask() {
                     @Override
                     public void run() {
