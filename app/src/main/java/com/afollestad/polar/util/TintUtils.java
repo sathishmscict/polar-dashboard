@@ -47,7 +47,7 @@ public final class TintUtils {
             mSearchSrcTextViewField.setAccessible(true);
             final EditText mSearchSrcTextView = (EditText) mSearchSrcTextViewField.get(searchView);
             mSearchSrcTextView.setTextColor(tintColor);
-            mSearchSrcTextView.setHintTextColor(ContextCompat.getColor(context, adjustAlpha(tintColor, 0.5f)));
+            mSearchSrcTextView.setHintTextColor(adjustAlpha(tintColor, 0.5f));
             setCursorTint(mSearchSrcTextView, tintColor);
 
             Field field = cls.getDeclaredField("mSearchButton");
