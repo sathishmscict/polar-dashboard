@@ -24,8 +24,8 @@ code {
     border-color: #E0E0E0;
 }
 
-.top-nav .right {
-    padding-bottom: 2%;
+.top-nav .right, .top-nav .right li, .top-nav .right li  {
+    height: 128px;
 }
 
 hr {
