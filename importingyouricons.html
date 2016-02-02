@@ -76,14 +76,22 @@
             </p>
             <hr />
 
-            <h4>Drawable.xml</h4>
+            <h4>drawable.xml</h4>
             <p class="flow-text">
-                The drawable.xml file is located at <b>/res/xml/drawable.xml</b> <i>and</i> <b>/assets/drawable.xml</b>. You need to make sure they are both updated at all times! This file
+                The <code>drawable.xml</code> file is located at <b>/res/xml/drawable.xml</b> <i>and</i> <b>/assets/drawable.xml</b>. You need to make sure they are both updated at all times! This file
                 is used by launchers, and the dashboard to retrieve icons in your pack (along with categories they belong to).
             </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/drawable.JPG" class="app-image">
             <hr>
 
-            <h4>App Filters</h4>
+            <h4>dashboard_drawable.xml</h4>
+            <p class="flow-text">
+                <b>This file is optional.</b> If you want the dashboard UI to display different icons (or icons in a different order) than 
+                what you want to display to launchers, you can add a <b>/res/xml/dashboard_drawable.xml</b> file, which has the same structure 
+                as <b>drawable.xml</b>.
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/dashboarddrawable.JPG" class="app-image">
+            <hr>
+
+            <h4>appfilter.xml</h4>
             <p class="flow-text">
                 The appfilter.xml file is located at <b>/res/xml/appfilter.xml</b> <i>and</i> <b>/assets/appfilter.xml</b>. You need to make sure they are both updated at all times! This is 
                 the most important file for an icon pack. It's used by launchers to associate your PNGs with actual apps. This file can also be used to apply masks along with other 

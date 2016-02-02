@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto+Mono:400,Roboto:300);
+@import url(http://fonts.googleapis.com/css?family=Roboto+Mono:400,Roboto:300,Roboto+Mono:400);
 
 html, body {
     margin: 0;
@@ -10,6 +10,12 @@ html, body {
 
 .nav-wrapper {
     background-color: #81D4FA;
+}
+
+code {
+    background-color: darkslategrey;
+    font-family: 'Roboto Mono', sans-serif;
+    font-weight: 400;
 }
 
 hr {
