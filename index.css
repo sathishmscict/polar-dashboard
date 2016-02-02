@@ -24,6 +24,10 @@ code {
     border-color: #E0E0E0;
 }
 
+.right {
+    margin-bottom: 2%;
+}
+
 hr {
     display: block;
     height: 1px;
