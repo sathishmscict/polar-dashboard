@@ -23,12 +23,14 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.IconAdapter;
 import com.afollestad.polar.dialogs.IconDetailsDialog;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.IconPickerActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
+import com.afollestad.polar.util.TintUtils;
 
 import java.util.List;
 import java.util.TimerTask;
@@ -61,6 +63,10 @@ public class IconsFragment extends BasePageFragment implements
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setOnCloseListener(this);
         mSearchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        if (getActivity() != null) {
+            TintUtils.themeSearchView(getActivity(), mSearchView,
+                    DialogUtils.resolveColor(getActivity(), R.attr.tab_icon_color));
+        }
     }
 
     @Override

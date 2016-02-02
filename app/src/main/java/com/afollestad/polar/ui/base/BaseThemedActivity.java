@@ -18,6 +18,7 @@ import android.view.View;
 import com.afollestad.assent.AssentActivity;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
+import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 
 /**
@@ -39,7 +40,7 @@ public abstract class BaseThemedActivity extends AssentActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             final View decorView = getWindow().getDecorView();
-            boolean lightStatusEnabled = Utils.isColorLight(DialogUtils.resolveColor(this, R.attr.colorPrimaryDark));
+            boolean lightStatusEnabled = TintUtils.isColorLight(DialogUtils.resolveColor(this, R.attr.colorPrimaryDark));
             final int systemUiVisibility = decorView.getSystemUiVisibility();
             if (lightStatusEnabled) {
                 decorView.setSystemUiVisibility(systemUiVisibility | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -59,7 +60,7 @@ public abstract class BaseThemedActivity extends AssentActivity {
             toolbar.setTitleTextColor(tintColor);
             Utils.setOverflowButtonColor(this, tintColor);
 
-            if (Utils.isColorLight(tintColor)) {
+            if (TintUtils.isColorLight(tintColor)) {
                 toolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light);
             } else {
                 toolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat);

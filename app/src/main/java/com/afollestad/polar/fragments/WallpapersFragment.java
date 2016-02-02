@@ -42,6 +42,7 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.WallpaperAdapter;
 import com.afollestad.polar.fragments.base.BasePageFragment;
+import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.viewer.ViewerActivity;
@@ -121,6 +122,10 @@ public class WallpapersFragment extends BasePageFragment implements
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setOnCloseListener(this);
         mSearchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        if (getActivity() != null) {
+            TintUtils.themeSearchView(getActivity(), mSearchView,
+                    DialogUtils.resolveColor(getActivity(), R.attr.tab_icon_color));
+        }
     }
 
     @Override

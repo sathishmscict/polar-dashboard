@@ -48,6 +48,7 @@ import com.afollestad.polar.ui.base.BaseThemedActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
 import com.afollestad.polar.util.LicensingUtils;
 import com.afollestad.polar.util.PagesBuilder;
+import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 import com.google.android.vending.licensing.Policy;
 
@@ -251,7 +252,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         int iconColor;
         int titleColor;
         int selectedBg;
-        if (Utils.isColorLight(navBg.getColor())) {
+        if (TintUtils.isColorLight(navBg.getColor())) {
             iconColor = ContextCompat.getColor(this, R.color.navigationview_normalicon_light);
             titleColor = ContextCompat.getColor(this, R.color.navigationview_normaltext_light);
             selectedBg = ContextCompat.getColor(this, R.color.navigationview_selectedbg_light);
