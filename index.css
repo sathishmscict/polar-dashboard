@@ -24,10 +24,6 @@ code {
     border-color: #E0E0E0;
 }
 
-.top-nav .right, .top-nav .right li, .top-nav .right li  {
-    height: 128px;
-}
-
 hr {
     display: block;
     height: 1px;
