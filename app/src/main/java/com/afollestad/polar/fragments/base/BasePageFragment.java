@@ -55,7 +55,6 @@ public abstract class BasePageFragment extends Fragment {
             }
         }
     }
-
     protected void applyInsetsToViewMargin(View view) {
         ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
             private int mInitialBottom = -1;

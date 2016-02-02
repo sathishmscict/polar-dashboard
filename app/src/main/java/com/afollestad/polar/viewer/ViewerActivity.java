@@ -6,12 +6,16 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.view.OnApplyWindowInsetsListener;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.WindowInsetsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.WallpapersFragment;
@@ -65,6 +69,23 @@ public class ViewerActivity extends AppCompatActivity {
         return 0;
     }
 
+    protected void applyTopInset(View view) {
+        ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
+            private int mInitialTop = -1;
+
+            @Override
+            public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
+                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+                if (mInitialTop == -1)
+                    mInitialTop = layoutParams.topMargin;
+                layoutParams.topMargin = mInitialTop + insets.getSystemWindowInsetTop();
+                v.setLayoutParams(layoutParams);
+                return insets;
+            }
+        });
+        ViewCompat.requestApplyInsets(view);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +100,8 @@ public class ViewerActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        applyTopInset(mToolbar);
 
         if (savedInstanceState == null) {
             if (getIntent() != null && getIntent().getExtras() != null) {
