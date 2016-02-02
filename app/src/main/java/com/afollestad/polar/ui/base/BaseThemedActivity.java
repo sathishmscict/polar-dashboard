@@ -2,6 +2,7 @@ package com.afollestad.polar.ui.base;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -35,6 +36,17 @@ public abstract class BaseThemedActivity extends AssentActivity {
         mLastDarkTheme = darkTheme();
         setTheme(getCurrentTheme());
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            final View decorView = getWindow().getDecorView();
+            boolean lightStatusEnabled = Utils.isColorLight(DialogUtils.resolveColor(this, R.attr.colorPrimaryDark));
+            final int systemUiVisibility = decorView.getSystemUiVisibility();
+            if (lightStatusEnabled) {
+                decorView.setSystemUiVisibility(systemUiVisibility | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            } else {
+                decorView.setSystemUiVisibility(systemUiVisibility & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            }
+        }
     }
 
     @SuppressLint("PrivateResource")
