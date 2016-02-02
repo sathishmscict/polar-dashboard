@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.assent.AssentActivity;
 import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.WallpapersFragment;
 import com.afollestad.polar.util.WallpaperUtils;
@@ -30,7 +31,7 @@ import static com.afollestad.polar.fragments.WallpapersFragment.RQ_CROPANDSETWAL
  * @author Aidan Follestad (afollestad)
  */
 @SuppressLint("MissingSuperCall")
-public class ViewerActivity extends AppCompatActivity {
+public class ViewerActivity extends AssentActivity {
 
     private WallpaperUtils.WallpapersHolder mWallpapers;
     @SuppressWarnings("FieldCanBeLocal")

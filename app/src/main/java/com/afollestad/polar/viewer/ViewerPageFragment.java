@@ -64,6 +64,12 @@ public class ViewerPageFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.apply:
+                break;
+            default:
+                break;
+        }
         WallpapersFragment.performOption(getActivity(), getView(),
                 item.getItemId() == R.id.apply ? 0 : 1, mWallpaper);
         return super.onOptionsItemSelected(item);

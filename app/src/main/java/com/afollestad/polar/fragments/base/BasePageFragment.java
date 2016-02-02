@@ -1,6 +1,5 @@
 package com.afollestad.polar.fragments.base;
 
-import android.app.Fragment;
 import android.support.annotation.StringRes;
 import android.support.v4.view.OnApplyWindowInsetsListener;
 import android.support.v4.view.ViewCompat;
@@ -10,12 +9,13 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.assent.AssentFragment;
 import com.afollestad.polar.ui.base.BaseThemedActivity;
 
 /**
  * @author Aidan Follestad (afollestad)
  */
-public abstract class BasePageFragment extends Fragment {
+public abstract class BasePageFragment extends AssentFragment {
 
     @StringRes
     public abstract int getTitle();
@@ -55,6 +55,7 @@ public abstract class BasePageFragment extends Fragment {
             }
         }
     }
+
     protected void applyInsetsToViewMargin(View view) {
         ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
             private int mInitialBottom = -1;

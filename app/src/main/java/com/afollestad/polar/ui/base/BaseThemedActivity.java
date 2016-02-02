@@ -51,11 +51,6 @@ public abstract class BaseThemedActivity extends AssentActivity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
     @SuppressLint("PrivateResource")
     @Override
     protected void onStart() {
