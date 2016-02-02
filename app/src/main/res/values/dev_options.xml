@@ -28,4 +28,7 @@
     <!-- Public Base64 from the developer console for license checking, optional -->
     <string name="licensing_public_key"></string>
 
+    <!-- When true, the app will open the last selected page during restarts -->
+    <bool name="persist_selected_page">true</bool>
+
 </resources>

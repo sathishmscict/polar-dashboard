@@ -17,6 +17,7 @@ import android.view.Window;
 
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.IconMoreAdapter;
+import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.IconsFragment;
 import com.afollestad.polar.transitions.CircularRevealTransition;
 import com.afollestad.polar.ui.base.BaseThemedActivity;
@@ -67,7 +68,7 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(category.getName());
 
-        int gridWidth = getResources().getInteger(R.integer.icon_grid_width);
+        final int gridWidth = Config.get().gridWidthIcons();
         mAdapter = new IconMoreAdapter(this, gridWidth, this);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, gridWidth));
         mRecyclerView.setAdapter(mAdapter);

@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -34,6 +33,7 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.MainPagerAdapter;
+import com.afollestad.polar.config.Config;
 import com.afollestad.polar.dialogs.ChangelogDialog;
 import com.afollestad.polar.dialogs.InvalidLicenseDialog;
 import com.afollestad.polar.fragments.AboutFragment;
@@ -50,6 +50,7 @@ import com.afollestad.polar.util.LicensingUtils;
 import com.afollestad.polar.util.PagesBuilder;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
+import com.afollestad.polar.views.DisableableViewPager;
 import com.google.android.vending.licensing.Policy;
 
 import butterknife.Bind;
@@ -73,7 +74,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     @Bind(R.id.navigation_view)
     NavigationView mNavView;
     @Bind(R.id.pager)
-    ViewPager mPager;
+    DisableableViewPager mPager;
 
     public RecyclerView mRecyclerView;
 
@@ -88,8 +89,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final boolean useNavDrawer = PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean("nav_drawer_mode", getResources().getBoolean(R.bool.nav_drawer_mode_default));
+        final boolean useNavDrawer = Config.get().navDrawerModeEnabled();
         if (useNavDrawer)
             setContentView(R.layout.activity_main_drawer);
         else
@@ -105,10 +105,12 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         else setupTabs();
 
         // Restore last selected page, tab/nav-drawer-item
-        int lastPage = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getInt("last_selected_page", 0);
-        if (lastPage > mPager.getAdapter().getCount() - 1) lastPage = 0;
-        mPager.setCurrentItem(lastPage);
-        if (mNavView != null) invalidateNavViewSelection(lastPage);
+        if (Config.get().persistSelectedPage()) {
+            int lastPage = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getInt("last_selected_page", 0);
+            if (lastPage > mPager.getAdapter().getCount() - 1) lastPage = 0;
+            mPager.setCurrentItem(lastPage);
+            if (mNavView != null) invalidateNavViewSelection(lastPage);
+        }
 
         processIntent(getIntent());
     }
@@ -132,16 +134,15 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     }
 
     private void setupPages() {
-        final Resources r = getResources();
         mPages = new PagesBuilder(7);
-        if (r.getBoolean(R.bool.homepage_enabled))
+        if (Config.get().homepageEnabled())
             mPages.add(new PagesBuilder.Page(R.id.drawer_home, R.drawable.tab_home, R.string.home, new HomeFragment()));
         mPages.add(new PagesBuilder.Page(R.id.drawer_icons, R.drawable.tab_icons, R.string.icons, new IconsFragment()));
         mPages.add(new PagesBuilder.Page(R.id.drawer_wallpapers, R.drawable.tab_wallpapers, R.string.wallpapers, new WallpapersFragment()));
-        if (!r.getString(R.string.icon_request_email).trim().isEmpty())
+        if (Config.get().iconRequestEnabled())
             mPages.add(new PagesBuilder.Page(R.id.drawer_requestIcons, R.drawable.tab_requests, R.string.request_icons, new RequestsFragment()));
         mPages.add(new PagesBuilder.Page(R.id.drawer_apply, R.drawable.tab_apply, R.string.apply, new ApplyFragment()));
-        if (r.getBoolean(R.bool.zooper_enabled))
+        if (Config.get().zooperEnabled())
             mPages.add(new PagesBuilder.Page(R.id.drawer_zooper, R.drawable.tab_zooper, R.string.zooper, new ZooperFragment()));
         mPages.add(new PagesBuilder.Page(R.id.drawer_about, R.drawable.tab_about, R.string.about, new AboutFragment()));
     }
@@ -163,7 +164,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     }
 
     public void showChangelogIfNecessary(boolean licenseAllowed) {
-        if (!getResources().getBoolean(R.bool.changelog_enabled)) {
+        if (!Config.get().changelogEnabled()) {
             retryLicenseCheck();
         } else if (licenseAllowed || retryLicenseCheck()) {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -179,20 +180,18 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
 
-        if (!getResources().getBoolean(R.bool.changelog_enabled))
+        if (!Config.get().changelogEnabled())
             menu.findItem(R.id.changelog).setVisible(false);
 
         MenuItem darkTheme = menu.findItem(R.id.darkTheme);
-        if (!getResources().getBoolean(R.bool.allow_theme_switching))
+        if (!Config.get().allowThemeSwitching())
             darkTheme.setVisible(false);
         else darkTheme.setChecked(darkTheme());
 
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         MenuItem navDrawerMode = menu.findItem(R.id.navDrawerMode);
-        if (getResources().getBoolean(R.bool.allow_nav_drawer_mode_switch)) {
+        if (Config.get().navDrawerModeAllowSwitch()) {
             navDrawerMode.setVisible(true);
-            navDrawerMode.setChecked(prefs.getBoolean("nav_drawer_mode",
-                    getResources().getBoolean(R.bool.nav_drawer_mode_default)));
+            navDrawerMode.setChecked(Config.get().navDrawerModeEnabled());
         }
 
         return super.onCreateOptionsMenu(menu);
@@ -214,8 +213,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
             return true;
         } else if (item.getItemId() == R.id.navDrawerMode) {
             item.setChecked(!item.isChecked());
-            PreferenceManager.getDefaultSharedPreferences(this).edit()
-                    .putBoolean("nav_drawer_mode", item.isChecked()).commit();
+            Config.get().navDrawerModeEnabled(item.isChecked());
             recreate();
             return true;
         }
@@ -307,8 +305,6 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
             public void onPageSelected(int position) {
                 final BasePageFragment frag = (BasePageFragment) getFragmentManager().findFragmentByTag("page:" + position);
                 if (frag != null) frag.updateTitle();
-                if (!getResources().getBoolean(R.bool.homepage_enabled))
-                    position++;
                 invalidateNavViewSelection(position);
             }
         });
@@ -330,8 +326,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
             return 0;
         }
 
-        boolean useNavDrawer = PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean("nav_drawer_mode", getResources().getBoolean(R.bool.nav_drawer_mode_default));
+        boolean useNavDrawer = Config.get().navDrawerModeEnabled();
         if (useNavDrawer) {
             return mDrawerLastInsets.getSystemWindowInsetTop();
         } else {
@@ -342,6 +337,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
     private void setupPager() {
         mPager.setAdapter(new MainPagerAdapter(getFragmentManager(), mPages));
         mPager.setOffscreenPageLimit(mPages.size());
+        mPager.setPagingEnabled(!Config.get().navDrawerModeEnabled());
     }
 
     private void setupTabs() {
@@ -402,6 +398,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         PreferenceManager.getDefaultSharedPreferences(MainActivity.this)
                 .edit().putInt("last_selected_page", mPager.getCurrentItem()).commit();
         if (isFinishing()) {
+            Config.deinit();
             Bridge.destroy();
             Inquiry.deinit();
             DrawableXmlParser.cleanup();

@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.ApplyAdapter;
+import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.util.ApplyUtil;
 
@@ -39,13 +40,12 @@ public class ApplyFragment extends BasePageFragment implements ApplyAdapter.Sele
 
         mRecyclerView = ButterKnife.findById(v, android.R.id.list);
 
-        final GridLayoutManager lm = new GridLayoutManager(getActivity(),
-                getResources().getInteger(R.integer.apply_grid_width));
+        final GridLayoutManager lm = new GridLayoutManager(getActivity(), Config.get().gridWidthApply());
         lm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
                 if (position == 0 && ApplyUtil.canQuickApply(getActivity()) != null)
-                    return getResources().getInteger(R.integer.apply_grid_width);
+                    return Config.get().gridWidthApply();
                 return 1;
             }
         });

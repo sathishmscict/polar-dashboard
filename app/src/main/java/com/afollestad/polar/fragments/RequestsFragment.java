@@ -29,6 +29,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.RequestsAdapter;
+import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.util.Utils;
@@ -202,13 +203,12 @@ public class RequestsFragment extends BasePageFragment implements
         applyInsetsToViewMargin(fab);
         applyInsetsToViewMargin(emptyText);
 
-        GridLayoutManager lm = new GridLayoutManager(getActivity(),
-                getResources().getInteger(R.integer.requests_grid_width));
+        GridLayoutManager lm = new GridLayoutManager(getActivity(), Config.get().gridWidthRequests());
         lm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
                 if (position == 0)
-                    return getResources().getInteger(R.integer.requests_grid_width);
+                    return Config.get().gridWidthRequests();
                 return 1;
             }
         });
@@ -227,12 +227,15 @@ public class RequestsFragment extends BasePageFragment implements
         list.setVisibility(View.GONE);
 
         mPager = (DisableableViewPager) getActivity().findViewById(R.id.pager);
-        list.setFingerListener(new DragSelectRecyclerView.FingerListener() {
-            @Override
-            public void onDragSelectFingerAction(boolean dragActive) {
-                mPager.setPagingEnabled(!dragActive);
-            }
-        });
+        if (!Config.get().navDrawerModeEnabled()) {
+            // Swiping is only enabled in nav drawer mode, so no need to run this code in nav drawer mode
+            list.setFingerListener(new DragSelectRecyclerView.FingerListener() {
+                @Override
+                public void onDragSelectFingerAction(boolean dragActive) {
+                    mPager.setPagingEnabled(!dragActive);
+                }
+            });
+        }
 
         emptyText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -384,7 +387,7 @@ public class RequestsFragment extends BasePageFragment implements
 
     @OnClick(R.id.fab)
     public void onClickFab() {
-        if (getString(R.string.icon_request_email).trim().isEmpty()) {
+        if (!Config.get().iconRequestEnabled()) {
             Utils.showError(getActivity(), new Exception("The developer has not set an email for icon requests yet."));
             return;
         }

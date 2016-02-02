@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.IconAdapter;
+import com.afollestad.polar.config.Config;
 import com.afollestad.polar.dialogs.IconDetailsDialog;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.IconPickerActivity;
@@ -76,7 +77,7 @@ public class IconsFragment extends BasePageFragment implements
         TextView emptyView = (TextView) v.findViewById(android.R.id.empty);
         emptyView.setText(R.string.no_results);
 
-        final int gridWidth = getResources().getInteger(R.integer.icon_grid_width);
+        final int gridWidth = Config.get().gridWidthIcons();
         mRecyclerView = ButterKnife.findById(v, android.R.id.list);
 
         mAdapter = new IconAdapter(getActivity(), gridWidth, new IconAdapter.ClickListener() {

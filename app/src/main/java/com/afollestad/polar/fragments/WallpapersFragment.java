@@ -41,6 +41,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.WallpaperAdapter;
+import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
@@ -339,7 +340,7 @@ public class WallpapersFragment extends BasePageFragment implements
             }
         });
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(
-                getResources().getInteger(R.integer.wallpaper_grid_width), StaggeredGridLayoutManager.VERTICAL));
+                Config.get().gridWidthWallpaper(), StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
 
         if (savedInstanceState != null)

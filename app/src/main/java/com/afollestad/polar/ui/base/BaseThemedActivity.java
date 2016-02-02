@@ -18,6 +18,7 @@ import android.view.View;
 import com.afollestad.assent.AssentActivity;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
+import com.afollestad.polar.config.Config;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 
@@ -25,8 +26,6 @@ import com.afollestad.polar.util.Utils;
  * @author Aidan Follestad (afollestad)
  */
 public abstract class BaseThemedActivity extends AssentActivity {
-
-    private static final String CONFIG_DARK_THEME = "config_dark_theme";
 
     private boolean mLastDarkTheme = false;
 
@@ -49,6 +48,8 @@ public abstract class BaseThemedActivity extends AssentActivity {
                 decorView.setSystemUiVisibility(systemUiVisibility & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
             }
         }
+
+        Config.init(this);
     }
 
     @SuppressLint("PrivateResource")
@@ -122,15 +123,11 @@ public abstract class BaseThemedActivity extends AssentActivity {
     }
 
     public final void darkTheme(boolean newValue) {
-        PreferenceManager.getDefaultSharedPreferences(this).edit()
-                .putBoolean(CONFIG_DARK_THEME, newValue).commit();
+        Config.get().darkTheme(newValue);
     }
 
     public final boolean darkTheme() {
-        if (!getResources().getBoolean(R.bool.allow_theme_switching))
-            darkTheme(getResources().getBoolean(R.bool.dark_theme_default));
-        return PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean(CONFIG_DARK_THEME, getResources().getBoolean(R.bool.dark_theme_default));
+        return Config.get().darkTheme();
     }
 
     public static void themeMenu(Context context, Menu menu) {
