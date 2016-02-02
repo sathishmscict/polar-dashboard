@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto+Mono:400,Roboto:300,Roboto+Mono:400);
+@import url(http://fonts.googleapis.com/css?family=Roboto+Mono:400,Roboto:300,Roboto+Mono:500);
 
 html, body {
     margin: 0;
@@ -15,9 +15,10 @@ html, body {
 code {
     background-color: #F5F5F5;
     font-family: 'Roboto Mono', sans-serif;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 16px;
-    padding: 6px;
+    color: black;
+    padding: 8px;
     border-style: solid;
     border-width: 1px;
     border-color: #E0E0E0;
