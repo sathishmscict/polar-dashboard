@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
 import com.afollestad.polar.R;
+import com.afollestad.polar.util.Utils;
 import com.pk.requestmanager.AppInfo;
 
 import java.util.ArrayList;
@@ -70,8 +71,10 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
         holder.image.setImageDrawable(app.getImage());
         holder.title.setText(app.getName());
 
-        if (holder.card != null)
+        if (holder.card != null) {
+            holder.card.setForeground(Utils.createCardSelector(holder.itemView.getContext()));
             holder.card.setActivated(isIndexSelected(position));
+        }
     }
 
     @Override

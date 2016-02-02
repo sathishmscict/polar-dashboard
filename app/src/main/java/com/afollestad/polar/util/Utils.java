@@ -2,8 +2,12 @@ package com.afollestad.polar.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RippleDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -15,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 
 import java.util.ArrayList;
@@ -124,6 +129,23 @@ public abstract class Utils {
         } else {
             v.getViewTreeObserver().removeOnGlobalLayoutListener(listener);
         }
+    }
 
+    public static Drawable createCardSelector(Context context) {
+        final int accentColor = DialogUtils.resolveColor(context, R.attr.colorAccent);
+        final int activated = TintUtils.adjustAlpha(accentColor, 0.3f);
+        final int pressed = TintUtils.adjustAlpha(accentColor, 0.6f);
+
+        final StateListDrawable baseSelector = new StateListDrawable();
+        baseSelector.addState(new int[]{android.R.attr.state_activated}, new ColorDrawable(activated));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return new RippleDrawable(ColorStateList.valueOf(accentColor),
+                    baseSelector, new ColorDrawable(Color.WHITE));
+        }
+
+        baseSelector.addState(new int[]{}, new ColorDrawable(Color.TRANSPARENT));
+        baseSelector.addState(new int[]{android.R.attr.state_pressed}, new ColorDrawable(pressed));
+        return baseSelector;
     }
 }

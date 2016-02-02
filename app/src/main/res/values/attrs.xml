@@ -2,7 +2,6 @@
 <resources>
 
     <attr name="colorAccentDark" format="color" />
-    <attr name="colorAccentTranslucent" format="color" />
 
     <attr name="toolbar_shadow" format="reference" />
 

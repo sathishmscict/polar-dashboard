@@ -9,7 +9,6 @@
         <item name="colorAccent">@color/accent_1_light</item>
 
         <item name="colorAccentDark">@color/accent_2_light</item>
-        <item name="colorAccentTranslucent">@color/accent_translucent_light</item>
 
         <item name="toolbar_shadow">@drawable/toolbar_shadow</item>
 
@@ -22,7 +21,6 @@
         <item name="tab_icon_color">@color/tab_icon_color_light</item>
 
         <item name="button_accent_selector">@drawable/selector_button_accent</item>
-        <item name="activatable_card_selector">@drawable/selector_activatable_card</item>
         <item name="force_light_status_bar">@bool/force_light_statusbar_icons_light</item>
 
         <item name="android:textColorPrimary">@color/primary_text_selector_light</item>
@@ -39,7 +37,6 @@
         <item name="colorAccent">@color/accent_1_dark</item>
 
         <item name="colorAccentDark">@color/accent_2_dark</item>
-        <item name="colorAccentTranslucent">@color/accent_translucent_dark</item>
 
         <item name="window_background_cards">@color/window_bg_cards_dark</item>
         <item name="android:windowBackground">@color/window_bg_cards_dark</item>
@@ -52,7 +49,6 @@
         <item name="toolbar_shadow">@drawable/toolbar_shadow</item>
 
         <item name="button_accent_selector">@drawable/selector_button_accent</item>
-        <item name="activatable_card_selector">@drawable/selector_activatable_card</item>
         <item name="force_light_status_bar">@bool/force_light_statusbar_icons_dark</item>
 
         <item name="android:textColorPrimary">@color/primary_text_selector_dark</item>
