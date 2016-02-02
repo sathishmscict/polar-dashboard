@@ -6,9 +6,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.GridLayoutManager;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +27,7 @@ import com.afollestad.assent.AssentCallback;
 import com.afollestad.assent.PermissionResultSet;
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerView;
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
@@ -61,7 +64,6 @@ public class RequestsFragment extends BasePageFragment implements
     private PkRequestManager mRequestManager;
     private MaterialDialog mDialog;
 
-    private boolean mRequestedPermission;
     private int mFabOffset = -1;
     private boolean mFabShown = false;
     private int mInitialSelection = -1;
@@ -254,26 +256,17 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onResume() {
         super.onResume();
-        if (!Assent.isPermissionGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
-            if (!mRequestedPermission) {
-                Assent.requestPermissions(this, PERM_RQ, Assent.WRITE_EXTERNAL_STORAGE);
-                mRequestedPermission = true;
-            }
-        } else {
-            reload();
-            if (getActivity() != null)
-                ((MainActivity) getActivity()).showChangelogIfNecessary(false);
-        }
+        reload();
+        if (getActivity() != null)
+            ((MainActivity) getActivity()).showChangelogIfNecessary(false);
     }
 
     @Override
     public void onPermissionResult(PermissionResultSet permissionResultSet) {
-        if (!permissionResultSet.isGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
-            list.setVisibility(View.GONE);
-            progress.setVisibility(View.GONE);
-            toggleFab(false);
-            emptyText.setVisibility(View.VISIBLE);
-            emptyText.setText(R.string.write_storage_permission_denied);
+        if (permissionResultSet.isGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
+            onClickFab();
+        } else {
+            Toast.makeText(getActivity(), R.string.write_storage_permission_denied, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -390,7 +383,20 @@ public class RequestsFragment extends BasePageFragment implements
         if (!Config.get().iconRequestEnabled()) {
             Utils.showError(getActivity(), new Exception("The developer has not set an email for icon requests yet."));
             return;
+        } else if (!Assent.isPermissionGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
+            new MaterialDialog.Builder(getActivity())
+                    .title(R.string.permission_needed)
+                    .content(Html.fromHtml(getString(R.string.permission_needed_desc, getString(R.string.app_name))))
+                    .positiveText(android.R.string.ok)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            Assent.requestPermissions(RequestsFragment.this, PERM_RQ, Assent.WRITE_EXTERNAL_STORAGE);
+                        }
+                    }).show();
+            return;
         }
+
         synchronized (LOCK) {
             if (getActivity() == null) return;
             final List<AppInfo> apps = mRequestManager.getApps();
