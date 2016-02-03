@@ -8,4 +8,14 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:transitionName="Toolbar"
     app:contentInsetStart="@dimen/content_inset"
-    tools:ignore="NewApi,Overdraw,UnusedAttribute" />
+    tools:ignore="NewApi,Overdraw,UnusedAttribute">
+
+    <!--<TextView-->
+        <!--android:id="@+id/toolbar_title"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:text="Testing Long Title Hello World"-->
+        <!--android:textColor="?titleTextColor" />-->
+
+</android.support.v7.widget.Toolbar>
