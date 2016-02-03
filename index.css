@@ -111,10 +111,6 @@ ul.side-nav.fixed a:hover {
 h1 {
     font-size: 3.0rem;
 }
-h5 {
-    margin-top: 6%;
-    color: #424242;
-}
 
 h1, h2, h3, h4 {
     color: #000;
@@ -130,6 +126,13 @@ h4 {
     font-size: 1.7rem;
     font-family: 'Roboto Mono', sans-serif;
     font-weight: 400;
+}
+
+h5 {
+    font-family: 'Roboto Mono', sans-serif;
+    font-weight: 400;
+    margin-top: 6%;
+    color: #424242;
 }
 
 h6 {
