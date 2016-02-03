@@ -108,6 +108,13 @@ ul.side-nav.fixed a:hover {
     background-color: #81D4FA;
 }
 
+h1 {
+    font-size: 3.5rem;
+}
+h5 {
+    margin-top: 1%;
+}
+
 h1, h2, h3, h4, h5, h6 {
     color: #000;
 }
