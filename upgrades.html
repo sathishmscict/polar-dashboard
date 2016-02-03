@@ -63,12 +63,13 @@
                     </p></li>
                     <li><p class="flow-text">
                         Copy all of the resource files (everything inside of <code>/res</code>) in your project, but don't overwrite
-                        <code>/res/drawablenodpi)</code>, <code>/res/xml</code>, or <code>/res/values</code>. It's likely some files in <code>/res/values</code>
-                        need updates, but avoid overwriting your own configuration in there (copying invidiual files works better).
+                        <code>/res/drawablenodpi)</code> or <code>/res/xml</code>. <b>Note:</b> there are obviously a lot of custom values
+                        set within files in <code>/res/values</code>, you'll want to make sure you make a backup and make sure everything is updated
+                        after the upgrade.
                     </p></li>
                     <li><p class="flow-text">
                         Copy over the <code>build.gradle</code> files (from the root of the project and inside the <code>app</code> module).
-                        Make sure you put back your application ID and versionName/versionCode.
+                        Make sure you put back your <code>applicationId</code> and <code>versionName</code>/<code>versionCode</code>.
                     </p></li>
                     <li><p class="flow-text">
                         Copy over the <code>AndroidManifest.xml</code> file, put your packageName back, along with any other custom configuration.
