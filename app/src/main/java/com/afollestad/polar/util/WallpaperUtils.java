@@ -1,16 +1,29 @@
 package com.afollestad.polar.util;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.afollestad.assent.Assent;
+import com.afollestad.assent.AssentCallback;
+import com.afollestad.assent.PermissionResultSet;
 import com.afollestad.bridge.Bridge;
 import com.afollestad.bridge.BridgeException;
+import com.afollestad.bridge.Callback;
+import com.afollestad.bridge.Request;
 import com.afollestad.bridge.Response;
 import com.afollestad.bridge.ResponseConvertCallback;
 import com.afollestad.bridge.annotations.Body;
@@ -18,11 +31,14 @@ import com.afollestad.bridge.annotations.ContentType;
 import com.afollestad.inquiry.Inquiry;
 import com.afollestad.inquiry.annotations.Column;
 import com.afollestad.inquiry.callbacks.RunCallback;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.WallpapersFragment;
 
+import java.io.File;
 import java.io.Serializable;
+import java.util.Locale;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -183,7 +199,7 @@ public class WallpaperUtils {
         }
     }
 
-    public static void save(@Nullable final Context context, @Nullable final WallpapersHolder holder) {
+    public static void saveDb(@Nullable final Context context, @Nullable final WallpapersHolder holder) {
         if (context == null || holder == null || holder.length() == 0) return;
         Inquiry.init(context, DATABASE_NAME, DATABASE_VERSION);
         try {
@@ -252,6 +268,143 @@ public class WallpaperUtils {
                         }
                     }
                 });
+    }
+
+    private static Activity mContextCache;
+    private static Wallpaper mWallpaperCache;
+    private static boolean mApplyCache;
+    private static File mFileCache;
+    private static Toast mToast;
+
+    private static void showToast(Context context, @StringRes int msg) {
+        showToast(context, context.getString(msg));
+    }
+
+    private static void showToast(Context context, String msg) {
+        if (mToast != null)
+            mToast.cancel();
+        mToast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+        mToast.show();
+    }
+
+    public static void download(final Activity context, final Wallpaper wallpaper, final boolean apply) {
+        mContextCache = context;
+        mWallpaperCache = wallpaper;
+        mApplyCache = apply;
+
+        if (!Assent.isPermissionGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
+            Assent.requestPermissions(new AssentCallback() {
+                @Override
+                public void onPermissionResult(PermissionResultSet permissionResultSet) {
+                    if (permissionResultSet.isGranted(Assent.WRITE_EXTERNAL_STORAGE))
+                        download(mContextCache, mWallpaperCache, mApplyCache);
+                    else
+                        Toast.makeText(context, R.string.write_storage_permission_denied, Toast.LENGTH_LONG).show();
+                }
+            }, 69, Assent.WRITE_EXTERNAL_STORAGE);
+            return;
+        }
+
+        final File saveFolder = new File(Environment.getExternalStorageDirectory(), context.getString(R.string.app_name));
+        //noinspection ResultOfMethodCallIgnored
+        saveFolder.mkdirs();
+
+        final String name;
+        final String extension = wallpaper.url.toLowerCase(Locale.getDefault()).endsWith(".png") ? ".png" : ".jpeg";
+        if (apply) {
+            // Crop/Apply
+            name = String.format("%s_%s_wallpaper.%s",
+                    wallpaper.name.replace(" ", "_"),
+                    wallpaper.author.replace(" ", "_"),
+                    extension);
+        } else {
+            // Save
+            name = String.format("%s_%s.%s",
+                    wallpaper.name.replace(" ", "_"),
+                    wallpaper.author.replace(" ", "_"),
+                    extension);
+        }
+
+        mFileCache = new File(saveFolder, name);
+
+        if (!mFileCache.exists()) {
+            final MaterialDialog dialog = new MaterialDialog.Builder(context)
+                    .content(R.string.downloading_wallpaper)
+                    .progress(true, -1)
+                    .cancelable(true)
+                    .cancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialogInterface) {
+                            if (mContextCache != null && !mContextCache.isFinishing())
+                                showToast(mContextCache, R.string.download_cancelled);
+                            Bridge.cancelAll()
+                                    .tag(WallpaperUtils.class.getName())
+                                    .commit();
+                        }
+                    }).show();
+            Bridge.get(wallpaper.url)
+                    .tag(WallpaperUtils.class.getName())
+                    .request(new Callback() {
+                        @Override
+                        public void response(Request request, Response response, BridgeException e) {
+                            if (e != null) {
+                                dialog.dismiss();
+                                if (e.reason() == BridgeException.REASON_REQUEST_CANCELLED) return;
+                                Utils.showError(context, e);
+                            } else {
+                                try {
+                                    response.asFile(mFileCache);
+                                    finishOption(mContextCache, apply, dialog);
+                                } catch (BridgeException e1) {
+                                    dialog.dismiss();
+                                    Utils.showError(context, e1);
+                                }
+                            }
+                        }
+                    });
+        } else {
+            finishOption(context, apply, null);
+        }
+    }
+
+    private static void finishOption(final Activity context, boolean apply, @Nullable final MaterialDialog dialog) {
+        MediaScannerConnection.scanFile(context,
+                new String[]{mFileCache.getAbsolutePath()}, null,
+                new MediaScannerConnection.OnScanCompletedListener() {
+                    public void onScanCompleted(String path, Uri uri) {
+                        Log.i("WallpaperScan", "Scanned " + path + ":");
+                        Log.i("WallpaperScan", "-> uri = " + uri);
+                    }
+                });
+
+        if (apply) {
+            // Apply
+            if (dialog != null)
+                dialog.dismiss();
+            final Intent intent = new Intent(Intent.ACTION_ATTACH_DATA)
+                    .setDataAndType(Uri.fromFile(mFileCache), "image/*")
+                    .putExtra("mimeType", "image/*");
+            context.startActivity(Intent.createChooser(intent, context.getString(R.string.set_wallpaper_using)));
+        } else {
+            // Save
+            if (dialog != null)
+                dialog.dismiss();
+            showToast(context, context.getString(R.string.saved_to_x, mFileCache.getAbsolutePath()));
+            resetOptionCache(false);
+        }
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public static void resetOptionCache(boolean delete) {
+        mContextCache = null;
+        mWallpaperCache = null;
+        mApplyCache = false;
+        if (delete && mFileCache != null) {
+            mFileCache.delete();
+            final File[] contents = mFileCache.getParentFile().listFiles();
+            if (contents != null && contents.length > 0)
+                mFileCache.getParentFile().delete();
+        }
     }
 
     private WallpaperUtils() {

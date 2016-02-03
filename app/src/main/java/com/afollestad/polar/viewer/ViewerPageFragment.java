@@ -1,6 +1,5 @@
 package com.afollestad.polar.viewer;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
@@ -11,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.afollestad.assent.AssentFragment;
 import com.afollestad.polar.R;
-import com.afollestad.polar.fragments.WallpapersFragment;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -22,11 +21,10 @@ import com.bumptech.glide.request.target.Target;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class ViewerPageFragment extends Fragment {
+public class ViewerPageFragment extends AssentFragment {
 
     @Bind(R.id.progress)
     ProgressBar mProgress;
@@ -64,14 +62,7 @@ public class ViewerPageFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.apply:
-                break;
-            default:
-                break;
-        }
-        WallpapersFragment.performOption(getActivity(), getView(),
-                item.getItemId() == R.id.apply ? 0 : 1, mWallpaper);
+        WallpaperUtils.download(getActivity(), mWallpaper, item.getItemId() == R.id.apply);
         return super.onOptionsItemSelected(item);
     }
 

@@ -181,7 +181,7 @@ public class ViewerActivity extends AssentActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RQ_CROPANDSETWALLPAPER) {
             WallpapersFragment.showToast(this, R.string.wallpaper_set);
-            WallpapersFragment.resetOptionCache(true);
+            WallpaperUtils.resetOptionCache(true);
         }
     }
 

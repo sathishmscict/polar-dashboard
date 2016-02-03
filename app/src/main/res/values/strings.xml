@@ -74,6 +74,7 @@
     <string name="zooper_coming_soon">Zooper support isn\'t ready yet, disable this tab in /res/values/dev_options.xml.</string>
     <string name="permission_needed">Permission Needed</string>
     <string name="permission_needed_desc"><![CDATA[ <b>%1$s</b> needs permission to access your phone\'s storage to generate an icon request!]]></string>
+    <string name="download_cancelled">Download cancelled!</string>
 
     <string-array name="wallpaper_options" translatable="false">
         <item>@string/apply</item>

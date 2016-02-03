@@ -1,13 +1,9 @@
 package com.afollestad.polar.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaScannerConnection;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
@@ -17,7 +13,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,14 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.assent.Assent;
-import com.afollestad.assent.AssentCallback;
-import com.afollestad.assent.PermissionResultSet;
 import com.afollestad.bridge.Bridge;
-import com.afollestad.bridge.BridgeException;
-import com.afollestad.bridge.Callback;
-import com.afollestad.bridge.Request;
-import com.afollestad.bridge.Response;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
@@ -44,12 +32,8 @@ import com.afollestad.polar.adapters.WallpaperAdapter;
 import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.util.TintUtils;
-import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.viewer.ViewerActivity;
-
-import java.io.File;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -173,129 +157,7 @@ public class WallpapersFragment extends BasePageFragment implements
         ActivityCompat.startActivityForResult(getActivity(), intent, RQ_VIEWWALLPAPER, options.toBundle());
     }
 
-    private static Activity mContextCache;
-    private static View mViewCache;
-    private static int mActionIndexCache;
-    private static WallpaperUtils.Wallpaper mWallpaperCache;
-    private static File mFileCache;
-
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static void resetOptionCache(boolean delete) {
-        mContextCache = null;
-        mViewCache = null;
-        mWallpaperCache = null;
-        if (delete && mFileCache != null) {
-            mFileCache.delete();
-            final File[] contents = mFileCache.getParentFile().listFiles();
-            if (contents != null && contents.length > 0)
-                mFileCache.getParentFile().delete();
-        }
-    }
-
-    public static void performOptionCached() {
-        if (mContextCache != null)
-            performOption(mContextCache, mViewCache, mActionIndexCache, mWallpaperCache);
-    }
-
-    public static void performOption(final Activity context, final View view, final int actionIndex, final WallpaperUtils.Wallpaper wallpaper) {
-        mContextCache = context;
-        mViewCache = view;
-        mActionIndexCache = actionIndex;
-        mWallpaperCache = wallpaper;
-
-        if (!Assent.isPermissionGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
-            Assent.requestPermissions(new AssentCallback() {
-                @Override
-                public void onPermissionResult(PermissionResultSet permissionResultSet) {
-                    if (permissionResultSet.isGranted(Assent.WRITE_EXTERNAL_STORAGE))
-                        performOptionCached();
-                    else
-                        Toast.makeText(mContextCache, R.string.write_storage_permission_denied, Toast.LENGTH_LONG).show();
-                }
-            }, 69, Assent.WRITE_EXTERNAL_STORAGE);
-            return;
-        }
-
-        final File saveFolder = new File(Environment.getExternalStorageDirectory(), context.getString(R.string.app_name));
-        //noinspection ResultOfMethodCallIgnored
-        saveFolder.mkdirs();
-
-        final String name;
-        final String extension = wallpaper.url.toLowerCase(Locale.getDefault()).endsWith(".png") ? ".png" : ".jpeg";
-        if (actionIndex == 0) {
-            // Crop/Apply
-            name = String.format("%s_%s_wallpaper.%s",
-                    wallpaper.name.replace(" ", "_"),
-                    wallpaper.author.replace(" ", "_"),
-                    extension);
-        } else {
-            // Save
-            name = String.format("%s_%s.%s",
-                    wallpaper.name.replace(" ", "_"),
-                    wallpaper.author.replace(" ", "_"),
-                    extension);
-        }
-
-        mFileCache = new File(saveFolder, name);
-
-        if (!mFileCache.exists()) {
-            final MaterialDialog dialog = new MaterialDialog.Builder(context)
-                    .content(R.string.downloading_wallpaper)
-                    .progress(true, -1)
-                    .cancelable(false)
-                    .show();
-            Bridge.get(wallpaper.url)
-                    .request(new Callback() {
-                        @Override
-                        public void response(Request request, Response response, BridgeException e) {
-                            if (e != null) {
-                                dialog.dismiss();
-                                if (e.reason() == BridgeException.REASON_REQUEST_CANCELLED) return;
-                                Utils.showError(context, e);
-                            } else {
-                                try {
-                                    response.asFile(mFileCache);
-                                    finishOption(mContextCache, mActionIndexCache, dialog);
-                                } catch (BridgeException e1) {
-                                    dialog.dismiss();
-                                    Utils.showError(context, e1);
-                                }
-                            }
-                        }
-                    });
-        } else {
-            finishOption(context, actionIndex, null);
-        }
-    }
-
-    public static void finishOption(final Activity context, int actionIndex, @Nullable final MaterialDialog dialog) {
-        MediaScannerConnection.scanFile(context,
-                new String[]{mFileCache.getAbsolutePath()}, null,
-                new MediaScannerConnection.OnScanCompletedListener() {
-                    public void onScanCompleted(String path, Uri uri) {
-                        Log.i("WallpaperScan", "Scanned " + path + ":");
-                        Log.i("WallpaperScan", "-> uri = " + uri);
-                    }
-                });
-
-        if (actionIndex == 0) {
-            // Apply
-            if (dialog != null)
-                dialog.dismiss();
-            final Intent intent = new Intent(Intent.ACTION_ATTACH_DATA)
-                    .setDataAndType(Uri.fromFile(mFileCache), "image/*")
-                    .putExtra("mimeType", "image/*");
-            context.startActivity(Intent.createChooser(intent, context.getString(R.string.set_wallpaper_using)));
-        } else {
-            // Save
-            if (dialog != null)
-                dialog.dismiss();
-            showToast(context, context.getString(R.string.saved_to_x, mFileCache.getAbsolutePath()));
-            resetOptionCache(false);
-        }
-    }
-
-    void showOptions(final int imageIndex) {
+    private void showOptions(final int imageIndex) {
         new MaterialDialog.Builder(getActivity())
                 .title(R.string.wallpaper)
                 .items(R.array.wallpaper_options)
@@ -303,7 +165,7 @@ public class WallpapersFragment extends BasePageFragment implements
                     @Override
                     public void onSelection(MaterialDialog materialDialog, View view, final int i, CharSequence charSequence) {
                         final WallpaperUtils.Wallpaper wallpaper = mWallpapers.get(imageIndex);
-                        performOption(getActivity(), getView(), i, wallpaper);
+                        WallpaperUtils.download(getActivity(), wallpaper, i == 0);
                     }
                 }).show();
     }
@@ -352,9 +214,7 @@ public class WallpapersFragment extends BasePageFragment implements
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-        mContextCache = null;
-        mViewCache = null;
-        mWallpaperCache = null;
+        WallpaperUtils.resetOptionCache(true);
     }
 
     public void load() {
@@ -389,7 +249,7 @@ public class WallpapersFragment extends BasePageFragment implements
         super.onPause();
         if (getActivity() != null) {
             if (mAdapter != null)
-                WallpaperUtils.save(getActivity(), mAdapter.getWallpapers());
+                WallpaperUtils.saveDb(getActivity(), mAdapter.getWallpapers());
             if (getActivity().isFinishing()) {
                 Bridge.cancelAll()
                         .tag(WallpapersFragment.class.getName())

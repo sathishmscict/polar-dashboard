@@ -50,6 +50,7 @@ import com.afollestad.polar.util.LicensingUtils;
 import com.afollestad.polar.util.PagesBuilder;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
+import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.views.DisableableViewPager;
 import com.google.android.vending.licensing.Policy;
 
@@ -420,7 +421,7 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RQ_CROPANDSETWALLPAPER) {
             WallpapersFragment.showToast(this, R.string.wallpaper_set);
-            WallpapersFragment.resetOptionCache(true);
+            WallpaperUtils.resetOptionCache(true);
         } else if (requestCode == RQ_VIEWWALLPAPER) {
             if (data != null && mRecyclerView != null) {
                 mRecyclerView.requestFocus();
