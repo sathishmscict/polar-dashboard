@@ -59,20 +59,30 @@
                 all of the custom configuration you had before.<br />
                 <ol>
                     <li><p class="flow-text">
-                        Copy all of the code (Java) files from the new release into your project (overwrite everything).
+                        Copy all of the code (Java) files from the new release into your project (overwrite everything). <b>You'll need to 
+                        refactor the package name again, as mentioned in <a href="//afollestad.github.io/polar-dashboard/gettingstarted.html">Getting Started</a>.</b>
                     </p></li>
+                    <li>
+                        <p class="flow-text">
+                            Make a backup of the <code>dev_</code> prefixed files in <code>/res/values</code>.
+                        </p>
+                    </li>
                     <li><p class="flow-text">
                         Copy all of the resource files (everything inside of <code>/res</code>) in your project, but don't overwrite
-                        <code>/res/drawablenodpi</code> or <code>/res/xml</code>. <b>NOTE:</b> there are obviously a lot of custom values
-                        set within files in <code>/res/values</code>, you'll want to make sure you make a backup and make sure everything is updated
-                        after the upgrade.
+                        <code>/res/drawablenodpi</code> or <code>/res/xml</code>
                     </p></li>
+                    <li>
+                        <p class="flow-text">
+                            Put back custom configuration from the <code>dev_</code> prefixed files in <code>/res/values</code>, <b>but be careful
+                            to not remove any new values that were added to those files for the upgrade.</b>
+                        </p>
+                    </li>
                     <li><p class="flow-text">
                         Copy over the <code>build.gradle</code> files (from the root of the project and inside the <code>app</code> module).
-                        Make sure you put back your <code>applicationId</code> and <code>versionName</code>/<code>versionCode</code>.
+                        Make sure you put back your <code>applicationId</code> and <code>versionName</code>/<code>versionCode</code> values.
                     </p></li>
                     <li><p class="flow-text">
-                        Copy over the <code>AndroidManifest.xml</code> file, put your packageName back, along with any other custom configuration.
+                        Copy over the <code>AndroidManifest.xml</code> file, put your <code>package</code> back at the top, along with any other custom configuration.
                     </p></li>
                 </ol>
             </p>
