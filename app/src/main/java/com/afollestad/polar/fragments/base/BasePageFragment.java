@@ -1,5 +1,7 @@
 package com.afollestad.polar.fragments.base;
 
+import android.app.Fragment;
+import android.os.Build;
 import android.support.annotation.StringRes;
 import android.support.v4.view.OnApplyWindowInsetsListener;
 import android.support.v4.view.ViewCompat;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.afollestad.assent.AssentFragment;
+import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.ui.base.BaseThemedActivity;
 
 /**
@@ -39,8 +42,6 @@ public abstract class BasePageFragment extends AssentFragment {
             BaseThemedActivity.themeMenu(getActivity(), menu);
     }
 
-    static final Object LOCK = new Object();
-
     /**
      * Applies window insets apart from the top inset to a ViewGroup's direct children, if they have
      * fitsSystemWindows set.
@@ -57,22 +58,18 @@ public abstract class BasePageFragment extends AssentFragment {
     }
 
     protected void applyInsetsToViewMargin(View view) {
-        ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
-            private int mInitialBottom = -1;
-
-            @Override
-            public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
-                synchronized (LOCK) {
-                    ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-                    if (mInitialBottom == -1)
-                        mInitialBottom = layoutParams.bottomMargin;
-                    layoutParams.bottomMargin = mInitialBottom + insets.getSystemWindowInsetBottom();
-                    v.setLayoutParams(layoutParams);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
+                @Override
+                public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
+                    //Ignore fitsSystemWindows
                     return insets;
                 }
-            }
-        });
-        ViewCompat.requestApplyInsets(view);
+            });
+        }
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        layoutParams.bottomMargin += ((MainActivity) getActivity()).getBottomInset();
+        view.setLayoutParams(layoutParams);
     }
 
     /**
@@ -81,20 +78,16 @@ public abstract class BasePageFragment extends AssentFragment {
      * Must be called in/after onViewCreated
      */
     protected void applyInsetsToView(View view) {
-        ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
-            private int mInitialBottom = -1;
-
-            @Override
-            public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
-                synchronized (LOCK) {
-                    if (mInitialBottom == -1)
-                        mInitialBottom = v.getPaddingBottom();
-                    v.setPaddingRelative(v.getPaddingStart(), v.getPaddingTop(),
-                            v.getPaddingEnd(), mInitialBottom + insets.getSystemWindowInsetBottom());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
+                @Override
+                public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
+                    //Ignore fitsSystemWindows
                     return insets;
                 }
-            }
-        });
-        ViewCompat.requestApplyInsets(view);
+            });
+        }
+        view.setPaddingRelative(view.getPaddingStart(), view.getPaddingTop(),
+                view.getPaddingEnd(), view.getPaddingBottom() + ((MainActivity) getActivity()).getBottomInset());
     }
 }
