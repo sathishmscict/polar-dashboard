@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Polar Dashboard &#8212; Getting Started</title>
+    <!-- jQuery-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Compiled and minified CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#81D4FA">
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+
+<body>
+    <header>
+        <nav class="top-nav">
+            <div class="nav-wrapper">
+                <a href="/" class="page-title">Getting Started</a>
+                <ul id="slide-out" class="side-nav fixed">
+                    <li>
+                        <a href="//afollestad.github.io/polar-dashboard" class="waves-effect">Home</a>
+                    </li>
+                    <li class="active">
+                        <a href="//afollestad.github.io/polar-dashboard/gettingstarted.html" class="waves-effect">Getting Started</a>
+                    </li>
+                    <li>
+                        <a href="//afollestad.github.io/polar-dashboard/icons.html" class="waves-effect">Icons</a>
+                    </li>
+                    <li>
+                        <a href="//afollestad.github.io/polar-dashboard/wallpapers.html" class="waves-effect">Wallpapers</a>
+                    </li>
+                    <li>
+                        <a href="//afollestad.github.io/polar-dashboard/customization.html" class="waves-effect">Customization</a>
+                    </li>
+                    <li>
+                        <a href="//afollestad.github.io/polar-dashboard/upgrades.html" class="waves-effect">Upgrades</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/afollestad/polar-dashboard" class="waves-effect">Back to GitHub</a>
+                    </li>
+                </ul>
+                <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+            </div>
+        </nav>
+    </header>
+    <main class="mainContent">
+        <div class="container">
+
+            <h1>Introduction</h1>
+
+            <p class="flow-text">
+                The first you need to do is download <b>Polar</b> from <a href="https://github.com/afollestad/polar-dashboard">GitHub</a>. 
+                A lot of you probably already understand how GitHub works, but I know some designers haven't had to use it before. We thought 
+                it would be helpful to have a basic guide to get the source code from GitHub. You'll need to know how to do this for upgrades, too.
+            </p>
+           
+            <hr />
+
+            <h1>Downloading the Code</h1>
+
+            <p class="flow-text">
+                First, you need to download the project to the computer that you use for design/development. There are three ways to do this:
+                <ol>
+                    <li>Download a ZIP file from the GitHub repo.</li>
+                    <li>Through the GitHub desktop client.</li>
+                    <li>Through the Command Prompt (Windows) or Terminal (OSX/Linux).</li>
+                </ol>
+            </p>
+
+            <h5>ZIP Archive</h5>
+
+            <p class="flow-text">
+                If you choose to download a ZIP file, it's pretty straightforward, but harder to keep up to date when things change remotely.
+            </p>
+            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/githubdownloadzip.JPG" class="app-image">
+            
+            <h5>Desktop Client</h5>
+
+            <p class="flow-text">
+                If you choose to use the GitHub desktop client, an extra step is required that makes the process a bit longer. First, you 
+                need to fork the main repository. Basically, this copies Polar from my (Aidan's) profile into your own. It's important to 
+                know that when I update the main repository, forks of it are not automatically updated. You have to do that yourself.
+            </p>
+
+            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/githubfork.JPG" class="app-image">
+
+            <p class="flow-text">
+                Once you've forked the repository, you can clone your fork from the GitHub desktop client.
+            </p>
+
+            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/githubdesktopclone.JPG" class="app-image">
+
+            <h5>Command Prompt/Terminal</h5>
+
+            <p class="flow-text">
+                I don't want to go over all of the specifics of how you setup Git to work from CMD/Terminal, so I will assume anyone 
+                that will be using this already understands how to set it up and use it.
+            </p>
+            <p class="flow-text">
+                You don't have to fork the repository, or even login. All that you need is the SSH URL from the main repository.
+            </p>
+
+            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/githubsshclone.JPG" class="app-image">
+
+            <p class="flow-text">
+                With that SSH URL, you can clone the repository into the current directory using <code>git clone git@github.com:afollestad/polar-dashboard.git</code>, 
+                and you can retrieve repository updates using <code>git pull origin master</code> (although this will generally be messy when you are editing a lot of local files that I also modify remotely).
+            </p>
+
+            <hr />
+
+            <h1>Refactoring the Package Name</h1>
+
+            <p class="flow-text">
+                Initially, Polar will have the package name (aka <code>applicationId</code>) <b>com.afollestad.polar</b>. This is a unique 
+                identifier, which no other app can used if it's published to Google Play. A phone also cannot have multiple apps installed 
+                with the same package name. So, naturally, you will need to change the package name to be whatever you want to use for your 
+                icon pack.
+            </p>
+
+            <p class="flow-text">
+                In order to change it and keep the code from throwing up red flags everywhere, you need to <i>refactor</i> the package name. 
+                Basically, refactoring means changing the name of something in code. When you change it in one place, it will automatically 
+                get changed everywhere that it is used. 
+            </p>
+
+            <p class="flow-text">
+                First, you need to create a new package for your icon pack. Right click on <code>/src/main/java</code>, and choose <b>New -> Package</b>.
+            </p>
+            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/newpackage.JPG" class="app-image">
+
+            <p class="flow-text">
+                The package name should be in the format <code>com.companyname.packname</code>. For an example, Tom's Gaufrer icon pack uses 
+                <code>com.wellingtomworks.gaufrer</code>.
+            </p>
+            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/newpackagename.JPG" class="app-image">
+
+            <p class="flow-text">
+                Now, you just need to drag-n-drop all the folders from <code>com.afollestad.polar</code> into your own new package.
+            </p>
+            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/movecodefiles.JPG" class="app-image">
+
+            <p class="flow-text">
+                There will be two dialogs after that, which will lead to refactoring all of the code files in the project to having your 
+                new package name.
+            </p>
+            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/refactorconfirm.JPG" class="app-image">
+            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/refactorconfirm2.JPG" class="app-image">
+
+        </div>
+    </main>
+    <script src="https://rawgit.com/afollestad/polar-dashboard/gh-pages/init.js" type="text/javascript"></script>
+</body>
+
+</html>

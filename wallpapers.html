@@ -26,13 +26,16 @@
                         <a href="//afollestad.github.io/polar-dashboard" class="waves-effect">Home</a>
                     </li>
                     <li>
-                        <a href="//afollestad.github.io/polar-dashboard/importingyouricons.html" class="waves-effect">Importing Your Icons</a>
-                    </li>
-                    <li class="active">
-                        <a href="//afollestad.github.io/polar-dashboard/importingyourwallpapers.html" class="waves-effect">Importing Your Wallpapers</a>
+                        <a href="//afollestad.github.io/polar-dashboard/gettingstarted.html" class="waves-effect">Getting Started</a>
                     </li>
                     <li>
-                        <a href="//afollestad.github.io/polar-dashboard/makeityours.html" class="waves-effect">Make It Yours</a>
+                        <a href="//afollestad.github.io/polar-dashboard/icons.html" class="waves-effect">Icons</a>
+                    </li>
+                    <li class="active">
+                        <a href="//afollestad.github.io/polar-dashboard/wallpapers.html" class="waves-effect">Wallpapers</a>
+                    </li>
+                    <li>
+                        <a href="//afollestad.github.io/polar-dashboard/customization.html" class="waves-effect">Customization</a>
                     </li>
                     <li>
                         <a href="//afollestad.github.io/polar-dashboard/upgrades.html" class="waves-effect">Upgrades</a>
@@ -47,24 +50,27 @@
     </header>
     <main class="mainContent">
         <div class="container">
-            <h4>The Cloud</h4>
+
+            <h1>The Cloud</h1>
             <p class="flow-text">
                 Polar uses cloud-based wallpapers, meaning you need to host your wallpaper images in the cloud. An easy and cheap (free) way to do this is a public GitHub repository.
                 GitHub obviously allows you to host files of any type, and it's fast.
             </p>
             <hr>
 
-            <h4>URL Configuration</h4>
+            <h1>URL Configuration</h1>
             <p class="flow-text">
                 In <code>/res/values/dev_options.xml</code> there is a string resource called <code>wallpapers_json_url</code> which needs to be configured with your hosted JSON file (discussed below).
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/wallpapersurl.JPG" class="app-image">
+            </p>
+            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/wallpapersurl.JPG" class="app-image">
             <hr />
 
-            <h4>JSON File</h4>
+            <h1>JSON File</h1>
             <p class="flow-text">
                 The URL configured above needs to point to a JSON file. This JSON file should look like the one in the image below. It contains an array of wallpaper objects, each containing
                 the author of the wallpaper, the URL to the wallpaper PNG, and the name of the wallpaper.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/wallpapersjson.JPG" class="app-image">
+            </p>
+            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/wallpapersjson.JPG" class="app-image">
 
         </div>
     </main>
