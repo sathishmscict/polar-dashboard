@@ -166,9 +166,9 @@ public class RequestsFragment extends BasePageFragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.cab_requests, menu);
         super.onCreateOptionsMenu(menu, inflater);
         synchronized (LOCK) {
-            inflater.inflate(R.menu.cab_requests, menu);
             MenuItem selectAll = menu.findItem(R.id.selectAll);
             try {
                 if (mAdapter == null || mAdapter.getSelectedCount() == 0)
