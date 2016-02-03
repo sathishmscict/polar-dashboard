@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.IconMoreAdapter;
 import com.afollestad.polar.config.Config;
@@ -22,6 +23,7 @@ import com.afollestad.polar.fragments.IconsFragment;
 import com.afollestad.polar.transitions.CircularRevealTransition;
 import com.afollestad.polar.ui.base.BaseThemedActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
+import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 
 import butterknife.Bind;
@@ -67,6 +69,11 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(category.getName());
+
+        if (mToolbar.getNavigationIcon() != null) {
+            mToolbar.setNavigationIcon(TintUtils.createTintedDrawable(mToolbar.getNavigationIcon(),
+                    DialogUtils.resolveColor(this, R.attr.tab_icon_color)));
+        }
 
         final int gridWidth = Config.get().gridWidthIcons();
         mAdapter = new IconMoreAdapter(this, gridWidth, this);

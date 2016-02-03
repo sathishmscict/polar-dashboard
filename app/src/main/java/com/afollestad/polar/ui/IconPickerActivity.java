@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.IconsFragment;
 import com.afollestad.polar.ui.base.BaseThemedActivity;
+import com.afollestad.polar.util.TintUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,6 +38,11 @@ public class IconPickerActivity extends BaseThemedActivity {
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_close);
+
+        if (toolbar.getNavigationIcon() != null) {
+            toolbar.setNavigationIcon(TintUtils.createTintedDrawable(toolbar.getNavigationIcon(),
+                    DialogUtils.resolveColor(this, R.attr.tab_icon_color)));
+        }
 
         getFragmentManager().beginTransaction().replace(R.id.container, new IconsFragment()).commit();
     }
