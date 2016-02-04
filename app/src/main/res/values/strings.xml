@@ -75,6 +75,7 @@
     <string name="permission_needed">Permission Needed</string>
     <string name="permission_needed_desc"><![CDATA[ <b>%1$s</b> needs permission to access your phone\'s storage to generate an icon request!]]></string>
     <string name="download_cancelled">Download cancelled!</string>
+    <string name="cmte_unavailable">CyanogenMod Theme Engine is not available to this device.</string>
 
     <string-array name="wallpaper_options" translatable="false">
         <item>@string/apply</item>

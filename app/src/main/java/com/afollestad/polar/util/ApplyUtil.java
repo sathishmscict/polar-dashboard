@@ -267,10 +267,14 @@ public class ApplyUtil {
                     }
                     break;
                 case CMTE:
-                    Intent cmteMain = new Intent(Intent.ACTION_MAIN);
-                    cmteMain.setClassName("org.cyanogenmod.theme.chooser", "org.cyanogenmod.theme.chooser.ChooserActivity");
-                    cmteMain.putExtra("pkgName", context.getPackageName());
-                    context.startActivity(cmteMain);
+                    try {
+                        Intent cmteMain = new Intent(Intent.ACTION_MAIN);
+                        cmteMain.setClassName("org.cyanogenmod.theme.chooser", "org.cyanogenmod.theme.chooser.ChooserActivity");
+                        cmteMain.putExtra("pkgName", context.getPackageName());
+                        context.startActivity(cmteMain);
+                    } catch (Throwable t) {
+                        Toast.makeText(context, R.string.cmte_unavailable, Toast.LENGTH_SHORT).show();
+                    }
                     break;
             }
             return true;
