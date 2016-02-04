@@ -359,7 +359,7 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onAppLoaded() {
         synchronized (LOCK) {
-            if (progressText == null) return;
+            if (progressText == null || mRequestManager == null) return;
             mAppsLoaded = true;
             progressText.post(new Runnable() {
                 @Override
