@@ -12,6 +12,18 @@ html, body {
     background-color: #81D4FA;
 }
 
+.tableofcontents li a {
+    margin-left: 2%;
+    color: black;
+    text-decoration: none;
+}
+
+.tableofcontents li a:hover {
+    margin-left: 2%;
+    color: black;
+    text-decoration: underline;
+}
+
 code {
     background-color: #F5F5F5;
     font-family: 'Roboto Mono', sans-serif;
