@@ -122,15 +122,32 @@
             </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options2.JPG" class="app-image" />
 
             <p class="flow-text">
-                Last but not least, the two settings discussed below are the only settings remaining that haven't been discussed on this page 
-                or elsewhere. <code>icon_request_email</code> is used as an email that icon requests are sent to; if this value is left empty, this 
+                Below, <code>icon_request_email</code> is used as an email that icon requests are sent to; if this value is left empty, this 
                 functionality is disabled. If you fill <code>license_public_key</code> with the Base64 license key value from the Google Play Developer 
                 Console, it will enable license checking functionality. The dashboard will refuse to open if license checking is enabled and a user 
                 did not install the pack via Google Play. Note that launchers will still be able to see your icons; but users will not be able to 
                 see the dashboard or use your wallpapers.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options3.JPG" class="app-image" />
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options3.JPG" class="app-image" 
+
+            <p class="flow-text">
+                If you fill in <code>feedback_email</code>, a feedback button is displayed at the top of the <b>About</b> page. Clicking 
+                the button will open the user's email client, with the recipient and subject line filled in automatically.
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/feedback.JPG" class="app-image" />
 
             <hr>
+
+            <h1>Donation</h1>
+
+            <p class="flow-text">
+                You can easily accept donation from your users. The <code>donation_license_key</code> is the same value you'd use for
+                <code>license_public_key</code>. However, leaving it blank will disable donation. When enabled, a donation button will appear
+                at the top of the <b>About page.</b>
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/donation.JPG" class="app-image" />
+
+            <p class="flow-text">
+                <code>donate_option_names</code> should be pretty self-explanatory. <code>donate_option_ids</code> are in-app product IDs 
+                setup from the Developer Console:
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/donation2.JPG" class="app-image" />
 
         </div>
     </main>
