@@ -41,6 +41,25 @@ public interface IConfig {
     boolean iconRequestEnabled();
 
     @Nullable
+    String feedbackEmail();
+
+    @Nullable
+    String feedbackSubjectLine();
+
+    boolean feedbackEnabled();
+
+    @Nullable
+    String donationLicenseKey();
+
+    boolean donationEnabled();
+
+    @Nullable
+    String[] donateOptionsNames();
+
+    @Nullable
+    String[] donateOptionsIds();
+
+    @Nullable
     String licensingPublicKey();
 
     boolean persistSelectedPage();

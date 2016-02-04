@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Email used to send feedback, leave empty to disable this feature. -->
+    <string name="feedback_email">fake-email@fake-website.com</string>
+
+    <!-- %1$s gets replaced with the name of your icon pack -->
+    <string name="feedback_subject_line">%1$s Feedback</string>
+
+    <!--
+        License key from Services & APIs on the Developer Console. Same as what's used for license checking.
+        Leave empty to disable the donation function.
+    -->
+    <string name="donate_license_key">
+        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAn/ntsCdMQTY94ZlGGrpurXwtrzYtdNrfzX6OFaWyVqnI8BX5sfPO6nDPPks/8tvA93/JTlCLHLK+D6l31b3HrGXp9Kn7pjPLQtaa1o9Sy6Jm7skEtdGykSDRwwZROAQWZiJJNtk3hAocdz2QLDQ8Qhw8NqWSVphLSmvvvEM1d4KC599tlwr0SZ4auZjHmI3pgB27ajt+7ixQ9AtSoDWEDBIybvIw0QqASVJDc9Yi9uUrrIEa/naZxPKbklyBUBtkVh8hJdimhHiwzPh8p/dWN89WbEj88XpcH5PLu1JvoY+A6t1pFrjBL4P0nJbU0Ls7g9CDr2UEKLTuS7tBPJtWcQIDAQAB
+    </string>
+
+    <!-- Names of donation options, e.g. "Buy me a pizza!" -->
+    <string-array name="donate_option_names">
+        <item>Buy me a soda! ($0.99)</item>
+        <item>Buy me a burger! ($5.00)</item>
+        <item>Buy me a pizza! ($10.00)</item>
+        <item>Buy me a meal! ($20.00)</item>
+    </string-array>
+
+    <!-- Names of donation option IDs, taken from the Developer Console -->
+    <string-array name="donate_option_ids">
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+    </string-array>
+
+</resources>

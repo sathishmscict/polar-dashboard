@@ -139,6 +139,53 @@ public class Config implements IConfig {
 
     @Nullable
     @Override
+    public String feedbackEmail() {
+        if (mR == null) return null;
+        return mR.getString(R.string.feedback_email);
+    }
+
+    @Nullable
+    @Override
+    public String feedbackSubjectLine() {
+        if (mR == null || mContext == null) return null;
+        return mR.getString(R.string.feedback_subject_line, mContext.getString(R.string.app_name));
+    }
+
+    @Override
+    public boolean feedbackEnabled() {
+        final String feedbackEmail = feedbackEmail();
+        return feedbackEmail != null && !feedbackEmail.trim().isEmpty();
+    }
+
+    @Nullable
+    @Override
+    public String donationLicenseKey() {
+        if (mR == null) return null;
+        return mR.getString(R.string.donate_license_key);
+    }
+
+    @Override
+    public boolean donationEnabled() {
+        final String licenseKey = donationLicenseKey();
+        return licenseKey != null && !licenseKey.trim().isEmpty();
+    }
+
+    @Nullable
+    @Override
+    public String[] donateOptionsNames() {
+        if (mR == null) return null;
+        return mR.getStringArray(R.array.donate_option_names);
+    }
+
+    @Nullable
+    @Override
+    public String[] donateOptionsIds() {
+        if (mR == null) return null;
+        return mR.getStringArray(R.array.donate_option_ids);
+    }
+
+    @Nullable
+    @Override
     public String licensingPublicKey() {
         if (mR == null) return null;
         return mR.getString(R.string.licensing_public_key);

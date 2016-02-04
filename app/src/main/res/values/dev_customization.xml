@@ -22,7 +22,7 @@
     <!-- Coming soon -->
     <bool name="zooper_enabled">false</bool>
 
-    <!-- Email used to send icon requests, leave empty to disable this feature -->
+    <!-- Email used to send icon requests, leave empty to disable this feature. -->
     <string name="icon_request_email">fake-email@fake-website.com</string>
 
     <!-- Public Base64 from the developer console for license checking, optional -->

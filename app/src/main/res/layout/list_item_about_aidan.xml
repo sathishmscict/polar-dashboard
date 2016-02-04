@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:foreground="?selectableItemBackground"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/content_inset_quarter"
     android:paddingLeft="@dimen/content_inset_quarter"
     android:paddingRight="@dimen/content_inset_quarter">
 

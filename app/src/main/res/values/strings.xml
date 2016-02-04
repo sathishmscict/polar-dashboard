@@ -76,6 +76,11 @@
     <string name="permission_needed_desc"><![CDATA[ <b>%1$s</b> needs permission to access your phone\'s storage to generate an icon request!]]></string>
     <string name="download_cancelled">Download cancelled!</string>
     <string name="cmte_unavailable">CyanogenMod Theme Engine is not available to this device.</string>
+    <string name="feedback">Feedback</string>
+    <string name="donate">Donate</string>
+    <string name="thank_you_donation">Thank you for your generosity!</string>
+    <string name="donation_error">An error occurred during donation: %1$s</string>
+    <string name="email_using">Email using…</string>
 
     <string-array name="wallpaper_options" translatable="false">
         <item>@string/apply</item>

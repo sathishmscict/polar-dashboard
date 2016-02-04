@@ -49,7 +49,7 @@ import com.afollestad.polar.fragments.RequestsFragment;
 import com.afollestad.polar.fragments.WallpapersFragment;
 import com.afollestad.polar.fragments.ZooperFragment;
 import com.afollestad.polar.fragments.base.BasePageFragment;
-import com.afollestad.polar.ui.base.BaseThemedActivity;
+import com.afollestad.polar.ui.base.BaseDonateActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
 import com.afollestad.polar.util.LicensingUtils;
 import com.afollestad.polar.util.PagesBuilder;
@@ -69,7 +69,7 @@ import static com.afollestad.polar.viewer.ViewerActivity.STATE_CURRENT_POSITION;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MainActivity extends BaseThemedActivity implements LicensingUtils.LicensingCallback, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseDonateActivity implements LicensingUtils.LicensingCallback, NavigationView.OnNavigationItemSelectedListener {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
