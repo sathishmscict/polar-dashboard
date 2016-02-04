@@ -32,4 +32,12 @@
         <item formatted="false"><![CDATA[I like playing piano, doing puzzles, &amp; making apps<br/><i>I primarily helped with animations and UI</i>]]></item>
     </string-array>
 
+    <!-- The title and link of the first button in your about card -->
+    <string name="about_button1_title">Website</string>
+    <string name="about_button1_link">http://aidanfollestad.com</string>
+
+    <!-- The title and link of the second button in your about card -->
+    <string name="about_button2_title">Google+</string>
+    <string name="about_button2_link">https://google.com/+AidanFollestad</string>
+
 </resources>

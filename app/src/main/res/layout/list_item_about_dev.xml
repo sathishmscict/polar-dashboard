@@ -84,8 +84,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:tag="http://afollestad.github.io/polar-dashboard"
-                        android:text="@string/website"
+                        android:tag="@string/about_button1_link"
+                        android:text="@string/about_button1_title"
                         android:textColor="?colorAccent" />
 
                     <Button
@@ -93,8 +93,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:tag="https://google.com/+TomWellington24"
-                        android:text="@string/google_plus"
+                        android:tag="@string/about_button2_link"
+                        android:text="@string/about_button2_title"
                         android:textColor="?colorAccent" />
 
                 </LinearLayout>
