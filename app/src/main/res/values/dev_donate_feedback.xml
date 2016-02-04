@@ -25,10 +25,10 @@
 
     <!-- Names of donation option IDs, taken from the Developer Console -->
     <string-array name="donate_option_ids">
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
+        <item>soda</item>
+        <item>burger</item>
+        <item>pizza</item>
+        <item>meal</item>
     </string-array>
 
 </resources>
