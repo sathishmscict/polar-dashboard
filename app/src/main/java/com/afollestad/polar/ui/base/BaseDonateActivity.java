@@ -60,7 +60,8 @@ public abstract class BaseDonateActivity extends BaseThemedActivity implements B
 
     @Override
     public void onBillingError(int errorCode, Throwable error) {
-        Toast.makeText(this, getString(R.string.donation_error, error.getMessage()), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.donation_error, error != null ?
+                error.getMessage() : "Error code " + errorCode), Toast.LENGTH_SHORT).show();
     }
 
     @Override
