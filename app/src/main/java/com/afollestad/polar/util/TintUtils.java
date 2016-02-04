@@ -109,6 +109,15 @@ public final class TintUtils {
         }
     }
 
+    @ColorInt
+    public static int darkenColor(@ColorInt int color) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        hsv[2] *= 0.8f; // value component
+        color = Color.HSVToColor(hsv);
+        return color;
+    }
+
     private TintUtils() {
     }
 }

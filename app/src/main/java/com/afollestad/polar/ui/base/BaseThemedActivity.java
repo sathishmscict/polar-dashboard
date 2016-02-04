@@ -134,7 +134,7 @@ public abstract class BaseThemedActivity extends AssentActivity {
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
             if (item.getIcon() != null)
-                item.setIcon(Utils.tintDrawable(item.getIcon(), tintColor));
+                item.setIcon(TintUtils.createTintedDrawable(item.getIcon(), tintColor));
         }
     }
 }

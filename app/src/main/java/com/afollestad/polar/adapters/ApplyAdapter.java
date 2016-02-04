@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.util.ApplyUtil;
-import com.afollestad.polar.util.Utils;
+import com.afollestad.polar.util.TintUtils;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -48,7 +48,7 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ApplyVH> {
             this.title = title;
             this.pkg = pkg;
             this.color = color;
-            this.colorDark = Utils.darkenColor(this.color);
+            this.colorDark = TintUtils.darkenColor(this.color);
             this.isInstalled = checkInstalled(context);
         }
 
