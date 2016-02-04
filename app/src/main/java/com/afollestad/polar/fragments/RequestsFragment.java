@@ -89,6 +89,19 @@ public class RequestsFragment extends BasePageFragment implements
         return R.string.request_icons;
     }
 
+    public boolean onBackPressed() {
+        if (mAdapter != null) {
+            if (mAdapter.getSelectedCount() > 0) {
+                mAdapter.clearSelection();
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     private void toggleFab(boolean show) {
         if (mFabOffset == -1) {
             final ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) fab.getLayoutParams();

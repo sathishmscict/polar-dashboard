@@ -1,6 +1,8 @@
 package com.afollestad.polar.ui;
 
 import android.annotation.TargetApi;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -432,6 +434,14 @@ public class MainActivity extends BaseThemedActivity implements LicensingUtils.L
 
     @Override
     public void onBackPressed() {
+        if (mPager != null) {
+            FragmentManager fm = getFragmentManager();
+            Fragment current = fm.findFragmentByTag("page:" + mPager.getCurrentItem());
+            if (current != null && current instanceof RequestsFragment &&
+                    ((RequestsFragment) current).onBackPressed()) {
+                return;
+            }
+        }
         super.onBackPressed();
     }
 
