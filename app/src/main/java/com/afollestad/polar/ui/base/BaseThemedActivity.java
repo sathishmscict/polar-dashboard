@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.support.v4.view.OnApplyWindowInsetsListener;
@@ -38,7 +37,8 @@ public abstract class BaseThemedActivity extends AssentActivity {
         setTheme(getCurrentTheme());
         super.onCreate(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                !DialogUtils.resolveBoolean(this, R.attr.disable_auto_light_status_bar)) {
             final View decorView = getWindow().getDecorView();
             final boolean lightStatusEnabled = DialogUtils.resolveBoolean(this, R.attr.force_light_status_bar) ||
                     TintUtils.isColorLight(DialogUtils.resolveColor(this, R.attr.colorPrimaryDark));

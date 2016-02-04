@@ -15,5 +15,6 @@
     <attr name="activatable_card_selector" format="reference" />
 
     <attr name="force_light_status_bar" format="boolean" />
+    <attr name="disable_auto_light_status_bar" format="boolean" />
 
 </resources>

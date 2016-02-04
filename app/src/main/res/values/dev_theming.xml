@@ -21,6 +21,7 @@
         When not forced (false), light status bar mode (dark icons) is used on Marshmallow when your status bar color is light
     -->
     <bool name="force_light_statusbar_icons_light">false</bool>
+    <bool name="disable_auto_light_statusbar_icons_light">false</bool>
 
     <!-- DARK THEME -->
 
@@ -36,6 +37,7 @@
         When not forced (false), light status bar mode (dark icons) is used on Marshmallow when your status bar color is light
     -->
     <bool name="force_light_statusbar_icons_dark">false</bool>
+    <bool name="disable_auto_light_statusbar_icons_dark">false</bool>
 
     <!-- Default theme colors, don't change these -->
 
