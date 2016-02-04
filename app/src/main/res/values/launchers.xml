@@ -2,6 +2,7 @@
 <resources>
 
     <string-array name="launcher_names">
+        <item>CMTE</item>
         <item>Nova</item>
         <item>Action</item>
         <item>Apex</item>
@@ -15,6 +16,7 @@
     </string-array>
 
     <string-array name="launcher_colors_primary">
+        <item>#3CA8F5</item>
         <item>#C72D15</item>
         <item>#2A3238</item>
         <item>#336AEC</item>
@@ -28,6 +30,7 @@
     </string-array>
 
     <string-array name="launcher_packages">
+        <item>org.cyanogenmod.theme.chooser</item>
         <item>com.teslacoilsw.launcher</item>
         <item>com.actionlauncher.playstore|com.chrislacy.actionlauncher.pro</item>
         <item>com.anddoes.launcher</item>
@@ -41,6 +44,7 @@
     </string-array>
 
     <integer-array name="launcher_icons">
+        <item>@drawable/ic_launcher_cmte</item>
         <item>@drawable/ic_launcher_nova</item>
         <item>@drawable/ic_launcher_action</item>
         <item>@drawable/ic_launcher_apex</item>

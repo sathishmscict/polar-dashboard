@@ -21,7 +21,7 @@ import java.lang.annotation.RetentionPolicy;
 
 public class ApplyUtil {
 
-    @IntDef({UNKNOWN, APEX, NOVA, AVIATE, ADW, ACTION, SMART, NEXT, GO, HOLO, SOLO, KK, ATOM, INSPIRE})
+    @IntDef({UNKNOWN, APEX, NOVA, AVIATE, ADW, ACTION, SMART, NEXT, GO, HOLO, SOLO, KK, ATOM, INSPIRE, CMTE})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Launcher {
     }
@@ -40,6 +40,7 @@ public class ApplyUtil {
     public static final int KK = 10;
     public static final int ATOM = 11;
     public static final int INSPIRE = 12;
+    public static final int CMTE = 13;
 
     @Launcher
     public static int launcherIdFromPkg(String pkg) {
@@ -75,6 +76,8 @@ public class ApplyUtil {
                 return ATOM;
             case "com.bam.android.inspirelauncher":
                 return INSPIRE;
+            case "org.cyanogenmod.theme.chooser":
+                return CMTE;
             default:
                 return UNKNOWN;
         }
@@ -262,6 +265,12 @@ public class ApplyUtil {
                     } else {
                         throw new ActivityNotFoundException();
                     }
+                    break;
+                case CMTE:
+                    Intent cmteMain = new Intent(Intent.ACTION_MAIN);
+                    cmteMain.setClassName("org.cyanogenmod.theme.chooser", "org.cyanogenmod.theme.chooser.ChooserActivity");
+                    cmteMain.putExtra("pkgName", context.getPackageName());
+                    context.startActivity(cmteMain);
                     break;
             }
             return true;
