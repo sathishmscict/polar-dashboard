@@ -30,6 +30,7 @@ import com.afollestad.polar.config.Config;
 import com.afollestad.polar.dialogs.IconDetailsDialog;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.IconPickerActivity;
+import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
 import com.afollestad.polar.util.TintUtils;
 
@@ -64,9 +65,10 @@ public class IconsFragment extends BasePageFragment implements
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setOnCloseListener(this);
         mSearchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
         if (getActivity() != null) {
-            TintUtils.themeSearchView(getActivity(), mSearchView,
-                    DialogUtils.resolveColor(getActivity(), R.attr.tab_icon_color));
+            final MainActivity act = (MainActivity) getActivity();
+            TintUtils.themeSearchView(act.getToolbar(), mSearchView, DialogUtils.resolveColor(act, R.attr.tab_icon_color));
         }
     }
 

@@ -1,6 +1,5 @@
 package com.afollestad.polar.util;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -12,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,13 +36,20 @@ public final class TintUtils {
     private static void tintImageView(Object target, Field field, int tintColor) throws Exception {
         field.setAccessible(true);
         final ImageView imageView = (ImageView) field.get(target);
+        if (imageView == null) return;
         if (imageView.getDrawable() != null)
             imageView.setImageDrawable(createTintedDrawable(imageView.getDrawable(), tintColor));
     }
 
-    public static void themeSearchView(@NonNull Context context, @NonNull SearchView searchView, @ColorInt int tintColor) {
+    public static void themeSearchView(@NonNull Toolbar toolbar, @NonNull SearchView searchView, @ColorInt int tintColor) {
         final Class<?> cls = searchView.getClass();
         try {
+            final Field mCollapseIconField = toolbar.getClass().getDeclaredField("mCollapseIcon");
+            mCollapseIconField.setAccessible(true);
+            final Drawable drawable = (Drawable) mCollapseIconField.get(toolbar);
+            if (drawable != null)
+                mCollapseIconField.set(toolbar, createTintedDrawable(drawable, tintColor));
+
             final Field mSearchSrcTextViewField = cls.getDeclaredField("mSearchSrcTextView");
             mSearchSrcTextViewField.setAccessible(true);
             final EditText mSearchSrcTextView = (EditText) mSearchSrcTextViewField.get(searchView);
@@ -57,6 +64,8 @@ public final class TintUtils {
             field = cls.getDeclaredField("mCloseButton");
             tintImageView(searchView, field, tintColor);
             field = cls.getDeclaredField("mVoiceButton");
+            tintImageView(searchView, field, tintColor);
+            field = cls.getDeclaredField("mCollapsedIcon");
             tintImageView(searchView, field, tintColor);
         } catch (Exception e) {
             e.printStackTrace();
