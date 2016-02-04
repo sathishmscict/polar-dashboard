@@ -51,7 +51,16 @@
     <main class="mainContent">
         <div class="container">
 
-            <h1>Copy in Files</h1>
+            <h1>Table of Contents</h1>
+            <ol class="tableofcontents">
+                <li><a href="#copyinfiles">Copy in Files</a></li>
+                <li><a href="#drawablexml">drawable.xml</a></li>
+                <li><a href="#dashboarddrawablexml">dashboard_drawable.xml</a></li>
+                <li><a href="#appfilterxml">appfilter.xml</a></li>
+            </ol>
+            <hr />
+
+            <h1 id="copyinfiles">Copy in Files</h1>
             <p class="flow-text">
                 First, you need to copy all of the PNGs for your icon pack into the <code>/res/drawable-nodpi</code> folder of Polar.
                 You can remove the placeholder PNGs that are already in there initially. If you plan on using the home page, make sure
@@ -82,14 +91,14 @@
             </p>
             <hr />
 
-            <h1>drawable.xml</h1>
+            <h1 id="drawablexml">drawable.xml</h1>
             <p class="flow-text">
                 The <code>drawable.xml</code> file is located at <code>/res/xml/drawable.xml</code> <i>and</i> <code>/assets/drawable.xml</code>. 
                 You need to make sure they are both updated at all times! This file is used by launchers, and the dashboard to retrieve icons in your pack (along with categories they belong to).
             </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/drawable.JPG" class="app-image">
             <hr>
 
-            <h1>dashboard_drawable.xml</h1>
+            <h1 id="dashboarddrawablexml">dashboard_drawable.xml</h1>
             <p class="flow-text">
                 <b>This file is optional.</b> If you want the dashboard UI to display different icons (or icons in a different order) than 
                 what you want to display to launchers, you can add a <code>/res/xml/dashboard_drawable.xml</code> file, which has the same structure 
@@ -97,7 +106,7 @@
             </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/drawabledashboard.JPG" class="app-image">
             <hr>
 
-            <h1>appfilter.xml</h1>
+            <h1 id="appfilterxml">appfilter.xml</h1>
             <p class="flow-text">
                 The appfilter.xml file is located at <code>/res/xml/appfilter.xml</code> <i>and</i> <code>/assets/appfilter.xml</code>. 
                 You need to make sure they are both updated at all times! This is the most important file for an icon pack. It's used 
