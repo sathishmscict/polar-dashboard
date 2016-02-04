@@ -2,7 +2,6 @@
 <resources>
 
     <string-array name="launcher_names">
-        <item>CMTE</item>
         <item>Nova</item>
         <item>Action</item>
         <item>Apex</item>
@@ -13,10 +12,10 @@
         <item>Solo</item>
         <item>KK</item>
         <item>Atom</item>
+        <item>CMTE</item>
     </string-array>
 
     <string-array name="launcher_colors_primary">
-        <item>#3CA8F5</item>
         <item>#C72D15</item>
         <item>#2A3238</item>
         <item>#336AEC</item>
@@ -27,10 +26,10 @@
         <item>#F23046</item>
         <item>#24B0C9</item>
         <item>#E0E0E0</item>
+        <item>#3CA8F5</item>
     </string-array>
 
     <string-array name="launcher_packages">
-        <item>org.cyanogenmod.theme.chooser</item>
         <item>com.teslacoilsw.launcher</item>
         <item>com.actionlauncher.playstore|com.chrislacy.actionlauncher.pro</item>
         <item>com.anddoes.launcher</item>
@@ -41,10 +40,10 @@
         <item>home.solo.launcher.free</item>
         <item>com.kk.launcher</item>
         <item>com.dlto.atom.launcher</item>
+        <item>org.cyanogenmod.theme.chooser</item>
     </string-array>
 
     <integer-array name="launcher_icons">
-        <item>@drawable/ic_launcher_cmte</item>
         <item>@drawable/ic_launcher_nova</item>
         <item>@drawable/ic_launcher_action</item>
         <item>@drawable/ic_launcher_apex</item>
@@ -55,6 +54,7 @@
         <item>@drawable/ic_launcher_solo</item>
         <item>@drawable/ic_launcher_kk</item>
         <item>@drawable/ic_launcher_atom</item>
+        <item>@drawable/ic_launcher_cmte</item>
     </integer-array>
 
 </resources>
