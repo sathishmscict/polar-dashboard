@@ -17,6 +17,9 @@
     <color name="tab_indicator_color_light">@color/default_tab_indicator_color_lighttheme</color>
     <color name="tab_icon_color_light">@color/default_tab_icon_color_lighttheme</color>
     <color name="card_background_light">@color/default_card_background_lighttheme</color>
+    <!--
+        When not forced (false), light status bar mode (dark icons) is used on Marshmallow when your status bar color is light
+    -->
     <bool name="force_light_statusbar_icons_light">false</bool>
 
     <!-- DARK THEME -->
@@ -29,6 +32,9 @@
     <color name="tab_indicator_color_dark">@color/default_tab_indicator_color_darktheme</color>
     <color name="tab_icon_color_dark">@color/default_tab_icon_color_darktheme</color>
     <color name="card_background_dark">@color/default_card_background_darktheme</color>
+    <!--
+        When not forced (false), light status bar mode (dark icons) is used on Marshmallow when your status bar color is light
+    -->
     <bool name="force_light_statusbar_icons_dark">false</bool>
 
     <!-- Default theme colors, don't change these -->
