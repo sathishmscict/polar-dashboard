@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/afollestad/polar-dashboard.svg)](https://travis-ci.org/afollestad/polar-dashboard)
 
-![Showcase](https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/indexshowcase.png?token=ABvGBdL28ue5kkkTc3-nHzYZOxsE83W9ks5Wt4VtwA%3D%3D)
+![Showcase](https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/showcase.png?token=ABvGBdL28ue5kkkTc3-nHzYZOxsE83W9ks5Wt4VtwA%3D%3D)
 
 # Tutorial
 
