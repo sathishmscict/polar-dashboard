@@ -278,7 +278,7 @@ public class ApplyUtil {
                     break;
             }
             return true;
-        } catch (ActivityNotFoundException e) {
+        } catch (Throwable t) {
             return false;
         }
     }
