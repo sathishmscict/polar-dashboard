@@ -120,6 +120,12 @@ public class Config implements IConfig {
     }
 
     @Override
+    public boolean wallpapersEnabled() {
+        String url = wallpapersJsonUrl();
+        return url != null && !url.trim().isEmpty();
+    }
+
+    @Override
     public boolean zooperEnabled() {
         return mR != null && mR.getBoolean(R.bool.zooper_enabled);
     }

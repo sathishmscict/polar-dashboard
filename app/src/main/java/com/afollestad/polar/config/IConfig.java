@@ -33,6 +33,8 @@ public interface IConfig {
     @Nullable
     String wallpapersJsonUrl();
 
+    boolean wallpapersEnabled();
+
     boolean zooperEnabled();
 
     @Nullable
