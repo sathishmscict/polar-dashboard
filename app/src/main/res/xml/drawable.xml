@@ -45,6 +45,30 @@
     <item drawable="half_green" />
     <item drawable="half_blue" />
     <item drawable="half_indigo" />
+    <item drawable="full_pink" />
+    <item drawable="full_orange" />
+    <item drawable="full_yellow" />
+    <item drawable="full_green" />
+    <item drawable="full_blue" />
+    <item drawable="full_indigo" />
+    <item drawable="half_pink" />
+    <item drawable="half_orange" />
+    <item drawable="half_yellow" />
+    <item drawable="half_green" />
+    <item drawable="half_blue" />
+    <item drawable="half_indigo" />
+    <item drawable="full_pink" />
+    <item drawable="full_orange" />
+    <item drawable="full_yellow" />
+    <item drawable="full_green" />
+    <item drawable="full_blue" />
+    <item drawable="full_indigo" />
+    <item drawable="half_pink" />
+    <item drawable="half_orange" />
+    <item drawable="half_yellow" />
+    <item drawable="half_green" />
+    <item drawable="half_blue" />
+    <item drawable="half_indigo" />
 
 
 </resources>
