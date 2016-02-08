@@ -84,8 +84,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:tag="https://dribbble.com/tomwellington"
-                        android:text="@string/dribbble"
+                        android:tag="https://wellingtom.xyz"
+                        android:text="@string/website"
                         android:textColor="?colorAccent" />
 
                     <Button
