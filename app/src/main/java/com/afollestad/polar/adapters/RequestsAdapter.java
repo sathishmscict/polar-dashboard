@@ -1,5 +1,6 @@
 package com.afollestad.polar.adapters;
 
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
+import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
+import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 import com.pk.requestmanager.AppInfo;
 
@@ -64,6 +67,9 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
         super.onBindViewHolder(holder, position);
         if (position == 0) {
             holder.title.setText(R.string.tap_apps_to_select_them);
+            final int bgColor = DialogUtils.resolveColor(holder.itemView.getContext(), R.attr.window_background_cards);
+            final int titleColor = TintUtils.isColorLight(bgColor) ? Color.BLACK : Color.WHITE;
+            holder.title.setTextColor(TintUtils.adjustAlpha(titleColor, 0.5f));
             return;
         }
 
