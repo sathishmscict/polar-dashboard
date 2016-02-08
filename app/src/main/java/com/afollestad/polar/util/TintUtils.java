@@ -3,6 +3,7 @@ package com.afollestad.polar.util;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.support.annotation.CheckResult;
 import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
@@ -27,6 +28,10 @@ public final class TintUtils {
     @Nullable
     public static Drawable createTintedDrawable(@Nullable Drawable drawable, @ColorInt int color) {
         if (drawable == null) return null;
+        else if (drawable instanceof VectorDrawable) {
+            drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            return drawable;
+        }
         drawable = DrawableCompat.wrap(drawable.mutate());
         DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_IN);
         DrawableCompat.setTint(drawable, color);

@@ -5,6 +5,8 @@
 
     <attr name="toolbar_shadow" format="reference" />
 
+    <attr name="toolbar_title_color" format="color" />
+    <attr name="toolbar_icons_color" format="color" />
     <attr name="tab_indicator_color" format="color" />
     <attr name="tab_icon_color" format="color" />
 

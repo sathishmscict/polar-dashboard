@@ -17,6 +17,8 @@
         <item name="android:windowBackground">@color/window_bg_cards_light</item>
         <item name="colorControlHighlight">@color/accent_1_light</item>
 
+        <item name="toolbar_title_color">@color/toolbar_title_color_light</item>
+        <item name="toolbar_icons_color">@color/toolbar_icons_color_light</item>
         <item name="tab_indicator_color">@color/tab_indicator_color_light</item>
         <item name="tab_icon_color">@color/tab_icon_color_light</item>
 
@@ -44,6 +46,8 @@
         <item name="colorControlHighlight">@color/accent_1_dark</item>
         <item name="card_background">@color/card_background_dark</item>
 
+        <item name="toolbar_title_color">@color/toolbar_title_color_dark</item>
+        <item name="toolbar_icons_color">@color/toolbar_icons_color_dark</item>
         <item name="tab_indicator_color">@color/tab_indicator_color_dark</item>
         <item name="tab_icon_color">@color/tab_icon_color_dark</item>
 

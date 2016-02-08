@@ -57,11 +57,12 @@ public abstract class BaseThemedActivity extends AssentActivity {
         super.onStart();
         final Toolbar toolbar = getToolbar();
         if (toolbar != null) {
-            final int tintColor = DialogUtils.resolveColor(this, R.attr.tab_icon_color);
-            toolbar.setTitleTextColor(tintColor);
-            Utils.setOverflowButtonColor(this, tintColor);
+            final int titleColor = DialogUtils.resolveColor(this, R.attr.toolbar_title_color);
+            final int iconColor = DialogUtils.resolveColor(this, R.attr.toolbar_icons_color);
+            toolbar.setTitleTextColor(titleColor);
+            Utils.setOverflowButtonColor(this, iconColor);
 
-            if (TintUtils.isColorLight(tintColor)) {
+            if (TintUtils.isColorLight(titleColor)) {
                 toolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light);
             } else {
                 toolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat);
@@ -130,7 +131,7 @@ public abstract class BaseThemedActivity extends AssentActivity {
     }
 
     public static void themeMenu(Context context, Menu menu) {
-        final int tintColor = DialogUtils.resolveColor(context, R.attr.tab_icon_color);
+        final int tintColor = DialogUtils.resolveColor(context, R.attr.toolbar_icons_color);
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
             if (item.getIcon() != null)
