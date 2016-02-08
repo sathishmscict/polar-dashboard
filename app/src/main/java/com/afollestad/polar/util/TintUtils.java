@@ -1,11 +1,13 @@
 package com.afollestad.polar.util;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.support.annotation.CheckResult;
 import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +25,10 @@ import java.lang.reflect.Field;
  * @author Aidan Follestad (afollestad)
  */
 public final class TintUtils {
+
+    public static Drawable createTintedDrawable(@NonNull Context context, @DrawableRes int drawable, @ColorInt int color) {
+        return createTintedDrawable(ContextCompat.getDrawable(context, drawable), color);
+    }
 
     @CheckResult
     @Nullable

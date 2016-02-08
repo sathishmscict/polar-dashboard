@@ -3,6 +3,7 @@ package com.afollestad.polar.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,12 +30,14 @@ import com.afollestad.dragselectrecyclerview.DragSelectRecyclerView;
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.RequestsAdapter;
 import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.MainActivity;
+import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.views.DisableableViewPager;
 import com.pk.requestmanager.AppInfo;
@@ -44,7 +47,6 @@ import com.pk.requestmanager.RequestSettings;
 import com.pk.requestmanager.SendRequestListener;
 
 import java.io.File;
-import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import butterknife.Bind;
@@ -184,10 +186,13 @@ public class RequestsFragment extends BasePageFragment implements
         synchronized (LOCK) {
             MenuItem selectAll = menu.findItem(R.id.selectAll);
             try {
+                final Activity act = getActivity();
+                final int tintColor = DialogUtils.resolveColor(act, R.attr.toolbar_icons_color);
                 if (mAdapter == null || mAdapter.getSelectedCount() == 0)
-                    selectAll.setIcon(R.drawable.ic_action_selectall);
-                else selectAll.setIcon(R.drawable.ic_action_close);
-            } catch (ConcurrentModificationException e) {
+                    selectAll.setIcon(TintUtils.createTintedDrawable(act, R.drawable.ic_action_selectall, tintColor));
+                else
+                    selectAll.setIcon(TintUtils.createTintedDrawable(act, R.drawable.ic_action_close, tintColor));
+            } catch (Throwable e) {
                 e.printStackTrace();
                 selectAll.setVisible(false);
                 // TODO solve this officially, use different request loading library?

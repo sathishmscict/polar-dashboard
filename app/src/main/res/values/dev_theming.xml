@@ -18,7 +18,7 @@
     <color name="tab_icon_color_light">@color/default_tab_icon_color_lighttheme</color>
     <color name="card_background_light">@color/default_card_background_lighttheme</color>
     <color name="toolbar_title_color_light">@color/default_toolbar_title_color_lighttheme</color>
-    <color name="toolbar_icons_color_light">@color/default_toolbar_icons_color_lighttheme</color>
+    <color name="toolbar_icons_color_light">#ff0000</color>
     <!--
         When not forced (false), light status bar mode (dark icons) is used on Marshmallow when your status bar color is light
     -->
