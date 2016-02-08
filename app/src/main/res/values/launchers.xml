@@ -16,17 +16,17 @@
     </string-array>
 
     <string-array name="launcher_colors_primary">
-        <item>#C72D15</item>
-        <item>#2A3238</item>
-        <item>#336AEC</item>
-        <item>#7D0098</item>
-        <item>#3CA8F5</item>
-        <item>#3AA090</item>
-        <item>#379B32</item>
-        <item>#F23046</item>
-        <item>#24B0C9</item>
-        <item>#E0E0E0</item>
-        <item>#3CA8F5</item>
+        <item>#C9171F</item>
+        <item>#252525</item>
+        <item>#157EF4</item>
+        <item>#7B009C</item>
+        <item>#1CA4F7</item>
+        <item>#1C9888</item>
+        <item>#349433</item>
+        <item>#E33F4D</item>
+        <item>#00AFCC</item>
+        <item>#EAEAEA</item>
+        <item>#1BBBD3</item>
     </string-array>
 
     <string-array name="launcher_packages">
