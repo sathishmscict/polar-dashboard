@@ -9,8 +9,10 @@
 
     <!-- LIGHT THEME -->
 
+    <!-- "primary_1_light" dictates the toolbar color, and "primary_2_light" dictates the status bar color -->
     <color name="primary_1_light">@color/default_primary_lighttheme</color>
     <color name="primary_2_light">@color/default_primarydark_lighttheme</color>
+    <!-- "accent_1_light" dictates the standard accent color, "accent_2_light" dictates the color for pressed states  -->
     <color name="accent_1_light">@color/default_accent_lighttheme</color>
     <color name="accent_2_light">@color/default_accentdark_lighttheme</color>
     <color name="window_bg_cards_light">@color/default_window_bg_cards_lighttheme</color>
