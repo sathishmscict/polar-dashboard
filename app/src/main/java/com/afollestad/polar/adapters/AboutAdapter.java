@@ -110,17 +110,28 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
 
     @Override
     public int getItemViewType(int position) {
-        if (mOptionsEnabled) {
-            if (position == 0) return -1;
-            position--;
+        if (mTitles.length == 3) {
+            // Gaufrer config
+            if (position == 0)
+                return -1;
+            else if (position == 1)
+                return 2;
+            else
+                return 1;
+        } else {
+            if (mOptionsEnabled) {
+                if (position == 0) return -1;
+                position--;
+            }
+            return position;
         }
-        return position;
     }
 
     @Override
     public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         @LayoutRes
         int layoutRes;
+        // Other config
         switch (viewType) {
             case -1:
                 layoutRes = R.layout.list_item_about_options;
