@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
+import android.os.Build;
 import android.support.annotation.CheckResult;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
@@ -34,7 +35,7 @@ public final class TintUtils {
     @Nullable
     public static Drawable createTintedDrawable(@Nullable Drawable drawable, @ColorInt int color) {
         if (drawable == null) return null;
-        else if (drawable instanceof VectorDrawable) {
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && drawable instanceof VectorDrawable) {
             drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN);
             return drawable;
         }
