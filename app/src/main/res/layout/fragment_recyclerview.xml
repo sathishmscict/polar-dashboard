@@ -8,19 +8,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
+        android:fitsSystemWindows="true"
         android:padding="@dimen/grid_margin"
-        android:scrollbars="vertical"
         android:scrollbarStyle="outsideOverlay"
-        android:fitsSystemWindows="true" />
+        android:scrollbars="vertical" />
 
     <LinearLayout
         android:id="@android:id/progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:fitsSystemWindows="true"
         android:orientation="vertical"
         android:visibility="gone"
-        android:fitsSystemWindows="true"
         tools:visibility="visible">
 
         <ProgressBar
@@ -57,12 +57,13 @@
         android:layout_marginLeft="@dimen/content_inset_more"
         android:layout_marginRight="@dimen/content_inset_more"
         android:layout_marginTop="@dimen/content_inset_more"
+        android:fitsSystemWindows="true"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
+        android:lineSpacingMultiplier="1.4"
         android:textColor="?android:textColorSecondary"
         android:textSize="@dimen/empty_text_size"
         android:textStyle="italic"
-        android:fitsSystemWindows="true"
         tools:ignore="UnusedAttribute"
         tools:text="No results"
         tools:visibility="gone" />
