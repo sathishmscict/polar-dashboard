@@ -12,7 +12,6 @@ import android.transition.Slide;
 import android.transition.TransitionSet;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 
 import com.afollestad.materialdialogs.util.DialogUtils;
@@ -43,8 +42,7 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
     Toolbar mToolbar;
     @Bind(android.R.id.list)
     RecyclerView mRecyclerView;
-    @Bind(R.id.circular_reveal_view)
-    ViewGroup mCircularRevealView;
+
 
     private IconMoreAdapter mAdapter;
 
@@ -117,8 +115,6 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
             returnSide.setInterpolator(new FastOutSlowInInterpolator());
             returnSide.excludeTarget(getString(R.string.transition_name_circular_reveal), true);
             returnSide.excludeTarget(Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME, true);
-
-            mCircularRevealView.setTransitionGroup(true);
 
             TransitionSet set = new TransitionSet()
                     .addTransition(circularRevealTransition)
