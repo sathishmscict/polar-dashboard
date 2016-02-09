@@ -45,6 +45,11 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
         return mWallpapers;
     }
 
+    public void clear() {
+        mWallpapers = null;
+        mFiltered = null;
+    }
+
     public void filter(String str) {
         if (str == null) {
             mFiltered = null;

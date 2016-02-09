@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.bridge.Bridge;
+import com.afollestad.bridge.BridgeException;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
@@ -35,6 +36,8 @@ import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.viewer.ViewerActivity;
+
+import java.net.UnknownHostException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -230,12 +233,18 @@ public class WallpapersFragment extends BasePageFragment implements
             return;
         }
         setListShown(false);
+        mAdapter.clear();
         Bridge.config().logging(true);
         WallpaperUtils.getAll(getActivity(), allowCached, new WallpaperUtils.WallpapersCallback() {
             @Override
             public void onRetrievedWallpapers(WallpaperUtils.WallpapersHolder wallpapers, Exception error, boolean cancelled) {
                 if (error != null) {
-                    mEmpty.setText(error.getMessage());
+                    if (error instanceof UnknownHostException || (error instanceof BridgeException &&
+                            ((BridgeException) error).reason() == BridgeException.REASON_REQUEST_FAILED)) {
+                        mEmpty.setText(R.string.unable_to_contact_server);
+                    } else {
+                        mEmpty.setText(error.getMessage());
+                    }
                 } else {
                     mEmpty.setText(cancelled ? R.string.request_cancelled : R.string.no_wallpapers);
                     mWallpapers = wallpapers;
