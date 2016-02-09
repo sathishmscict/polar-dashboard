@@ -51,7 +51,7 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
     }
 
     public void filter(String str) {
-        if (str == null) {
+        if (str == null || mWallpapers == null) {
             mFiltered = null;
             notifyDataSetChanged();
             return;
