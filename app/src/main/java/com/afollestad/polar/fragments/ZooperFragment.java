@@ -2,6 +2,7 @@ package com.afollestad.polar.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -39,6 +40,8 @@ public class ZooperFragment extends BasePageFragment implements
     TextView mEmpty;
     @Bind(android.R.id.progress)
     View mProgress;
+    @Bind(R.id.fabRoot)
+    FloatingActionButton mFabRoot;
 
     private ZooperAdapter mAdapter;
     private String mQueryText;
@@ -59,7 +62,7 @@ public class ZooperFragment extends BasePageFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_recyclerview, container, false);
+        return inflater.inflate(R.layout.fragment_zooper, container, false);
     }
 
     @Override
@@ -95,8 +98,11 @@ public class ZooperFragment extends BasePageFragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        if (savedInstanceState == null)
-            setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()));
+        if (savedInstanceState == null) {
+            final int offset = Utils.getNavBarHeight(getActivity());
+            setBottomPadding(mRecyclerView, offset);
+            setBottomMargin(mFabRoot, offset);
+        }
 
         mAdapter = new ZooperAdapter(getActivity());
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(

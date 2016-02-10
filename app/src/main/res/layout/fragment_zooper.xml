@@ -1,0 +1,110 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fitsSystemWindows="true"
+        android:padding="@dimen/grid_margin"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical" />
+
+    <LinearLayout
+        android:id="@android:id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
+        <!--suppress AndroidDomInspection -->
+        <TextView
+            android:id="@+id/progressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/content_inset"
+            android:layout_marginTop="@dimen/content_inset"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/header_text_size"
+            android:textStyle="italic"
+            android:visibility="gone"
+            tools:ignore="UnusedAttribute"
+            tools:text="Loading apps…"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/content_inset_more"
+        android:layout_marginLeft="@dimen/content_inset_more"
+        android:layout_marginRight="@dimen/content_inset_more"
+        android:layout_marginTop="@dimen/content_inset_more"
+        android:fitsSystemWindows="true"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.4"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="@dimen/empty_text_size"
+        android:textStyle="italic"
+        tools:ignore="UnusedAttribute"
+        tools:text="No results"
+        tools:visibility="gone" />
+
+    <com.tr4android.support.extension.widget.FloatingActionMenu
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        app:fabMenuCloseIconAngle="135"
+        app:fabMenuCloseIconSrc="@drawable/ic_action_close"
+        app:fabMenuLabelStyle="@style/label_style_dark">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabRoot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/content_inset"
+            android:layout_marginEnd="@dimen/content_inset"
+            android:layout_marginStart="@dimen/content_inset"
+            android:src="@drawable/ic_action_download"
+            app:backgroundTint="?colorAccent" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabInstallFonts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/install_fonts"
+            android:src="@drawable/ic_typeface"
+            app:backgroundTint="?colorAccent"
+            app:fabSize="mini" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabInstallIconsets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/install_iconsets"
+            android:src="@drawable/ic_icons"
+            app:backgroundTint="?colorAccent"
+            app:fabSize="mini" />
+
+    </com.tr4android.support.extension.widget.FloatingActionMenu>
+
+</FrameLayout>

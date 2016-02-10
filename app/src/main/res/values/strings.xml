@@ -85,6 +85,8 @@
     <string name="search_widgets">Search widgets…</string>
     <string name="made_for_zooper">These widgets are made for Zooper Pro</string>
     <string name="zooper_already_installed">Zooper Pro is already installed!</string>
+    <string name="install_fonts">Install Fonts</string>
+    <string name="install_iconsets">Install Iconsets</string>
 
     <string-array name="wallpaper_options" translatable="false">
         <item>@string/apply</item>
