@@ -3,6 +3,7 @@ package com.afollestad.polar.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -36,6 +37,15 @@ public abstract class Utils {
                 .content(e.getMessage())
                 .positiveText(android.R.string.ok)
                 .show();
+    }
+
+    public static int getStatusBarHeight(Context context) {
+        final Resources r = context.getResources();
+        int result = 0;
+        int resourceId = r.getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0)
+            result = r.getDimensionPixelSize(resourceId);
+        return result;
     }
 
 //    @Size(2)
