@@ -4,6 +4,6 @@
     <integer name="wallpaper_grid_width">3</integer>
     <integer name="apply_grid_width">4</integer>
     <integer name="icon_grid_width">6</integer>
-    <integer name="requests_grid_width">4</integer>
+    <integer name="requests_grid_width">5</integer>
 
 </resources>
