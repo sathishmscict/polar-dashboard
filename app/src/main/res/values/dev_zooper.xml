@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Leave empty to disable Zooper support -->
+    <integer-array name="zooper_widget_previews">
+        <!--<item>@drawable/ic_launcher_action</item>-->
+    </integer-array>
+
+    <string-array name="zooper_widget_names">
+        <!--<item>A placeholder</item>-->
+    </string-array>
+
+</resources>
