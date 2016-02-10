@@ -80,21 +80,19 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:id="@+id/badgeButtonLeft"
                         style="?borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:tag="@string/about_button1_link"
-                        android:text="@string/about_button1_title"
                         android:textColor="?colorAccent" />
 
                     <Button
+                        android:id="@+id/badgeButtonRight"
                         style="?borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:tag="@string/about_button2_link"
-                        android:text="@string/about_button2_title"
                         android:textColor="?colorAccent" />
 
                 </LinearLayout>

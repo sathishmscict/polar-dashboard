@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- DO NOT REMOVE THESE 4 ARRAYS. -->
-    <!-- ONLY MODIFY THE FIRST ITEM IN EACH ARRAY FOR YOURSELF, OTHERWISE TERMS ARE VIOLATED. -->
+    <!-- DO NOT REMOVE THE DEV/DESIGNERS ABOUT ITEMS, OTHERWISE TERMS ARE VIOLATED. -->
 
     <string-array name="about_images" formatted="false" tools:ignore="TypographyDashes">
         <item>https://lh3.googleusercontent.com/-0mdcClKXlgM/AAAAAAAAAAI/AAAAAAAAAAA/xgdLWeAg7pM/s120-c/photo.jpg</item>
@@ -32,12 +32,24 @@
         <item formatted="false"><![CDATA[I like playing piano, doing puzzles, &amp; making apps<br/><i>I primarily helped with animations and UI</i>]]></item>
     </string-array>
 
-    <!-- The title and link of the first button in your about card -->
-    <string name="about_button1_title">Website</string>
-    <string name="about_button1_link">http://aidanfollestad.com</string>
+    <!-- The title of the left button(s) in your about card(s) -->
+    <string-array name="about_button_1_titles">
+        <item>Website</item>
+    </string-array>
 
-    <!-- The title and link of the second button in your about card -->
-    <string name="about_button2_title">Google+</string>
-    <string name="about_button2_link">https://google.com/+AidanFollestad</string>
+    <!-- The link of the left button(s) in your about card(s) -->
+    <string-array name="about_button_1_links">
+        <item>http://aidanfollestad.com</item>
+    </string-array>
+
+    <!-- The title of the right button(s) in your about card(s) -->
+    <string-array name="about_button_2_titles">
+        <item>Google+ 1</item>
+    </string-array>
+
+    <!-- The link of the right button(s) in your about card(s) -->
+    <string-array name="about_button_2_links">
+        <item>https://google.com/+AidanFollestad</item>
+    </string-array>
 
 </resources>

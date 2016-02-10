@@ -9,9 +9,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -53,8 +55,15 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
         mDescriptions = context.getResources().getStringArray(R.array.about_descriptions);
         mImages = context.getResources().getStringArray(R.array.about_images);
         mCovers = context.getResources().getStringArray(R.array.about_covers);
+        mDevButtonTitles = context.getResources().getStringArray(R.array.about_button_1_titles);
+        mDevButtonLinks = context.getResources().getStringArray(R.array.about_button_1_links);
+        mDevButtonTitles2 = context.getResources().getStringArray(R.array.about_button_2_titles);
+        mDevButtonLinks2 = context.getResources().getStringArray(R.array.about_button_2_links);
         mOptionCb = cb;
         mOptionsEnabled = Config.get().feedbackEnabled() || Config.get().donationEnabled();
+        mItemAidan = mTitles.length -3;
+        mItemTom = mTitles.length -2;
+        mItemDaniel = mTitles.length-1;
     }
 
     private final Context mContext;
@@ -62,8 +71,16 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
     private final String[] mDescriptions;
     private final String[] mImages;
     private final String[] mCovers;
+    private final String[] mDevButtonTitles;
+    private final String[] mDevButtonLinks;
+    private final String[] mDevButtonTitles2;
+    private final String[] mDevButtonLinks2;
     private final OptionsClickListener mOptionCb;
     private final boolean mOptionsEnabled;
+    // saving values in case there's more than one dev
+    private int mItemAidan;
+    private final int mItemTom;
+    private final int mItemDaniel;
 
     public static class MainViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -74,6 +91,8 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
             title = ButterKnife.findById(itemView, R.id.title);
             description = ButterKnife.findById(itemView, R.id.description);
             badges = ButterKnife.findById(itemView, R.id.badgesFrame);
+            leftButton = ButterKnife.findById(itemView, R.id.badgeButtonLeft);
+            rightButton = ButterKnife.findById(itemView, R.id.badgeButtonRight);
 
             feedbackButton = ButterKnife.findById(itemView, R.id.feedbackButton);
             feedbackImage = ButterKnife.findById(itemView, R.id.feedbackImage);
@@ -96,6 +115,8 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
         final ImageView feedbackImage;
         final View donateButton;
         final ImageView donateImage;
+        final Button leftButton;
+        final Button rightButton;
         private final OptionsClickListener mOptionsCb;
 
         @Override
@@ -130,27 +151,18 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
     @Override
     public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         @LayoutRes
-        int layoutRes;
-        // Other config
-        switch (viewType) {
-            case -1:
-                layoutRes = R.layout.list_item_about_options;
-                break;
-            case 1:
-                layoutRes = R.layout.list_item_about_aidan;
-                break;
-            case 2:
-                layoutRes = R.layout.list_item_about_tom;
-                break;
-            case 3:
-                layoutRes = R.layout.list_item_about_daniel;
-                break;
-            default:
-                layoutRes = R.layout.list_item_about_dev;
-                break;
-        }
+        int layoutRes = getLayoutResourceForViewType(viewType);
         final View v = LayoutInflater.from(parent.getContext()).inflate(layoutRes, parent, false);
         return new MainViewHolder(v, mOptionCb);
+    }
+
+    @LayoutRes
+    private int getLayoutResourceForViewType(int viewType) {
+        if(viewType == -1) return R.layout.list_item_about_options;
+        else if(viewType == mItemAidan) return R.layout.list_item_about_aidan;
+        else if(viewType == mItemTom) return R.layout.list_item_about_tom;
+        else if(viewType == mItemDaniel) return R.layout.list_item_about_daniel;
+        else return R.layout.list_item_about_dev;
     }
 
     @Override
@@ -183,6 +195,13 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
         holder.title.setText(mTitles[index]);
         holder.description.setText(Html.fromHtml(mDescriptions[index]));
         holder.description.setMovementMethod(LinkMovementMethod.getInstance());
+
+        if(index != mItemAidan && index != mItemTom && index != mItemDaniel) {
+            holder.leftButton.setText(mDevButtonTitles[index]);
+            holder.leftButton.setTag(mDevButtonLinks[index]);
+            holder.rightButton.setText(mDevButtonTitles2[index]);
+            holder.rightButton.setTag(mDevButtonLinks2[index]);
+        }
 
         Glide.with(mContext)
                 .load(mCovers[index])
