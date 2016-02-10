@@ -34,6 +34,7 @@ import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.util.TintUtils;
+import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.viewer.ViewerActivity;
 
@@ -191,8 +192,8 @@ public class WallpapersFragment extends BasePageFragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
-        applyInsets((ViewGroup) view);
+        if (savedInstanceState == null)
+            setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()));
 
         mAdapter = new WallpaperAdapter(new WallpaperAdapter.ClickListener() {
             @Override

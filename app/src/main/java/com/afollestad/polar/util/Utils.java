@@ -3,6 +3,7 @@ package com.afollestad.polar.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -41,11 +42,27 @@ public abstract class Utils {
 
     public static int getStatusBarHeight(Context context) {
         final Resources r = context.getResources();
-        int result = 0;
         int resourceId = r.getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0)
-            result = r.getDimensionPixelSize(resourceId);
-        return result;
+            return r.getDimensionPixelSize(resourceId);
+        return 0;
+    }
+
+    public static int getNavBarHeight(Activity context) {
+        if (context == null || context.isFinishing()) {
+            return 0;
+        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            // Translucent nav doesn't exist below KitKat
+            return 0;
+        } else if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Vertical offset isn't needed since nav bar goes to the side of the screen
+            return 0;
+        }
+        final Resources r = context.getResources();
+        int resourceId = r.getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0)
+            return r.getDimensionPixelSize(resourceId);
+        return 0;
     }
 
 //    @Size(2)

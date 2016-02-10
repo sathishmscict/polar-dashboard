@@ -219,9 +219,12 @@ public class RequestsFragment extends BasePageFragment implements
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        applyInsets((ViewGroup) view);
-        applyInsetsToViewMargin(fab);
-        applyInsetsToViewMargin(emptyText);
+        if (savedInstanceState == null) {
+            final int offset = Utils.getNavBarHeight(getActivity());
+            setBottomMargin(fab, offset);
+            setBottomMargin(emptyText, offset);
+            setBottomPadding(list, offset);
+        }
 
         GridLayoutManager lm = new GridLayoutManager(getActivity(), Config.get().gridWidthRequests());
         lm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

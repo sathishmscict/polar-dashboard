@@ -33,6 +33,7 @@ import com.afollestad.polar.ui.IconPickerActivity;
 import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
 import com.afollestad.polar.util.TintUtils;
+import com.afollestad.polar.util.Utils;
 
 import java.util.List;
 import java.util.TimerTask;
@@ -136,7 +137,8 @@ public class IconsFragment extends BasePageFragment implements
         super.onViewCreated(view, savedInstanceState);
         if (getActivity() != null) load();
 
-        applyInsetsToView(mRecyclerView);
+        if (savedInstanceState == null)
+            setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()));
     }
 
     private void load() {
