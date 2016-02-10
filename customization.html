@@ -53,7 +53,6 @@
 
             <h1>Table of Contents</h1>
             <ol class="tableofcontents">
-                <li><a href="#namepackageicon">Name, Package, and Icon</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#changelog">Changelog</a></li>
                 <li><a href="#theming">Theming</a></li>
@@ -61,26 +60,6 @@
                 <li><a href="#donation">Donation</a></li>
             </ol>
             <hr/>
-
-            <h1 id="namepackageicon">Name, Package, and Icon</h1>
-
-            <p class="flow-text">
-                First, you need to change the name of the dashboard to the name of your icon pack. This can be done from <code>/res/values/strings.xml</code> 
-                as seen in the image below. Make sure you update the first two strings to replace "Polar". The second is used in Muzei.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/appname.JPG" class="app-image">
-
-            <p class="flow-text">
-                Your launcher (home screen) icon goes into the <code>mipmap</code> prefixed folders in <code>/res</code>.
-            </p>
-            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/launchericons.JPG" class="app-image-small">
-            
-            <p class="flow-text">
-                You will also need to update your <code>applicationId</code> (your pack's unique identifier which will also be used on Google Play) 
-                in <code>/app/build.gradle</code>. It is however possible that the refactoring step from the Getting Started page updated this for you already. 
-                You also manage your app's version (<code>versionCode</code> and <code>versionName</code>) from this file.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/buildgradle.JPG" class="app-image">
-
-            <hr>
 
             <h1 id="about">About</h1>
 
