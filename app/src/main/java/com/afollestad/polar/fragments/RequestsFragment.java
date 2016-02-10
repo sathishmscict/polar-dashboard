@@ -302,7 +302,8 @@ public class RequestsFragment extends BasePageFragment implements
                 mRequestManager.setSettings(new RequestSettings.Builder()
                         .addEmailAddress(getString(R.string.icon_request_email))
                         .emailSubject(String.format("%s %s", getString(R.string.app_name), getString(R.string.icon_request)))
-                        .emailPrecontent("These apps are missing on my phone:\n\n") // Text before the main app information
+                        .emailPrecontent(String.format("These apps are missing on my phone... " +
+                                "I'm using version %s.\n\n", BuildConfig.VERSION_NAME)) // Text before the main app information
                         .saveLocation(saveFolder.getAbsolutePath())
                         .appfilterName("appfilter.xml")
                         .compressFormat(PkRequestManager.PNG)
