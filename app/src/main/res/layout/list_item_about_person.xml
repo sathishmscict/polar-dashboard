@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:foreground="?selectableItemBackground"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/content_inset_quarter"
-    android:paddingRight="@dimen/content_inset_quarter">
+    android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card"
-        style="@style/Card">
+        style="@style/Card"
+        android:layout_marginLeft="@dimen/content_inset_half_card"
+        android:layout_marginRight="@dimen/content_inset_half_card">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -71,43 +71,13 @@
                     android:textSize="@dimen/content_text_size"
                     tools:text="Android and Backend Engineer, SkillFitness.\nLives in Minneapolis, MN" />
 
-                <LinearLayout
-                    android:id="@+id/badgesFrame"
+                <com.afollestad.polar.views.SplitButtonsLayout
+                    android:id="@+id/buttonsFrame"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/content_inset_quarter"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
-
-                    <Button
-                        style="?borderlessButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:tag="http://aidanfollestad.com"
-                        android:text="@string/website"
-                        android:textColor="?colorAccent" />
-
-                    <Button
-                        style="?borderlessButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:tag="https://google.com/+AidanFollestad"
-                        android:text="@string/google_plus"
-                        android:textColor="?colorAccent" />
-
-                    <Button
-                        style="?borderlessButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:tag="https://www.linkedin.com/in/afollestad"
-                        android:text="@string/linkedin"
-                        android:textColor="?colorAccent" />
-
-                </LinearLayout>
+                    android:gravity="center_vertical|end"
+                    android:orientation="horizontal" />
 
             </LinearLayout>
 
