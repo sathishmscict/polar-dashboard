@@ -310,7 +310,7 @@ public class WallpaperUtils {
         saveFolder.mkdirs();
 
         final String name;
-        final String extension = wallpaper.url.toLowerCase(Locale.getDefault()).endsWith(".png") ? ".png" : ".jpeg";
+        final String extension = wallpaper.url.toLowerCase(Locale.getDefault()).endsWith(".png") ? "png" : "jpg";
         if (apply) {
             // Crop/Apply
             name = String.format("%s_%s_wallpaper.%s",
