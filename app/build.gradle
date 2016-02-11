@@ -21,8 +21,8 @@ android {
         applicationId "com.afollestad.polar"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 6
-        versionName "1.0.2"
+        versionCode 7
+        versionName "1.0.3"
     }
     buildTypes {
 //        debug {
@@ -78,4 +78,5 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.2.1'
 
     compile 'com.anjlab.android.iab.v3:library:1.0.+'
+    compile 'com.github.TR4Android:AppCompat-Extension-Library:v0.2.0'
 }

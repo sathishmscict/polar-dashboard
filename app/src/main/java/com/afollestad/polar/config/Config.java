@@ -127,7 +127,7 @@ public class Config implements IConfig {
 
     @Override
     public boolean zooperEnabled() {
-        return mR != null && mR.getBoolean(R.bool.zooper_enabled);
+        return mR != null && mR.getIntArray(R.array.zooper_widget_previews).length > 0;
     }
 
     @Nullable

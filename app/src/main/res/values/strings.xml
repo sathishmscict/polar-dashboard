@@ -82,6 +82,16 @@
     <string name="donation_error">An error occurred during donation: %1$s</string>
     <string name="email_using">Email using…</string>
     <string name="unable_to_contact_server">Unable to contact the server! Check your internet connection.</string>
+    <string name="search_widgets">Search widgets…</string>
+    <string name="made_for_zooper">These widgets are made for Zooper Pro</string>
+    <string name="zooper_already_installed">Zooper Pro is already installed!</string>
+    <string name="install_fonts">Install Fonts</string>
+    <string name="install_iconsets">Install Iconsets</string>
+    <string name="assets_installed">Assets installed successfully!</string>
+    <string name="please_wait">Please wait…</string>
+    <string name="installing_fonts">Installing fonts…</string>
+    <string name="installing_iconsets">Installing iconsets…</string>
+    <string name="installing_bitmaps">Installing bitmaps…</string>
 
     <string-array name="wallpaper_options" translatable="false">
         <item>@string/apply</item>

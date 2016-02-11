@@ -2,14 +2,17 @@ package com.afollestad.polar.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
+import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
@@ -39,6 +42,15 @@ public abstract class Utils {
                 .show();
     }
 
+    public static boolean isPkgInstalled(@NonNull Context context, @NonNull String targetPackage) {
+        final PackageManager pm = context.getPackageManager();
+        try {
+            return pm.getPackageInfo(targetPackage, PackageManager.GET_META_DATA) != null;
+        } catch (Throwable ignored) {
+        }
+        return true;
+    }
+
     public static int getStatusBarHeight(Context context) {
         final Resources r = context.getResources();
         int resourceId = r.getIdentifier("status_bar_height", "dimen", "android");
@@ -60,6 +72,16 @@ public abstract class Utils {
         if (resourceId > 0)
             return r.getDimensionPixelSize(resourceId);
         return 0;
+    }
+
+    public static int[] resolveResourceIds(@NonNull Context context, @ArrayRes int integerArray) {
+        TypedArray ar = context.getResources().obtainTypedArray(integerArray);
+        int len = ar.length();
+        int[] resIds = new int[len];
+        for (int i = 0; i < len; i++)
+            resIds[i] = ar.getResourceId(i, 0);
+        ar.recycle();
+        return resIds;
     }
 
 //    @Size(2)

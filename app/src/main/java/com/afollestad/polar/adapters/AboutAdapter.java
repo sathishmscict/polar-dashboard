@@ -3,17 +3,16 @@ package com.afollestad.polar.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.support.annotation.LayoutRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,15 +22,37 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.config.Config;
 import com.afollestad.polar.util.TintUtils;
+import com.afollestad.polar.views.SplitButtonsLayout;
 import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 
 
 public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHolder> implements View.OnClickListener {
 
-    public interface OptionsClickListener {
+    public static class AboutItem {
 
+        public final String coverImage;
+        public final String profileImage;
+        public final String title;
+        public final String description;
+        public final String[] buttonNames;
+        public final String[] buttonLinks;
+
+        public AboutItem(String coverImage, String profileImage,
+                         String title, String description, String[] buttonNames, String[] buttonLinks) {
+            this.coverImage = coverImage;
+            this.profileImage = profileImage;
+            this.title = title;
+            this.description = description;
+            this.buttonNames = buttonNames;
+            this.buttonLinks = buttonLinks;
+        }
+    }
+
+    public interface OptionsClickListener {
         void onOptionFeedback();
 
         void onOptionDonate();
@@ -51,36 +72,37 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
 
     public AboutAdapter(Activity context, OptionsClickListener cb) {
         mContext = context;
-        mTitles = context.getResources().getStringArray(R.array.about_titles);
-        mDescriptions = context.getResources().getStringArray(R.array.about_descriptions);
-        mImages = context.getResources().getStringArray(R.array.about_images);
-        mCovers = context.getResources().getStringArray(R.array.about_covers);
-        mDevButtonTitles = context.getResources().getStringArray(R.array.about_button_1_titles);
-        mDevButtonLinks = context.getResources().getStringArray(R.array.about_button_1_links);
-        mDevButtonTitles2 = context.getResources().getStringArray(R.array.about_button_2_titles);
-        mDevButtonLinks2 = context.getResources().getStringArray(R.array.about_button_2_links);
+
+        final Resources r = context.getResources();
+        final String[] titles = r.getStringArray(R.array.about_titles);
+        final String[] descriptions = r.getStringArray(R.array.about_descriptions);
+        final String[] images = r.getStringArray(R.array.about_images);
+        final String[] covers = r.getStringArray(R.array.about_covers);
+
+        final String[] buttonNames2d = r.getStringArray(R.array.about_buttons_names);
+        final String[][] buttonNames3d = new String[buttonNames2d.length][];
+        for (int i = 0; i < buttonNames2d.length; i++)
+            buttonNames3d[i] = buttonNames2d[i].split("\\|");
+
+        final String[] buttonLinks2d = r.getStringArray(R.array.about_buttons_links);
+        final String[][] buttonLinks3d = new String[buttonLinks2d.length][];
+        for (int i = 0; i < buttonLinks2d.length; i++)
+            buttonLinks3d[i] = buttonLinks2d[i].split("\\|");
+
+        mItems = new ArrayList<>(titles.length);
+        for (int i = 0; i < titles.length; i++) {
+            mItems.add(new AboutItem(covers[i], images[i], titles[i], descriptions[i],
+                    buttonNames3d[i], buttonLinks3d[i]));
+        }
+
         mOptionCb = cb;
         mOptionsEnabled = Config.get().feedbackEnabled() || Config.get().donationEnabled();
-        mItemAidan = mTitles.length -3;
-        mItemTom = mTitles.length -2;
-        mItemDaniel = mTitles.length-1;
     }
 
     private final Context mContext;
-    private final String[] mTitles;
-    private final String[] mDescriptions;
-    private final String[] mImages;
-    private final String[] mCovers;
-    private final String[] mDevButtonTitles;
-    private final String[] mDevButtonLinks;
-    private final String[] mDevButtonTitles2;
-    private final String[] mDevButtonLinks2;
+    private final ArrayList<AboutItem> mItems;
     private final OptionsClickListener mOptionCb;
     private final boolean mOptionsEnabled;
-    // saving values in case there's more than one dev
-    private int mItemAidan;
-    private final int mItemTom;
-    private final int mItemDaniel;
 
     public static class MainViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -90,9 +112,7 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
             image = ButterKnife.findById(itemView, R.id.image);
             title = ButterKnife.findById(itemView, R.id.title);
             description = ButterKnife.findById(itemView, R.id.description);
-            badges = ButterKnife.findById(itemView, R.id.badgesFrame);
-            leftButton = ButterKnife.findById(itemView, R.id.badgeButtonLeft);
-            rightButton = ButterKnife.findById(itemView, R.id.badgeButtonRight);
+            buttons = ButterKnife.findById(itemView, R.id.buttonsFrame);
 
             feedbackButton = ButterKnife.findById(itemView, R.id.feedbackButton);
             feedbackImage = ButterKnife.findById(itemView, R.id.feedbackImage);
@@ -109,14 +129,12 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
         final ImageView image;
         final TextView title;
         final TextView description;
-        final LinearLayout badges;
+        final SplitButtonsLayout buttons;
 
         final View feedbackButton;
         final ImageView feedbackImage;
         final View donateButton;
         final ImageView donateImage;
-        final Button leftButton;
-        final Button rightButton;
         private final OptionsClickListener mOptionsCb;
 
         @Override
@@ -131,21 +149,11 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
 
     @Override
     public int getItemViewType(int position) {
-        if (mTitles.length == 3) {
-            // Gaufrer config
-            if (position == 0)
-                return -1;
-            else if (position == 1)
-                return 2;
-            else
-                return 1;
-        } else {
-            if (mOptionsEnabled) {
-                if (position == 0) return -1;
-                position--;
-            }
-            return position;
+        if (mOptionsEnabled) {
+            if (position == 0) return -1;
+            position--;
         }
+        return position;
     }
 
     @Override
@@ -158,11 +166,9 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
 
     @LayoutRes
     private int getLayoutResourceForViewType(int viewType) {
-        if(viewType == -1) return R.layout.list_item_about_options;
-        else if(viewType == mItemAidan) return R.layout.list_item_about_aidan;
-        else if(viewType == mItemTom) return R.layout.list_item_about_tom;
-        else if(viewType == mItemDaniel) return R.layout.list_item_about_daniel;
-        else return R.layout.list_item_about_dev;
+        if (viewType == -1)
+            return R.layout.list_item_about_options;
+        return R.layout.list_item_about_person;
     }
 
     @Override
@@ -192,31 +198,37 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
         if (mOptionsEnabled)
             index--;
 
-        holder.title.setText(mTitles[index]);
-        holder.description.setText(Html.fromHtml(mDescriptions[index]));
+        final AboutItem item = mItems.get(index);
+        holder.title.setText(item.title);
+        holder.description.setText(Html.fromHtml(item.description));
         holder.description.setMovementMethod(LinkMovementMethod.getInstance());
 
-        if(index != mItemAidan && index != mItemTom && index != mItemDaniel) {
-            holder.leftButton.setText(mDevButtonTitles[index]);
-            holder.leftButton.setTag(mDevButtonLinks[index]);
-            holder.rightButton.setText(mDevButtonTitles2[index]);
-            holder.rightButton.setTag(mDevButtonLinks2[index]);
-        }
-
         Glide.with(mContext)
-                .load(mCovers[index])
+                .load(item.coverImage)
                 .into(holder.cover);
         Glide.with(mContext)
-                .load(mImages[index])
+                .load(item.profileImage)
                 .into(holder.image);
 
-        for (int i = 0; i < holder.badges.getChildCount(); i++)
-            holder.badges.getChildAt(i).setOnClickListener(this);
+        if (item.buttonNames.length > 0) {
+            holder.buttons.setButtonCount(item.buttonNames.length);
+            if (!holder.buttons.hasAllButtons()) {
+                if (item.buttonNames.length != item.buttonLinks.length)
+                    throw new IllegalStateException("Button names and button links must have the same number of items (item " + index + ")");
+                for (int i = 0; i < item.buttonNames.length; i++)
+                    holder.buttons.addButton(item.buttonNames[i], item.buttonLinks[i]);
+            }
+        } else {
+            holder.buttons.setVisibility(View.GONE);
+        }
+
+        for (int i = 0; i < holder.buttons.getChildCount(); i++)
+            holder.buttons.getChildAt(i).setOnClickListener(this);
     }
 
     @Override
     public int getItemCount() {
-        int count = mTitles.length;
+        int count = mItems.size();
         if (mOptionsEnabled) count++;
         return count;
     }

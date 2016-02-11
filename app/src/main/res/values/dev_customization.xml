@@ -19,9 +19,6 @@
         https://raw.githubusercontent.com/TWellington/JSON-for-Gaufrer/master/wallpapers.json
     </string>
 
-    <!-- Coming soon -->
-    <bool name="zooper_enabled">false</bool>
-
     <!-- Email used to send icon requests, leave empty to disable this feature. -->
     <string name="icon_request_email">fake-email@fake-website.com</string>
 
