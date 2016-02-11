@@ -55,8 +55,8 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
         ButterKnife.bind(this);
 
         if (savedInstanceState == null) {
-            final View root = findViewById(R.id.root);
-            setTopPadding(root, Utils.getStatusBarHeight(this));
+//            final View root = findViewById(R.id.root);
+//            setTopPadding(root, Utils.getStatusBarHeight(this));
             setBottomPadding(mRecyclerView, Utils.getNavBarHeight(this));
         }
 

@@ -85,13 +85,13 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
     public RecyclerView mRecyclerView;
 
     int mDrawerModeTopInset;
-
     int mBottomInset;
+
     private PagesBuilder mPages;
 
-    public int getBottomInset() {
-        return mBottomInset;
-    }
+//    public int getBottomInset() {
+//        return mBottomInset;
+//    }
 
     @Override
     public Toolbar getToolbar() {
