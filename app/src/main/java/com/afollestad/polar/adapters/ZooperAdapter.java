@@ -95,7 +95,10 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
             Glide.with(holder.itemView.getContext())
                     .load(mWidgetPreviews[position])
                     .into(holder.image);
-            holder.name.setText(mWidgetNames[position]);
+            if (position < mWidgetNames.length) {
+                holder.name.setText(mWidgetNames[position]);
+                holder.name.setVisibility(View.VISIBLE);
+            } else holder.name.setVisibility(View.GONE);
         } else {
             StaggeredGridLayoutManager.LayoutParams lp = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
             lp.setFullSpan(true);

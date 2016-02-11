@@ -15,7 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.assent.Assent;
+import com.afollestad.assent.AssentCallback;
+import com.afollestad.assent.PermissionResultSet;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.ZooperAdapter;
@@ -24,9 +28,11 @@ import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
+import com.afollestad.polar.zooper.ZooperUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -40,8 +46,8 @@ public class ZooperFragment extends BasePageFragment implements
     TextView mEmpty;
     @Bind(android.R.id.progress)
     View mProgress;
-    @Bind(R.id.fabRoot)
-    FloatingActionButton mFabRoot;
+    @Bind(R.id.fabInstall)
+    FloatingActionButton mFabInstall;
 
     private ZooperAdapter mAdapter;
     private String mQueryText;
@@ -101,7 +107,7 @@ public class ZooperFragment extends BasePageFragment implements
         if (savedInstanceState == null) {
             final int offset = Utils.getNavBarHeight(getActivity());
             setBottomPadding(mRecyclerView, offset);
-            setBottomMargin(mFabRoot, offset);
+            setBottomMargin(mFabInstall, offset);
         }
 
         mAdapter = new ZooperAdapter(getActivity());
@@ -114,6 +120,45 @@ public class ZooperFragment extends BasePageFragment implements
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @OnClick(R.id.fabInstall)
+    public void onInstall() {
+        mFabInstall.hide();
+        if (!Assent.isPermissionGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
+            Assent.requestPermissions(new AssentCallback() {
+                @Override
+                public void onPermissionResult(PermissionResultSet permissionResultSet) {
+                    checkInstalled();
+                }
+            }, 69, Assent.WRITE_EXTERNAL_STORAGE);
+        } else {
+            checkInstalled();
+        }
+    }
+
+    private void checkInstalled() {
+        ZooperUtil.checkInstalled(getActivity(), new ZooperUtil.CheckResult() {
+            @Override
+            public void onCheckResult(boolean fontsInstalled, boolean iconsetsInstalled, boolean bitmapsInstalled) {
+                performInstallZooper(fontsInstalled, iconsetsInstalled, bitmapsInstalled);
+            }
+        });
+    }
+
+    private void performInstallZooper(boolean fontsInstalled, boolean iconsetsInstalled, boolean bitmapsInstalled) {
+        ZooperUtil.install(getActivity(), !fontsInstalled, !iconsetsInstalled, !bitmapsInstalled,
+                new ZooperUtil.InstallResult() {
+                    @Override
+                    public void onInstallResult(Exception e) {
+                        mFabInstall.show();
+                        if (e != null) {
+                            Utils.showError(getActivity(), e);
+                        } else {
+                            Toast.makeText(getActivity(), R.string.assets_installed, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     // Search
