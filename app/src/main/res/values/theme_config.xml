@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
 
-    <!-- TODO -->
     <string name="theme_feature">theme_header</string>
-    <string name="theme_title">Moonshine</string>
-    <string name="authorName">Pedro Peguero Jr.</string>
-    <string name="developerName">Valiant Pixels</string>
-    <string name="developer_name">Valiant Pixels</string>
-    <string name="developer_link">http://www.valiantpixels.com/</string>
-    <string name="theme_description">Android 4.5? Project Hera? Nope. It is officially time for a new look. Introducing, Moonshine.
-Inspired by leaks and rumors, we decided to make a full pack following these new guidelines.\n\nEmail: support@valiantpixels.com</string>
+    <string name="theme_title">@string/app_name</string>
+    <string name="authorName">Not filled in</string>
+    <string name="developerName">Not filled in</string>
+    <string name="developer_name">Not filled in</string>
+    <string name="developer_link">http://www.google.com</string>
+    <string name="theme_description">Not filled in</string>
     <string name="theme_preview1">preview1</string>
 
 </resources>

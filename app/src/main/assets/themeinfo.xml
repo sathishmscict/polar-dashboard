@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?><?xml version="1.0" encoding="utf-8"?><!-- This is for Atom Launcher -->
 <themeInfo>
-    <packageName>com.tomwellington.gaufrer</packageName>
+    <packageName>com.afollestad.polar</packageName>
     <versionName>1.0</versionName>
     <versionCode>1</versionCode>
-    <themeName>Gaufrer</themeName>
+    <themeName>Unnamed</themeName>
     <themePointColor>#F27400</themePointColor>
     <themePreview img1="preview1" />
     <preview img1="preview1" />

@@ -1,9 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?><!-- This is for Apex launcher -->
 <theme>
     <version>1</version>
-    <themeName>Gaufrer Icon Pack</themeName>
-    <themeInfo>Gaufrer is an icon pack with pressed glyphs, and embossed sheets of paper above those
-        glyphs casting shadows below the top sheet of paper, with extreme lighting.
-    </themeInfo>
+    <themeName>Unnamed</themeName>
+    <themeInfo>Not filled in</themeInfo>
     <preview img1="preview1" />
 </theme>
