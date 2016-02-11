@@ -266,6 +266,8 @@ public class RequestsFragment extends BasePageFragment implements
                 Assent.requestPermissions(RequestsFragment.this, PERM_RQ, Assent.WRITE_EXTERNAL_STORAGE);
             }
         });
+
+        setBottomMargin(emptyText, Utils.getNavBarHeight(getActivity()));
     }
 
     @Override
