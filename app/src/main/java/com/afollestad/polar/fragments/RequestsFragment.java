@@ -1,7 +1,5 @@
 package com.afollestad.polar.fragments;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -18,8 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewPropertyAnimator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,41 +100,6 @@ public class RequestsFragment extends BasePageFragment implements
         }
     }
 
-    private void toggleFab(boolean show) {
-        if (mFabOffset == -1) {
-            final ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) fab.getLayoutParams();
-            mFabOffset = lp.bottomMargin * 2;
-        }
-        if (show) {
-            if (mFabShown) return;
-            mFabShown = true;
-            fab.animate().cancel();
-            fab.setVisibility(View.VISIBLE);
-            fab.setTranslationY(mFabOffset);
-            ViewPropertyAnimator animator = fab.animate().translationY(0);
-            animator.setInterpolator(new DecelerateInterpolator());
-            animator.setDuration(FAB_ANIMATION_DURATION);
-            animator.setListener(null);
-            animator.start();
-        } else {
-            if (!mFabShown) return;
-            mFabShown = false;
-            fab.animate().cancel();
-            fab.setTranslationY(0);
-            ViewPropertyAnimator animator = fab.animate().translationY(mFabOffset);
-            animator.setInterpolator(new DecelerateInterpolator());
-            animator.setDuration(FAB_ANIMATION_DURATION);
-            animator.setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    fab.setVisibility(View.GONE);
-                }
-            });
-            animator.start();
-        }
-    }
-
     @Override
     public void updateTitle() {
         synchronized (LOCK) {
@@ -157,7 +118,10 @@ public class RequestsFragment extends BasePageFragment implements
                     act.setTitle(getString(R.string.request_icons_x, numSelected));
                 }
 
-                toggleFab(numSelected > 0);
+                if (!fab.isShown() && numSelected > 0)
+                    fab.show();
+                else if (fab.isShown() && numSelected == 0)
+                    fab.hide();
                 // Work around for the icon sometimes being invisible?
                 fab.setImageResource(R.drawable.ic_action_apply);
                 // Update toolbar items
