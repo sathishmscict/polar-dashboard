@@ -60,6 +60,7 @@
                 <li><a href="#downloadingthecode">Downloading the Code</a></li>
                 <li><a href="#importingtheproject">Importing the Project</a></li>
                 <li><a href="#namepackageicon">Name, Package, and Icon</a></li>
+                <li><a href="#metadata">Metadata</a></li>
             </ol>
             <hr />
 
@@ -173,6 +174,25 @@
                 in <code>/app/build.gradle</code>. It is however possible that the refactoring step from the Getting Started page updated this for you already.
                 You also manage your app's version (<code>versionCode</code> and <code>versionName</code>) from this file.
             </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/buildgradle.JPG" class="app-image">
+
+            <hr/>
+
+            <h1 id="metadata">Metadata</h1>
+            <p class="flow-text">
+                There are a few files which are used by very specific launchers, such as Apex launcher. It's important that you fill in the information 
+                in these files so that launchers like Apex display the correct name and icon for your pack.
+            </p>
+            <p class="flow-text">
+                These files include <code>themecfg.xml</code> and <code>themeinfo.xml</code>. They exist <b>in both</b> <code>/res/values/xml</code> 
+                and <code>/assets</code>.
+            </p>
+            <p class="flow-text">
+                <code>themeinfo.xml</code> looks like this:
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/themeinfo.JPG" class="app-image">
+
+            <p class="flow-text">
+                And <code>themecfg.xml</code> looks like this:
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/themecfg.JPG" class="app-image">
 
         </div>
     </main>
