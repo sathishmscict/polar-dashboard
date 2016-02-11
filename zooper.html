@@ -54,8 +54,57 @@
     <main class="mainContent">
         <div class="container">
 
-            <h1>Zooper Widgets</h1>
-            <p class="flow-text">Coming soon!</p>
+            <h1>Table of Contents</h1>
+            <ol class="tableofcontents">
+                <li><a href="#assets">Assets</a></li>
+                <li><a href="#metadata">Metadata</a></li>
+                <li><a href="#previews">Dashboard Previews</a></li>
+            </ol>
+            <hr />
+
+            <h1 id="assets">Assets</h1>
+            <p class="flow-text">
+                Most importantly, you need to import your Zooper assets into the dashboard. I won't go into detail how these assets are 
+                generated, but your <code>bitmaps</code>, <code>fonts</code>, <code>IconSets</code>, and <code>templates</code> all go into 
+                their respective folder within <code>/src/main/assets</code>.
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/zooperassets.JPG" class="app-image">
+
+            <hr/>
+
+            <h1 id="metadata">Metadata</h1>
+            <p class="flow-text">
+                Next, you'll need to fill out meta data which Zooper will use to recognize your pack.
+            </p>
+
+            <p class="flow-text">
+                First, you need to comment out this intent filter in <code>AndroidManifest.xml</code>. This is how Zooper finds your 
+                pack initially.
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/zooperintentfilter.JPG" class="app-image">
+
+            <p class="flow-text">
+                At the bottom of that same file, uncomment the template provider. This is how Zooper will pull your template files out of 
+                the dashboard. <b>MAKE SURE you change the authority to something unique. If you used the same authority as another pack, 
+                the packs would conflict with each other and only one would be able to be intalled at a time.</b>
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/zoopertemplateprovider.JPG" class="app-image">
+
+            <p class="flow-text">
+                Lastly for meta data, you'll need to fill out information in <code>/res/values/dev_zooper.xml</code>. The comments 
+                should make what they do self-explanatory. It's recommended that you at least put your name in <code>zooper_pack_desc</code>.
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/zooperdevinfo.JPG" class="app-image">
+
+            <hr/>
+
+            <h1 id="previews">Dashboard Previews</h1>
+            <p class="flow-text">
+                If you choose to do so, Polar can display previews of your Zooper widgets in a page within the dashboard. They key is these two 
+                arrays at the bottom of <code>/res/values/dev_zooper.xml</code>:
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/zooperdashboardpreview.JPG" class="app-image">
+            <p class="flow-text">
+                <code>zooper_widget_previews</code> contains a list of drawables which contain previews of your widgets. Most people who choose to
+                use previews will take screenshots of their widgets on top of a wallpaper, and make the image square. You can put these preview files 
+                in the <code>/res/drawable-nodpi</code> folder. <code>zooper_widget_names</code> should contain a list of names which are displayed 
+                under each preview.
+            </p>
 
         </div>
     </main>
