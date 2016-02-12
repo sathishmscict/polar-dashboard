@@ -14,6 +14,8 @@ import com.afollestad.polar.ui.base.BaseThemedActivity;
  */
 public abstract class BasePageFragment extends AssentFragment {
 
+    private boolean isVisible;
+
     @StringRes
     protected abstract int getTitle();
 
@@ -25,8 +27,14 @@ public abstract class BasePageFragment extends AssentFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        this.isVisible = isVisibleToUser;
         if (isVisibleToUser)
             updateTitle();
+    }
+
+    protected void invalidateOptionsMenu() {
+        if (isVisible && getActivity() != null && !getActivity().isFinishing())
+            getActivity().invalidateOptionsMenu();
     }
 
     @Override
