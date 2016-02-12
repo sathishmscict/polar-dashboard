@@ -134,11 +134,7 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
         setHasOptionsMenu(true);
-
-        if (savedInstanceState != null)
-            IconRequest.restoreInstanceState(getActivity(), savedInstanceState, this, this, this);
     }
 
     @Nullable
@@ -244,6 +240,19 @@ public class RequestsFragment extends BasePageFragment implements
         });
 
         setBottomMargin(emptyText, Utils.getNavBarHeight(getActivity()));
+
+        if (savedInstanceState != null) {
+            IconRequest.restoreInstanceState(getActivity(), savedInstanceState, this, this, this);
+            final IconRequest ir = IconRequest.get();
+            if (ir != null && ir.isAppsLoaded()) {
+                mAdapter.setApps(ir.getApps());
+                mAdapter.restoreInstanceState(savedInstanceState);
+                emptyText.setVisibility(View.GONE);
+                progress.setVisibility(View.GONE);
+                progressText.setVisibility(View.GONE);
+                list.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
@@ -272,6 +281,7 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        mAdapter.saveInstanceState(outState);
         IconRequest.saveInstanceState(outState);
     }
 
