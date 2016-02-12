@@ -411,6 +411,7 @@ public class RequestsFragment extends BasePageFragment implements
                 mDialog.dismiss();
                 fab.hide();
                 IconRequest.get().unselectAllApps();
+                mAdapter.clearSelected();
                 mAdapter.notifyDataSetChanged();
             }
         });
