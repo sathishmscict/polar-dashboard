@@ -58,7 +58,7 @@
             <ol class="tableofcontents">
                 <li><a href="#about">About</a></li>
                 <li><a href="#changelog">Changelog</a></li>
-                <li><a href="#theming">Theming</a></li>
+                <li><a href="#theming">Theming and UI Mode</a></li>
                 <li><a href="#options">Options</a></li>
                 <li><a href="#donation">Donation</a></li>
             </ol>
@@ -93,13 +93,13 @@
 
             <hr>
 
-            <h1 id="theming">Theming</h1>
+            <h1 id="theming">Theming and UI Mode</h1>
 
             <p class="flow-text">
                 The first boolean in the image below (<code>allow_theme_switching</code>) determines whether or not users will be able to switch between the light and dark theme from the dashboard UI. 
                 When true, there will be a checkbox in the overflow menu. The second boolean (<code>dark_theme_default</code>) sets whether the dashboard will use the dark theme initially. By default, 
                 it will not; it will use the light theme initially.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/theme_switch.JPG" class="app-image">
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/theme_toggle.JPG" class="app-image">
 
             <p class="flow-text">
                 The values under the "light theme" and "dark theme" comments allow you to switch out the colors used throughout the dashboard. Initially, they are set to use the default 
@@ -113,26 +113,26 @@
             <p class="flow-text">
                 By default, Polar will use a tabbed UI. You can easily make Polar use a navigation drawer instead, just by setting <code>nav_drawer_mode_default</code> to true. The second option 
                 after that determines whether or not users can switch between tabs and a navigation drawer from within the dashboard UI.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options1.JPG" class="app-image">
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options_1.JPG" class="app-image">
 
             <p class="flow-text">
                 A lot of designers like to have a homepage that users will see when they first open the dashboard. We encourage you to try 
                 not using the homepage, but we included this function for those who really need it. You can enable or disable the homepage 
                 using the <code>homepage_enabled</code> boolean. The other settings should be self-explanatory.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options2.JPG" class="app-image" />
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options_2.JPG" class="app-image" />
 
             <p class="flow-text">
-                Below, <code>icon_request_email</code> is used as an email that icon requests are sent to; if this value is left empty, this 
-                functionality is disabled. If you fill <code>license_public_key</code> with the Base64 license key value from the Google Play Developer 
-                Console, it will enable license checking functionality. The dashboard will refuse to open if license checking is enabled and a user 
-                did not install the pack via Google Play. Note that launchers will still be able to see your icons; but users will not be able to 
-                see the dashboard or use your wallpapers.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options3.JPG" class="app-image" 
-
-            <p class="flow-text">
-                If you fill in <code>feedback_email</code>, a feedback button is displayed at the top of the <b>About</b> page. Clicking 
-                the button will open the user's email client, with the recipient and subject line filled in automatically.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/feedback.JPG" class="app-image" />
+                Below, a few options are displayed.
+                
+                <ol>
+                    <li><code>icon_request_email</code> &#8212; an email that icon requests are sent to. Leave empty to disable icon requests.</li>
+                    <li><code>licensing_public_key</code> &#8212; the Base64 key from the Google Play Developer Console (Under Services &amp; APIs).</li>
+                    <li><code>persist_selected_page</code> &#8212; when true, the dashboard will open the last selected page when restarted.</li>
+                    <li><code>feedback_email</code> &#8212; an email address feedback can be sent to from the About page. Leave empty to disable this feature.</li>
+                    <li><code>feedback_subject_line</code> &#8212; a subject line used in feedback emails.</li>
+                </ol>
+            </p>
+            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options_3.JPG" class="app-image" />
 
             <hr>
 
