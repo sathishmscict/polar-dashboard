@@ -22,7 +22,7 @@ public class GaufrerWallpaperSource extends RemoteMuzeiArtSource {
 
     private static final int ROTATE_TIME_MILLIS = 3 * 60 * 60 * 1000; // rotate every 3 hours
 
-    public void setActiveIndex(int index) {
+    private void setActiveIndex(int index) {
         PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
                 .edit().putInt("muzei_index", index).commit();
     }

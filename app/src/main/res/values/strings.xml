@@ -18,7 +18,6 @@
     <string name="dismiss">Dismiss</string>
     <string name="muzei_description">Polar wallpapers.</string>
     <string name="changelog" translatable="false">Changelog</string>
-    <string name="view">View</string>
     <string name="error">Error</string>
     <string name="search_icons">Search icons…</string>
     <string name="no_results">No results</string>
@@ -34,11 +33,6 @@
     <string name="building_icon_request">Building icon request… %1$d%%</string>
     <string name="icon_request_error">Icon request failed…</string>
     <string name="write_storage_permission_denied">Write external storage permission denied!</string>
-    <string name="website">Website</string>
-    <string name="dribbble">Dribbble</string>
-    <string name="github">GitHub</string>
-    <string name="google_plus">Google+</string>
-    <string name="linkedin">LinkedIn</string>
     <string name="no_wallpapers">No wallpapers</string>
     <string name="search_wallpapers">Search wallpapers…</string>
     <string name="reload_from_web">Reload from Web</string>
@@ -71,7 +65,6 @@
     <string name="home">Home</string>
     <string name="nav_drawer_mode">Nav drawer mode</string>
     <string name="zooper">Zooper</string>
-    <string name="zooper_coming_soon">Zooper support isn\'t ready yet, disable this tab in /res/values/dev_options.xml.</string>
     <string name="permission_needed">Permission Needed</string>
     <string name="permission_needed_desc"><![CDATA[ <b>%1$s</b> needs permission to access your phone\'s storage to generate an icon request!]]></string>
     <string name="download_cancelled">Download cancelled!</string>
@@ -85,8 +78,6 @@
     <string name="search_widgets">Search widgets…</string>
     <string name="made_for_zooper">These widgets are made for Zooper Pro</string>
     <string name="zooper_already_installed">Zooper Pro is already installed!</string>
-    <string name="install_fonts">Install Fonts</string>
-    <string name="install_iconsets">Install Iconsets</string>
     <string name="assets_installed">Assets installed successfully!</string>
     <string name="please_wait">Please wait…</string>
     <string name="installing_fonts">Installing fonts…</string>

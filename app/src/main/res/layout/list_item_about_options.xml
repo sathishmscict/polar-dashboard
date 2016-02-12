@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/content_inset_half"
     android:paddingRight="@dimen/content_inset_half"
     android:paddingTop="@dimen/content_inset_half"
-    android:weightSum="2">
+    android:weightSum="2"
+    android:baselineAligned="false">
 
     <LinearLayout
         android:id="@+id/feedbackButton"

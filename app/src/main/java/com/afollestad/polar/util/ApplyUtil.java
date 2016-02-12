@@ -276,6 +276,8 @@ public class ApplyUtil {
                         Toast.makeText(context, R.string.cmte_unavailable, Toast.LENGTH_SHORT).show();
                     }
                     break;
+                case UNKNOWN:
+                    break;
             }
             return true;
         } catch (Throwable t) {

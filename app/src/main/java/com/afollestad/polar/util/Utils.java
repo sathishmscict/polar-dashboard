@@ -1,5 +1,6 @@
 package com.afollestad.polar.util;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -110,6 +111,7 @@ public abstract class Utils {
     }
 
     public static void setOverflowButtonColor(@NonNull Activity activity, final @ColorInt int color) {
+        @SuppressLint("PrivateResource")
         final String overflowDescription = activity.getString(R.string.abc_action_menu_overflow_description);
         final ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
         final ViewTreeObserver viewTreeObserver = decorView.getViewTreeObserver();

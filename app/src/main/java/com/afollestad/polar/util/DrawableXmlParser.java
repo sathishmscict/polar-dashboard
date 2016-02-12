@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -37,9 +38,9 @@ public class DrawableXmlParser {
             getName(); // generate name
         }
 
-        static int SPACE = 1;
-        static int CAPS = 2;
-        static int CAPS_LOCK = 3;
+        static final int SPACE = 1;
+        static final int CAPS = 2;
+        static final int CAPS_LOCK = 3;
 
         public long getUniqueId() {
             return mName.hashCode();
@@ -134,7 +135,7 @@ public class DrawableXmlParser {
 
         @Override
         public String toString() {
-            return String.format("%s (%d)", mName, getIcons().size());
+            return String.format(Locale.getDefault(), "%s (%d)", mName, getIcons().size());
         }
     }
 

@@ -25,7 +25,7 @@ public class Config implements IConfig {
     }
 
     private static Config mConfig;
-    private Context mContext;
+    private final Context mContext;
     private Resources mR;
 
     public static void init(@NonNull Context context) {

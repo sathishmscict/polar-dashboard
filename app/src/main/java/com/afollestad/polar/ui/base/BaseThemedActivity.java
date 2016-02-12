@@ -25,7 +25,7 @@ public abstract class BaseThemedActivity extends AssentActivity {
 
     private boolean mLastDarkTheme = false;
 
-    public abstract Toolbar getToolbar();
+    protected abstract Toolbar getToolbar();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -133,11 +133,11 @@ public abstract class BaseThemedActivity extends AssentActivity {
         }
     }
 
-    public final void darkTheme(boolean newValue) {
+    protected final void darkTheme(boolean newValue) {
         Config.get().darkTheme(newValue);
     }
 
-    public final boolean darkTheme() {
+    protected final boolean darkTheme() {
         return Config.get().darkTheme();
     }
 

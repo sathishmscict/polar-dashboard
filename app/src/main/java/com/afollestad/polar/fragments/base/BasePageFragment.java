@@ -15,7 +15,7 @@ import com.afollestad.polar.ui.base.BaseThemedActivity;
 public abstract class BasePageFragment extends AssentFragment {
 
     @StringRes
-    public abstract int getTitle();
+    protected abstract int getTitle();
 
     public void updateTitle() {
         if (getActivity() != null)

@@ -90,6 +90,7 @@ public abstract class FragmentStatePagerAdapter extends PagerAdapter {
         return fragment;
     }
 
+    @SuppressLint("CommitTransaction")
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         Fragment fragment = (Fragment) object;

@@ -70,6 +70,7 @@ public class ViewerActivity extends AssentActivity {
         return 0;
     }
 
+    @SuppressLint("PrivateResource")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
