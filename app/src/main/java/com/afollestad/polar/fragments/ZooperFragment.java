@@ -104,11 +104,10 @@ public class ZooperFragment extends BasePageFragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        if (savedInstanceState == null) {
-            final int offset = Utils.getNavBarHeight(getActivity());
-            setBottomPadding(mRecyclerView, offset);
-            setBottomMargin(mFabInstall, offset);
-        }
+
+        final int offset = Utils.getNavBarHeight(getActivity());
+        setBottomPadding(mRecyclerView, offset, R.dimen.grid_margin);
+        setBottomMargin(mFabInstall, offset, R.dimen.content_inset);
 
         mAdapter = new ZooperAdapter(getActivity());
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(

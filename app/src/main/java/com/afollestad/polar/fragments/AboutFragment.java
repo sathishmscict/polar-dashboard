@@ -51,8 +51,7 @@ public class AboutFragment extends BasePageFragment implements AboutAdapter.Opti
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (savedInstanceState == null)
-            setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()));
+        setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()), R.dimen.content_inset_quarter);
     }
 
     @Override

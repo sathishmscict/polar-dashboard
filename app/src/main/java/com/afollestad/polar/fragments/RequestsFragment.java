@@ -191,12 +191,11 @@ public class RequestsFragment extends BasePageFragment implements
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        if (savedInstanceState == null) {
-            final int offset = Utils.getNavBarHeight(getActivity());
-            setBottomMargin(fab, offset);
-            setBottomMargin(progressText, offset);
-            setBottomPadding(list, offset);
-        }
+        final int offset = Utils.getNavBarHeight(getActivity());
+        setBottomMargin(fab, offset, R.dimen.fab_bottom_margin);
+        setBottomMargin(progressText, offset, 0);
+        setBottomPadding(list, offset, R.dimen.fab_bottom_margin_list);
+        setBottomMargin(emptyText, Utils.getNavBarHeight(getActivity()), R.dimen.nav_drawer_item_hor_pad);
 
         GridLayoutManager lm = new GridLayoutManager(getActivity(), Config.get().gridWidthRequests());
         lm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -238,8 +237,6 @@ public class RequestsFragment extends BasePageFragment implements
                 Assent.requestPermissions(RequestsFragment.this, PERM_RQ, Assent.WRITE_EXTERNAL_STORAGE);
             }
         });
-
-        setBottomMargin(emptyText, Utils.getNavBarHeight(getActivity()));
 
         if (savedInstanceState != null) {
             IconRequest.restoreInstanceState(getActivity(), savedInstanceState, this, this, this);

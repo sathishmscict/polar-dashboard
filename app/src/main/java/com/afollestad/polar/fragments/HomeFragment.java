@@ -36,8 +36,7 @@ public class HomeFragment extends BasePageFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        if (savedInstanceState == null)
-            setBottomMargin(mFab, Utils.getNavBarHeight(getActivity()));
+        setBottomMargin(mFab, Utils.getNavBarHeight(getActivity()), R.dimen.content_inset);
     }
 
     @Override

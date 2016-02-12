@@ -1,5 +1,6 @@
 package com.afollestad.polar.fragments.base;
 
+import android.support.annotation.DimenRes;
 import android.support.annotation.StringRes;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,17 +45,17 @@ public abstract class BasePageFragment extends AssentFragment {
             BaseThemedActivity.themeMenu(getActivity(), menu);
     }
 
-    protected void setBottomMargin(View view, int margin) {
+    protected void setBottomMargin(View view, int margin, @DimenRes int defaultMargin) {
         ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
-        lp.bottomMargin = lp.bottomMargin + margin;
+        lp.bottomMargin = (defaultMargin != 0 ? getResources().getDimensionPixelSize(defaultMargin) : 0) + margin;
         view.setLayoutParams(lp);
     }
 
-    protected void setBottomPadding(View view, int padding) {
+    protected void setBottomPadding(View view, int padding, @DimenRes int defaultPadding) {
         view.setPadding(view.getPaddingLeft(),
                 view.getPaddingTop(),
                 view.getPaddingRight(),
-                view.getPaddingBottom() + padding);
+                (defaultPadding != 0 ? getResources().getDimensionPixelSize(defaultPadding) : 0) + padding);
     }
 
 //    /**

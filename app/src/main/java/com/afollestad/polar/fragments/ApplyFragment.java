@@ -61,8 +61,7 @@ public class ApplyFragment extends BasePageFragment implements ApplyAdapter.Sele
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (savedInstanceState == null)
-            setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()));
+        setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()), R.dimen.grid_margin);
     }
 
     @Override

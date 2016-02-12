@@ -137,8 +137,7 @@ public class IconsFragment extends BasePageFragment implements
         super.onViewCreated(view, savedInstanceState);
         if (getActivity() != null) load();
 
-        if (savedInstanceState == null)
-            setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()));
+        setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()), R.dimen.grid_margin);
     }
 
     private void load() {

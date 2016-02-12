@@ -192,8 +192,7 @@ public class WallpapersFragment extends BasePageFragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        if (savedInstanceState == null)
-            setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()));
+        setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()), R.dimen.grid_margin);
 
         mAdapter = new WallpaperAdapter(new WallpaperAdapter.ClickListener() {
             @Override
