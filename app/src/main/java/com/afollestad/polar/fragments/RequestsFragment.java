@@ -352,6 +352,7 @@ public class RequestsFragment extends BasePageFragment implements
             progressText.post(new Runnable() {
                 @Override
                 public void run() {
+                    if (mRequestManager == null) return;
                     invalidateOptionsMenu();
                     mAdapter.setApps(mRequestManager.getApps());
                     emptyText.setVisibility(mAdapter.getItemCount() == 0 ?
