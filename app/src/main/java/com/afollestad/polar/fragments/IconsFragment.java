@@ -136,7 +136,7 @@ public class IconsFragment extends BasePageFragment implements
         super.onViewCreated(view, savedInstanceState);
         if (getActivity() != null) load();
 
-        applyInsetsToView(mRecyclerView);
+        //applyInsetsToView(mRecyclerView);
     }
 
     private void load() {
