@@ -24,14 +24,12 @@
     <string name="about">About</string>
     <string name="request_icons">Request Icons</string>
     <string name="request_icons_x">Request Icons (%1$d)</string>
-    <string name="preparing_to_load">Preparing to load…</string>
-    <string name="loading_progress_x">Loading… %1$d%%</string>
+    <string name="loading_filter">Loading filter…</string>
+    <string name="loading">Loading…</string>
     <string name="no_apps">No apps</string>
     <string name="tap_apps_to_select_them">Tap apps to select them!</string>
     <string name="icon_request">Icon Request</string>
     <string name="preparing_icon_request">Preparing icon request…</string>
-    <string name="building_icon_request">Building icon request… %1$d%%</string>
-    <string name="icon_request_error">Icon request failed…</string>
     <string name="write_storage_permission_denied">Write external storage permission denied!</string>
     <string name="no_wallpapers">No wallpapers</string>
     <string name="search_wallpapers">Search wallpapers…</string>
@@ -83,6 +81,7 @@
     <string name="installing_fonts">Installing fonts…</string>
     <string name="installing_iconsets">Installing iconsets…</string>
     <string name="installing_bitmaps">Installing bitmaps…</string>
+    <string name="x_version_x">%1$s version: %2$s</string>
 
     <string-array name="wallpaper_options" translatable="false">
         <item>@string/apply</item>

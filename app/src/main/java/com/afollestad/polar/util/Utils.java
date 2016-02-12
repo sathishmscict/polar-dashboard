@@ -26,6 +26,7 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.config.Config;
 
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -41,6 +42,21 @@ public abstract class Utils {
                 .content(e.getMessage())
                 .positiveText(android.R.string.ok)
                 .show();
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public static int wipe(File dir) {
+        if (!dir.exists()) return 0;
+        int count = 1;
+        if (dir.isDirectory()) {
+            File[] contents = dir.listFiles();
+            if (contents != null && contents.length > 0) {
+                for (File fi : contents)
+                    count += wipe(fi);
+            }
+        }
+        dir.delete();
+        return count;
     }
 
     public static boolean isPkgInstalled(@NonNull Context context, @NonNull String targetPackage) {
