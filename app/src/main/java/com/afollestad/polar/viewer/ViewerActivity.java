@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -95,6 +96,8 @@ public class ViewerActivity extends AssentActivity {
             lp = (FrameLayout.LayoutParams) mStatusbarPlaceholder.getLayoutParams();
             lp.height = statusBarHeight;
             mStatusbarPlaceholder.setLayoutParams(lp);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                mStatusbarPlaceholder.setBackgroundColor(Color.TRANSPARENT);
         } else {
             mStatusbarPlaceholder.setVisibility(View.GONE);
         }
