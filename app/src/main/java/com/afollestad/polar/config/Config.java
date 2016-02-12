@@ -25,14 +25,22 @@ public class Config implements IConfig {
     }
 
     private static Config mConfig;
-    private final Context mContext;
+    private Context mContext;
     private Resources mR;
 
     public static void init(@NonNull Context context) {
         mConfig = new Config(context);
     }
 
+    public static void setContext(Context context) {
+        if (mConfig != null) {
+            mConfig.mContext = context;
+            mConfig.mR = context.getResources();
+        }
+    }
+
     private void destroy() {
+        mContext = null;
         mR = null;
     }
 

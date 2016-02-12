@@ -106,6 +106,7 @@ public abstract class BaseThemedActivity extends AssentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Config.setContext(this);
         if (mLastDarkTheme != darkTheme())
             recreate();
     }
