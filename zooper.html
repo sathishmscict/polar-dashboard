@@ -96,14 +96,12 @@
 
             <h1 id="previews">Dashboard Previews</h1>
             <p class="flow-text">
-                If you choose to do so, Polar can display previews of your Zooper widgets in a page within the dashboard. The key is these two 
-                arrays at the bottom of <code>/res/values/dev_zooper.xml</code>:
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/zooperdashboardpreview.JPG" class="app-image">
+                If you choose to do so, Polar can display previews of your Zooper widgets in a page within the dashboard. The key is the boolean  
+                <code>enable_zooper_page</code> in <code>/res/values/dev_zooper.xml</code>:
+            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/zooper_dashboardpreview.JPG" class="app-image">
             <p class="flow-text">
-                <code>zooper_widget_previews</code> contains a list of drawables which contain previews of your widgets. Most people who choose to
-                use previews will take screenshots of their widgets on top of a wallpaper, and make the image square. You can put these preview files 
-                in the <code>/res/drawable-nodpi</code> folder. <code>zooper_widget_names</code> should contain a list of names which are displayed 
-                under each preview.
+                <code>zooper_widget_names</code> should contain a list of names which are displayed under each preview. The previews themselves are 
+                pulled directly from your template files in <code>/assets/templates</code>.
             </p>
 
         </div>
