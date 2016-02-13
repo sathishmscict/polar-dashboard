@@ -21,8 +21,8 @@ android {
         applicationId "com.afollestad.polar"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 10
-        versionName "1.1"
+        versionCode 11
+        versionName "1.1.1"
     }
     buildTypes {
 //        debug {
@@ -61,7 +61,7 @@ dependencies {
     compile 'com.github.afollestad:sectioned-recyclerview:0.2.0'
     compile 'com.github.afollestad:assent:ec59bea20f'
     compile 'com.github.afollestad:inquiry:b13a58b902'
-    compile 'com.github.afollestad:icon-request:f6341c8260'
+    compile 'com.github.afollestad:icon-request:6aa0357326'
 
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
