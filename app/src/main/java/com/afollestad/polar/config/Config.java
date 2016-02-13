@@ -135,7 +135,7 @@ public class Config implements IConfig {
 
     @Override
     public boolean zooperEnabled() {
-        return mR != null && mR.getIntArray(R.array.zooper_widget_previews).length > 0;
+        return mR != null && mR.getBoolean(R.bool.enable_zooper_page);
     }
 
     @Nullable
@@ -237,5 +237,11 @@ public class Config implements IConfig {
     public int gridWidthRequests() {
         if (mR == null) return 3;
         return mR.getInteger(R.integer.requests_grid_width);
+    }
+
+    @Override
+    public int gridWidthZooper() {
+        if (mR == null) return 2;
+        return mR.getInteger(R.integer.zooper_grid_width);
     }
 }

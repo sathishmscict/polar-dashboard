@@ -1,5 +1,7 @@
 package com.afollestad.polar.fragments;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -30,6 +32,9 @@ import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.zooper.ZooperUtil;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -51,6 +56,8 @@ public class ZooperFragment extends BasePageFragment implements
 
     private ZooperAdapter mAdapter;
     private String mQueryText;
+    private ArrayList<PreviewItem> mPreviews;
+    private Drawable mWallpaper;
 
     public ZooperFragment() {
     }
@@ -100,6 +107,7 @@ public class ZooperFragment extends BasePageFragment implements
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -111,8 +119,39 @@ public class ZooperFragment extends BasePageFragment implements
 
         mAdapter = new ZooperAdapter(getActivity());
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(
-                Config.get().gridWidthWallpaper(), StaggeredGridLayoutManager.VERTICAL));
+                Config.get().gridWidthZooper(), StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
+
+        ZooperUtil.getPreviews(getActivity(), new ZooperUtil.PreviewCallback() {
+            @Override
+            public void onPreviewsLoaded(ArrayList<PreviewItem> previews, Drawable wallpaper, Exception error) {
+                if (getActivity() == null || getActivity().isFinishing() || !isAdded())
+                    return;
+                else if (error != null) {
+                    error.printStackTrace();
+                    setListShown(true);
+                    mAdapter.setPreviewFiles(null, null);
+                    mEmpty.setVisibility(View.VISIBLE);
+                    if (error.getMessage().trim().isEmpty())
+                        mEmpty.setText(error.toString());
+                    else mEmpty.setText(error.getMessage());
+                    return;
+                }
+                mPreviews = previews;
+                mWallpaper = wallpaper;
+                mAdapter.setPreviewFiles(mPreviews, mWallpaper);
+            }
+        });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (getActivity() != null && getActivity().isFinishing()) {
+            Utils.wipe(ZooperUtil.getWidgetPreviewCache(getActivity()));
+            mWallpaper = null;
+            mPreviews = null;
+        }
     }
 
     @Override
@@ -158,6 +197,17 @@ public class ZooperFragment extends BasePageFragment implements
                         }
                     }
                 });
+    }
+
+    public static class PreviewItem implements Serializable {
+
+        public final String name;
+        public final Bitmap image;
+
+        public PreviewItem(String name, Bitmap image) {
+            this.name = name;
+            this.image = image;
+        }
     }
 
     // Search

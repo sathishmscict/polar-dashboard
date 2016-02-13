@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -16,6 +17,7 @@ import android.os.Build;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,8 @@ import com.afollestad.polar.R;
 import com.afollestad.polar.config.Config;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 
@@ -171,5 +175,25 @@ public abstract class Utils {
         baseSelector.addState(new int[]{}, new ColorDrawable(Color.TRANSPARENT));
         baseSelector.addState(new int[]{android.R.attr.state_pressed}, new ColorDrawable(pressed));
         return baseSelector;
+    }
+
+    public static void recycleQuietely(@Nullable Bitmap bitmap) {
+        if (bitmap == null || bitmap.isRecycled()) return;
+        bitmap.recycle();
+    }
+
+    public static void copy(InputStream is, OutputStream os) throws Exception {
+        byte[] buffer = new byte[2048];
+        int read;
+        while ((read = is.read(buffer)) != -1)
+            os.write(buffer, 0, read);
+        os.flush();
+    }
+
+    public static String removeExtension(String name) {
+        if (name.startsWith(".")) return name;
+        int dot = name.lastIndexOf('.');
+        if (dot == -1) return name;
+        return name.substring(0, dot);
     }
 }

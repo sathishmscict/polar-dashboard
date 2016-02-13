@@ -1,9 +1,15 @@
 package com.afollestad.polar.zooper;
 
 import android.app.Activity;
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
@@ -13,6 +19,8 @@ import android.util.Log;
 import com.afollestad.bridge.BridgeUtil;
 import com.afollestad.polar.R;
 import com.afollestad.polar.dialogs.ProgressDialogFragment;
+import com.afollestad.polar.fragments.ZooperFragment;
+import com.afollestad.polar.util.Utils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,6 +29,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -64,6 +76,7 @@ public class ZooperUtil {
             // So, say it is installed.
             return true;
         }
+        if (files == null || files.length == 0) return false;
         for (String filename : files) {
             final File file = new File(getZooperWidgetDir(folder), filename);
             if (!file.exists()) return false;
@@ -207,6 +220,157 @@ public class ZooperUtil {
                 });
             }
         }).start();
+    }
+
+    public interface PreviewCallback {
+        void onPreviewsLoaded(ArrayList<ZooperFragment.PreviewItem> previews, Drawable wallpaper, Exception error);
+    }
+
+    public static File getWidgetPreviewCache(@NonNull Context context) {
+        return new File(context.getExternalCacheDir(), "WidgetPreviews");
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public static void getPreviews(final Activity context, final PreviewCallback cb) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final AssetManager am = context.getAssets();
+                    final String[] templates = am.list("templates");
+                    if (templates == null || templates.length == 0) {
+                        post(context, new Runnable() {
+                            @Override
+                            public void run() {
+                                cb.onPreviewsLoaded(null, null, null);
+                            }
+                        });
+                        return;
+                    }
+
+                    final File cacheDir = getWidgetPreviewCache(context);
+                    Utils.wipe(cacheDir);
+                    cacheDir.mkdirs();
+                    final ArrayList<ZooperFragment.PreviewItem> results = new ArrayList<>();
+
+                    for (String file : templates) {
+                        final File zwFileCache = new File(cacheDir, file);
+                        InputStream is = null;
+                        OutputStream os = null;
+                        try {
+                            is = am.open("templates/" + file);
+                            os = new FileOutputStream(zwFileCache);
+                            Utils.copy(is, os);
+                            BridgeUtil.closeQuietly(is);
+                            BridgeUtil.closeQuietly(os);
+
+                            if (zwFileCache.exists()) {
+                                final String widgetName = Utils.removeExtension(zwFileCache.getName());
+                                final File pngFile = new File(cacheDir, widgetName + ".png");
+
+                                final ZipFile zipFile = new ZipFile(zwFileCache);
+                                final Enumeration<? extends ZipEntry> entryEnum = zipFile.entries();
+                                ZipEntry entry;
+                                while ((entry = entryEnum.nextElement()) != null) {
+                                    if (entry.getName().endsWith("screen.png")) {
+                                        InputStream zis = null;
+                                        OutputStream zos = null;
+                                        try {
+                                            zis = zipFile.getInputStream(entry);
+                                            zos = new FileOutputStream(pngFile);
+                                            Utils.copy(zis, zos);
+                                        } finally {
+                                            BridgeUtil.closeQuietly(zis);
+                                            BridgeUtil.closeQuietly(zos);
+                                        }
+                                        break;
+                                    }
+                                }
+
+                                Bitmap img = BitmapFactory.decodeFile(pngFile.getAbsolutePath());
+                                results.add(new ZooperFragment.PreviewItem(
+                                        widgetName,
+                                        replaceColor(img, Color.parseColor("#555555"), Color.TRANSPARENT)));
+                            }
+                        } catch (final Exception e) {
+                            if (cb != null) {
+                                post(context, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cb.onPreviewsLoaded(null, null, e);
+                                    }
+                                });
+                            }
+                            break;
+                        } finally {
+                            zwFileCache.delete();
+                            BridgeUtil.closeQuietly(is);
+                            BridgeUtil.closeQuietly(os);
+                        }
+                    }
+
+                    if (cb != null) {
+                        final Drawable wallpaperDrawable = WallpaperManager.getInstance(context).getDrawable();
+                        post(context, new Runnable() {
+                            @Override
+                            public void run() {
+                                cb.onPreviewsLoaded(results, wallpaperDrawable, null);
+                            }
+                        });
+                    }
+                } catch (final Exception e) {
+                    if (cb != null) {
+                        post(context, new Runnable() {
+                            @Override
+                            public void run() {
+                                cb.onPreviewsLoaded(null, null, e);
+                            }
+                        });
+                    }
+                }
+            }
+        }).start();
+    }
+
+    private static Bitmap replaceColor(@NonNull Bitmap src, @ColorInt int originalColor, @ColorInt int replaceColor) {
+        int width = src.getWidth();
+        int height = src.getHeight();
+        int[] pixels = new int[width * height];
+        src.getPixels(pixels, 0, width, 0, 0, width, height);
+
+        int minX = width;
+        int minY = height;
+        int maxX = -1;
+        int maxY = -1;
+
+        Bitmap bmOut = Bitmap.createBitmap(width, height, src.getConfig());
+        src.recycle();
+        int pixel;
+
+        for (int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                int index = y * width + x;
+                pixel = pixels[index];
+                if (pixel == originalColor) {
+                    pixels[index] = replaceColor;
+                }
+                if (pixels[index] != replaceColor) {
+                    if (x < minX)
+                        minX = x;
+                    if (x > maxX)
+                        maxX = x;
+                    if (y < minY)
+                        minY = y;
+                    if (y > maxY)
+                        maxY = y;
+                }
+            }
+        }
+
+        bmOut.setPixels(pixels, 0, width, 0, 0, width, height);
+        Bitmap result = Bitmap.createBitmap(bmOut, minX, minY, (maxX - minX) + 1, (maxY - minY) + 1);
+        bmOut.recycle();
+        return result;
     }
 
     private ZooperUtil() {

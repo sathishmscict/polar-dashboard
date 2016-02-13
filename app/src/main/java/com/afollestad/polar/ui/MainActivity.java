@@ -57,6 +57,7 @@ import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.views.DisableableViewPager;
+import com.afollestad.polar.zooper.ZooperUtil;
 import com.google.android.vending.licensing.Policy;
 
 import butterknife.Bind;
