@@ -15,4 +15,4 @@ A tutorial is available on [this repository's website](http://afollestad.github.
 
 # Upgrade Tool
 
-[PUT](https://github.com/afollestad/polar-dashboard-upgrade-tool) will be officially released soon.
+[PUT](https://github.com/afollestad/polar-dashboard-upgrade-tool) is available for automatic upgrades. 
