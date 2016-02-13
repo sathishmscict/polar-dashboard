@@ -148,6 +148,8 @@ public class ZooperFragment extends BasePageFragment implements
     public void onPause() {
         super.onPause();
         if (getActivity() != null && getActivity().isFinishing()) {
+            if (mAdapter != null)
+                mAdapter.recycle();
             Utils.wipe(ZooperUtil.getWidgetPreviewCache(getActivity()));
             mWallpaper = null;
             mPreviews = null;

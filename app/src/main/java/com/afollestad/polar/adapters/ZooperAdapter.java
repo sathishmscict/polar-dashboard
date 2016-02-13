@@ -36,8 +36,8 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
     private final boolean mZooperInstalled;
 
     private Drawable mWallpaper;
-    private ArrayList<ZooperFragment.PreviewItem> mPreviewFiles;
-    private ArrayList<ZooperFragment.PreviewItem> mFilteredPreviews;
+    private ArrayList<ZooperFragment.PreviewItem> mPreviews;
+    private ArrayList<ZooperFragment.PreviewItem> mPreviewsFiltered;
     private ArrayList<String> mFilteredNames;
 
     public ZooperAdapter(Context context) {
@@ -46,7 +46,7 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
     }
 
     public void setPreviewFiles(ArrayList<ZooperFragment.PreviewItem> previewFiles, Drawable wallpaper) {
-        this.mPreviewFiles = previewFiles;
+        this.mPreviews = previewFiles;
         this.mWallpaper = wallpaper;
         notifyDataSetChanged();
     }
@@ -54,8 +54,8 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
     public void filter(String name) {
         if (name == null || name.trim().isEmpty()) {
             synchronized (mWidgetNames) {
-                mFilteredPreviews.clear();
-                mFilteredPreviews = null;
+                mPreviewsFiltered.clear();
+                mPreviewsFiltered = null;
                 mFilteredNames.clear();
                 mFilteredNames = null;
                 return;
@@ -63,7 +63,7 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
         }
 
         synchronized (mWidgetNames) {
-            mFilteredPreviews = new ArrayList<>();
+            mPreviewsFiltered = new ArrayList<>();
             mFilteredNames = new ArrayList<>();
             name = name.toLowerCase(Locale.getDefault());
             for (int i = 0; i < mWidgetNames.length; i++) {
@@ -72,12 +72,12 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
                 if (mWidgetNames[i].toLowerCase(Locale.getDefault())
                         .contains(name)) {
                     mFilteredNames.add(mWidgetNames[i]);
-                    mFilteredPreviews.add(mPreviewFiles.get(i));
+                    mPreviewsFiltered.add(mPreviews.get(i));
                 }
             }
             if (mFilteredNames.size() == 0) {
                 mFilteredNames = null;
-                mFilteredPreviews = null;
+                mPreviewsFiltered = null;
             }
         }
     }
@@ -100,8 +100,8 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
     public void onBindViewHolder(ZooperVH holder, int position) {
         if (holder.image != null) {
             if (getItemViewType(0) == 1) position--;
-            final ZooperFragment.PreviewItem preview = mFilteredPreviews != null ?
-                    mFilteredPreviews.get(position) : mPreviewFiles.get(position);
+            final ZooperFragment.PreviewItem preview = mPreviewsFiltered != null ?
+                    mPreviewsFiltered.get(position) : mPreviews.get(position);
             holder.image.setImageBitmap(preview.image);
             holder.background.setImageDrawable(mWallpaper);
             if (position < mWidgetNames.length) {
@@ -118,11 +118,18 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
 
     @Override
     public int getItemCount() {
-        if (mFilteredPreviews != null)
-            return mFilteredPreviews.size() + (!mZooperInstalled ? 1 : 0);
-        else if (mPreviewFiles != null && mPreviewFiles.size() > 0)
-            return mPreviewFiles.size() + (!mZooperInstalled ? 1 : 0);
+        if (mPreviewsFiltered != null)
+            return mPreviewsFiltered.size() + (!mZooperInstalled ? 1 : 0);
+        else if (mPreviews != null && mPreviews.size() > 0)
+            return mPreviews.size() + (!mZooperInstalled ? 1 : 0);
         else return 0;
+    }
+
+    public void recycle() {
+        for (ZooperFragment.PreviewItem item : mPreviews) {
+            if (!item.image.isRecycled())
+                item.image.recycle();
+        }
     }
 
     public static class ZooperVH extends RecyclerView.ViewHolder implements View.OnClickListener {

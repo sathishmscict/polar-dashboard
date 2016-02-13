@@ -6,10 +6,8 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
@@ -288,9 +286,7 @@ public class ZooperUtil {
                                 }
 
                                 Bitmap img = BitmapFactory.decodeFile(pngFile.getAbsolutePath());
-                                results.add(new ZooperFragment.PreviewItem(
-                                        widgetName,
-                                        replaceColor(img, Color.parseColor("#555555"), Color.TRANSPARENT)));
+                                results.add(new ZooperFragment.PreviewItem(widgetName, img));
                             }
                         } catch (final Exception e) {
                             if (cb != null) {
@@ -330,47 +326,6 @@ public class ZooperUtil {
                 }
             }
         }).start();
-    }
-
-    private static Bitmap replaceColor(@NonNull Bitmap src, @ColorInt int originalColor, @ColorInt int replaceColor) {
-        int width = src.getWidth();
-        int height = src.getHeight();
-        int[] pixels = new int[width * height];
-        src.getPixels(pixels, 0, width, 0, 0, width, height);
-
-        int minX = width;
-        int minY = height;
-        int maxX = -1;
-        int maxY = -1;
-
-        Bitmap bmOut = Bitmap.createBitmap(width, height, src.getConfig());
-        src.recycle();
-        int pixel;
-
-        for (int y = 0; y < height; ++y) {
-            for (int x = 0; x < width; ++x) {
-                int index = y * width + x;
-                pixel = pixels[index];
-                if (pixel == originalColor) {
-                    pixels[index] = replaceColor;
-                }
-                if (pixels[index] != replaceColor) {
-                    if (x < minX)
-                        minX = x;
-                    if (x > maxX)
-                        maxX = x;
-                    if (y < minY)
-                        minY = y;
-                    if (y > maxY)
-                        maxY = y;
-                }
-            }
-        }
-
-        bmOut.setPixels(pixels, 0, width, 0, 0, width, height);
-        Bitmap result = Bitmap.createBitmap(bmOut, minX, minY, (maxX - minX) + 1, (maxY - minY) + 1);
-        bmOut.recycle();
-        return result;
     }
 
     private ZooperUtil() {
