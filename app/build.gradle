@@ -61,7 +61,7 @@ dependencies {
     compile 'com.github.afollestad:sectioned-recyclerview:0.2.0'
     compile 'com.github.afollestad:assent:ec59bea20f'
     compile 'com.github.afollestad:inquiry:b13a58b902'
-    compile 'com.github.afollestad:icon-request:6aa0357326'
+    compile 'com.github.afollestad:icon-request:96ad116698'
 
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
