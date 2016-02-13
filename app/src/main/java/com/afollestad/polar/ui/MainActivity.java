@@ -19,10 +19,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.OnApplyWindowInsetsListener;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.WindowInsetsCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.RecyclerView;
@@ -370,18 +367,6 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
         for (PagesBuilder.Page page : mPages)
             addTab(page.iconRes);
         mTabs.setSelectedTabIndicatorColor(DialogUtils.resolveColor(this, R.attr.tab_indicator_color));
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root), new OnApplyWindowInsetsListener() {
-            @Override
-            public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
-                int systemWindowInsetTop = insets.getSystemWindowInsetTop();
-                v.setPaddingRelative(0, systemWindowInsetTop, 0, v.getPaddingBottom());
-
-                mBottomInset = insets.getSystemWindowInsetBottom();
-
-                return insets;
-            }
-        });
     }
 
     @Override

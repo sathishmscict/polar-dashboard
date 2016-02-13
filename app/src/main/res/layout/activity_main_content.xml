@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.afollestad.polar.views.insets.WindowInsetsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
     tools:showIn="@layout/activity_main">
 
     <View
@@ -14,6 +15,7 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         tools:background="#80000000" />
 
-</FrameLayout>
+</com.afollestad.polar.views.insets.WindowInsetsFrameLayout>

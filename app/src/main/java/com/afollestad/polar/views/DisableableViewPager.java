@@ -1,16 +1,17 @@
 package com.afollestad.polar.views;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.polar.views.insets.InsetsViewPager;
+
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class DisableableViewPager extends ViewPager {
+public class DisableableViewPager extends InsetsViewPager {
 
     private boolean isPagingEnabled = true;
 
