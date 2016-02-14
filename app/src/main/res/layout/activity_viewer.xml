@@ -25,7 +25,7 @@
             android:layout_height="?actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:transitionName="Toolbar"
-            app:contentInsetStart="@dimen/toolbar_inset_smaller"
+            app:contentInsetStart="@dimen/second_keyline"
             app:popupTheme="@style/ThemeOverlay.AppCompat"
             tools:ignore="UnusedAttribute" />
 

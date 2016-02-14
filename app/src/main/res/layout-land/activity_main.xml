@@ -7,25 +7,31 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
+        android:layout_height="wrap_content"
         android:background="?colorPrimary"
         android:elevation="@dimen/toolbar_elevation"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:contentInsetStart="@dimen/content_inset"
         app:layout_windowInsets="top"
-        tools:ignore="NewApi,Overdraw,UnusedAttribute">
+        tools:ignore="UnusedAttribute">
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            tools:ignore="NewApi,RtlSymmetry,UnusedAttribute" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            tools:ignore="NewApi,Overdraw,UnusedAttribute">
 
-    </android.support.v7.widget.Toolbar>
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                tools:ignore="NewApi,RtlSymmetry,UnusedAttribute" />
+
+        </android.support.v7.widget.Toolbar>
+
+    </FrameLayout>
 
     <include layout="@layout/activity_main_content" />
 

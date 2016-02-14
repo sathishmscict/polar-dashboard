@@ -3,6 +3,4 @@
 
     <dimen name="fab_bottom_margin">56dp</dimen>
 
-    <dimen name="toolbar_inset_smaller">36dp</dimen>
-
 </resources>

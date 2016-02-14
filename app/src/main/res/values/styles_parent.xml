@@ -32,6 +32,12 @@
         <item name="android:textColorSecondaryInverse">@color/secondary_text_selector_dark</item>
 
         <item name="android:windowContentOverlay">@null</item>
+
+        <item name="toolbarStyle">@style/Widget.Responsive.Toolbar</item>
+        <item name="toolbarNavigationButtonStyle">
+            @style/Widget.Responsive.Toolbar.Button.Navigation
+        </item>
+        <item name="actionOverflowButtonStyle">@style/Widget.Responsive.ActionButton.Overflow</item>
     </style>
 
     <!-- Dark -->
@@ -65,6 +71,33 @@
         <item name="android:textColorSecondaryInverse">@color/secondary_text_selector_light</item>
 
         <item name="android:windowContentOverlay">@null</item>
+
+        <item name="toolbarStyle">@style/Widget.Responsive.Toolbar</item>
+        <item name="toolbarNavigationButtonStyle">
+            @style/Widget.Responsive.Toolbar.Button.Navigation
+        </item>
+        <item name="actionOverflowButtonStyle">@style/Widget.Responsive.ActionButton.Overflow</item>
+    </style>
+
+    <!--Correct responsive toolbar layout according to specs, see
+        https://medium.com/@lucasurbas/making-android-toolbar-responsive-2627d4e07129-->
+
+    <style name="Widget.Responsive.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="maxButtonHeight">48dp</item>
+        <item name="android:paddingLeft">@dimen/toolbar_horizontal_padding</item>
+        <item name="android:paddingRight">@dimen/toolbar_horizontal_padding</item>
+        <item name="contentInsetStart">@dimen/content_inset</item>
+    </style>
+
+    <style name="Widget.Responsive.Toolbar.Button.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:minWidth">48dp</item>
+    </style>
+
+    <style name="Widget.Responsive.ActionButton.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
     </style>
 
 </resources>

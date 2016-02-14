@@ -314,6 +314,8 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
                 invalidateNavViewSelection(position);
             }
         });
+
+        mToolbar.setContentInsetsRelative(getResources().getDimensionPixelSize(R.dimen.second_keyline),0);
     }
 
     void invalidateNavViewSelection(int position) {
