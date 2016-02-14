@@ -6,7 +6,6 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
 
@@ -43,20 +42,8 @@ public class InsetsViewPager extends ViewPager implements InsetsViewGroup {
 
     @Override
     protected boolean fitSystemWindows(Rect insets) {
-        // super.fitSystemWindows(insets);
-        //mWindowInsets.set(insets);
-
-        //setWillNotDraw(false);
-
-        mHelper.onFitSystemWindows(insets);
+        mHelper.fitSystemWindows(insets);
         return false;
-    }
-
-    @Override
-    public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        super.addView(child, index, params);
-
-
     }
 
     @Override
@@ -77,6 +64,11 @@ public class InsetsViewPager extends ViewPager implements InsetsViewGroup {
     @Override
     public ViewGroup.LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new LayoutParams(getContext(), attrs);
+    }
+
+    @Override
+    public void dispatchFitSystemWindows(Rect insets) {
+        mHelper.fitSystemWindows(insets);
     }
 
     public class LayoutParams extends ViewPager.LayoutParams implements InsetsLayoutParams {

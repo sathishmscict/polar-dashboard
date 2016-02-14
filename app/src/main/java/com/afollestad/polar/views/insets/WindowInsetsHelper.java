@@ -15,11 +15,9 @@ import com.afollestad.polar.R;
 
 public class WindowInsetsHelper {
 
-    private static final String TAG_INSETS_APPLIED = "insets_applied";
-
     public static final int FLAG_INSETS_TOP = 0x1;
     public static final int FLAG_INSETS_BOTTOM = 0x2;
-
+    private static final String TAG_INSETS_APPLIED = "insets_applied";
     private boolean mInsetsTop;
     private boolean mInsetsBottom;
     private boolean mInsetsUseMargin;
@@ -66,18 +64,19 @@ public class WindowInsetsHelper {
         return insets;
     }
 
-    public boolean onFitSystemWindows(Rect insets) {
+    public boolean fitSystemWindows(Rect insets) {
         for (int i = 0; i < mView.getChildCount(); i++) {
             final View child = mView.getChildAt(i);
 
             if (child instanceof InsetsViewGroup) {
-                //TODO
-                //((InsetsViewGroup) child).dispatchFitSystemWindows(insets);
+                ((InsetsViewGroup) child).dispatchFitSystemWindows(insets);
             } else {
                 InsetsLayoutParamsHelper helper = ((InsetsLayoutParams) child.getLayoutParams()).getHelper();
                 applyInsets(insets, child, helper.insetsTop, helper.insetsBottom, helper.insetsUseMargin);
             }
         }
+
+        applyInsets(insets, mView, mInsetsTop, mInsetsBottom, mInsetsUseMargin);
 
         ViewCompat.postInvalidateOnAnimation(mView);
 

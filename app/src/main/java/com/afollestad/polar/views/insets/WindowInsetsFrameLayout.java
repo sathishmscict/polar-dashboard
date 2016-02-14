@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
@@ -47,18 +46,9 @@ public class WindowInsetsFrameLayout extends FrameLayout implements InsetsViewGr
 
     @Override
     protected boolean fitSystemWindows(Rect insets) {
-        // super.fitSystemWindows(insets);
-        //mWindowInsets.set(insets);
+        mHelper.fitSystemWindows(insets);
 
-        //setWillNotDraw(false);
         return false;
-    }
-
-    @Override
-    public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        super.addView(child, index, params);
-
-
     }
 
 
@@ -80,6 +70,11 @@ public class WindowInsetsFrameLayout extends FrameLayout implements InsetsViewGr
     @Override
     protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
         return p instanceof LayoutParams;
+    }
+
+    @Override
+    public void dispatchFitSystemWindows(Rect insets) {
+        mHelper.fitSystemWindows(insets);
     }
 
     public class LayoutParams extends FrameLayout.LayoutParams implements InsetsLayoutParams {
