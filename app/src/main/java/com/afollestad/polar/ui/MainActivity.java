@@ -125,7 +125,7 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
             mPager.setCurrentItem(lastPage);
             if (mNavView != null) invalidateNavViewSelection(lastPage);
         }
-        dispatchFragmentUpdateTitle(true);
+        dispatchFragmentUpdateTitle(!useNavDrawer);
 
 
         processIntent(getIntent());
@@ -429,7 +429,7 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
         ((DrawerLayout) findViewById(R.id.drawer)).closeDrawers();
         final int index = mPages.findPositionForItem(item);
         if (index > -1)
-            mPager.setCurrentItem(index);
+            mPager.setCurrentItem(index, false);
         return false;
     }
 
