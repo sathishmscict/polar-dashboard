@@ -1,4 +1,4 @@
-<com.afollestad.polar.views.insets.WindowInsetsLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.pluscubed.insetsdispatcher.view.InsetsDispatcherLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
@@ -37,4 +37,4 @@
 
     <include layout="@layout/activity_main_content" />
 
-</com.afollestad.polar.views.insets.WindowInsetsLinearLayout>
+</com.pluscubed.insetsdispatcher.view.InsetsDispatcherLinearLayout>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.afollestad.polar.views.insets.WindowInsetsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.pluscubed.insetsdispatcher.view.InsetsDispatcherFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -58,4 +58,4 @@
         app:layout_windowInsets="bottom"
         app:layout_windowInsetsUseMargin="true" />
 
-</com.afollestad.polar.views.insets.WindowInsetsFrameLayout>
+</com.pluscubed.insetsdispatcher.view.InsetsDispatcherFrameLayout>

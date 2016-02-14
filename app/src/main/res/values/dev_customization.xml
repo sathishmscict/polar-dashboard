@@ -26,7 +26,7 @@
     <string name="licensing_public_key"></string>
 
     <!-- When true, the app will open the last selected page during restarts -->
-    <bool name="persist_selected_page">false</bool>
+    <bool name="persist_selected_page">true</bool>
 
     <!-- Email used to send feedback, leave empty to disable this feature. -->
     <string name="feedback_email">fake-email@fake-website.com</string>

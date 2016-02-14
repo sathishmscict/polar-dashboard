@@ -13,14 +13,14 @@
     <drawable name="zooper_pack_icon">@mipmap/ic_launcher</drawable>
 
     <!-- Setting to true will display your Zooper Widget templates within Polar -->
-    <bool name="enable_zooper_page">false</bool>
+    <bool name="enable_zooper_page">true</bool>
 
     <!-- Optional names of each widget in /assets/templates -->
     <string-array name="zooper_widget_names">
-        <!--<item>Widget One</item>-->
-        <!--<item>Widget Two</item>-->
-        <!--<item>Widget Three</item>-->
-        <!--<item>Widget Four</item>-->
+        <item>Widget One</item>
+        <item>Widget Two</item>
+        <item>Widget Three</item>
+        <item>Widget Four</item>
     </string-array>
 
 </resources>

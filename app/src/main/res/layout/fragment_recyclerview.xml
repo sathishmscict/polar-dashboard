@@ -1,4 +1,4 @@
-<com.afollestad.polar.views.insets.WindowInsetsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.pluscubed.insetsdispatcher.view.InsetsDispatcherFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -70,4 +70,4 @@
         tools:text="No results"
         tools:visibility="gone" />
 
-</com.afollestad.polar.views.insets.WindowInsetsFrameLayout>
+</com.pluscubed.insetsdispatcher.view.InsetsDispatcherFrameLayout>

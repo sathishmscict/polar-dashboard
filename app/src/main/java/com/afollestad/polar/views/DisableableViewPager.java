@@ -4,12 +4,12 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import com.afollestad.polar.views.insets.InsetsViewPager;
+import com.pluscubed.insetsdispatcher.view.InsetsDispatcherViewPager;
 
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class DisableableViewPager extends InsetsViewPager {
+public class DisableableViewPager extends InsetsDispatcherViewPager {
 
     private boolean isPagingEnabled = true;
 
