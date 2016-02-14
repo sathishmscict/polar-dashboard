@@ -13,7 +13,6 @@
     <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
-        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -68,57 +67,53 @@
 
             <!-- ADW -->
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
                 <action android:name="org.adw.launcher.THEMES" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="org.adw.launcher.icons.ACTION_PICK_ICON" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
-            <!-- Nova -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="com.teslacoilsw.launcher.THEME" />
-            </intent-filter>
-
-            <!-- LauncherPro / Holo -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="com.fede.launcher.THEME_ICONPACK" />
-            </intent-filter>
-
             <!-- Apex -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="com.anddoes.launcher.THEME" />
             </intent-filter>
-
-            <!-- Launcher Pro/Holo Launcher -->
+            <!-- Atom -->
+            <intent-filter>
+                <action android:name="com.dlto.atom.launcher.THEME" />
+            </intent-filter>
+            <!-- Nova -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <category android:name="com.teslacoilsw.launcher.THEME" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.novalauncher.THEME" />
+                <category android:name="com.novalauncher.category.CUSTOM_ICON_PICKER" />
+            </intent-filter>
+            <!-- LauncherPro / Holo -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.fede.launcher.THEME_ICONPACK" />
             </intent-filter>
-
-            <!-- GO Launcher -->
+            <!-- Next Launcher -->
             <intent-filter>
-                <action android:name="com.gau.go.launcherex.theme" />
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.THEME_SCENE" />
+                <action android:name="com.gtp.nextlauncher.theme" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <!-- TSF Shell -->
             <intent-filter>
-                <category android:name="android.intent.category.INFO" />
-            </intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.tsf.shell.themes" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!-- Turbo Launcher -->
+            <intent-filter>
+                <action android:name="com.phonemetra.turbo.launcher.icons.ACTION_PICK_ICON" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
             <!-- Smart Launcher -->
             <intent-filter>
                 <action android:name="ginlemon.smartlauncher.THEMES" />
@@ -129,21 +124,68 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
-            <!-- Next Launcher -->
+            <!-- Nine Launcher -->
             <intent-filter>
-                <action android:name="com.gtp.nextlauncher.theme" />
-
+                <action android:name="com.gridappsinc.launcher.theme.apk_action" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
-            <!-- TSF Shell -->
+            <!-- Random launchers -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="com.tsf.shell.themes" />
+                <action android:name="org.adw.launcher.THEMES" />
+                <action android:name="mobi.bbase.ahome.THEME" />
+                <action android:name="com.rogro.GDE.THEME.1" />
+                <action android:name="com.android.dxtop.launcher.THEME" />
+
+                <category android:name="com.fede.launcher.THEME_ICONPACK" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="org.adw.launcher.icons.ACTION_PICK_ICON" />
+                <action android:name="mobi.bbase.ahome.THEME" />
+                <action android:name="com.rogro.GDE.THEME.1" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="cdproductions.crazyicons.TWO" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!-- THEME MANAGER -->
+            <intent-filter>
+                <action android:name="com.daeva112.manager.MAIN" />
+                <category android:name="com.daeva112.manager.THEME" />
+            </intent-filter>
+            <!-- GO LAUNCHER -->
+            <intent-filter>
+                <action android:name="com.gau.go.launcherex.theme" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.THEME_SCENE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.INFO" />
+            </intent-filter>
+            <!-- Solo Launcher -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="home.solo.launcher.free.THEMES" />
+                <action android:name="home.solo.launcher.free.ACTION_ICON" />
+            </intent-filter>
+            <!-- LG Home -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.lge.launcher2.THEME" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <!-- Uncomment for Zooper -->
+            <!--<intent-filter>-->
+                <!--<action android:name="org.zooper.zw.TEMPLATES" />-->
+            <!--</intent-filter>-->
+
         </activity>
         <activity
             android:name=".ui.IconMoreActivity"
@@ -153,6 +195,13 @@
             android:name=".viewer.ViewerActivity"
             android:label="@string/app_name_wallpaper"
             android:theme="@style/AppTheme.Viewer" />
+
+        <!-- Uncomment for Zooper -->
+        <!-- MAKE SURE YOU RENAME COM.AFOLLESTAD.POLAR TO BE UNIQUE TO YOUR PACK -->
+        <!--<provider-->
+            <!--android:name=".zooper.TemplateProvider"-->
+            <!--android:authorities="com.afollestad.polar.zwprovider"/>-->
+
     </application>
 
 </manifest>

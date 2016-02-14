@@ -54,6 +54,7 @@ import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.views.DisableableViewPager;
+import com.afollestad.polar.zooper.ZooperUtil;
 import com.google.android.vending.licensing.Policy;
 
 import butterknife.Bind;
@@ -82,13 +83,13 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
     public RecyclerView mRecyclerView;
 
     int mDrawerModeTopInset;
-
     int mBottomInset;
+
     private PagesBuilder mPages;
 
-    public int getBottomInset() {
-        return mBottomInset;
-    }
+//    public int getBottomInset() {
+//        return mBottomInset;
+//    }
 
     @Override
     public Toolbar getToolbar() {

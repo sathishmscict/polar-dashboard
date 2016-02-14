@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class CircularRevealTransition extends Visibility {
 
-    final static int REVEAL_ANIMATION_DURATION = 550;
+    private final static int REVEAL_ANIMATION_DURATION = 550;
 
-    private float startX;
-    private float startY;
+    private final float startX;
+    private final float startY;
 
     public CircularRevealTransition(float x, float y) {
         super();
@@ -34,7 +34,7 @@ public class CircularRevealTransition extends Visibility {
         return createAnimator(view, false);
     }
 
-    public Animator createAnimator(View view, boolean appear) {
+    private Animator createAnimator(View view, boolean appear) {
         float dx = Math.max(view.getMeasuredWidth() - startX, startX);
         float dy = Math.max(view.getMeasuredHeight() - startY, startY);
 

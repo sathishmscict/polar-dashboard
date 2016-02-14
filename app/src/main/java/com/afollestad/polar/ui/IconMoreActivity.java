@@ -34,15 +34,12 @@ import butterknife.ButterKnife;
 public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdapter.ClickListener {
 
     public static final String EXTRA_REVEAL_ANIM_LOCATION = "com.afollestad.polar.REVEAL_ANIM_LOCATION";
-
     public static final String EXTRA_CATEGORY = "com.afollestad.polar.CATEGORY";
-
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(android.R.id.list)
     RecyclerView mRecyclerView;
-
 
     private IconMoreAdapter mAdapter;
 
@@ -57,9 +54,13 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
         setContentView(R.layout.activity_icons_more);
         ButterKnife.bind(this);
 
-        final View root = findViewById(R.id.root);
-        applyTopInset(root);
-        applyBottomInset(mRecyclerView);
+        if (savedInstanceState == null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                final View root = findViewById(R.id.root);
+                setTopPadding(root, Utils.getStatusBarHeight(this));
+            }
+            setBottomPadding(mRecyclerView, Utils.getNavBarHeight(this));
+        }
 
         final DrawableXmlParser.Category category = (DrawableXmlParser.Category) getIntent().getSerializableExtra(EXTRA_CATEGORY);
 

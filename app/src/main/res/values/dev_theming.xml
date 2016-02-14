@@ -4,7 +4,7 @@
     <!-- OPTIONS -->
 
     <!-- When allow_theme_switching is true, users can switch between the light and dark theme from the overflow menu -->
-    <bool name="allow_theme_switching">false</bool>
+    <bool name="allow_theme_switching">true</bool>
     <bool name="dark_theme_default">false</bool>
 
     <!-- LIGHT THEME -->

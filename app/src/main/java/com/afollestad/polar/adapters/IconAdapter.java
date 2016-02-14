@@ -254,7 +254,7 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
                     .into(holder.image);
         }
 
-        holder.itemView.setTag(String.format("%d:%d:%d", section, relativePos, absolutePos));
+        holder.itemView.setTag(String.format(Locale.getDefault(), "%d:%d:%d", section, relativePos, absolutePos));
         holder.itemView.setOnClickListener(this);
     }
 }

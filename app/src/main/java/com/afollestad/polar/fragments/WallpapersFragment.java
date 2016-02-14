@@ -34,10 +34,11 @@ import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.util.TintUtils;
+import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.viewer.ViewerActivity;
 
-import java.net.UnknownHostException;
+import java.net.SocketTimeoutException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -191,8 +192,7 @@ public class WallpapersFragment extends BasePageFragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
-        applyInsets((ViewGroup) view);
+        setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()), R.dimen.grid_margin);
 
         mAdapter = new WallpaperAdapter(new WallpaperAdapter.ClickListener() {
             @Override
@@ -239,9 +239,14 @@ public class WallpapersFragment extends BasePageFragment implements
             @Override
             public void onRetrievedWallpapers(WallpaperUtils.WallpapersHolder wallpapers, Exception error, boolean cancelled) {
                 if (error != null) {
-                    if (error instanceof UnknownHostException || (error instanceof BridgeException &&
-                            ((BridgeException) error).reason() == BridgeException.REASON_REQUEST_FAILED)) {
-                        mEmpty.setText(R.string.unable_to_contact_server);
+                    if (error instanceof BridgeException) {
+                        BridgeException e = (BridgeException) error;
+                        if (e.reason() == BridgeException.REASON_REQUEST_FAILED)
+                            mEmpty.setText(R.string.unable_to_contact_server);
+                        else if (e.reason() == BridgeException.REASON_REQUEST_TIMEOUT ||
+                                (e.underlyingException() != null && e.underlyingException() instanceof SocketTimeoutException))
+                            mEmpty.setText(R.string.unable_to_contact_server);
+                        else mEmpty.setText(e.getMessage());
                     } else {
                         mEmpty.setText(error.getMessage());
                     }

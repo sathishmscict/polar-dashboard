@@ -23,4 +23,10 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat"
         tools:ignore="UnusedAttribute" />
 
+    <FrameLayout
+        android:id="@+id/statusbarPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#40000000" />
+
 </FrameLayout>

@@ -32,7 +32,15 @@ public class Config implements IConfig {
         mConfig = new Config(context);
     }
 
+    public static void setContext(Context context) {
+        if (mConfig != null) {
+            mConfig.mContext = context;
+            mConfig.mR = context.getResources();
+        }
+    }
+
     private void destroy() {
+        mContext = null;
         mR = null;
     }
 
@@ -127,7 +135,7 @@ public class Config implements IConfig {
 
     @Override
     public boolean zooperEnabled() {
-        return mR != null && mR.getBoolean(R.bool.zooper_enabled);
+        return mR != null && mR.getBoolean(R.bool.enable_zooper_page);
     }
 
     @Nullable
@@ -229,5 +237,11 @@ public class Config implements IConfig {
     public int gridWidthRequests() {
         if (mR == null) return 3;
         return mR.getInteger(R.integer.requests_grid_width);
+    }
+
+    @Override
+    public int gridWidthZooper() {
+        if (mR == null) return 2;
+        return mR.getInteger(R.integer.zooper_grid_width);
     }
 }

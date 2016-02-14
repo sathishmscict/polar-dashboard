@@ -4,7 +4,7 @@
     <!-- True enables the nav drawer layout -->
     <bool name="nav_drawer_mode_default">false</bool>
     <!-- Good for testing to switch between tabs and nav drawer, true shows a checkbox option in the overflow menu -->
-    <bool name="allow_nav_drawer_mode_switch">false</bool>
+    <bool name="allow_nav_drawer_mode_switch">true</bool>
 
     <!-- True enables the homepage -->
     <bool name="homepage_enabled">true</bool>
@@ -18,9 +18,6 @@
     <string name="wallpapers_json_url" formatted="false">
         https://raw.githubusercontent.com/TWellington/JSON-for-Gaufrer/master/wallpapers.json
     </string>
-
-    <!-- Coming soon -->
-    <bool name="zooper_enabled">false</bool>
 
     <!-- Email used to send icon requests, leave empty to disable this feature. -->
     <string name="icon_request_email">fake-email@fake-website.com</string>
@@ -42,7 +39,6 @@
         Leave empty to disable the donation function.
     -->
     <string name="donate_license_key">
-        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAn/ntsCdMQTY94ZlGGrpurXwtrzYtdNrfzX6OFaWyVqnI8BX5sfPO6nDPPks/8tvA93/JTlCLHLK+D6l31b3HrGXp9Kn7pjPLQtaa1o9Sy6Jm7skEtdGykSDRwwZROAQWZiJJNtk3hAocdz2QLDQ8Qhw8NqWSVphLSmvvvEM1d4KC599tlwr0SZ4auZjHmI3pgB27ajt+7ixQ9AtSoDWEDBIybvIw0QqASVJDc9Yi9uUrrIEa/naZxPKbklyBUBtkVh8hJdimhHiwzPh8p/dWN89WbEj88XpcH5PLu1JvoY+A6t1pFrjBL4P0nJbU0Ls7g9CDr2UEKLTuS7tBPJtWcQIDAQAB
     </string>
 
     <!-- Names of donation options, e.g. "Buy me a pizza!" -->

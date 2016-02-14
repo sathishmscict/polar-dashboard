@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- DO NOT REMOVE THESE 4 ARRAYS. -->
-    <!-- ONLY MODIFY THE FIRST ITEM IN EACH ARRAY FOR YOURSELF, OTHERWISE TERMS ARE VIOLATED. -->
+    <!-- DO NOT REMOVE THE BOTTOM 3 ITEMS OF EACH ARRAY, OTHERWISE TERMS ARE VIOLATED. -->
 
     <string-array name="about_images" formatted="false" tools:ignore="TypographyDashes">
         <item>https://lh3.googleusercontent.com/-0mdcClKXlgM/AAAAAAAAAAI/AAAAAAAAAAA/xgdLWeAg7pM/s120-c/photo.jpg</item>
@@ -19,7 +18,7 @@
     </string-array>
 
     <string-array name="about_titles">
-        <item>Developer</item>
+        <item>You</item>
         <item>Aidan Follestad</item>
         <item>Tom Wellington</item>
         <item>Daniel Ciao</item>
@@ -32,12 +31,18 @@
         <item formatted="false"><![CDATA[I like playing piano, doing puzzles, &amp; making apps<br/><i>I primarily helped with animations and UI</i>]]></item>
     </string-array>
 
-    <!-- The title and link of the first button in your about card -->
-    <string name="about_button1_title">Website</string>
-    <string name="about_button1_link">http://aidanfollestad.com</string>
+    <string-array name="about_buttons_names">
+        <item>Website|Google+</item>
+        <item>Website|Google+|LinkedIn</item>
+        <item>Dribbble|Google+</item>
+        <item>Website|Google+|GitHub</item>
+    </string-array>
 
-    <!-- The title and link of the second button in your about card -->
-    <string name="about_button2_title">Google+</string>
-    <string name="about_button2_link">https://google.com/+AidanFollestad</string>
+    <string-array name="about_buttons_links">
+        <item>http://aidanfollestad.com|https://google.com/+AidanFollestad</item>
+        <item>http://aidanfollestad.com|https://google.com/+AidanFollestad|https://www.linkedin.com/in/afollestad</item>
+        <item>https://dribbble.com/tomwellington|https://google.com/+TomWellington24</item>
+        <item>http://wwww.pluscubed.com|https://plus.google.com/+DanielCiao|https://github.com/plusCubed</item>
+    </string-array>
 
 </resources>

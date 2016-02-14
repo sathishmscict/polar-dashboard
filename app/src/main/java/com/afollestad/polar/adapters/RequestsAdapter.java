@@ -1,5 +1,6 @@
 package com.afollestad.polar.adapters;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,14 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
+import com.afollestad.iconrequest.App;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
-import com.pk.requestmanager.AppInfo;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -30,15 +30,15 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
         void onClick(int index, boolean longClick);
     }
 
-    private ArrayList<AppInfo> mApps;
+    private ArrayList<App> mApps;
     private final SelectionChangedListener mListener;
 
     public RequestsAdapter(SelectionChangedListener listener) {
         mListener = listener;
     }
 
-    public void setApps(List<AppInfo> apps) {
-        mApps = (ArrayList<AppInfo>) apps;
+    public void setApps(ArrayList<App> apps) {
+        mApps = apps;
         notifyDataSetChanged();
     }
 
@@ -73,8 +73,9 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
             return;
         }
 
-        final AppInfo app = mApps.get(position - 1);
-        holder.image.setImageDrawable(app.getImage());
+        final Context c = holder.itemView.getContext();
+        final App app = mApps.get(position - 1);
+        app.loadIcon(holder.image);
         holder.title.setText(app.getName());
 
         if (holder.card != null) {
@@ -86,21 +87,6 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
     @Override
     public int getItemCount() {
         return mApps != null ? mApps.size() + 1 : 0;
-    }
-
-    public void selectAll() {
-        updateSelection(true);
-    }
-
-    public void clearSelection() {
-        updateSelection(false);
-    }
-
-    private void updateSelection(boolean select) {
-        synchronized (mListener) {
-            for (int i = 1; i < getItemCount(); i++)
-                setSelected(i, select);
-        }
     }
 
     public class RequestVH extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {

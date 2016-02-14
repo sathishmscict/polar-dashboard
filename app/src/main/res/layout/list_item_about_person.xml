@@ -71,33 +71,13 @@
                     android:textSize="@dimen/content_text_size"
                     tools:text="Android and Backend Engineer, SkillFitness.\nLives in Minneapolis, MN" />
 
-                <LinearLayout
-                    android:id="@+id/badgesFrame"
+                <com.afollestad.polar.views.SplitButtonsLayout
+                    android:id="@+id/buttonsFrame"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/content_inset_quarter"
                     android:gravity="center_vertical|end"
-                    android:orientation="horizontal">
-
-                    <Button
-                        style="?borderlessButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:tag="https://wellingtom.xyz"
-                        android:text="@string/website"
-                        android:textColor="?colorAccent" />
-
-                    <Button
-                        style="?borderlessButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:tag="https://google.com/+TomWellington24"
-                        android:text="@string/google_plus"
-                        android:textColor="?colorAccent" />
-
-                </LinearLayout>
+                    android:orientation="horizontal" />
 
             </LinearLayout>
 

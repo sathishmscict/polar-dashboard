@@ -19,6 +19,7 @@ import com.afollestad.polar.adapters.ApplyAdapter;
 import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.util.ApplyUtil;
+import com.afollestad.polar.util.Utils;
 
 import butterknife.ButterKnife;
 
@@ -60,8 +61,7 @@ public class ApplyFragment extends BasePageFragment implements ApplyAdapter.Sele
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        applyInsetsToView(mRecyclerView);
+        setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()), R.dimen.grid_margin);
     }
 
     @Override
