@@ -78,5 +78,5 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.2.1'
 
     compile 'com.anjlab.android.iab.v3:library:1.0.+'
-    compile 'com.github.TR4Android:AppCompat-Extension-Library:v0.2.0'
+//    compile 'com.github.TR4Android:AppCompat-Extension-Library:v0.2.0'
 }
