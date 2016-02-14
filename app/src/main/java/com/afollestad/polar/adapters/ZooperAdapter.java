@@ -32,7 +32,9 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
     private final static String ZOOPER_PRO_PKG = "org.zooper.zwpro";
     public final static int SEARCH_RESULT_LIMIT = 10;
 
-    private final String[] mWidgetNames;
+    private final Object LOCK = new Object();
+
+    private String[] mWidgetNames;
     private final boolean mZooperInstalled;
 
     private Drawable mWallpaper;
@@ -45,24 +47,33 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
         mZooperInstalled = Utils.isPkgInstalled(context, ZOOPER_PRO_PKG);
     }
 
-    public void setPreviewFiles(ArrayList<ZooperFragment.PreviewItem> previewFiles, Drawable wallpaper) {
+    public void setPreviews(ArrayList<ZooperFragment.PreviewItem> previewFiles, Drawable wallpaper) {
         this.mPreviews = previewFiles;
+        if (mWidgetNames == null || mWidgetNames.length == 0) {
+            mWidgetNames = new String[previewFiles.size()];
+            for (int i = 0; i < previewFiles.size(); i++)
+                mWidgetNames[i] = previewFiles.get(i).name;
+        }
         this.mWallpaper = wallpaper;
         notifyDataSetChanged();
     }
 
     public void filter(String name) {
         if (name == null || name.trim().isEmpty()) {
-            synchronized (mWidgetNames) {
-                mPreviewsFiltered.clear();
-                mPreviewsFiltered = null;
-                mFilteredNames.clear();
-                mFilteredNames = null;
+            synchronized (LOCK) {
+                if (mPreviewsFiltered != null) {
+                    mPreviewsFiltered.clear();
+                    mPreviewsFiltered = null;
+                }
+                if (mFilteredNames != null) {
+                    mFilteredNames.clear();
+                    mFilteredNames = null;
+                }
                 return;
             }
         }
 
-        synchronized (mWidgetNames) {
+        synchronized (LOCK) {
             mPreviewsFiltered = new ArrayList<>();
             mFilteredNames = new ArrayList<>();
             name = name.toLowerCase(Locale.getDefault());

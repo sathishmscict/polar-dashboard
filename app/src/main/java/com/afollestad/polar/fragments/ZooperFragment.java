@@ -133,7 +133,7 @@ public class ZooperFragment extends BasePageFragment implements
                 else if (error != null) {
                     error.printStackTrace();
                     setListShown(true);
-                    mAdapter.setPreviewFiles(null, null);
+                    mAdapter.setPreviews(null, null);
                     mEmpty.setVisibility(View.VISIBLE);
                     if (error.getMessage().trim().isEmpty())
                         mEmpty.setText(error.toString());
@@ -142,7 +142,7 @@ public class ZooperFragment extends BasePageFragment implements
                 }
                 mPreviews = previews;
                 mWallpaper = wallpaper;
-                mAdapter.setPreviewFiles(mPreviews, mWallpaper);
+                mAdapter.setPreviews(mPreviews, mWallpaper);
             }
         });
     }
