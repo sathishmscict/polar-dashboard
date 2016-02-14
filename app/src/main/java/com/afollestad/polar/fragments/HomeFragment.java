@@ -22,8 +22,8 @@ import butterknife.OnClick;
  */
 public class HomeFragment extends BasePageFragment {
 
-    @Bind(R.id.fab)
-    FloatingActionButton mFab;
+//    @Bind(R.id.fab)
+//    FloatingActionButton mFab;
 
     @Nullable
     @Override
