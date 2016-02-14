@@ -196,8 +196,7 @@
             android:label="@string/app_name_wallpaper"
             android:theme="@style/AppTheme.Viewer" />
 
-        <!-- Uncomment for Zooper -->
-        <!-- MAKE SURE YOU RENAME COM.AFOLLESTAD.POLAR TO BE UNIQUE TO YOUR PACK -->
+        <!-- Uncomment for Zooper, MAKE SURE YOU RENAME COM.AFOLLESTAD.POLAR TO BE UNIQUE TO YOUR PACK -->
         <!--<provider-->
             <!--android:name=".zooper.TemplateProvider"-->
             <!--android:authorities="com.afollestad.polar.zwprovider"/>-->
