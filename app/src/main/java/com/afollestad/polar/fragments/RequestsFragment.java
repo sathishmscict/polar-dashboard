@@ -105,7 +105,7 @@ public class RequestsFragment extends BasePageFragment implements
             if (act != null) {
                 if (fab == null) {
                     act.setTitle(R.string.request_icons);
-                    invalidateOptionsMenu();
+                    //invalidateOptionsMenu();
                     return;
                 }
 
@@ -123,7 +123,7 @@ public class RequestsFragment extends BasePageFragment implements
                 // Work around for the icon sometimes being invisible?
                 fab.setImageResource(R.drawable.ic_action_apply);
                 // Update toolbar items
-                invalidateOptionsMenu();
+                //invalidateOptionsMenu();
             }
         }
     }
@@ -345,7 +345,7 @@ public class RequestsFragment extends BasePageFragment implements
                 @Override
                 public void run() {
                     if (IconRequest.get() == null) return;
-                    invalidateOptionsMenu();
+                    getActivity().invalidateOptionsMenu();
                     mAdapter.setApps(IconRequest.get().getApps());
                     mAdapter.notifyDataSetChanged();
                     emptyText.setVisibility(mAdapter.getItemCount() == 0 ?
@@ -442,7 +442,7 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onDragSelectionChanged(int count) {
         updateTitle();
-        invalidateOptionsMenu();
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override
