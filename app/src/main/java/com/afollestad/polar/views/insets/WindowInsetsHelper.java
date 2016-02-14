@@ -45,13 +45,11 @@ public class WindowInsetsHelper {
     @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
     public WindowInsets onApplyWindowInsets(WindowInsets insets) {
 
-        if (insets != null) {
+        if (insets == null) {
+            return null;
+        } else {
             mInsets = new Rect(insets.getSystemWindowInsetLeft(), insets.getSystemWindowInsetTop(),
                     insets.getSystemWindowInsetRight(), insets.getSystemWindowInsetBottom());
-        }
-
-        if (mInsets == null) {
-            return null;
         }
 
 
