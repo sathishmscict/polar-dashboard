@@ -3,8 +3,6 @@ package com.afollestad.polar.views;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.afollestad.polar.views.insets.InsetsViewPager;
 
@@ -37,8 +35,4 @@ public class DisableableViewPager extends InsetsViewPager {
         this.isPagingEnabled = b;
     }
 
-    @Override
-    public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        super.addView(child, index, params);
-    }
 }

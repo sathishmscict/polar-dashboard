@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.base.BasePageFragment;
-import com.afollestad.polar.util.Utils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,7 +35,6 @@ public class HomeFragment extends BasePageFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        setBottomMargin(mFab, Utils.getNavBarHeight(getActivity()), R.dimen.content_inset);
     }
 
     @Override

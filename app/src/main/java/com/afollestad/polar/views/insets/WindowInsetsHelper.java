@@ -24,6 +24,8 @@ public class WindowInsetsHelper {
 
     private ViewGroup mView;
 
+    private Rect mInsets;
+
     public WindowInsetsHelper(Context context, AttributeSet attrs, ViewGroup view) {
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
@@ -43,8 +45,15 @@ public class WindowInsetsHelper {
     @TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
     public WindowInsets onApplyWindowInsets(WindowInsets insets) {
 
-        Rect rect = new Rect(insets.getSystemWindowInsetLeft(), insets.getSystemWindowInsetTop(),
-                insets.getSystemWindowInsetRight(), insets.getSystemWindowInsetBottom());
+        if (insets != null) {
+            mInsets = new Rect(insets.getSystemWindowInsetLeft(), insets.getSystemWindowInsetTop(),
+                    insets.getSystemWindowInsetRight(), insets.getSystemWindowInsetBottom());
+        }
+
+        if (mInsets == null) {
+            return null;
+        }
+
 
         for (int i = 0; i < mView.getChildCount(); i++) {
             final View child = mView.getChildAt(i);
@@ -53,18 +62,24 @@ public class WindowInsetsHelper {
                 child.dispatchApplyWindowInsets(insets);
             } else {
                 InsetsLayoutParamsHelper helper = ((InsetsLayoutParams) child.getLayoutParams()).getHelper();
-                applyInsets(rect, child, helper.insetsTop, helper.insetsBottom, helper.insetsUseMargin);
+                applyInsets(mInsets, child, helper.insetsTop, helper.insetsBottom, helper.insetsUseMargin);
             }
         }
 
-        applyInsets(rect, mView, mInsetsTop, mInsetsBottom, mInsetsUseMargin);
+        applyInsets(mInsets, mView, mInsetsTop, mInsetsBottom, mInsetsUseMargin);
 
         ViewCompat.postInvalidateOnAnimation(mView);
 
         return insets;
     }
 
-    public boolean fitSystemWindows(Rect insets) {
+    public void fitSystemWindows(Rect insets) {
+        mInsets = insets;
+
+        if (mInsets == null) {
+            return;
+        }
+
         for (int i = 0; i < mView.getChildCount(); i++) {
             final View child = mView.getChildAt(i);
 
@@ -72,15 +87,15 @@ public class WindowInsetsHelper {
                 ((InsetsViewGroup) child).dispatchFitSystemWindows(insets);
             } else {
                 InsetsLayoutParamsHelper helper = ((InsetsLayoutParams) child.getLayoutParams()).getHelper();
-                applyInsets(insets, child, helper.insetsTop, helper.insetsBottom, helper.insetsUseMargin);
+                applyInsets(mInsets, child, helper.insetsTop, helper.insetsBottom, helper.insetsUseMargin);
             }
         }
 
-        applyInsets(insets, mView, mInsetsTop, mInsetsBottom, mInsetsUseMargin);
+        applyInsets(mInsets, mView, mInsetsTop, mInsetsBottom, mInsetsUseMargin);
 
         ViewCompat.postInvalidateOnAnimation(mView);
 
-        return false;
+        return;
     }
 
     private void applyInsets(Rect insets, View view, boolean insetsTop, boolean insetsBottom, boolean useMargin) {

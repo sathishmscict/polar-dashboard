@@ -57,13 +57,6 @@ public class RequestsFragment extends BasePageFragment implements
     private static final Object LOCK = new Object();
 
     private final static int PERM_RQ = 69;
-
-    private RequestsAdapter mAdapter;
-    private MaterialDialog mDialog;
-
-    private int mInitialSelection = -1;
-    private boolean mAppsLoaded = false;
-
     @Bind(android.R.id.list)
     DragSelectRecyclerView list;
     @Bind(android.R.id.progress)
@@ -75,6 +68,10 @@ public class RequestsFragment extends BasePageFragment implements
     @Bind(R.id.fab)
     FloatingActionButton fab;
     DisableableViewPager mPager;
+    private RequestsAdapter mAdapter;
+    private MaterialDialog mDialog;
+    private int mInitialSelection = -1;
+    private boolean mAppsLoaded = false;
 
     public RequestsFragment() {
     }
@@ -190,12 +187,6 @@ public class RequestsFragment extends BasePageFragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
-        final int offset = Utils.getNavBarHeight(getActivity());
-        setBottomMargin(fab, offset, R.dimen.fab_bottom_margin);
-        setBottomMargin(progressText, offset, 0);
-        setBottomPadding(list, offset, R.dimen.fab_bottom_margin_list);
-        setBottomMargin(emptyText, Utils.getNavBarHeight(getActivity()), R.dimen.nav_drawer_item_hor_pad);
 
         GridLayoutManager lm = new GridLayoutManager(getActivity(), Config.get().gridWidthRequests());
         lm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

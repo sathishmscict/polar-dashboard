@@ -16,7 +16,6 @@ import com.afollestad.polar.adapters.AboutAdapter;
 import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.MainActivity;
-import com.afollestad.polar.util.Utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -46,12 +45,6 @@ public class AboutFragment extends BasePageFragment implements AboutAdapter.Opti
         mRecyclerView.setLayoutManager(lm);
         mRecyclerView.setAdapter(mAdapter);
         return v;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()), R.dimen.content_inset_quarter);
     }
 
     @Override

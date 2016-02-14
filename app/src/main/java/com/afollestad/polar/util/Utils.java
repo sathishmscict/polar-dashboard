@@ -83,8 +83,7 @@ public abstract class Utils {
     public static int getNavBarHeight(Activity context) {
         if (context == null || context.isFinishing()) {
             return 0;
-        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT ||
-                !context.getResources().getBoolean(R.bool.translucent_nav)) {
+        } else if (!context.getResources().getBoolean(R.bool.translucent_nav)) {
             // Translucent nav is disabled
             return 0;
         }
@@ -112,10 +111,6 @@ public abstract class Utils {
 //        display.getSize(size);
 //        return new int[]{size.x, size.y};
 //    }
-
-    public interface LayoutCallback<VT extends View> {
-        void onLayout(VT view);
-    }
 
     public static <VT extends View> void waitForLayout(@NonNull final VT view, @NonNull final LayoutCallback<VT> cb) {
         ViewTreeObserver viewTreeObserver = view.getViewTreeObserver();
@@ -195,5 +190,9 @@ public abstract class Utils {
         int dot = name.lastIndexOf('.');
         if (dot == -1) return name;
         return name.substring(0, dot);
+    }
+
+    public interface LayoutCallback<VT extends View> {
+        void onLayout(VT view);
     }
 }

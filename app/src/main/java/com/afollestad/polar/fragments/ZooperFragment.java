@@ -56,6 +56,13 @@ public class ZooperFragment extends BasePageFragment implements
 
     private ZooperAdapter mAdapter;
     private String mQueryText;
+    private final Runnable searchRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mAdapter.filter(mQueryText);
+            setListShown(true);
+        }
+    };
     private ArrayList<PreviewItem> mPreviews;
     private Drawable mWallpaper;
 
@@ -112,10 +119,6 @@ public class ZooperFragment extends BasePageFragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
-        final int offset = Utils.getNavBarHeight(getActivity());
-        setBottomPadding(mRecyclerView, offset, R.dimen.grid_margin);
-        setBottomMargin(mFabInstall, offset, R.dimen.content_inset);
 
         mAdapter = new ZooperAdapter(getActivity());
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(
@@ -201,26 +204,7 @@ public class ZooperFragment extends BasePageFragment implements
                 });
     }
 
-    public static class PreviewItem implements Serializable {
-
-        public final String name;
-        public final Bitmap image;
-
-        public PreviewItem(String name, Bitmap image) {
-            this.name = name;
-            this.image = image;
-        }
-    }
-
     // Search
-
-    private final Runnable searchRunnable = new Runnable() {
-        @Override
-        public void run() {
-            mAdapter.filter(mQueryText);
-            setListShown(true);
-        }
-    };
 
     @Override
     public boolean onQueryTextSubmit(String query) {
@@ -241,5 +225,16 @@ public class ZooperFragment extends BasePageFragment implements
         mAdapter.filter(null);
         setListShown(true);
         return false;
+    }
+
+    public static class PreviewItem implements Serializable {
+
+        public final String name;
+        public final Bitmap image;
+
+        public PreviewItem(String name, Bitmap image) {
+            this.name = name;
+            this.image = image;
+        }
     }
 }

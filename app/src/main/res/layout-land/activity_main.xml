@@ -1,9 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.afollestad.polar.views.insets.WindowInsetsLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -11,9 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="?colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:elevation="@dimen/toolbar_elevation"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:contentInsetStart="@dimen/content_inset"
+        app:layout_windowInsets="top"
         tools:ignore="NewApi,Overdraw,UnusedAttribute">
 
         <android.support.design.widget.TabLayout
@@ -27,4 +29,4 @@
 
     <include layout="@layout/activity_main_content" />
 
-</LinearLayout>
+</com.afollestad.polar.views.insets.WindowInsetsLinearLayout>

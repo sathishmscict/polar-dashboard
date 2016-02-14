@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
@@ -13,12 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.afollestad.assent.AssentActivity;
 import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.WallpapersFragment;
-import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.util.WallpaperUtils;
 
 import butterknife.Bind;
@@ -32,16 +28,12 @@ import static com.afollestad.polar.fragments.WallpapersFragment.RQ_CROPANDSETWAL
 @SuppressLint("MissingSuperCall")
 public class ViewerActivity extends AssentActivity {
 
+    public static final String STATE_CURRENT_POSITION = "state_current_position";
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
     private WallpaperUtils.WallpapersHolder mWallpapers;
     @SuppressWarnings("FieldCanBeLocal")
     private ViewerPageAdapter mAdapter;
-
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
-    @Bind(R.id.statusbarPlaceholder)
-    FrameLayout mStatusbarPlaceholder;
-
-    public static final String STATE_CURRENT_POSITION = "state_current_position";
     private int mCurrentPosition;
 
     @Override
@@ -86,21 +78,6 @@ public class ViewerActivity extends AssentActivity {
                 onBackPressed();
             }
         });
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // TODO replace with insets?
-            final int statusBarHeight = Utils.getStatusBarHeight(this);
-            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mToolbar.getLayoutParams();
-            lp.topMargin = statusBarHeight;
-            mToolbar.setLayoutParams(lp);
-            lp = (FrameLayout.LayoutParams) mStatusbarPlaceholder.getLayoutParams();
-            lp.height = statusBarHeight;
-            mStatusbarPlaceholder.setLayoutParams(lp);
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                mStatusbarPlaceholder.setBackgroundColor(Color.TRANSPARENT);
-        } else {
-            mStatusbarPlaceholder.setVisibility(View.GONE);
-        }
 
         if (savedInstanceState == null) {
             if (getIntent() != null && getIntent().getExtras() != null) {

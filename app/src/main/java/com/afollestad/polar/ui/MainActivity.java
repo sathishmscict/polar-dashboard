@@ -54,7 +54,6 @@ import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.views.DisableableViewPager;
-import com.afollestad.polar.zooper.ZooperUtil;
 import com.google.android.vending.licensing.Policy;
 
 import butterknife.Bind;
@@ -69,6 +68,7 @@ import static com.afollestad.polar.viewer.ViewerActivity.STATE_CURRENT_POSITION;
  */
 public class MainActivity extends BaseDonateActivity implements LicensingUtils.LicensingCallback, NavigationView.OnNavigationItemSelectedListener {
 
+    public RecyclerView mRecyclerView;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Nullable
@@ -79,9 +79,6 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
     NavigationView mNavView;
     @Bind(R.id.pager)
     DisableableViewPager mPager;
-
-    public RecyclerView mRecyclerView;
-
     int mDrawerModeTopInset;
     int mBottomInset;
 
@@ -112,7 +109,8 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
         setupPager();
         if (useNavDrawer)
             setupNavDrawer();
-        else setupTabs();
+        else
+            setupTabs();
 
         // Restore last selected page, tab/nav-drawer-item
         if (Config.get().persistSelectedPage()) {
