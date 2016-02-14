@@ -118,15 +118,14 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
         else
             setupTabs();
 
-        int lastPage = 0;
         // Restore last selected page, tab/nav-drawer-item
         if (Config.get().persistSelectedPage()) {
-            lastPage = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getInt("last_selected_page", 0);
+            int lastPage = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getInt("last_selected_page", 0);
             if (lastPage > mPager.getAdapter().getCount() - 1) lastPage = 0;
             mPager.setCurrentItem(lastPage);
             if (mNavView != null) invalidateNavViewSelection(lastPage);
         }
-        dispatchFragmentUpdateTitle(lastPage, true);
+        dispatchFragmentUpdateTitle(true);
 
 
         processIntent(getIntent());
@@ -321,7 +320,7 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
         mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                dispatchFragmentUpdateTitle(position, false);
+                dispatchFragmentUpdateTitle(false);
                 invalidateNavViewSelection(position);
             }
         });
@@ -368,7 +367,7 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                dispatchFragmentUpdateTitle(position, false);
+                dispatchFragmentUpdateTitle(false);
             }
         });
 
@@ -377,11 +376,14 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
         mTabs.setSelectedTabIndicatorColor(DialogUtils.resolveColor(this, R.attr.tab_indicator_color));
     }
 
-    void dispatchFragmentUpdateTitle(final int position, final boolean checkTabsLocation) {
+    void dispatchFragmentUpdateTitle(final boolean checkTabsLocation) {
+        //First set the presumed title, then let fragment do anything specific.
+        setTitle(mPages.get(mPager.getCurrentItem()).titleRes);
+
         mPager.post(new Runnable() {
             @Override
             public void run() {
-                final BasePageFragment frag = (BasePageFragment) getFragmentManager().findFragmentByTag("page:" + position);
+                final BasePageFragment frag = (BasePageFragment) getFragmentManager().findFragmentByTag("page:" + mPager.getCurrentItem());
                 if (frag != null) frag.updateTitle();
 
                 if (checkTabsLocation) {
@@ -409,11 +411,9 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
                 @SuppressWarnings("deprecation")
                 @Override
                 public void onGlobalLayout() {
-                    if (mToolbar.isTitleTruncated()) {
-                        if (mTabs.getParent() == mToolbar) {
-                            mToolbar.removeView(mTabs);
-                            mAppBarLinear.addView(mTabs);
-                        }
+                    if (mToolbar.isTitleTruncated() && mTabs.getParent() == mToolbar) {
+                        mToolbar.removeView(mTabs);
+                        mAppBarLinear.addView(mTabs);
                     }
 
                     setTitle(currentTitle);
