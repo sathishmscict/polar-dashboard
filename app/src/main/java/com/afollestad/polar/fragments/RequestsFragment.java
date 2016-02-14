@@ -105,7 +105,6 @@ public class RequestsFragment extends BasePageFragment implements
             if (act != null) {
                 if (fab == null) {
                     act.setTitle(R.string.request_icons);
-                    //invalidateOptionsMenu();
                     return;
                 }
 

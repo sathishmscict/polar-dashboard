@@ -80,13 +80,8 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
     @Bind(R.id.pager)
     DisableableViewPager mPager;
     int mDrawerModeTopInset;
-    int mBottomInset;
 
     private PagesBuilder mPages;
-
-//    public int getBottomInset() {
-//        return mBottomInset;
-//    }
 
     @Override
     public Toolbar getToolbar() {
@@ -112,13 +107,16 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
         else
             setupTabs();
 
+        int lastPage = 0;
         // Restore last selected page, tab/nav-drawer-item
         if (Config.get().persistSelectedPage()) {
-            int lastPage = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getInt("last_selected_page", 0);
+            lastPage = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getInt("last_selected_page", 0);
             if (lastPage > mPager.getAdapter().getCount() - 1) lastPage = 0;
             mPager.setCurrentItem(lastPage);
             if (mNavView != null) invalidateNavViewSelection(lastPage);
         }
+        dispatchFragmentUpdateTitle(lastPage);
+
 
         processIntent(getIntent());
     }
@@ -312,14 +310,13 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
         mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                final BasePageFragment frag = (BasePageFragment) getFragmentManager().findFragmentByTag("page:" + position);
-                if (frag != null) frag.updateTitle();
+                dispatchFragmentUpdateTitle(position);
                 invalidateNavViewSelection(position);
             }
         });
     }
 
-    private void invalidateNavViewSelection(int position) {
+    void invalidateNavViewSelection(int position) {
         assert mNavView != null;
         final int selectedId = mPages.get(position).drawerId;
         mNavView.post(new Runnable() {
@@ -358,14 +355,23 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                final BasePageFragment frag = (BasePageFragment) getFragmentManager().findFragmentByTag("page:" + position);
-                if (frag != null) frag.updateTitle();
+                dispatchFragmentUpdateTitle(position);
             }
         });
 
         for (PagesBuilder.Page page : mPages)
             addTab(page.iconRes);
         mTabs.setSelectedTabIndicatorColor(DialogUtils.resolveColor(this, R.attr.tab_indicator_color));
+    }
+
+    void dispatchFragmentUpdateTitle(final int position) {
+        mPager.post(new Runnable() {
+            @Override
+            public void run() {
+                final BasePageFragment frag = (BasePageFragment) getFragmentManager().findFragmentByTag("page:" + position);
+                if (frag != null) frag.updateTitle();
+            }
+        });
     }
 
     @Override
@@ -389,16 +395,6 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
-    }
-
-    @Override
-    public void setTitle(CharSequence title) {
-        mToolbar.setTitle(title);
-    }
-
-    @Override
-    public void setTitle(int titleId) {
-        mToolbar.setTitle(titleId);
     }
 
     @Override
