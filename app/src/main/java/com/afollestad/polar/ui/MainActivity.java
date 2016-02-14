@@ -27,7 +27,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowInsets;
+import android.widget.LinearLayout;
 
 import com.afollestad.bridge.Bridge;
 import com.afollestad.inquiry.Inquiry;
@@ -69,16 +71,25 @@ import static com.afollestad.polar.viewer.ViewerActivity.STATE_CURRENT_POSITION;
 public class MainActivity extends BaseDonateActivity implements LicensingUtils.LicensingCallback, NavigationView.OnNavigationItemSelectedListener {
 
     public RecyclerView mRecyclerView;
+
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
+
     @Nullable
     @Bind(R.id.tabs)
     TabLayout mTabs;
+
     @Nullable
     @Bind(R.id.navigation_view)
     NavigationView mNavView;
+
     @Bind(R.id.pager)
     DisableableViewPager mPager;
+
+    @Nullable
+    @Bind(R.id.app_bar)
+    LinearLayout mAppBarLinear;
+
     int mDrawerModeTopInset;
 
     private PagesBuilder mPages;
@@ -115,7 +126,7 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
             mPager.setCurrentItem(lastPage);
             if (mNavView != null) invalidateNavViewSelection(lastPage);
         }
-        dispatchFragmentUpdateTitle(lastPage);
+        dispatchFragmentUpdateTitle(lastPage, true);
 
 
         processIntent(getIntent());
@@ -310,7 +321,7 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
         mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                dispatchFragmentUpdateTitle(position);
+                dispatchFragmentUpdateTitle(position, false);
                 invalidateNavViewSelection(position);
             }
         });
@@ -357,7 +368,7 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                dispatchFragmentUpdateTitle(position);
+                dispatchFragmentUpdateTitle(position, false);
             }
         });
 
@@ -366,14 +377,51 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
         mTabs.setSelectedTabIndicatorColor(DialogUtils.resolveColor(this, R.attr.tab_indicator_color));
     }
 
-    void dispatchFragmentUpdateTitle(final int position) {
+    void dispatchFragmentUpdateTitle(final int position, final boolean checkTabsLocation) {
         mPager.post(new Runnable() {
             @Override
             public void run() {
                 final BasePageFragment frag = (BasePageFragment) getFragmentManager().findFragmentByTag("page:" + position);
                 if (frag != null) frag.updateTitle();
+
+                if (checkTabsLocation) {
+                    moveTabsIfNeeded();
+                }
             }
         });
+    }
+
+    void moveTabsIfNeeded() {
+        final CharSequence currentTitle = getTitle();
+
+        String longestTitle = null;
+        for (PagesBuilder.Page page : mPages) {
+            String title = getString(page.titleRes);
+            if (longestTitle == null || title.length() > longestTitle.length()) {
+                longestTitle = title;
+            }
+        }
+        setTitle(longestTitle);
+
+        if (mTabs != null) {
+            ViewTreeObserver vto = mToolbar.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @SuppressWarnings("deprecation")
+                @Override
+                public void onGlobalLayout() {
+                    if (mToolbar.isTitleTruncated()) {
+                        if (mTabs.getParent() == mToolbar) {
+                            mToolbar.removeView(mTabs);
+                            mAppBarLinear.addView(mTabs);
+                        }
+                    }
+
+                    setTitle(currentTitle);
+
+                    mToolbar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            });
+        }
     }
 
     @Override
