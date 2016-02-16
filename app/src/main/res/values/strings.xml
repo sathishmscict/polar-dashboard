@@ -81,7 +81,7 @@
     <string name="installing_fonts">Installing fonts…</string>
     <string name="installing_iconsets">Installing iconsets…</string>
     <string name="installing_bitmaps">Installing bitmaps…</string>
-    <string name="x_version_x">%1$s version: %2$s</string>
+    <string name="x_version_x">%1$s version: %2$s (%3$d)</string>
 
     <string-array name="wallpaper_options" translatable="false">
         <item>@string/apply</item>

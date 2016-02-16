@@ -57,6 +57,7 @@ public class RequestsFragment extends BasePageFragment implements
     private static final Object LOCK = new Object();
 
     private final static int PERM_RQ = 69;
+
     @Bind(android.R.id.list)
     DragSelectRecyclerView list;
     @Bind(android.R.id.progress)
@@ -68,6 +69,7 @@ public class RequestsFragment extends BasePageFragment implements
     @Bind(R.id.fab)
     FloatingActionButton fab;
     DisableableViewPager mPager;
+
     private RequestsAdapter mAdapter;
     private MaterialDialog mDialog;
     private int mInitialSelection = -1;
@@ -285,7 +287,8 @@ public class RequestsFragment extends BasePageFragment implements
                         .loadCallback(this)
                         .selectionCallback(this)
                         .sendCallback(this)
-                        .withFooter(getString(R.string.x_version_x, getString(R.string.app_name), BuildConfig.VERSION_NAME))
+                        .withFooter(getString(R.string.x_version_x, getString(R.string.app_name),
+                                BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE))
                         .includeDeviceInfo(true)
                         .build();
             }
