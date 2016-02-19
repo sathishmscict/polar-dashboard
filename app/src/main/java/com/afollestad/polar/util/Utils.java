@@ -65,11 +65,12 @@ public abstract class Utils {
 
     public static boolean isPkgInstalled(@NonNull Context context, @NonNull String targetPackage) {
         final PackageManager pm = context.getPackageManager();
+        boolean installed = false;
         try {
-            return pm.getPackageInfo(targetPackage, PackageManager.GET_META_DATA) != null;
+            installed = pm.getPackageInfo(targetPackage, PackageManager.GET_META_DATA) != null;
         } catch (Throwable ignored) {
         }
-        return true;
+        return installed;
     }
 
     public static int getStatusBarHeight(Context context) {
