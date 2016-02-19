@@ -25,8 +25,6 @@ import butterknife.ButterKnife;
 
 public class AboutFragment extends BasePageFragment implements AboutAdapter.OptionsClickListener {
 
-    private RecyclerView mRecyclerView;
-
     public AboutFragment() {
     }
 
@@ -38,7 +36,7 @@ public class AboutFragment extends BasePageFragment implements AboutAdapter.Opti
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_recyclerview_bare, container, false);
-        mRecyclerView = ButterKnife.findById(v, android.R.id.list);
+        final RecyclerView mRecyclerView = ButterKnife.findById(v, android.R.id.list);
 
         final LinearLayoutManager lm = new LinearLayoutManager(getActivity());
         final AboutAdapter mAdapter = new AboutAdapter(getActivity(), this);
