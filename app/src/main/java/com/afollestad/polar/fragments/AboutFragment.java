@@ -51,7 +51,7 @@ public class AboutFragment extends BasePageFragment implements AboutAdapter.Opti
         try {
             final String email = URLEncoder.encode(Config.get().feedbackEmail(), "UTF-8");
             //noinspection ConstantConditions
-            final String subject = URLEncoder.encode(Config.get().feedbackSubjectLine().replace(" ", "%20"), "UTF-8");
+            final String subject = URLEncoder.encode(Config.get().feedbackSubjectLine(), "UTF-8");
             contactUri = Uri.parse(String.format("mailto:%s?subject=%s", email, subject));
         } catch (UnsupportedEncodingException e) {
             Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
