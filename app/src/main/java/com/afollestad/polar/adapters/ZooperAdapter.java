@@ -137,9 +137,11 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
     }
 
     public void recycle() {
-        for (ZooperFragment.PreviewItem item : mPreviews) {
-            if (!item.image.isRecycled())
-                item.image.recycle();
+        if(mPreviews != null)  {
+            for (ZooperFragment.PreviewItem item : mPreviews) {
+                if (!item.image.isRecycled())
+                    item.image.recycle();
+            }
         }
     }
 
