@@ -2,5 +2,6 @@
 <resources>
 
     <bool name="translucent_nav">true</bool>
+    <bool name="translucent_nav_viewer">true</bool>
 
 </resources>

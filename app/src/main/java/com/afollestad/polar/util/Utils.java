@@ -1,11 +1,13 @@
 package com.afollestad.polar.util;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -15,6 +17,7 @@ import android.os.Build;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +28,9 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.config.Config;
 
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 
@@ -42,13 +48,29 @@ public abstract class Utils {
                 .show();
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public static int wipe(File dir) {
+        if (!dir.exists()) return 0;
+        int count = 1;
+        if (dir.isDirectory()) {
+            File[] contents = dir.listFiles();
+            if (contents != null && contents.length > 0) {
+                for (File fi : contents)
+                    count += wipe(fi);
+            }
+        }
+        dir.delete();
+        return count;
+    }
+
     public static boolean isPkgInstalled(@NonNull Context context, @NonNull String targetPackage) {
         final PackageManager pm = context.getPackageManager();
+        boolean installed = false;
         try {
-            return pm.getPackageInfo(targetPackage, PackageManager.GET_META_DATA) != null;
+            installed = pm.getPackageInfo(targetPackage, PackageManager.GET_META_DATA) != null;
         } catch (Throwable ignored) {
         }
-        return true;
+        return installed;
     }
 
     public static int getStatusBarHeight(Context context) {
@@ -62,8 +84,7 @@ public abstract class Utils {
     public static int getNavBarHeight(Activity context) {
         if (context == null || context.isFinishing()) {
             return 0;
-        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT ||
-                !context.getResources().getBoolean(R.bool.translucent_nav)) {
+        } else if (!context.getResources().getBoolean(R.bool.translucent_nav)) {
             // Translucent nav is disabled
             return 0;
         }
@@ -92,10 +113,6 @@ public abstract class Utils {
 //        return new int[]{size.x, size.y};
 //    }
 
-    public interface LayoutCallback<VT extends View> {
-        void onLayout(VT view);
-    }
-
     public static <VT extends View> void waitForLayout(@NonNull final VT view, @NonNull final LayoutCallback<VT> cb) {
         ViewTreeObserver viewTreeObserver = view.getViewTreeObserver();
         if (viewTreeObserver.isAlive()) {
@@ -110,6 +127,7 @@ public abstract class Utils {
     }
 
     public static void setOverflowButtonColor(@NonNull Activity activity, final @ColorInt int color) {
+        @SuppressLint("PrivateResource")
         final String overflowDescription = activity.getString(R.string.abc_action_menu_overflow_description);
         final ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
         final ViewTreeObserver viewTreeObserver = decorView.getViewTreeObserver();
@@ -153,5 +171,29 @@ public abstract class Utils {
         baseSelector.addState(new int[]{}, new ColorDrawable(Color.TRANSPARENT));
         baseSelector.addState(new int[]{android.R.attr.state_pressed}, new ColorDrawable(pressed));
         return baseSelector;
+    }
+
+    public static void recycleQuietely(@Nullable Bitmap bitmap) {
+        if (bitmap == null || bitmap.isRecycled()) return;
+        bitmap.recycle();
+    }
+
+    public static void copy(InputStream is, OutputStream os) throws Exception {
+        byte[] buffer = new byte[2048];
+        int read;
+        while ((read = is.read(buffer)) != -1)
+            os.write(buffer, 0, read);
+        os.flush();
+    }
+
+    public static String removeExtension(String name) {
+        if (name.startsWith(".")) return name;
+        int dot = name.lastIndexOf('.');
+        if (dot == -1) return name;
+        return name.substring(0, dot);
+    }
+
+    public interface LayoutCallback<VT extends View> {
+        void onLayout(VT view);
     }
 }

@@ -54,12 +54,6 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
         setContentView(R.layout.activity_icons_more);
         ButterKnife.bind(this);
 
-        if (savedInstanceState == null) {
-            final View root = findViewById(R.id.root);
-            setTopPadding(root, Utils.getStatusBarHeight(this));
-            setBottomPadding(mRecyclerView, Utils.getNavBarHeight(this));
-        }
-
         final DrawableXmlParser.Category category = (DrawableXmlParser.Category) getIntent().getSerializableExtra(EXTRA_CATEGORY);
 
         setSupportActionBar(mToolbar);

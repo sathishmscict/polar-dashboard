@@ -75,4 +75,6 @@ public interface IConfig {
     int gridWidthIcons();
 
     int gridWidthRequests();
+
+    int gridWidthZooper();
 }

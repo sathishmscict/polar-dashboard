@@ -34,11 +34,10 @@ import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.util.TintUtils;
-import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.viewer.ViewerActivity;
 
-import java.net.UnknownHostException;
+import java.net.SocketTimeoutException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,20 +50,28 @@ import static com.afollestad.polar.viewer.ViewerActivity.STATE_CURRENT_POSITION;
 public class WallpapersFragment extends BasePageFragment implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
+    public static final int RQ_CROPANDSETWALLPAPER = 8585;
+    public static final int RQ_VIEWWALLPAPER = 2001;
+    private static Toast mToast;
     @Bind(android.R.id.list)
     RecyclerView mRecyclerView;
     @Bind(android.R.id.empty)
     TextView mEmpty;
     @Bind(android.R.id.progress)
     View mProgress;
-
-    public static final int RQ_CROPANDSETWALLPAPER = 8585;
-    public static final int RQ_VIEWWALLPAPER = 2001;
-
-    private WallpaperAdapter mAdapter;
     WallpaperUtils.WallpapersHolder mWallpapers;
+    private WallpaperAdapter mAdapter;
     private String mQueryText;
-    private static Toast mToast;
+    private final Runnable searchRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mAdapter.filter(mQueryText);
+            setListShown(true);
+        }
+    };
+
+    public WallpapersFragment() {
+    }
 
     public static void showToast(Context context, @StringRes int message) {
         showToast(context, context.getString(message));
@@ -75,9 +82,6 @@ public class WallpapersFragment extends BasePageFragment implements
             mToast.cancel();
         mToast = Toast.makeText(context, message, Toast.LENGTH_LONG);
         mToast.show();
-    }
-
-    public WallpapersFragment() {
     }
 
     @Override
@@ -192,8 +196,6 @@ public class WallpapersFragment extends BasePageFragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        if (savedInstanceState == null)
-            setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()));
 
         mAdapter = new WallpaperAdapter(new WallpaperAdapter.ClickListener() {
             @Override
@@ -240,9 +242,14 @@ public class WallpapersFragment extends BasePageFragment implements
             @Override
             public void onRetrievedWallpapers(WallpaperUtils.WallpapersHolder wallpapers, Exception error, boolean cancelled) {
                 if (error != null) {
-                    if (error instanceof UnknownHostException || (error instanceof BridgeException &&
-                            ((BridgeException) error).reason() == BridgeException.REASON_REQUEST_FAILED)) {
-                        mEmpty.setText(R.string.unable_to_contact_server);
+                    if (error instanceof BridgeException) {
+                        BridgeException e = (BridgeException) error;
+                        if (e.reason() == BridgeException.REASON_REQUEST_FAILED)
+                            mEmpty.setText(R.string.unable_to_contact_server);
+                        else if (e.reason() == BridgeException.REASON_REQUEST_TIMEOUT ||
+                                (e.underlyingException() != null && e.underlyingException() instanceof SocketTimeoutException))
+                            mEmpty.setText(R.string.unable_to_contact_server);
+                        else mEmpty.setText(e.getMessage());
                     } else {
                         mEmpty.setText(error.getMessage());
                     }
@@ -255,6 +262,8 @@ public class WallpapersFragment extends BasePageFragment implements
             }
         });
     }
+
+    // Search
 
     @Override
     public void onPause() {
@@ -269,16 +278,6 @@ public class WallpapersFragment extends BasePageFragment implements
             }
         }
     }
-
-    // Search
-
-    private final Runnable searchRunnable = new Runnable() {
-        @Override
-        public void run() {
-            mAdapter.filter(mQueryText);
-            setListShown(true);
-        }
-    };
 
     @Override
     public boolean onQueryTextSubmit(String query) {

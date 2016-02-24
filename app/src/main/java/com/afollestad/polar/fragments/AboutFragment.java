@@ -16,7 +16,6 @@ import com.afollestad.polar.adapters.AboutAdapter;
 import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.MainActivity;
-import com.afollestad.polar.util.Utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -25,8 +24,6 @@ import butterknife.ButterKnife;
 
 
 public class AboutFragment extends BasePageFragment implements AboutAdapter.OptionsClickListener {
-
-    private RecyclerView mRecyclerView;
 
     public AboutFragment() {
     }
@@ -39,7 +36,7 @@ public class AboutFragment extends BasePageFragment implements AboutAdapter.Opti
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_recyclerview_bare, container, false);
-        mRecyclerView = ButterKnife.findById(v, android.R.id.list);
+        final RecyclerView mRecyclerView = ButterKnife.findById(v, android.R.id.list);
 
         final LinearLayoutManager lm = new LinearLayoutManager(getActivity());
         final AboutAdapter mAdapter = new AboutAdapter(getActivity(), this);
@@ -49,19 +46,12 @@ public class AboutFragment extends BasePageFragment implements AboutAdapter.Opti
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if (savedInstanceState == null)
-            setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()));
-    }
-
-    @Override
     public void onOptionFeedback() {
         final Uri contactUri;
         try {
             final String email = URLEncoder.encode(Config.get().feedbackEmail(), "UTF-8");
             //noinspection ConstantConditions
-            final String subject = URLEncoder.encode(Config.get().feedbackSubjectLine().replace(" ", "%20"), "UTF-8");
+            final String subject = URLEncoder.encode(Config.get().feedbackSubjectLine(), "UTF-8");
             contactUri = Uri.parse(String.format("mailto:%s?subject=%s", email, subject));
         } catch (UnsupportedEncodingException e) {
             Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();

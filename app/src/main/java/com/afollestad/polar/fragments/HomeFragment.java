@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.base.BasePageFragment;
-import com.afollestad.polar.util.Utils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,8 +22,8 @@ import butterknife.OnClick;
  */
 public class HomeFragment extends BasePageFragment {
 
-    @Bind(R.id.fab)
-    FloatingActionButton mFab;
+//    @Bind(R.id.fab)
+//    FloatingActionButton mFab;
 
     @Nullable
     @Override
@@ -36,8 +35,6 @@ public class HomeFragment extends BasePageFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        if (savedInstanceState == null)
-            setBottomMargin(mFab, Utils.getNavBarHeight(getActivity()));
     }
 
     @Override

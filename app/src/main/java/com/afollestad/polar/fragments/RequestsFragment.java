@@ -1,10 +1,7 @@
 package com.afollestad.polar.fragments;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -18,8 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewPropertyAnimator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +23,11 @@ import com.afollestad.assent.AssentCallback;
 import com.afollestad.assent.PermissionResultSet;
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerView;
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
+import com.afollestad.iconrequest.App;
+import com.afollestad.iconrequest.AppsLoadCallback;
+import com.afollestad.iconrequest.AppsSelectionListener;
+import com.afollestad.iconrequest.IconRequest;
+import com.afollestad.iconrequest.RequestSendCallback;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.DialogUtils;
@@ -40,13 +40,9 @@ import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.views.DisableableViewPager;
-import com.pk.requestmanager.AppInfo;
-import com.pk.requestmanager.AppLoadListener;
-import com.pk.requestmanager.PkRequestManager;
-import com.pk.requestmanager.RequestSettings;
-import com.pk.requestmanager.SendRequestListener;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -55,21 +51,12 @@ import butterknife.OnClick;
 
 
 public class RequestsFragment extends BasePageFragment implements
-        AppLoadListener, SendRequestListener, RequestsAdapter.SelectionChangedListener, AssentCallback, DragSelectRecyclerViewAdapter.SelectionListener {
+        AppsLoadCallback, AppsSelectionListener, RequestSendCallback, AssentCallback,
+        DragSelectRecyclerViewAdapter.SelectionListener, RequestsAdapter.SelectionChangedListener {
 
     private static final Object LOCK = new Object();
 
     private final static int PERM_RQ = 69;
-    private final static int FAB_ANIMATION_DURATION = 250;
-
-    private RequestsAdapter mAdapter;
-    private PkRequestManager mRequestManager;
-    private MaterialDialog mDialog;
-
-    private int mFabOffset = -1;
-    private boolean mFabShown = false;
-    private int mInitialSelection = -1;
-    private boolean mAppsLoaded = false;
 
     @Bind(android.R.id.list)
     DragSelectRecyclerView list;
@@ -83,6 +70,11 @@ public class RequestsFragment extends BasePageFragment implements
     FloatingActionButton fab;
     DisableableViewPager mPager;
 
+    private RequestsAdapter mAdapter;
+    private MaterialDialog mDialog;
+    private int mInitialSelection = -1;
+    private boolean mAppsLoaded = false;
+
     public RequestsFragment() {
     }
 
@@ -94,48 +86,17 @@ public class RequestsFragment extends BasePageFragment implements
     public boolean onBackPressed() {
         if (mAdapter != null) {
             if (mAdapter.getSelectedCount() > 0) {
-                mAdapter.clearSelection();
+                if (IconRequest.get() != null) {
+                    IconRequest.get().unselectAllApps();
+                    mAdapter.clearSelected();
+                }
+                mAdapter.notifyDataSetChanged();
                 return true;
             } else {
                 return false;
             }
         } else {
             return false;
-        }
-    }
-
-    private void toggleFab(boolean show) {
-        if (mFabOffset == -1) {
-            final ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) fab.getLayoutParams();
-            mFabOffset = lp.bottomMargin * 2;
-        }
-        if (show) {
-            if (mFabShown) return;
-            mFabShown = true;
-            fab.animate().cancel();
-            fab.setVisibility(View.VISIBLE);
-            fab.setTranslationY(mFabOffset);
-            ViewPropertyAnimator animator = fab.animate().translationY(0);
-            animator.setInterpolator(new DecelerateInterpolator());
-            animator.setDuration(FAB_ANIMATION_DURATION);
-            animator.setListener(null);
-            animator.start();
-        } else {
-            if (!mFabShown) return;
-            mFabShown = false;
-            fab.animate().cancel();
-            fab.setTranslationY(0);
-            ViewPropertyAnimator animator = fab.animate().translationY(mFabOffset);
-            animator.setInterpolator(new DecelerateInterpolator());
-            animator.setDuration(FAB_ANIMATION_DURATION);
-            animator.setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    super.onAnimationEnd(animation);
-                    fab.setVisibility(View.GONE);
-                }
-            });
-            animator.start();
         }
     }
 
@@ -146,7 +107,6 @@ public class RequestsFragment extends BasePageFragment implements
             if (act != null) {
                 if (fab == null) {
                     act.setTitle(R.string.request_icons);
-                    act.invalidateOptionsMenu();
                     return;
                 }
 
@@ -157,11 +117,14 @@ public class RequestsFragment extends BasePageFragment implements
                     act.setTitle(getString(R.string.request_icons_x, numSelected));
                 }
 
-                toggleFab(numSelected > 0);
+                if (!fab.isShown() && numSelected > 0)
+                    fab.show();
+                else if (fab.isShown() && numSelected == 0)
+                    fab.hide();
                 // Work around for the icon sometimes being invisible?
                 fab.setImageResource(R.drawable.ic_action_apply);
                 // Update toolbar items
-                act.invalidateOptionsMenu();
+                //invalidateOptionsMenu();
             }
         }
     }
@@ -169,7 +132,6 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
         setHasOptionsMenu(true);
     }
 
@@ -195,7 +157,6 @@ public class RequestsFragment extends BasePageFragment implements
             } catch (Throwable e) {
                 e.printStackTrace();
                 selectAll.setVisible(false);
-                // TODO solve this officially, use different request loading library?
             }
             selectAll.setVisible(mAppsLoaded);
         }
@@ -205,9 +166,18 @@ public class RequestsFragment extends BasePageFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         synchronized (LOCK) {
             if (item.getItemId() == R.id.selectAll) {
-                if (mAdapter.getSelectedCount() == 0)
-                    mAdapter.selectAll();
-                else mAdapter.clearSelection();
+                final IconRequest ir = IconRequest.get();
+                if (ir != null) {
+                    if (mAdapter.getSelectedCount() == 0) {
+                        ir.selectAllApps();
+                        for (int i = 0; i < mAdapter.getItemCount(); i++)
+                            mAdapter.setSelected(i, true);
+                    } else {
+                        ir.unselectAllApps();
+                        mAdapter.clearSelected();
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
                 return true;
             }
             return super.onOptionsItemSelected(item);
@@ -218,13 +188,6 @@ public class RequestsFragment extends BasePageFragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
-        if (savedInstanceState == null) {
-            final int offset = Utils.getNavBarHeight(getActivity());
-            setBottomMargin(fab, offset);
-            setBottomMargin(emptyText, offset);
-            setBottomPadding(list, offset);
-        }
 
         GridLayoutManager lm = new GridLayoutManager(getActivity(), Config.get().gridWidthRequests());
         lm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -246,7 +209,7 @@ public class RequestsFragment extends BasePageFragment implements
         emptyText.setVisibility(View.GONE);
         progress.setVisibility(View.VISIBLE);
         progressText.setVisibility(View.VISIBLE);
-        progressText.setText(R.string.preparing_to_load);
+        progressText.setText(R.string.loading_filter);
         list.setVisibility(View.GONE);
 
         mPager = (DisableableViewPager) getActivity().findViewById(R.id.pager);
@@ -267,7 +230,18 @@ public class RequestsFragment extends BasePageFragment implements
             }
         });
 
-        setBottomMargin(emptyText, Utils.getNavBarHeight(getActivity()));
+        if (savedInstanceState != null) {
+            IconRequest.restoreInstanceState(getActivity(), savedInstanceState, this, this, this);
+            final IconRequest ir = IconRequest.get();
+            if (ir != null && ir.isAppsLoaded()) {
+                mAdapter.setApps(ir.getApps());
+                mAdapter.restoreInstanceState(savedInstanceState);
+                emptyText.setVisibility(View.GONE);
+                progress.setVisibility(View.GONE);
+                progressText.setVisibility(View.GONE);
+                list.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
@@ -293,49 +267,33 @@ public class RequestsFragment extends BasePageFragment implements
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mAdapter.saveInstanceState(outState);
+        IconRequest.saveInstanceState(outState);
+    }
+
     @SuppressLint("StringFormatInvalid")
     private void reload() {
         synchronized (LOCK) {
-            if (mRequestManager == null) {
-                mRequestManager = PkRequestManager.getInstance(getActivity());
+            if (IconRequest.get() == null) {
                 final File saveFolder = new File(Environment.getExternalStorageDirectory(), getString(R.string.app_name));
-                //noinspection ResultOfMethodCallIgnored
-                saveFolder.mkdirs();
-                mRequestManager.setSettings(new RequestSettings.Builder()
-                        .addEmailAddress(getString(R.string.icon_request_email))
-                        .emailSubject(String.format("%s %s", getString(R.string.app_name), getString(R.string.icon_request)))
-                        .emailPrecontent(String.format("These apps are missing on my phone... " +
-                                "I'm using version %s.\n\n", BuildConfig.VERSION_NAME)) // Text before the main app information
-                        .saveLocation(saveFolder.getAbsolutePath())
-                        .appfilterName("appfilter.xml")
-                        .compressFormat(PkRequestManager.PNG)
-                        .appendInformation(true)
-                        .createAppfilter(true)
-                        .createZip(true)
-                        .filterAutomatic(true)
-                        .filterDefined(true)
-                        .byteBuffer(2048)
-                        .compressQuality(100)
-                        .build());
-            } else {
-                mRequestManager.removeAllListeners();
-                mRequestManager.setActivity(getActivity());
+                Utils.wipe(new File(saveFolder, "files"));
+                IconRequest.start(getActivity())
+                        .toEmail(getString(R.string.icon_request_email))
+                        .withSubject(String.format("%s %s", getString(R.string.app_name), getString(R.string.icon_request)))
+                        .saveDir(saveFolder)
+                        .loadCallback(this)
+                        .selectionCallback(this)
+                        .sendCallback(this)
+                        .withFooter(getString(R.string.x_version_x, getString(R.string.app_name),
+                                BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE))
+                        .includeDeviceInfo(true)
+                        .build();
             }
-
-            emptyText.setOnClickListener(null);
-            mRequestManager.addAppLoadListener(this);
-            mRequestManager.addSendRequestListener(this);
-            mRequestManager.setDebugging(BuildConfig.DEBUG);
-
-            if (mRequestManager.getApps() != null && mRequestManager.getApps().size() > 0) {
-                mAdapter.setApps(mRequestManager.getApps());
-                mAdapter.setApps(mRequestManager.getApps());
-                emptyText.setVisibility(mAdapter.getItemCount() == 0 ?
-                        View.VISIBLE : View.GONE);
-                progress.setVisibility(View.GONE);
-                list.setVisibility(View.VISIBLE);
-            }
-            mRequestManager.loadAppsIfEmptyAsync();
+            if (!IconRequest.get().isAppsLoaded())
+                IconRequest.get().loadApps();
         }
     }
 
@@ -343,18 +301,17 @@ public class RequestsFragment extends BasePageFragment implements
     public void onPause() {
         super.onPause();
         synchronized (LOCK) {
-            if (mRequestManager != null)
-                mRequestManager.removeAllListeners();
-            mRequestManager = null;
+            if (getActivity() != null && getActivity().isFinishing())
+                IconRequest.cleanup();
             if (mDialog != null)
                 mDialog.dismiss();
         }
     }
 
-    // Load apps listener
+    // Icon Requests
 
     @Override
-    public void onAppPreload() {
+    public void onLoadingFilter() {
         if (progressText == null) return;
         mAppsLoaded = false;
         progressText.post(new Runnable() {
@@ -363,33 +320,36 @@ public class RequestsFragment extends BasePageFragment implements
                 emptyText.setVisibility(View.GONE);
                 progress.setVisibility(View.VISIBLE);
                 list.setVisibility(View.GONE);
-                progressText.setText(R.string.preparing_to_load);
+                progressText.setText(R.string.loading_filter);
             }
         });
     }
 
     @Override
-    public void onAppLoading(int status, final int progress) {
+    public void onAppsLoadProgress(final int percent) {
         if (progressText == null) return;
         progressText.post(new Runnable() {
             @Override
             public void run() {
                 if (!isAdded() || getActivity() == null) return;
-                progressText.setText(getString(R.string.loading_progress_x, progress));
+                // Percent isn't used here since it happens so fast anyways
+                progressText.setText(R.string.loading);
             }
         });
     }
 
     @Override
-    public void onAppLoaded() {
+    public void onAppsLoaded(ArrayList<App> arrayList, Exception e) {
         synchronized (LOCK) {
-            if (progressText == null || mRequestManager == null) return;
+            if (progressText == null || IconRequest.get() == null) return;
             mAppsLoaded = true;
             progressText.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (getActivity() != null) getActivity().invalidateOptionsMenu();
-                    mAdapter.setApps(mRequestManager.getApps());
+                    if (IconRequest.get() == null) return;
+                    getActivity().invalidateOptionsMenu();
+                    mAdapter.setApps(IconRequest.get().getApps());
+                    mAdapter.notifyDataSetChanged();
                     emptyText.setVisibility(mAdapter.getItemCount() == 0 ?
                             View.VISIBLE : View.GONE);
                     progress.setVisibility(View.GONE);
@@ -400,7 +360,52 @@ public class RequestsFragment extends BasePageFragment implements
         }
     }
 
-    // Send request listener
+    // Apps selection listener
+
+    @Override
+    public void onAppSelectionChanged(int count) {
+        if (count == 0)
+            fab.hide();
+        else fab.show();
+    }
+
+    // Request send listener
+
+    @Override
+    public void onRequestPreparing() {
+        if (getActivity() == null) return;
+        progressText.post(new Runnable() {
+            @Override
+            public void run() {
+                mDialog = new MaterialDialog.Builder(getActivity())
+                        .content(R.string.preparing_icon_request)
+                        .progress(true, -1)
+                        .cancelable(false)
+                        .show();
+            }
+        });
+    }
+
+    @Override
+    public void onRequestError(Exception e) {
+        mDialog.dismiss();
+        Utils.showError(getActivity(), e);
+    }
+
+    @Override
+    public void onRequestSent() {
+        if (getActivity() == null) return;
+        progressText.post(new Runnable() {
+            @Override
+            public void run() {
+                mDialog.dismiss();
+                fab.hide();
+                IconRequest.get().unselectAllApps();
+                mAdapter.clearSelected();
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+    }
 
     @OnClick(R.id.fab)
     public void onClickFab() {
@@ -422,64 +427,24 @@ public class RequestsFragment extends BasePageFragment implements
         }
 
         synchronized (LOCK) {
-            if (getActivity() == null) return;
-            final List<AppInfo> apps = mRequestManager.getApps();
-            for (int i = 0; i < apps.size(); i++)
-                apps.get(i).setSelected(mAdapter.isIndexSelected(i + 1));
-            mRequestManager.setActivity(getActivity());
-            mRequestManager.sendRequestAsync();
+            final IconRequest ir = IconRequest.get();
+            if (getActivity() == null || ir == null) return;
+            final List<App> apps = ir.getApps();
+            if (apps != null) {
+                for (int i = 0; i < apps.size(); i++) {
+                    if (mAdapter.isIndexSelected(i + 1))
+                        ir.selectApp(apps.get(i));
+                    else ir.unselectApp(apps.get(i));
+                }
+            }
+            ir.send();
         }
-    }
-
-    @Override
-    public void onRequestStart(boolean automatic) {
-        if (getActivity() == null) return;
-        progressText.post(new Runnable() {
-            @Override
-            public void run() {
-                mDialog = new MaterialDialog.Builder(getActivity())
-                        .content(R.string.preparing_icon_request)
-                        .progress(true, -1)
-                        .cancelable(false)
-                        .show();
-            }
-        });
-    }
-
-    @Override
-    public void onRequestBuild(boolean automatic, final int progress) {
-        if (getActivity() == null) return;
-        progressText.post(new Runnable() {
-            @Override
-            public void run() {
-                mDialog.setContent(R.string.building_icon_request, progress);
-            }
-        });
-    }
-
-    @Override
-    public void onRequestFinished(boolean automatic, final boolean intentSuccessful, Intent intent) {
-        if (getActivity() == null) return;
-        progressText.post(new Runnable() {
-            @Override
-            public void run() {
-                mDialog.dismiss();
-                fab.setVisibility(View.GONE);
-
-                mAdapter.clearSelection();
-                mAdapter.notifyDataSetChanged();
-
-                if (!intentSuccessful)
-                    Toast.makeText(getActivity(), R.string.icon_request_error, Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     @Override
     public void onDragSelectionChanged(int count) {
         updateTitle();
-        if (getActivity() != null)
-            getActivity().invalidateOptionsMenu();
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override

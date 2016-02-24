@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.afollestad.assent.AssentActivity;
 import com.afollestad.materialdialogs.util.DialogUtils;
@@ -25,7 +26,16 @@ public abstract class BaseThemedActivity extends AssentActivity {
 
     private boolean mLastDarkTheme = false;
 
-    public abstract Toolbar getToolbar();
+    public static void themeMenu(Context context, Menu menu) {
+        final int tintColor = DialogUtils.resolveColor(context, R.attr.toolbar_icons_color);
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            if (item.getIcon() != null)
+                item.setIcon(TintUtils.createTintedDrawable(item.getIcon(), tintColor));
+        }
+    }
+
+    protected abstract Toolbar getToolbar();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +43,14 @@ public abstract class BaseThemedActivity extends AssentActivity {
         mLastDarkTheme = darkTheme();
         setTheme(getCurrentTheme());
         super.onCreate(savedInstanceState);
+
+        if (Config.get().navDrawerModeEnabled()) {
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+                //TODO: Get insets working on KitKat when drawer is used.
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            }
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
                 !DialogUtils.resolveBoolean(this, R.attr.disable_auto_light_status_bar)) {
@@ -67,45 +85,10 @@ public abstract class BaseThemedActivity extends AssentActivity {
         }
     }
 
-    protected void setTopPadding(View view, int padding) {
-        view.setPadding(view.getPaddingLeft(),
-                view.getPaddingTop() + padding,
-                view.getPaddingRight(),
-                view.getPaddingBottom());
-    }
-
-    protected void setBottomPadding(View view, int padding) {
-        view.setPadding(view.getPaddingLeft(),
-                view.getPaddingTop(),
-                view.getPaddingRight(),
-                view.getPaddingBottom() + padding);
-    }
-
-//    protected void applyTopInset(View view) {
-//        ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
-//            @Override
-//            public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
-//                int systemWindowInsetTop = insets.getSystemWindowInsetTop();
-//                v.setPaddingRelative(0, systemWindowInsetTop, 0, v.getPaddingBottom());
-//                return insets;
-//            }
-//        });
-//    }
-//
-//    protected void applyBottomInset(View view) {
-//        ViewCompat.setOnApplyWindowInsetsListener(view, new OnApplyWindowInsetsListener() {
-//            @Override
-//            public WindowInsetsCompat onApplyWindowInsets(View v, WindowInsetsCompat insets) {
-//                int systemWindowInsetBottom = insets.getSystemWindowInsetBottom();
-//                v.setPaddingRelative(0, v.getPaddingTop(), 0, systemWindowInsetBottom);
-//                return insets;
-//            }
-//        });
-//    }
-
     @Override
     protected void onResume() {
         super.onResume();
+        Config.setContext(this);
         if (mLastDarkTheme != darkTheme())
             recreate();
     }
@@ -133,20 +116,11 @@ public abstract class BaseThemedActivity extends AssentActivity {
         }
     }
 
-    public final void darkTheme(boolean newValue) {
+    protected final void darkTheme(boolean newValue) {
         Config.get().darkTheme(newValue);
     }
 
-    public final boolean darkTheme() {
+    protected final boolean darkTheme() {
         return Config.get().darkTheme();
-    }
-
-    public static void themeMenu(Context context, Menu menu) {
-        final int tintColor = DialogUtils.resolveColor(context, R.attr.toolbar_icons_color);
-        for (int i = 0; i < menu.size(); i++) {
-            MenuItem item = menu.getItem(i);
-            if (item.getIcon() != null)
-                item.setIcon(TintUtils.createTintedDrawable(item.getIcon(), tintColor));
-        }
     }
 }

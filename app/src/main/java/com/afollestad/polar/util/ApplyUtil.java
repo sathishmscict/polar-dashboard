@@ -21,7 +21,7 @@ import java.lang.annotation.RetentionPolicy;
 
 public class ApplyUtil {
 
-    @IntDef({UNKNOWN, APEX, NOVA, AVIATE, ADW, ACTION, SMART, NEXT, GO, HOLO, SOLO, KK, ATOM, INSPIRE, CMTE})
+    @IntDef({UNKNOWN, APEX, NOVA, AVIATE, ADW, ACTION, SMART, NEXT, GO, HOLO, SOLO, KK, ATOM, INSPIRE, CMTE, LGHOME})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Launcher {
     }
@@ -41,6 +41,7 @@ public class ApplyUtil {
     public static final int ATOM = 11;
     public static final int INSPIRE = 12;
     public static final int CMTE = 13;
+    public static final int LGHOME = 14;
 
     @Launcher
     public static int launcherIdFromPkg(String pkg) {
@@ -76,8 +77,11 @@ public class ApplyUtil {
                 return ATOM;
             case "com.bam.android.inspirelauncher":
                 return INSPIRE;
+            case "com.cyngn.theme.chooser":
             case "org.cyanogenmod.theme.chooser":
                 return CMTE;
+            case "com.lge.launcher2":
+                return LGHOME;
             default:
                 return UNKNOWN;
         }
@@ -276,6 +280,13 @@ public class ApplyUtil {
                         Toast.makeText(context, R.string.cmte_unavailable, Toast.LENGTH_SHORT).show();
                     }
                     break;
+                case LGHOME:
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.setComponent(new ComponentName("com.lge.launcher2", "com.lge.launcher2.homesettings.HomeSettingsPrefActivity"));
+                    context.startActivity(intent);
+                    break;
+                case UNKNOWN:
+                    break;
             }
             return true;
         } catch (Throwable t) {
@@ -298,15 +309,4 @@ public class ApplyUtil {
         if (launcherIdFromPkg(pkg) == -1) return null;
         return pkg;
     }
-
-//    public static void quickApply(@NonNull Context context) throws Exception {
-//        final String pkg = getDefaultLauncher(context);
-//        if (pkg.equalsIgnoreCase("com.google.android.googlequicksearchbox"))
-//            throw new Exception("Google Now Launcher does not support theming!");
-//        try {
-//            apply(context, pkg);
-//        } catch (RuntimeException e) {
-//            throw new Exception(e.getMessage(), e);
-//        }
-//    }
 }

@@ -133,8 +133,8 @@ public class LicensingUtils {
 
     private static class MyLicenseCheckerCallback implements LicenseCheckerCallback {
 
-        private Context mContext;
-        private LicensingCallback mCb;
+        private final Context mContext;
+        private final LicensingCallback mCb;
 
         public MyLicenseCheckerCallback(Context context, LicensingCallback callback) {
             mContext = context;

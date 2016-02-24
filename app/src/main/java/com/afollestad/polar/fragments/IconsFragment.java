@@ -33,7 +33,6 @@ import com.afollestad.polar.ui.IconPickerActivity;
 import com.afollestad.polar.ui.MainActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
 import com.afollestad.polar.util.TintUtils;
-import com.afollestad.polar.util.Utils;
 
 import java.util.List;
 import java.util.TimerTask;
@@ -48,6 +47,24 @@ public class IconsFragment extends BasePageFragment implements
     RecyclerView mRecyclerView;
 
     public IconsFragment() {
+    }
+
+    public static void selectItem(Activity context, Fragment context2, DrawableXmlParser.Icon icon) {
+        Bitmap bmp = null;
+        if (icon.getDrawableId(context) != 0) {
+            //noinspection ConstantConditions
+            bmp = ((BitmapDrawable) ResourcesCompat.getDrawable(context.getResources(),
+                    icon.getDrawableId(context), null)).getBitmap();
+        }
+        if (context instanceof IconPickerActivity) {
+            context.setResult(Activity.RESULT_OK, new Intent().putExtra("icon", bmp));
+            context.finish();
+        } else {
+            FragmentManager fm;
+            if (context2 != null) fm = context2.getChildFragmentManager();
+            else fm = context.getFragmentManager();
+            IconDetailsDialog.create(bmp, icon).show(fm, "ICON_DETAILS_DIALOG");
+        }
     }
 
     @Override
@@ -97,24 +114,6 @@ public class IconsFragment extends BasePageFragment implements
         return v;
     }
 
-    public static void selectItem(Activity context, Fragment context2, DrawableXmlParser.Icon icon) {
-        Bitmap bmp = null;
-        if (icon.getDrawableId(context) != 0) {
-            //noinspection ConstantConditions
-            bmp = ((BitmapDrawable) ResourcesCompat.getDrawable(context.getResources(),
-                    icon.getDrawableId(context), null)).getBitmap();
-        }
-        if (context instanceof IconPickerActivity) {
-            context.setResult(Activity.RESULT_OK, new Intent().putExtra("icon", bmp));
-            context.finish();
-        } else {
-            FragmentManager fm;
-            if (context2 != null) fm = context2.getChildFragmentManager();
-            else fm = context.getFragmentManager();
-            IconDetailsDialog.create(bmp, icon).show(fm, "ICON_DETAILS_DIALOG");
-        }
-    }
-
     void setListShown(boolean shown) {
         final View v = getView();
         if (v != null) {
@@ -136,9 +135,6 @@ public class IconsFragment extends BasePageFragment implements
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (getActivity() != null) load();
-
-        if (savedInstanceState == null)
-            setBottomPadding(mRecyclerView, Utils.getNavBarHeight(getActivity()));
     }
 
     private void load() {
