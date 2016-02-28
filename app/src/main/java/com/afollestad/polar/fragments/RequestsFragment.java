@@ -415,7 +415,7 @@ public class RequestsFragment extends BasePageFragment implements
         } else if (!Assent.isPermissionGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
             new MaterialDialog.Builder(getActivity())
                     .title(R.string.permission_needed)
-                    .content(Html.fromHtml(getString(R.string.permission_needed_desc, getString(R.string.app_name))))
+                    .content(Html.fromHtml(getString(R.string.permission_needed_request_desc, getString(R.string.app_name))))
                     .positiveText(android.R.string.ok)
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override

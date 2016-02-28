@@ -24,8 +24,6 @@ import butterknife.ButterKnife;
 
 public class ApplyFragment extends BasePageFragment implements ApplyAdapter.SelectionCallback {
 
-    private RecyclerView mRecyclerView;
-
     public ApplyFragment() {
     }
 
@@ -38,8 +36,7 @@ public class ApplyFragment extends BasePageFragment implements ApplyAdapter.Sele
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
-        mRecyclerView = ButterKnife.findById(v, android.R.id.list);
-
+        final RecyclerView recyclerView = ButterKnife.findById(v, android.R.id.list);
         final GridLayoutManager lm = new GridLayoutManager(getActivity(), Config.get().gridWidthApply());
         lm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -51,8 +48,8 @@ public class ApplyFragment extends BasePageFragment implements ApplyAdapter.Sele
         });
 
         final ApplyAdapter mAdapter = new ApplyAdapter(getActivity(), this);
-        mRecyclerView.setLayoutManager(lm);
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(lm);
+        recyclerView.setAdapter(mAdapter);
 
         return v;
     }

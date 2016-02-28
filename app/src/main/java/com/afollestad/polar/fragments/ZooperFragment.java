@@ -3,12 +3,14 @@ package com.afollestad.polar.fragments;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +24,8 @@ import android.widget.Toast;
 import com.afollestad.assent.Assent;
 import com.afollestad.assent.AssentCallback;
 import com.afollestad.assent.PermissionResultSet;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.ZooperAdapter;
@@ -44,6 +48,8 @@ import butterknife.OnClick;
  */
 public class ZooperFragment extends BasePageFragment implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+
+    private static final int PERM_RQ = 61;
 
     @Bind(android.R.id.list)
     RecyclerView mRecyclerView;
@@ -172,9 +178,22 @@ public class ZooperFragment extends BasePageFragment implements
             Assent.requestPermissions(new AssentCallback() {
                 @Override
                 public void onPermissionResult(PermissionResultSet permissionResultSet) {
-                    checkInstalled();
+                    if (permissionResultSet.allPermissionsGranted()) {
+                        checkInstalled();
+                    } else {
+                        new MaterialDialog.Builder(getActivity())
+                                .title(R.string.permission_needed)
+                                .content(Html.fromHtml(getString(R.string.permission_needed_zooper_desc, getString(R.string.app_name))))
+                                .positiveText(android.R.string.ok)
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        Assent.requestPermissions(ZooperFragment.this, PERM_RQ, Assent.WRITE_EXTERNAL_STORAGE);
+                                    }
+                                }).show();
+                    }
                 }
-            }, 69, Assent.WRITE_EXTERNAL_STORAGE);
+            }, PERM_RQ, Assent.WRITE_EXTERNAL_STORAGE);
         } else {
             checkInstalled();
         }
