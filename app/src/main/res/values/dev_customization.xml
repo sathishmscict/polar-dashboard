@@ -22,6 +22,12 @@
     <!-- Email used to send icon requests, leave empty to disable this feature. -->
     <string name="icon_request_email">fake-email@fake-website.com</string>
 
+    <!-- Max number of icons that can be sent per request. -1 disables max count. -->
+    <integer name="icon_request_maxcount">-1</integer>
+
+    <!-- When true, the user is only allowed to send one icon request (unless they clear data/reinstall the app) -->
+    <bool name="icon_request_oneshot">false</bool>
+
     <!-- Public Base64 from the developer console for license checking, optional -->
     <string name="licensing_public_key"></string>
 

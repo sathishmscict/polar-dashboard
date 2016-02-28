@@ -201,6 +201,7 @@ public class RequestsFragment extends BasePageFragment implements
 
         mAdapter = new RequestsAdapter(this);
         mAdapter.setSelectionListener(this);
+        mAdapter.setMaxSelectionCount(getResources().getInteger(R.integer.icon_request_maxcount));
 
         list.setLayoutManager(lm);
         list.setAdapter(mAdapter);
