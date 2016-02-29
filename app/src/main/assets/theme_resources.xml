@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Theme version="1">
+    <Label value="Polar" />
+    <Wallpaper image="wall_name" />
+    <LockScreenWallpaper image="wall_name" />
+    <ThemePreview image="preview1" />
+    <ThemePreviewWork image="preview1" />
+    <ThemePreviewMenu image="preview1" />
+    <DockMenuAppIcon selector="app_drawer_icon_name" />
+
+    <AppIcon name="com.appfour.weartube/com.appfour.weartube.PhoneActivity"
+        image="wear_video_tube" />
+
+</Theme>

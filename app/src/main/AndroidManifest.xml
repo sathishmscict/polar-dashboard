@@ -183,7 +183,7 @@
 
             <!-- Uncomment for Zooper -->
             <!--<intent-filter>-->
-                <!--<action android:name="org.zooper.zw.TEMPLATES" />-->
+            <!--<action android:name="org.zooper.zw.TEMPLATES" />-->
             <!--</intent-filter>-->
 
         </activity>
@@ -198,8 +198,8 @@
 
         <!-- Uncomment for Zooper, MAKE SURE YOU RENAME COM.AFOLLESTAD.POLAR TO BE UNIQUE TO YOUR PACK -->
         <!--<provider-->
-            <!--android:name=".zooper.TemplateProvider"-->
-            <!--android:authorities="com.afollestad.polar.zwprovider"/>-->
+        <!--android:name=".zooper.TemplateProvider"-->
+        <!--android:authorities="com.afollestad.polar.zwprovider"/>-->
 
     </application>
 
