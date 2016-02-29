@@ -1,6 +1,5 @@
 package com.afollestad.polar.config;
 
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 
 /**
@@ -23,12 +22,6 @@ public interface IConfig {
     boolean navDrawerModeAllowSwitch();
 
     boolean homepageEnabled();
-
-    @Nullable
-    String homepageDescription();
-
-    @Nullable
-    Drawable homepageLandingIcon();
 
     @Nullable
     String wallpapersJsonUrl();
@@ -77,4 +70,10 @@ public interface IConfig {
     int gridWidthRequests();
 
     int gridWidthZooper();
+
+    int iconRequestMaxCount();
+
+    boolean iconRequestOneShotUsed();
+
+    boolean iconRequestOneShotUsed(boolean used);
 }

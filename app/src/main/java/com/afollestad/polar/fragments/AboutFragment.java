@@ -72,7 +72,7 @@ public class AboutFragment extends BasePageFragment implements AboutAdapter.Opti
     @Override
     public void onOptionDonate() {
         final String[] optionNames = Config.get().donateOptionsNames();
-        final String[] optionIds = Config.get().donateOptionsNames();
+        final String[] optionIds = Config.get().donateOptionsIds();
         if (optionNames == null || optionIds == null || optionNames.length != optionIds.length) {
             Toast.makeText(getActivity(), "Donation not configured correctly.", Toast.LENGTH_SHORT).show();
             return;

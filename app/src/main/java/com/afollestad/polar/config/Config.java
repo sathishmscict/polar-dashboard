@@ -3,12 +3,9 @@ package com.afollestad.polar.config;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 
 import com.afollestad.polar.R;
 
@@ -104,20 +101,6 @@ public class Config implements IConfig {
     @Override
     public boolean homepageEnabled() {
         return mR == null || mR.getBoolean(R.bool.homepage_enabled);
-    }
-
-    @Nullable
-    @Override
-    public String homepageDescription() {
-        if (mR == null) return null;
-        return mR.getString(R.string.homepage_description);
-    }
-
-    @DrawableRes
-    @Override
-    public Drawable homepageLandingIcon() {
-        if (mR == null) return null;
-        return ContextCompat.getDrawable(mContext, R.drawable.homepage_landing_icon);
     }
 
     @Nullable
@@ -243,5 +226,29 @@ public class Config implements IConfig {
     public int gridWidthZooper() {
         if (mR == null) return 2;
         return mR.getInteger(R.integer.zooper_grid_width);
+    }
+
+    @Override
+    public int iconRequestMaxCount() {
+        if (mR == null) return -1;
+        return mR.getInteger(R.integer.icon_request_maxcount);
+    }
+
+    @Override
+    public boolean iconRequestOneShotUsed() {
+        if (mR == null) return false;
+        else if (!mR.getBoolean(R.bool.icon_request_oneshot)) {
+            prefs().edit().putBoolean("[os_used]", false).commit();
+            return false;
+        }
+        return prefs().getBoolean("[os_used]", false);
+    }
+
+    @Override
+    public boolean iconRequestOneShotUsed(boolean used) {
+        if (mR == null) return false;
+        else if (used && !mR.getBoolean(R.bool.icon_request_oneshot)) used = false;
+        prefs().edit().putBoolean("[os_used]", used).commit();
+        return used;
     }
 }

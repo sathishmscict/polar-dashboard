@@ -63,6 +63,8 @@ dependencies {
     compile 'com.github.afollestad:inquiry:b13a58b902'
     compile 'com.github.afollestad:icon-request:e9f66ac6fb'
 
+    compile 'me.zhanghai.android.materialprogressbar:library:1.1.5'
+
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.android.support:recyclerview-v7:23.2.0'
     compile 'com.android.support:support-v13:23.2.0'

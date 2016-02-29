@@ -47,6 +47,7 @@ public class IconsFragment extends BasePageFragment implements
     RecyclerView mRecyclerView;
 
     public IconsFragment() {
+
     }
 
     public static void selectItem(Activity context, Fragment context2, DrawableXmlParser.Icon icon) {

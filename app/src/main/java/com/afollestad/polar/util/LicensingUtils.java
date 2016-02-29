@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
+import com.afollestad.polar.config.Config;
 import com.afollestad.polar.dialogs.ProgressDialogFragment;
 import com.google.android.vending.licensing.AESObfuscator;
 import com.google.android.vending.licensing.LicenseChecker;
@@ -91,8 +92,8 @@ public class LicensingUtils {
     }
 
     public static boolean check(@NonNull AppCompatActivity context, @NonNull LicensingCallback cb) {
-        final String key = context.getString(R.string.licensing_public_key).trim();
-        if (key.trim().isEmpty()) {
+        final String key = Config.get().licensingPublicKey();
+        if (key == null || key.trim().isEmpty()) {
             LOG("License checking is disabled.");
             return true;
         } else if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(KEY_VALID, false)) {

@@ -14,6 +14,8 @@ import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
 import com.afollestad.iconrequest.App;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
+import com.afollestad.polar.config.Config;
+import com.afollestad.polar.config.IConfig;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 
@@ -30,10 +32,15 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
         void onClick(int index, boolean longClick);
     }
 
+    private boolean mUsedOneShot;
+    private final int mMax;
     private ArrayList<App> mApps;
     private final SelectionChangedListener mListener;
 
     public RequestsAdapter(SelectionChangedListener listener) {
+        final IConfig config = Config.get();
+        mUsedOneShot = config.iconRequestOneShotUsed();
+        mMax = config.iconRequestMaxCount();
         mListener = listener;
     }
 
@@ -42,9 +49,14 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
         notifyDataSetChanged();
     }
 
+    public void setUsedOneShot(boolean used) {
+        mUsedOneShot = used;
+        notifyItemChanged(0);
+    }
+
     @Override
     protected boolean isIndexSelectable(int index) {
-        return index > 0;
+        return !mUsedOneShot && index > 0;
     }
 
     @Override
@@ -66,14 +78,20 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
     public void onBindViewHolder(RequestVH holder, int position) {
         super.onBindViewHolder(holder, position);
         if (position == 0) {
-            holder.title.setText(R.string.tap_apps_to_select_them);
+            final Context c = holder.itemView.getContext();
+            if (mUsedOneShot) {
+                holder.title.setText(R.string.one_shot_used);
+            } else if (mMax > -1) {
+                holder.title.setText(c.getResources().getString(R.string.tap_to_select_app_withmax, mMax));
+            } else {
+                holder.title.setText(R.string.tap_to_select_app);
+            }
             final int bgColor = DialogUtils.resolveColor(holder.itemView.getContext(), R.attr.window_background_cards);
             final int titleColor = TintUtils.isColorLight(bgColor) ? Color.BLACK : Color.WHITE;
             holder.title.setTextColor(TintUtils.adjustAlpha(titleColor, 0.5f));
             return;
         }
 
-        final Context c = holder.itemView.getContext();
         final App app = mApps.get(position - 1);
         app.loadIcon(holder.image);
         holder.title.setText(app.getName());

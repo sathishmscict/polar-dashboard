@@ -79,8 +79,8 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
                 Utils.waitForLayout(mRecyclerView, new Utils.LayoutCallback<RecyclerView>() {
                     @Override
                     public void onLayout(RecyclerView view) {
-
                         List<Pair<View, String>> pairs = asList(mTransitionViews);
+                        //noinspection unchecked
                         final Bundle activityOptions =
                                 ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
                                         pairs.toArray(new Pair[pairs.size()])).toBundle();

@@ -399,6 +399,7 @@ public class RequestsFragment extends BasePageFragment implements
         progressText.post(new Runnable() {
             @Override
             public void run() {
+                mAdapter.setUsedOneShot(Config.get().iconRequestOneShotUsed(true));
                 mDialog.dismiss();
                 fab.hide();
                 IconRequest.get().unselectAllApps();
