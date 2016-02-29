@@ -17,115 +17,135 @@
 </head>
 
 <body>
-    <header>
-        <nav class="top-nav">
-            <div class="nav-wrapper">
-                <a href="//afollestad.github.io/polar-dashboard" class="page-title">Icons</a>
-                <ul id="slide-out" class="side-nav fixed">
-                    <li>
-                        <a href="//afollestad.github.io/polar-dashboard" class="waves-effect">Home</a>
-                    </li>
-                    <li>
-                        <a href="//afollestad.github.io/polar-dashboard/gettingstarted.html" class="waves-effect">Getting Started</a>
-                    </li>
-                    <li class="active">
-                        <a href="//afollestad.github.io/polar-dashboard/icons.html" class="waves-effect">Icons</a>
-                    </li>
-                    <li>
-                        <a href="//afollestad.github.io/polar-dashboard/wallpapers.html" class="waves-effect">Wallpapers</a>
-                    </li>
-                    <li>
-                        <a href="//afollestad.github.io/polar-dashboard/customization.html" class="waves-effect">Customization</a>
-                    </li>
-                    <li>
-                        <a href="//afollestad.github.io/polar-dashboard/zooper.html" class="waves-effect">Zooper</a>
-                    </li>
-                    <li>
-                        <a href="//afollestad.github.io/polar-dashboard/upgrades.html" class="waves-effect">Upgrades</a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/afollestad/polar-dashboard" class="waves-effect">Back to GitHub</a>
-                    </li>
-                </ul>
-                <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-            </div>
-        </nav>
-    </header>
-    <main class="mainContent">
-        <div class="container">
-
-            <h1>Table of Contents</h1>
-            <ol class="tableofcontents">
-                <li><a href="#copyinfiles">Copy in Files</a></li>
-                <li><a href="#drawablexml">drawable.xml</a></li>
-                <li><a href="#dashboarddrawablexml">dashboard_drawable.xml</a></li>
-                <li><a href="#appfilterxml">appfilter.xml</a></li>
-            </ol>
-            <hr />
-
-            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/preview_icons.png" class="app-image-small">
-            <hr />
-
-            <h1 id="copyinfiles">Copy in Files</h1>
-            <p class="flow-text">
-                First, you need to copy all of the PNGs for your icon pack into the <code>/res/drawable-nodpi</code> folder of Polar.
-                You can remove the placeholder PNGs that are already in there initially. If you plan on using the home page, make sure
-                you replace <code>ic_web.png</code> with a large version (preferably 512x512) version of your launcher icon.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/drawablenodpi.JPG" class="app-image">
-
-            <p class="flow-text">
-                Polar has file naming conventions which allow you to specify how the app's name will be displayed in the dashboard. Here are the rules:
-                <ol>
-                    <li><b>No changes:</b> the first letter of the name will be capital.</li>
-                    <li><b>Single underscores:</b> will become a space in the middle of a word, the next letter is capital. If it's placed at the beginning of the name, it makes the first letter lowercase.</li>
-                    <li><b>Double underscores:</b> no space, makes the next letter capital.</li>
-                    <li><b>Triple underscores:</b> makes the next word all capital.</li>
-                </ol>
-            </p>
-
-            <p class="flow-text">
-                Here are some samples:
-                <ol>
-                    <li><b>betternet.png</b> will become <b>Betternet</b></li>
-                    <li><b>google_chrome.png</b> will become <b>Google Chrome</b></li>
-                    <li><b>pay__pal.png</b> will become <b>PayPal</b></li>
-                    <li><b>_kaip.png</b> will become <b>kaip</b></li>
-                    <li><b>___kaip.png</b> will become <b>KAIP</b></li>
-                    <li><b>___npr_one.png</b> will become <b>NPR One</b></li>
-                    <li><b>material___os.png</b> will become <b>MaterialOS</b></li>
-                </ol>
-            </p>
-            <hr />
-
-            <h1 id="drawablexml">drawable.xml</h1>
-            <p class="flow-text">
-                The <code>drawable.xml</code> file is located at <code>/res/xml/drawable.xml</code> <i>and</i> <code>/assets/drawable.xml</code>. 
-                You need to make sure they are both updated at all times! This file is used by launchers, and the dashboard to retrieve icons in your pack (along with categories they belong to).
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/drawable.JPG" class="app-image">
-            <hr>
-
-            <h1 id="dashboarddrawablexml">dashboard_drawable.xml</h1>
-            <p class="flow-text">
-                <b>This file is optional.</b> If you want the dashboard UI to display different icons (or icons in a different order) than 
-                what you want to display to launchers, you can add a <code>/res/xml/dashboard_drawable.xml</code> file, which has the same structure 
-                as <code>drawable.xml</code>.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/drawabledashboard.JPG" class="app-image">
-            <hr>
-
-            <h1 id="appfilterxml">appfilter.xml</h1>
-            <p class="flow-text">
-                The appfilter.xml file is located at <code>/res/xml/appfilter.xml</code> <i>and</i> <code>/assets/appfilter.xml</code>. 
-                You need to make sure they are both updated at all times! This is the most important file for an icon pack. It's used 
-                by launchers to associate your PNGs with actual apps. This file can also be used to apply masks along with other 
-                various configurations. There are apps like <a href="https://play.google.com/store/apps/details?id=com.mikepenz.applicationreader" target="_blank">ApplicationReader</a> by 
-                <a href="https://plus.google.com/+MikePenz" target="_blank">Mike Penz</a> which can aid in finding ComponentInfo for apps. But the 
-                most efficient way to get a list of ComponentInfos to put in your appfilter would be to use the Icon Request tool 
-                within Polar since it can do batch selection and email them to you.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/appfilter.JPG" class="app-image">
-            
+<header>
+    <nav class="top-nav">
+        <div class="nav-wrapper">
+            <a href="//afollestad.github.io/polar-dashboard" class="page-title">Icons</a>
+            <ul id="slide-out" class="side-nav fixed">
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard" class="waves-effect">Home</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/gettingstarted.html" class="waves-effect">Getting
+                        Started</a>
+                </li>
+                <li class="active">
+                    <a href="//afollestad.github.io/polar-dashboard/icons.html" class="waves-effect">Icons</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/wallpapers.html" class="waves-effect">Wallpapers</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/customization.html" class="waves-effect">Customization</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/zooper.html" class="waves-effect">Zooper</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/upgrades.html" class="waves-effect">Upgrades</a>
+                </li>
+                <li>
+                    <a href="https://github.com/afollestad/polar-dashboard" class="waves-effect">Back to GitHub</a>
+                </li>
+            </ul>
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
         </div>
-    </main>
-    <script src="https://rawgit.com/afollestad/polar-dashboard/gh-pages/init.js" type="text/javascript"></script>
+    </nav>
+</header>
+<main class="mainContent">
+    <div class="container">
+
+        <h1>Table of Contents</h1>
+        <ol class="tableofcontents">
+            <li><a href="#copyinfiles">Copy in Files</a></li>
+            <li><a href="#drawablexml">drawable.xml</a></li>
+            <li><a href="#dashboarddrawablexml">dashboard_drawable.xml</a></li>
+            <li><a href="#appfilterxml">appfilter.xml</a></li>
+        </ol>
+        <hr/>
+
+        <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/preview_icons.png"
+             class="app-image-small">
+        <hr/>
+
+        <h1 id="copyinfiles">Copy in Files</h1>
+        <p class="flow-text">
+            First, you need to copy all of the PNGs for your icon pack into the <code>/res/drawable-nodpi</code> folder
+            of Polar.
+            You can remove the placeholder PNGs that are already in there initially. If you plan on using the home page,
+            make sure
+            you replace <code>ic_web.png</code> with a large version (preferably 512x512) version of your launcher icon.
+        </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/drawablenodpi.JPG"
+                 class="app-image">
+
+        <p class="flow-text">
+            Polar has file naming conventions which allow you to specify how the app's name will be displayed in the
+            dashboard. Here are the rules:
+        <ol>
+            <li><b>No changes:</b> the first letter of the name will be capital.</li>
+            <li><b>Single underscores:</b> will become a space in the middle of a word, the next letter is capital. If
+                it's placed at the beginning of the name, it makes the first letter lowercase.
+            </li>
+            <li><b>Double underscores:</b> no space, makes the next letter capital.</li>
+            <li><b>Triple underscores:</b> makes the next word all capital.</li>
+        </ol>
+        </p>
+
+        <p class="flow-text">
+            Here are some samples:
+        <ol>
+            <li><b>betternet.png</b> will become <b>Betternet</b></li>
+            <li><b>google_chrome.png</b> will become <b>Google Chrome</b></li>
+            <li><b>pay__pal.png</b> will become <b>PayPal</b></li>
+            <li><b>_kaip.png</b> will become <b>kaip</b></li>
+            <li><b>___kaip.png</b> will become <b>KAIP</b></li>
+            <li><b>___npr_one.png</b> will become <b>NPR One</b></li>
+            <li><b>material___os.png</b> will become <b>MaterialOS</b></li>
+        </ol>
+        </p>
+        <hr/>
+
+        <h1 id="drawablexml">drawable.xml</h1>
+        <p class="flow-text">
+            The <code>drawable.xml</code> file is located at <code>/res/xml/drawable.xml</code> <i>and</i> <code>/assets/drawable.xml</code>.
+            You need to make sure they are both updated at all times! This file is used by launchers, and the dashboard
+            to retrieve icons in your pack (along with categories they belong to).
+        </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/drawable.JPG"
+                 class="app-image">
+        <hr>
+
+        <h1 id="dashboarddrawablexml">dashboard_drawable.xml</h1>
+        <p class="flow-text">
+            <b>This file is optional.</b> If you want the dashboard UI to display different icons (or icons in a
+            different order) than
+            what you want to display to launchers, you can add a <code>/res/xml/dashboard_drawable.xml</code> file,
+            which has the same structure
+            as <code>drawable.xml</code>.
+        </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/drawabledashboard.JPG"
+                 class="app-image">
+        <hr>
+
+        <h1 id="appfilterxml">appfilter.xml</h1>
+        <p class="flow-text">
+            The appfilter.xml file is located at <code>/res/xml/appfilter.xml</code> <i>and</i> <code>/assets/appfilter.xml</code>.
+            You need to make sure they are both updated at all times! This is the most important file for an icon pack.
+            It's used
+            by launchers to associate your PNGs with actual apps. This file can also be used to apply masks along with
+            other
+            various configurations. There are apps like <a
+                href="https://play.google.com/store/apps/details?id=com.mikepenz.applicationreader" target="_blank">ApplicationReader</a>
+            by
+            <a href="https://plus.google.com/+MikePenz" target="_blank">Mike Penz</a> which can aid in finding
+            ComponentInfo for apps. But the
+            most efficient way to get a list of ComponentInfos to put in your appfilter would be to use the Icon Request
+            tool
+            within Polar since it can do batch selection and email them to you.
+        </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/appfilter.JPG"
+                 class="app-image">
+
+    </div>
+</main>
+<script src="https://rawgit.com/afollestad/polar-dashboard/gh-pages/init.js" type="text/javascript"></script>
 </body>
 
 </html>

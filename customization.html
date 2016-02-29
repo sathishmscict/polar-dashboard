@@ -17,166 +17,215 @@
 </head>
 
 <body>
-    <header>
-        <nav class="top-nav">
-            <div class="nav-wrapper">
-                <a href="//afollestad.github.io/polar-dashboard" class="page-title">Customization</a>
-                <ul id="slide-out" class="side-nav fixed">
-                    <li>
-                        <a href="//afollestad.github.io/polar-dashboard" class="waves-effect">Home</a>
-                    </li>
-                    <li>
-                        <a href="//afollestad.github.io/polar-dashboard/gettingstarted.html" class="waves-effect">Getting Started</a>
-                    </li>
-                    <li>
-                        <a href="//afollestad.github.io/polar-dashboard/icons.html" class="waves-effect">Icons</a>
-                    </li>
-                    <li>
-                        <a href="//afollestad.github.io/polar-dashboard/wallpapers.html" class="waves-effect">Wallpapers</a>
-                    </li>
-                    <li class="active">
-                        <a href="//afollestad.github.io/polar-dashboard/customization.html" class="waves-effect">Customization</a>
-                    </li>
-                    <li>
-                        <a href="//afollestad.github.io/polar-dashboard/zooper.html" class="waves-effect">Zooper</a>
-                    </li>
-                    <li>
-                        <a href="//afollestad.github.io/polar-dashboard/upgrades.html" class="waves-effect">Upgrades</a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/afollestad/polar-dashboard" class="waves-effect">Back to GitHub</a>
-                    </li>
-                </ul>
-                <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-            </div>
-        </nav>
-    </header>
-    <main class="mainContent">
-        <div class="container">
-
-            <h1>Table of Contents</h1>
-            <ol class="tableofcontents">
-                <li><a href="#about">About</a></li>
-                <li><a href="#changelog">Changelog</a></li>
-                <li><a href="#theming">Theming and UI Mode</a></li>
-                <li><a href="#options">Options</a></li>
-                <li><a href="#donation">Donation</a></li>
-            </ol>
-            <hr/>
-
-            <h1 id="about">About</h1>
-
-            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/preview_about.png" class="app-image-small">
-            <hr />
-
-            <p class="flow-text">
-                You will need to put information about yourself (and whoever else helped you) into <code>/res/values/dev_about.xml</code>. 
-                This should be mostly self-explanatory; each item in each array represents a card in the About page. The card titles (people's names) 
-                go in the items in <code>about_titles</code>, descriptions go in <code>about_descriptions</code>, etc.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/about_main.JPG" class="app-image">
-
-            <p class="flow-text">
-                You can easily change the buttons displayed at the bottom of each of your cards. The names go in the first array, the 
-                links they lead to go in the second. Each button name/link is separated by a pipe (<code>|</code>) character.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/about_card_buttons.JPG" class="app-image">
-
-            <p class="flow-text">
-                <b>Important note:</b> do not remove the bottom 3 arrays in each item, doing so will violate the terms of using this dashboard
-                free of charge.
-            </p>
-
-            <hr>
-
-            <h1 id="changelog">Changelog</h1>
-
-            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/preview_changelog.png" class="app-image-small">
-            <hr/>
-
-            <p class="flow-text">
-                Not much explanation should be needed for this, but you can enable/disable showing a changelog for new versions in 
-                <code>/res/values/dev_changelog.xml</code>. You can even use basic HTML formatting in each list item.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/changelog_main.JPG" class="app-image">
-
-            <hr>
-
-            <h1 id="theming">Theming and UI Mode</h1>
-
-            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/preview_uitheming.png" class="app-image">
-            <hr />
-
-            <p class="flow-text">
-                The first boolean in the image below (<code>allow_theme_switching</code>) determines whether or not users will be able to switch between the light and dark theme from the dashboard UI. 
-                When true, there will be a checkbox in the overflow menu. The second boolean (<code>dark_theme_default</code>) sets whether the dashboard will use the dark theme initially. By default, 
-                it will not; it will use the light theme initially.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/theme_toggle.JPG" class="app-image">
-
-            <p class="flow-text">
-                The values under the "light theme" and "dark theme" comments allow you to switch out the colors used throughout the dashboard. Initially, they are set to use the default 
-                colors that we decided to use for Polar. It's recommended you change theme colors to fit your icon pack's branding.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/theme_options.JPG" class="app-image" />
-
-            <hr/>
-
-            <p class="flow-text">
-                It's likely you'd want to <b>change what's displayed at the top of the navigation drawer if you choose to not use tabs</b>. 
-                You can do so from the <code>/res/layout/drawer_header.xml</code> file.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/drawerheader.JPG" class="app-image" />
-            <p class="flow-text">
-                <code>android:scaleType</code> should usually either be <code>fitXY</code> or <code>centerCrop</code>. You should also put the 
-                PNG you're using as the header in <code>/res/drawable-nodpi</code>.
-            </p>
-
-            <hr>
-
-            <h1 id="options">Options</h1>
-
-            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/preview_options.png" class="app-image">
-            <hr />
-
-            <p class="flow-text">
-                By default, Polar will use a tabbed UI. You can easily make Polar use a navigation drawer instead, just by setting <code>nav_drawer_mode_default</code> to true. 
-                <code>allow_nav_drawer_mode_switch</code> determines whether users are allowed to switch between the light and dark theme.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options_1.JPG" class="app-image">
-
-            <p class="flow-text">
-                A lot of designers like to have a homepage that users will see when they first open the dashboard. We encourage you to try 
-                not using the homepage, but we included this function for those who really need it. You can enable or disable the homepage 
-                using the <code>homepage_enabled</code> boolean. The other settings should be self-explanatory.
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options_2.JPG" class="app-image" />
-
-            <hr/>
-
-            <p class="flow-text">
-                Below, a few options are displayed.
-                
-                <ol>
-                    <li><code>icon_request_email</code> &#8212; an email that icon requests are sent to. Leave empty to disable icon requests.</li>
-                    <li><code>licensing_public_key</code> &#8212; the Base64 key from the Google Play Developer Console (Under Services &amp; APIs).</li>
-                    <li><code>persist_selected_page</code> &#8212; when true, the dashboard will open the last selected page when restarted.</li>
-                    <li><code>feedback_email</code> &#8212; an email address feedback can be sent to from the About page. Leave empty to disable this feature.</li>
-                    <li><code>feedback_subject_line</code> &#8212; a subject line used in feedback emails.</li>
-                </ol><br/>
-            </p>
-            <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options_3.JPG" class="app-image" />
-
-            <hr>
-
-            <h1 id="donation">Donation</h1>
-
-            <p class="flow-text">
-                You can easily accept donation from your users. The <code>donation_license_key</code> is the same value you'd use for
-                <code>license_public_key</code>. However, leaving it blank will disable donation. When enabled, a donation button will appear
-                at the top of the <b>About page.</b>
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/donation.JPG" class="app-image" />
-
-            <p class="flow-text">
-                <code>donate_option_names</code> should be pretty self-explanatory. <code>donate_option_ids</code> are in-app product IDs 
-                setup from the Developer Console:
-            </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/donation2.JPG" class="app-image" />
-
+<header>
+    <nav class="top-nav">
+        <div class="nav-wrapper">
+            <a href="//afollestad.github.io/polar-dashboard" class="page-title">Customization</a>
+            <ul id="slide-out" class="side-nav fixed">
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard" class="waves-effect">Home</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/gettingstarted.html" class="waves-effect">Getting
+                        Started</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/icons.html" class="waves-effect">Icons</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/wallpapers.html" class="waves-effect">Wallpapers</a>
+                </li>
+                <li class="active">
+                    <a href="//afollestad.github.io/polar-dashboard/customization.html" class="waves-effect">Customization</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/zooper.html" class="waves-effect">Zooper</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/upgrades.html" class="waves-effect">Upgrades</a>
+                </li>
+                <li>
+                    <a href="https://github.com/afollestad/polar-dashboard" class="waves-effect">Back to GitHub</a>
+                </li>
+            </ul>
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
         </div>
-    </main>
-    <script src="https://rawgit.com/afollestad/polar-dashboard/gh-pages/init.js" type="text/javascript"></script>
+    </nav>
+</header>
+<main class="mainContent">
+    <div class="container">
+
+        <h1>Table of Contents</h1>
+        <ol class="tableofcontents">
+            <li><a href="#about">About</a></li>
+            <li><a href="#changelog">Changelog</a></li>
+            <li><a href="#theming">Theming and UI Mode</a></li>
+            <li><a href="#options">Options</a></li>
+            <li><a href="#donation">Donation</a></li>
+        </ol>
+        <hr/>
+
+        <h1 id="about">About</h1>
+
+        <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/preview_about.png"
+             class="app-image-small">
+        <hr/>
+
+        <p class="flow-text">
+            You will need to put information about yourself (and whoever else helped you) into <code>/res/values/dev_about.xml</code>.
+            This should be mostly self-explanatory; each item in each array represents a card in the About page. The
+            card titles (people's names)
+            go in the items in <code>about_titles</code>, descriptions go in <code>about_descriptions</code>, etc.
+        </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/about_main.JPG"
+                 class="app-image">
+
+        <p class="flow-text">
+            You can easily change the buttons displayed at the bottom of each of your cards. The names go in the first
+            array, the
+            links they lead to go in the second. Each button name/link is separated by a pipe (<code>|</code>)
+            character.
+        </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/about_card_buttons.JPG"
+                 class="app-image">
+
+        <p class="flow-text">
+            <b>Important note:</b> do not remove the bottom 3 arrays in each item, doing so will violate the terms of
+            using this dashboard
+            free of charge.
+        </p>
+
+        <hr>
+
+        <h1 id="changelog">Changelog</h1>
+
+        <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/preview_changelog.png"
+             class="app-image-small">
+        <hr/>
+
+        <p class="flow-text">
+            Not much explanation should be needed for this, but you can enable/disable showing a changelog for new
+            versions in
+            <code>/res/values/dev_changelog.xml</code>. You can even use basic HTML formatting in each list item.
+        </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/changelog_main.JPG"
+                 class="app-image">
+
+        <hr>
+
+        <h1 id="theming">Theming and UI Mode</h1>
+
+        <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/preview_uitheming.png"
+             class="app-image">
+        <hr/>
+
+        <p class="flow-text">
+            The first boolean in the image below (<code>allow_theme_switching</code>) determines whether or not users
+            will be able to switch between the light and dark theme from the dashboard UI.
+            When true, there will be a checkbox in the overflow menu. The second boolean
+            (<code>dark_theme_default</code>) sets whether the dashboard will use the dark theme initially. By default,
+            it will not; it will use the light theme initially.
+        </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/theme_toggle.JPG"
+                 class="app-image">
+
+        <p class="flow-text">
+            The values under the "light theme" and "dark theme" comments allow you to switch out the colors used
+            throughout the dashboard. Initially, they are set to use the default
+            colors that we decided to use for Polar. It's recommended you change theme colors to fit your icon pack's
+            branding.
+        </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/theme_options.JPG"
+                 class="app-image"/>
+
+        <hr/>
+
+        <p class="flow-text">
+            It's likely you'd want to <b>change what's displayed at the top of the navigation drawer if you choose to
+            not use tabs</b>.
+            You can do so from the <code>/res/layout/drawer_header.xml</code> file.
+        </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/drawerheader.JPG"
+                 class="app-image"/>
+        <p class="flow-text">
+            <code>android:scaleType</code> should usually either be <code>fitXY</code> or <code>centerCrop</code>. You
+            should also put the
+            PNG you're using as the header in <code>/res/drawable-nodpi</code>.
+        </p>
+
+        <hr>
+
+        <h1 id="options">Options</h1>
+
+        <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/preview_options.png"
+             class="app-image">
+        <hr/>
+
+        <p class="flow-text">
+            By default, Polar will use a tabbed UI. You can easily make Polar use a navigation drawer instead, just by
+            setting <code>nav_drawer_mode_default</code> to true.
+            <code>allow_nav_drawer_mode_switch</code> determines whether users are allowed to switch between the light
+            and dark theme.
+        </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options_1.JPG"
+                 class="app-image">
+
+        <p class="flow-text">
+            A lot of designers like to have a homepage that users will see when they first open the dashboard. We
+            encourage you to try
+            not using the homepage, but we included this function for those who really need it. You can enable or
+            disable the homepage
+            using the <code>homepage_enabled</code> boolean. The other settings should be self-explanatory.
+        </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options_2.JPG"
+                 class="app-image"/>
+
+        <hr/>
+
+        <p class="flow-text">
+            Below, a few options are displayed.
+
+        <ol>
+            <li><code>icon_request_email</code> &#8212; an email that icon requests are sent to. Leave empty to disable
+                icon requests.
+            </li>
+            <li><code>icon_request_maxcount</code> &#8212; -1 disables this. Otherwise, specifies a maximum number
+                of icons users can request icons for (per icon request).
+            </li>
+            <li><code>icon_request_oneshot</code> &#8212; false by default, true prevents the user from sending more
+                than one icon request, this can't be reset from within the app.
+            </li>
+            <li><code>licensing_public_key</code> &#8212; the Base64 key from the Google Play Developer Console (Under
+                Services &amp; APIs).
+            </li>
+            <li><code>persist_selected_page</code> &#8212; when true, the dashboard will open the last selected page
+                when restarted.
+            </li>
+            <li><code>feedback_email</code> &#8212; an email address feedback can be sent to from the About page. Leave
+                empty to disable this feature.
+            </li>
+            <li><code>feedback_subject_line</code> &#8212; a subject line used in feedback emails.</li>
+        </ol>
+        
+        </p>
+        <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/options3.JPG"
+             class="app-image"/>
+
+        <hr>
+
+        <h1 id="donation">Donation</h1>
+
+        <p class="flow-text">
+            You can easily accept donation from your users. The <code>donation_license_key</code> is the same value
+            you'd use for
+            <code>license_public_key</code>. However, leaving it blank will disable donation. When enabled, a donation
+            button will appear
+            at the top of the <b>About page.</b>
+        </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/donation.JPG"
+                 class="app-image"/>
+
+        <p class="flow-text">
+            <code>donate_option_names</code> should be pretty self-explanatory. <code>donate_option_ids</code> are
+            in-app product IDs
+            setup from the Developer Console:
+        </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/donation2.JPG"
+                 class="app-image"/>
+
+    </div>
+</main>
+<script src="https://rawgit.com/afollestad/polar-dashboard/gh-pages/init.js" type="text/javascript"></script>
 </body>
 
 </html>
