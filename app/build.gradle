@@ -21,7 +21,7 @@ android {
         applicationId "com.afollestad.polar"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 15
+        versionCode 16
         versionName "1.3.0"
         generatedDensities = []
     }
@@ -63,7 +63,7 @@ dependencies {
     compile 'com.github.afollestad:sectioned-recyclerview:0.2.0'
     compile 'com.github.afollestad:assent:ec59bea20f'
     compile 'com.github.afollestad:inquiry:b13a58b902'
-    compile 'com.github.afollestad:icon-request:e9f66ac6fb'
+    compile 'com.github.afollestad:icon-request:8686cb0f31'
 
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.5'
 
