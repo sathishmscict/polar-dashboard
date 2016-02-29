@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="icons_header_height">56dp</dimen>
-
     <dimen name="content_inset_quarter">6dp</dimen>
     <!-- Minus 2 for negative margin on cards -->
     <dimen name="content_inset_half_card">10dp</dimen>

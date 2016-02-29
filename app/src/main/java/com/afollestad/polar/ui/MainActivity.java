@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
@@ -19,6 +18,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -316,7 +316,6 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
         bgDrawable.addState(new int[]{android.R.attr.state_checked}, new ColorDrawable(selectedBg));
         mNavView.setItemBackground(bgDrawable);
 
-        mNavView.getHeaderView(0).setBackgroundColor(DialogUtils.resolveColor(this, R.attr.colorAccent));
         mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -325,7 +324,7 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
             }
         });
 
-        mToolbar.setContentInsetsRelative(getResources().getDimensionPixelSize(R.dimen.second_keyline),0);
+        mToolbar.setContentInsetsRelative(getResources().getDimensionPixelSize(R.dimen.second_keyline), 0);
     }
 
     void invalidateNavViewSelection(int position) {
@@ -436,8 +435,11 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
     private void addTab(@DrawableRes int icon) {
         assert mTabs != null;
         TabLayout.Tab tab = mTabs.newTab().setIcon(icon);
-        if (tab.getIcon() != null)
-            tab.getIcon().setColorFilter(DialogUtils.resolveColor(this, R.attr.tab_icon_color), PorterDuff.Mode.SRC_ATOP);
+        if (tab.getIcon() != null) {
+            Drawable tintedIcon = DrawableCompat.wrap(tab.getIcon());
+            DrawableCompat.setTint(tintedIcon, DialogUtils.resolveColor(this, R.attr.tab_icon_color));
+            tab.setIcon(tintedIcon);
+        }
         mTabs.addTab(tab);
     }
 

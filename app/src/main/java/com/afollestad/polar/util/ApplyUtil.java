@@ -276,14 +276,18 @@ public class ApplyUtil {
                         cmteMain.setClassName("org.cyanogenmod.theme.chooser", "org.cyanogenmod.theme.chooser.ChooserActivity");
                         cmteMain.putExtra("pkgName", context.getPackageName());
                         context.startActivity(cmteMain);
-                    } catch (Throwable t) {
+                    } catch (ActivityNotFoundException e) {
                         Toast.makeText(context, R.string.cmte_unavailable, Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case LGHOME:
-                    Intent intent = new Intent(Intent.ACTION_MAIN);
-                    intent.setComponent(new ComponentName("com.lge.launcher2", "com.lge.launcher2.homesettings.HomeSettingsPrefActivity"));
-                    context.startActivity(intent);
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.setComponent(new ComponentName("com.lge.launcher2", "com.lge.launcher2.homesettings.HomeSettingsPrefActivity"));
+                        context.startActivity(intent);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(context, R.string.lghome_unavailable, Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case UNKNOWN:
                     break;
