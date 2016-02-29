@@ -8,7 +8,6 @@
     <ThemePreviewMenu image="polar_preview" />
     <DockMenuAppIcon selector="half_green" />
 
-
     <!-- This is how to format this xml to get your icons to work with LG Home -->
 
     <AppIcon name="com.afollestad.polar/com.afollestad.polar.ui.MainActivity"
