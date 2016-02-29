@@ -39,5 +39,6 @@
 
     <dimen name="second_keyline">72dp</dimen>
     <dimen name="toolbar_horizontal_padding">4dp</dimen>
+    <dimen name="button_height">48dp</dimen>
 
 </resources>
