@@ -79,7 +79,15 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
         Utils.waitForLayout(mRecyclerView, new Utils.LayoutCallback<RecyclerView>() {
             @Override
             public void onLayout(RecyclerView view) {
-                supportStartPostponedEnterTransition();
+                //A small delay for RecyclerView to draw images
+                //TODO: Use a better method than just waiting
+                view.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        supportStartPostponedEnterTransition();
+                    }
+                }, 50);
+
             }
         });
     }

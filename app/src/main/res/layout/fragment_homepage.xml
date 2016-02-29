@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:fitsSystemWindows="true">
+    android:clipToPadding="false">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -29,7 +28,7 @@
                 android:layout_marginBottom="@dimen/content_inset"
                 android:layout_marginTop="@dimen/content_inset_less"
                 android:scaleType="fitXY"
-                android:src="@drawable/homepage_landing_icon"
+                app:srcCompat="@drawable/homepage_landing_icon"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -54,8 +53,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
         android:layout_marginBottom="@dimen/content_inset"
-        android:src="@drawable/ic_action_star"
         app:layout_windowInsets="bottom"
-        app:layout_windowInsetsUseMargin="true" />
+        app:layout_windowInsetsUseMargin="true"
+        app:srcCompat="@drawable/ic_action_star" />
 
 </com.pluscubed.insetsdispatcher.view.InsetsDispatcherFrameLayout>

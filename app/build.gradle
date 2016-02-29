@@ -23,7 +23,9 @@ android {
         targetSdkVersion 23
         versionCode 13
         versionName "1.2.1"
+        generatedDensities = []
     }
+
     buildTypes {
 //        debug {
 //            signingConfig signingConfigs.production
@@ -36,9 +38,9 @@ android {
         }
     }
 
-//    dexOptions {
-//        dexInProcess = true
-//    }
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
+    }
 }
 
 repositories {
@@ -82,5 +84,5 @@ dependencies {
     compile 'com.anjlab.android.iab.v3:library:1.0.+'
 //    compile 'com.github.TR4Android:AppCompat-Extension-Library:v0.2.0'
 
-    compile 'com.pluscubed:insets-dispatcher:0.1.0'
+    compile 'com.pluscubed:insets-dispatcher:0.1.3'
 }

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:id="@+id/circular_reveal_bg_view"
@@ -47,9 +46,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="?toolbar_shadow"
-            app:layout_windowInsets="top"
-            app:layout_windowInsetsUseMargin="true" />
+            android:background="?toolbar_shadow" />
 
     </com.pluscubed.insetsdispatcher.view.InsetsDispatcherLinearLayout>
 

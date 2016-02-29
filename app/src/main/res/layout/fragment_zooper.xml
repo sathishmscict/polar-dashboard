@@ -78,9 +78,9 @@
         android:layout_marginBottom="@dimen/content_inset"
         android:layout_marginEnd="@dimen/content_inset"
         android:layout_marginStart="@dimen/content_inset"
-        android:src="@drawable/ic_action_download"
         app:backgroundTint="?colorAccent"
         app:layout_windowInsets="bottom"
-        app:layout_windowInsetsUseMargin="true" />
+        app:layout_windowInsetsUseMargin="true"
+        app:srcCompat="@drawable/ic_action_download" />
 
 </com.pluscubed.insetsdispatcher.view.InsetsDispatcherFrameLayout>

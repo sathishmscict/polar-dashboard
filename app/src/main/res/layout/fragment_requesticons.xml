@@ -79,9 +79,9 @@
         android:layout_marginBottom="@dimen/fab_bottom_margin"
         android:layout_marginLeft="@dimen/fab_horizontal_margin"
         android:layout_marginRight="@dimen/fab_horizontal_margin"
-        android:src="@drawable/ic_action_apply"
         android:visibility="gone"
         app:layout_windowInsets="bottom"
-        app:layout_windowInsetsUseMargin="true" />
+        app:layout_windowInsetsUseMargin="true"
+        app:srcCompat="@drawable/ic_action_apply" />
 
 </com.pluscubed.insetsdispatcher.view.InsetsDispatcherFrameLayout>
