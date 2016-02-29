@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Theme version="1">
     <Label value="Polar" />
-    <Wallpaper image="wall_name" />
-    <LockScreenWallpaper image="wall_name" />
-    <ThemePreview image="preview1" />
-    <ThemePreviewWork image="preview1" />
-    <ThemePreviewMenu image="preview1" />
-    <DockMenuAppIcon selector="app_drawer_icon_name" />
+    <Wallpaper image="polar_wallpaper" />
+    <LockScreenWallpaper image="polar_wallpaper" />
+    <ThemePreview image="polar_preview" />
+    <ThemePreviewWork image="polar_preview" />
+    <ThemePreviewMenu image="polar_preview" />
+    <DockMenuAppIcon selector="half_green" />
 
-    <AppIcon name="com.appfour.weartube/com.appfour.weartube.PhoneActivity"
-        image="wear_video_tube" />
+
+    <!-- This is how to format this xml to get your icons to work with LG Home -->
+
+    <AppIcon name="com.afollestad.polar/com.afollestad.polar.ui.MainActivity"
+        image="polar" />
 
 </Theme>

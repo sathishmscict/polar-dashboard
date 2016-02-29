@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<appmap>
-    <item name="andy" class="com.google.android.apps.chrome.Main" />
-    <item name="andy" class="com.antutu.ABenchMark.ABenchMarkStart" />
-</appmap>

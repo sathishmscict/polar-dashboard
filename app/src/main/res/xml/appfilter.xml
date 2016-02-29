@@ -5,5 +5,10 @@
     <iconupon img1="iconupon" />
     <scale factor="1.0" />
 
+    <!-- Polar -->
+    <item
+        component="ComponentInfo{com.afollestad.polar/com.afollestad.polar.ui.MainActivity}"
+        drawable="polar" />
+
 
 </resources>
