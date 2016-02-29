@@ -30,6 +30,6 @@
         android:background="?button_accent_selector"
         android:clickable="true"
         android:text="@string/more"
-        android:textColor="?android:textColorPrimaryInverse" />
+        android:textColor="#fff" />
 
 </com.afollestad.polar.views.IconHeaderViewGroup>
