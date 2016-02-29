@@ -70,6 +70,7 @@ public class ViewerActivity extends AssentActivity {
         setContentView(R.layout.activity_viewer);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
+        setResult(RESULT_OK);
 
         mToolbar.setNavigationIcon(R.drawable.ic_action_back);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {

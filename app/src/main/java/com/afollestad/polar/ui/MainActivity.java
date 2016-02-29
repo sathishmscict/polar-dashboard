@@ -82,6 +82,9 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
     @Nullable
     @Bind(R.id.navigation_view)
     NavigationView mNavView;
+    @Nullable
+    @Bind(R.id.drawer)
+    DrawerLayout mDrawer;
 
     @Bind(R.id.pager)
     DisableableViewPager mPager;
@@ -239,32 +242,28 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
 
     private void setupNavDrawer() {
         assert mNavView != null;
+        assert mDrawer != null;
         mNavView.getMenu().clear();
         for (PagesBuilder.Page page : mPages)
             page.addToMenu(mNavView.getMenu());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             getWindow().setStatusBarColor(Color.TRANSPARENT);
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            drawer.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+            mDrawer.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
 
                 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
-
                     //TODO: Check if NavigationView needs bottom padding
-
                     WindowInsets drawerLayoutInsets = insets.replaceSystemWindowInsets(
                             insets.getSystemWindowInsetLeft(),
                             insets.getSystemWindowInsetTop(),
                             insets.getSystemWindowInsetRight(),
                             0
                     );
-
                     mDrawerModeTopInset = drawerLayoutInsets.getSystemWindowInsetTop();
-
                     ((DrawerLayout) v).setChildInsets(drawerLayoutInsets,
                             drawerLayoutInsets.getSystemWindowInsetTop() > 0);
                     return insets;
@@ -278,8 +277,8 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
         menuIcon = TintUtils.createTintedDrawable(menuIcon, DialogUtils.resolveColor(this, R.attr.tab_icon_color));
         getSupportActionBar().setHomeAsUpIndicator(menuIcon);
 
-        drawer.setDrawerListener(new ActionBarDrawerToggle(this, drawer, mToolbar, R.string.drawer_open, R.string.drawer_close));
-        drawer.setStatusBarBackgroundColor(DialogUtils.resolveColor(this, R.attr.colorPrimaryDark));
+        mDrawer.addDrawerListener(new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.drawer_open, R.string.drawer_close));
+        mDrawer.setStatusBarBackgroundColor(DialogUtils.resolveColor(this, R.attr.colorPrimaryDark));
         mNavView.setNavigationItemSelectedListener(this);
 
         final ColorDrawable navBg = (ColorDrawable) mNavView.getBackground();
@@ -412,6 +411,7 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
                 public void onGlobalLayout() {
                     if (mToolbar.isTitleTruncated() && mTabs.getParent() == mToolbar) {
                         mToolbar.removeView(mTabs);
+                        //noinspection ConstantConditions
                         mAppBarLinear.addView(mTabs);
                     }
 
@@ -486,7 +486,11 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
             WallpapersFragment.showToast(this, R.string.wallpaper_set);
             WallpaperUtils.resetOptionCache(true);
         } else if (requestCode == RQ_VIEWWALLPAPER) {
-            if (data != null && mRecyclerView != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mDrawer != null) {
+                getWindow().setStatusBarColor(Color.TRANSPARENT);
+                mDrawer.setStatusBarBackgroundColor(DialogUtils.resolveColor(this, R.attr.colorPrimaryDark));
+            }
+            if (mRecyclerView != null) {
                 mRecyclerView.requestFocus();
                 final int currentPos = data.getIntExtra(STATE_CURRENT_POSITION, 0);
                 mRecyclerView.post(new Runnable() {
