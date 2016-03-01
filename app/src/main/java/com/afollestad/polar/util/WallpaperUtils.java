@@ -259,9 +259,10 @@ public class WallpaperUtils {
                                     }
                                 }
                                 callback.onRetrievedWallpapers(holder, null, false);
-                            } catch (Exception e1) {
+                            } catch (Throwable e1) {
                                 Log.d("WallpaperUtils", String.format("Failed to load wallpapers... %s", e1.getMessage()));
-                                callback.onRetrievedWallpapers(null, e1, false);
+                                if (e1 instanceof Exception)
+                                    callback.onRetrievedWallpapers(null, (Exception) e1, false);
                             } finally {
                                 Inquiry.deinit();
                             }
