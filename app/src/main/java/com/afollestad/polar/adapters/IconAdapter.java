@@ -157,9 +157,6 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
             }
             if (include != null) mFiltered.add(include);
         }
-
-        if (mFiltered.size() == 0)
-            mFiltered = null;
         notifyDataSetChanged();
     }
 
