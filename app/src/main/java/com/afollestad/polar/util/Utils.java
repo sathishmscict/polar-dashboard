@@ -5,19 +5,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
-import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,38 +68,38 @@ public abstract class Utils {
         return installed;
     }
 
-    public static int getStatusBarHeight(Context context) {
-        final Resources r = context.getResources();
-        int resourceId = r.getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0)
-            return r.getDimensionPixelSize(resourceId);
-        return 0;
-    }
-
-    public static int getNavBarHeight(Activity context) {
-        if (context == null || context.isFinishing()) {
-            return 0;
-        } else if (!context.getResources().getBoolean(R.bool.translucent_nav)) {
-            // Translucent nav is disabled
-            return 0;
-        }
-        final Resources r = context.getResources();
-        int resourceId = r.getIdentifier("navigation_bar_height", "dimen", "android");
-        if (resourceId > 0)
-            return r.getDimensionPixelSize(resourceId);
-        return 0;
-    }
-
-    public static int[] resolveResourceIds(@NonNull Context context, @ArrayRes int integerArray) {
-        TypedArray ar = context.getResources().obtainTypedArray(integerArray);
-        int len = ar.length();
-        int[] resIds = new int[len];
-        for (int i = 0; i < len; i++)
-            resIds[i] = ar.getResourceId(i, 0);
-        ar.recycle();
-        return resIds;
-    }
-
+//    public static int getStatusBarHeight(Context context) {
+//        final Resources r = context.getResources();
+//        int resourceId = r.getIdentifier("status_bar_height", "dimen", "android");
+//        if (resourceId > 0)
+//            return r.getDimensionPixelSize(resourceId);
+//        return 0;
+//    }
+//
+//    public static int getNavBarHeight(Activity context) {
+//        if (context == null || context.isFinishing()) {
+//            return 0;
+//        } else if (!context.getResources().getBoolean(R.bool.translucent_nav)) {
+//            // Translucent nav is disabled
+//            return 0;
+//        }
+//        final Resources r = context.getResources();
+//        int resourceId = r.getIdentifier("navigation_bar_height", "dimen", "android");
+//        if (resourceId > 0)
+//            return r.getDimensionPixelSize(resourceId);
+//        return 0;
+//    }
+//
+//    public static int[] resolveResourceIds(@NonNull Context context, @ArrayRes int integerArray) {
+//        TypedArray ar = context.getResources().obtainTypedArray(integerArray);
+//        int len = ar.length();
+//        int[] resIds = new int[len];
+//        for (int i = 0; i < len; i++)
+//            resIds[i] = ar.getResourceId(i, 0);
+//        ar.recycle();
+//        return resIds;
+//    }
+//
 //    @Size(2)
 //    public static int[] getScreenDimensions(Activity activity) {
 //        final Display display = activity.getWindowManager().getDefaultDisplay();
@@ -173,10 +168,10 @@ public abstract class Utils {
         return baseSelector;
     }
 
-    public static void recycleQuietely(@Nullable Bitmap bitmap) {
-        if (bitmap == null || bitmap.isRecycled()) return;
-        bitmap.recycle();
-    }
+//    public static void recycleQuietely(@Nullable Bitmap bitmap) {
+//        if (bitmap == null || bitmap.isRecycled()) return;
+//        bitmap.recycle();
+//    }
 
     public static void copy(InputStream is, OutputStream os) throws Exception {
         byte[] buffer = new byte[2048];

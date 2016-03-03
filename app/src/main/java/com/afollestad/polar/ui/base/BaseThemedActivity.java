@@ -35,7 +35,7 @@ public abstract class BaseThemedActivity extends AssentActivity {
         }
     }
 
-    protected abstract Toolbar getToolbar();
+    public abstract Toolbar getToolbar();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

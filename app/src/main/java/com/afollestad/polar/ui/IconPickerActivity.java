@@ -34,6 +34,7 @@ public class IconPickerActivity extends BaseThemedActivity {
 
         ButterKnife.bind(this);
 
+        toolbar.setTitle(R.string.select_icon);
         setSupportActionBar(toolbar);
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

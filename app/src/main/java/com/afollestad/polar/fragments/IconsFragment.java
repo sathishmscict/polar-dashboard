@@ -6,11 +6,14 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -22,18 +25,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.assent.Assent;
+import com.afollestad.assent.AssentCallback;
+import com.afollestad.assent.PermissionResultSet;
+import com.afollestad.bridge.BridgeUtil;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.IconAdapter;
 import com.afollestad.polar.config.Config;
 import com.afollestad.polar.dialogs.IconDetailsDialog;
+import com.afollestad.polar.dialogs.ProgressDialogFragment;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.IconPickerActivity;
-import com.afollestad.polar.ui.MainActivity;
+import com.afollestad.polar.ui.base.BaseThemedActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
 import com.afollestad.polar.util.TintUtils;
+import com.afollestad.polar.util.Utils;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 import java.util.TimerTask;
 
@@ -47,19 +59,75 @@ public class IconsFragment extends BasePageFragment implements
     RecyclerView mRecyclerView;
 
     public IconsFragment() {
-
     }
 
-    public static void selectItem(Activity context, Fragment context2, DrawableXmlParser.Icon icon) {
-        Bitmap bmp = null;
+    private static Activity mContext;
+    private static Fragment mContext2;
+    private static DrawableXmlParser.Icon mIcon;
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public static void selectItem(final Activity context, Fragment context2, final DrawableXmlParser.Icon icon) {
+        final Bitmap bmp;
         if (icon.getDrawableId(context) != 0) {
             //noinspection ConstantConditions
             bmp = ((BitmapDrawable) ResourcesCompat.getDrawable(context.getResources(),
                     icon.getDrawableId(context), null)).getBitmap();
+        } else {
+            return;
         }
         if (context instanceof IconPickerActivity) {
-            context.setResult(Activity.RESULT_OK, new Intent().putExtra("icon", bmp));
-            context.finish();
+            if (!Assent.isPermissionGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
+                mContext = context;
+                mContext2 = context2;
+                mIcon = icon;
+                Assent.requestPermissions(new AssentCallback() {
+                    @Override
+                    public void onPermissionResult(PermissionResultSet permissionResultSet) {
+                        if (permissionResultSet.allPermissionsGranted())
+                            selectItem(mContext, mContext2, mIcon);
+                        else
+                            Toast.makeText(context, R.string.write_storage_permission_denied, Toast.LENGTH_LONG).show();
+                        mContext = null;
+                        mContext2 = null;
+                        mIcon = null;
+                    }
+                }, 79, Assent.WRITE_EXTERNAL_STORAGE);
+                return;
+            }
+
+            final ProgressDialogFragment progress = ProgressDialogFragment.show((AppCompatActivity) context, R.string.please_wait);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    File dest = new File(Environment.getExternalStorageDirectory(), "IconCache");
+                    dest.mkdirs();
+                    dest = new File(dest, icon.getName() + ".png");
+                    FileOutputStream os = null;
+                    try {
+                        os = new FileOutputStream(dest);
+                        bmp.compress(Bitmap.CompressFormat.PNG, 100, os);
+                        final Uri uri = Uri.fromFile(dest);
+                        context.setResult(Activity.RESULT_OK, new Intent()
+                                .putExtra(Intent.EXTRA_STREAM, uri)
+                                .setData(uri));
+                        context.finish();
+                    } catch (final Exception e) {
+                        dest.delete();
+                        progress.dismiss();
+                        if (!context.isFinishing()) {
+                            context.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Utils.showError(context, e);
+                                }
+                            });
+                        }
+                    } finally {
+                        progress.dismiss();
+                        BridgeUtil.closeQuietly(os);
+                    }
+                }
+            }).start();
         } else {
             FragmentManager fm;
             if (context2 != null) fm = context2.getChildFragmentManager();
@@ -86,7 +154,7 @@ public class IconsFragment extends BasePageFragment implements
         mSearchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         if (getActivity() != null) {
-            final MainActivity act = (MainActivity) getActivity();
+            final BaseThemedActivity act = (BaseThemedActivity) getActivity();
             TintUtils.themeSearchView(act.getToolbar(), mSearchView, DialogUtils.resolveColor(act, R.attr.tab_icon_color));
         }
     }
