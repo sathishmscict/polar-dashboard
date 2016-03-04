@@ -20,7 +20,8 @@ import android.widget.TextView;
 
 import com.afollestad.polar.R;
 import com.afollestad.polar.ui.IconMoreActivity;
-import com.afollestad.polar.ui.MainActivity;
+import com.afollestad.polar.ui.base.BaseThemedActivity;
+import com.afollestad.polar.ui.base.ISelectionMode;
 import com.afollestad.polar.util.DrawableXmlParser;
 import com.afollestad.polar.util.Utils;
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
@@ -58,7 +59,7 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
                     mFiltered.get(index) : mCategories.get(index);
 
 
-            int topPadding = ((MainActivity) mContext).getLastStatusBarInsetHeight();
+            int topPadding = ((BaseThemedActivity) mContext).getLastStatusBarInsetHeight();
             float[] pressedLocation = new float[]{
                     event.getRawX(),
                     event.getRawY() - topPadding};
@@ -70,6 +71,9 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
                     .putExtra(IconMoreActivity.EXTRA_CATEGORY, category)
                     .putExtra(IconMoreActivity.EXTRA_REVEAL_ANIM_LOCATION, pressedLocation);
 
+            if (mContext instanceof ISelectionMode) {
+                intent.putExtra("selection_mode", ((ISelectionMode) mContext).inSelectionMode());
+            }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mTransitionSection = index;
@@ -85,11 +89,11 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
                                 ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
                                         pairs.toArray(new Pair[pairs.size()])).toBundle();
 
-                        mContext.startActivity(intent, activityOptions);
+                        ((Activity) mContext).startActivityForResult(intent, 6969, activityOptions);
                     }
                 });
             } else {
-                mContext.startActivity(intent);
+                ((Activity) mContext).startActivityForResult(intent, 6969);
             }
         }
         return true;

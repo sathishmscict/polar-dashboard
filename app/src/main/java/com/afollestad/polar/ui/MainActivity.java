@@ -337,6 +337,7 @@ public class MainActivity extends BaseDonateActivity implements LicensingUtils.L
         });
     }
 
+    @Override
     public int getLastStatusBarInsetHeight() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             return 0;

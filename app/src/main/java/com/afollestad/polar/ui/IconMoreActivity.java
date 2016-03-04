@@ -21,6 +21,7 @@ import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.IconsFragment;
 import com.afollestad.polar.transitions.CircularRevealTransition;
 import com.afollestad.polar.ui.base.BaseThemedActivity;
+import com.afollestad.polar.ui.base.ISelectionMode;
 import com.afollestad.polar.util.DrawableXmlParser;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
@@ -31,7 +32,8 @@ import butterknife.ButterKnife;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdapter.ClickListener {
+public class IconMoreActivity extends BaseThemedActivity
+        implements IconMoreAdapter.ClickListener, ISelectionMode {
 
     public static final String EXTRA_REVEAL_ANIM_LOCATION = "com.afollestad.polar.REVEAL_ANIM_LOCATION";
     public static final String EXTRA_CATEGORY = "com.afollestad.polar.CATEGORY";
@@ -46,6 +48,14 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
     @Override
     public Toolbar getToolbar() {
         return mToolbar;
+    }
+
+    @Override
+    public int getLastStatusBarInsetHeight() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return 0;
+        }
+        return findViewById(R.id.root).getPaddingTop();
     }
 
     @Override
@@ -165,5 +175,10 @@ public class IconMoreActivity extends BaseThemedActivity implements IconMoreAdap
     @Override
     public void onClick(View view, int index) {
         IconsFragment.selectItem(this, null, mAdapter.getIcon(index));
+    }
+
+    @Override
+    public boolean inSelectionMode() {
+        return getIntent().getBooleanExtra("selection_mode", false);
     }
 }

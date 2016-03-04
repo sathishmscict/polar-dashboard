@@ -38,8 +38,8 @@ import com.afollestad.polar.config.Config;
 import com.afollestad.polar.dialogs.IconDetailsDialog;
 import com.afollestad.polar.dialogs.ProgressDialogFragment;
 import com.afollestad.polar.fragments.base.BasePageFragment;
-import com.afollestad.polar.ui.IconPickerActivity;
 import com.afollestad.polar.ui.base.BaseThemedActivity;
+import com.afollestad.polar.ui.base.ISelectionMode;
 import com.afollestad.polar.util.DrawableXmlParser;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
@@ -50,7 +50,6 @@ import java.util.List;
 import java.util.TimerTask;
 
 import butterknife.ButterKnife;
-
 
 public class IconsFragment extends BasePageFragment implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener {
@@ -65,6 +64,14 @@ public class IconsFragment extends BasePageFragment implements
     private static Fragment mContext2;
     private static DrawableXmlParser.Icon mIcon;
 
+    public static IconsFragment create(boolean selectionMode) {
+        IconsFragment frag = new IconsFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("selection_mode", selectionMode);
+        frag.setArguments(args);
+        return frag;
+    }
+
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void selectItem(final Activity context, Fragment context2, final DrawableXmlParser.Icon icon) {
         final Bitmap bmp;
@@ -75,7 +82,7 @@ public class IconsFragment extends BasePageFragment implements
         } else {
             return;
         }
-        if (context instanceof IconPickerActivity) {
+        if (((ISelectionMode) context).inSelectionMode()) {
             if (!Assent.isPermissionGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
                 mContext = context;
                 mContext2 = context2;

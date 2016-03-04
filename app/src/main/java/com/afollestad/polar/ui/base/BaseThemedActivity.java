@@ -37,6 +37,10 @@ public abstract class BaseThemedActivity extends AssentActivity {
 
     public abstract Toolbar getToolbar();
 
+    public int getLastStatusBarInsetHeight() {
+        return 0;
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Config.init(this);
