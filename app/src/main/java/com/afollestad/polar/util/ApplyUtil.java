@@ -200,10 +200,15 @@ public class ApplyUtil {
                 case GO: {
                     Intent intent = context.getPackageManager().getLaunchIntentForPackage("com.gau.go.launcherex");
                     if (intent != null) {
-                        Intent go = new Intent("com.gau.go.launcherex.MyThemes.mythemeaction")
-                                .putExtra("type", 1)
-                                .putExtra("pkgname", context.getPackageName());
-                        context.sendBroadcast(go);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent go = new Intent("com.gau.go.launcherex.MyThemes.mythemeaction")
+                                        .putExtra("type", 1)
+                                        .putExtra("pkgname", context.getPackageName());
+                                context.sendBroadcast(go);
+                            }
+                        }, 250);
                     } else {
                         throw new ActivityNotFoundException();
                     }
@@ -237,7 +242,7 @@ public class ApplyUtil {
                                     .putExtra(SOLO_EXTRA_APPLY_THEME_NAME, res.getString(R.string.app_name));
                             context.sendBroadcast(solo);
                         }
-                    }, 1000);
+                    }, 250);
                     break;
                 case KK:
                     Intent kkApply = context.getPackageManager().getLaunchIntentForPackage("com.kk.launcher");
