@@ -118,7 +118,7 @@ public class LicensingUtils {
         // Construct the LicenseChecker with a policy.
         mChecker = new LicenseChecker(
                 context, new ServerManagedPolicy(context,
-                new AESObfuscator(getSalt(context), context.getPackageName(), deviceId)),
+                new AESObfuscator(getSalt(context), BuildConfig.APPLICATION_ID, deviceId)),
                 key);
         mChecker.checkAccess(mLicenseCheckerCallback);
         return false;

@@ -5,6 +5,8 @@ import android.content.res.XmlResourceParser;
 import android.support.annotation.NonNull;
 import android.support.annotation.XmlRes;
 
+import com.afollestad.polar.BuildConfig;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -98,7 +100,7 @@ public class DrawableXmlParser {
         public int getDrawableId(Context context) {
             if (mDrawable == null)
                 return 0;
-            return context.getResources().getIdentifier(mDrawable, "drawable", context.getPackageName());
+            return context.getResources().getIdentifier(mDrawable, "drawable", BuildConfig.APPLICATION_ID);
         }
 
         @Override
