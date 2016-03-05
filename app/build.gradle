@@ -63,7 +63,7 @@ dependencies {
     compile 'com.github.afollestad:sectioned-recyclerview:0.2.0'
     compile 'com.github.afollestad:assent:ec59bea20f'
     compile 'com.github.afollestad:inquiry:b13a58b902'
-    compile 'com.github.afollestad:icon-request:5b8edf2163'
+    compile 'com.github.afollestad:icon-request:33b68f7f8c'
 
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.5'
 
