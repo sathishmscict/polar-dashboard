@@ -47,7 +47,7 @@ public class IconPickerActivity extends BaseThemedActivity implements ISelection
                     DialogUtils.resolveColor(this, R.attr.tab_icon_color)));
         }
 
-        getFragmentManager().beginTransaction().replace(R.id.container, new IconsFragment()).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container, IconsFragment.create(true)).commit();
     }
 
     @Override
