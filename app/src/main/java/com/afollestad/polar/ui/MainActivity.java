@@ -68,7 +68,8 @@ import static com.afollestad.polar.viewer.ViewerActivity.STATE_CURRENT_POSITION;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class MainActivity extends BaseDonateActivity implements LicensingUtils.LicensingCallback, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseDonateActivity implements
+        LicensingUtils.LicensingCallback, NavigationView.OnNavigationItemSelectedListener {
 
     public RecyclerView mRecyclerView;
 

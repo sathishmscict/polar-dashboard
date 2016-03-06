@@ -82,7 +82,7 @@ public class IconsFragment extends BasePageFragment implements
         } else {
             return;
         }
-        if (((ISelectionMode) context).inSelectionMode()) {
+        if (context instanceof ISelectionMode && ((ISelectionMode) context).inSelectionMode()) {
             if (!Assent.isPermissionGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
                 mContext = context;
                 mContext2 = context2;
