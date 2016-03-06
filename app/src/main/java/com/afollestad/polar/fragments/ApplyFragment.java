@@ -55,27 +55,30 @@ public class ApplyFragment extends BasePageFragment implements ApplyAdapter.Sele
     }
 
     @Override
-    public void onLauncherSelection(int index, String title, final String pkg) {
-        if (!ApplyUtil.apply(getActivity(), pkg)) {
-            new MaterialDialog.Builder(getActivity())
-                    .title(R.string.not_installed)
-                    .content(Html.fromHtml(getString(R.string.not_installed_prompt, title)))
-                    .positiveText(android.R.string.yes)
-                    .negativeText(android.R.string.cancel)
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            try {
-                                Intent intent = new Intent(Intent.ACTION_VIEW)
-                                        .setData(Uri.parse(String.format("market://details?id=%s", pkg)));
-                                startActivity(intent);
-                            } catch (ActivityNotFoundException e) {
-                                Intent intent = new Intent(Intent.ACTION_VIEW)
-                                        .setData(Uri.parse(String.format("http://play.google.com/store/apps/details?id=%s", pkg)));
-                                startActivity(intent);
+    public void onLauncherSelection(int index, final String title, final String pkg) {
+        ApplyUtil.apply(getActivity(), pkg, new ApplyUtil.ApplyCallback() {
+            @Override
+            public void onNotInstalled() {
+                new MaterialDialog.Builder(getActivity())
+                        .title(R.string.not_installed)
+                        .content(Html.fromHtml(getString(R.string.not_installed_prompt, title)))
+                        .positiveText(android.R.string.yes)
+                        .negativeText(android.R.string.cancel)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                try {
+                                    Intent intent = new Intent(Intent.ACTION_VIEW)
+                                            .setData(Uri.parse(String.format("market://details?id=%s", pkg)));
+                                    startActivity(intent);
+                                } catch (ActivityNotFoundException e) {
+                                    Intent intent = new Intent(Intent.ACTION_VIEW)
+                                            .setData(Uri.parse(String.format("http://play.google.com/store/apps/details?id=%s", pkg)));
+                                    startActivity(intent);
+                                }
                             }
-                        }
-                    }).show();
-        }
+                        }).show();
+            }
+        });
     }
 }

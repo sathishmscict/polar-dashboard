@@ -1,8 +1,10 @@
 package com.afollestad.polar.util;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -13,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
 
@@ -88,13 +91,38 @@ public class ApplyUtil {
         }
     }
 
-    public static boolean apply(@NonNull final Context context, @NonNull String launcherPkg) {
-        final int id = launcherIdFromPkg(launcherPkg);
-        if (id == -1) throw new RuntimeException("Unsupported launcher: " + launcherPkg);
-        return apply(context, id);
+    public interface ApplyCallback {
+        void onNotInstalled();
     }
 
-    public static boolean apply(@NonNull final Context context, @Launcher int launcher) {
+    public static void apply(@NonNull final Context context, @NonNull String launcherPkg, @NonNull ApplyCallback cb) {
+        final int id = launcherIdFromPkg(launcherPkg);
+        if (id == -1) throw new RuntimeException("Unsupported launcher: " + launcherPkg);
+        apply(context, id, cb);
+    }
+
+    @SuppressLint("SwitchIntDef")
+    public static void apply(@NonNull final Context context, @Launcher final int launcher, @NonNull final ApplyCallback cb) {
+        switch (launcher) {
+            case GO:
+                new MaterialDialog.Builder(context)
+                        .title(R.string.go_launcher)
+                        .content(R.string.go_launcher_notice)
+                        .positiveText(android.R.string.ok)
+                        .dismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                applyFinish(context, launcher, cb);
+                            }
+                        }).show();
+                break;
+            default:
+                applyFinish(context, launcher, cb);
+                break;
+        }
+    }
+
+    private static void applyFinish(@NonNull final Context context, @Launcher int launcher, @NonNull ApplyCallback cb) {
         final String ACTION_APPLY_ICON_THEME = "com.teslacoilsw.launcher.APPLY_ICON_THEME";
         final String NOVA_PACKAGE = "com.teslacoilsw.launcher";
         final String EXTRA_ICON_THEME_PACKAGE = "com.teslacoilsw.launcher.extra.ICON_THEME_PACKAGE";
@@ -296,9 +324,8 @@ public class ApplyUtil {
                 case UNKNOWN:
                     break;
             }
-            return true;
         } catch (Throwable t) {
-            return false;
+            cb.onNotInstalled();
         }
     }
 
