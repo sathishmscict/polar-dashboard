@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.XmlRes;
 
 import com.afollestad.polar.BuildConfig;
+import com.afollestad.polar.R;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -155,6 +156,8 @@ public class DrawableXmlParser {
                             mCurrentCategory = new Category(parser.getAttributeValue(null, "title"));
                             mCategories.add(mCurrentCategory);
                         } else if (tagName.equalsIgnoreCase("item")) {
+                            if (mCurrentCategory == null)
+                                mCurrentCategory = new Category(context.getString(R.string.default_category));
                             mCurrentCategory.addItem(new Icon(parser.getAttributeValue(null, "drawable"), mCurrentCategory));
                         }
                         break;
