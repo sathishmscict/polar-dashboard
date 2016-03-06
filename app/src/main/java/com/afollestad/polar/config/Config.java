@@ -233,22 +233,4 @@ public class Config implements IConfig {
         if (mR == null) return -1;
         return mR.getInteger(R.integer.icon_request_maxcount);
     }
-
-    @Override
-    public boolean iconRequestOneShotUsed() {
-        if (mR == null) return false;
-        else if (!mR.getBoolean(R.bool.icon_request_oneshot)) {
-            prefs().edit().putBoolean("[os_used]", false).commit();
-            return false;
-        }
-        return prefs().getBoolean("[os_used]", false);
-    }
-
-    @Override
-    public boolean iconRequestOneShotUsed(boolean used) {
-        if (mR == null) return false;
-        else if (used && !mR.getBoolean(R.bool.icon_request_oneshot)) used = false;
-        prefs().edit().putBoolean("[os_used]", used).commit();
-        return used;
-    }
 }

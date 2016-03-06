@@ -25,8 +25,15 @@
     <!-- Max number of icons that can be sent per request. -1 disables max count. -->
     <integer name="icon_request_maxcount">-1</integer>
 
-    <!-- When true, the user is only allowed to send one icon request (unless they clear data/reinstall the app) -->
-    <bool name="icon_request_oneshot">false</bool>
+    <!--
+        The interval in seconds in which users must wait between sending icon requests. 0 or less disables it.
+
+        If you want minutes: [seconds] = [minutes] * 60
+        If you want hours:   [seconds] = [hours] * 3600
+        If you want days:    [seconds] = [days] * 86400
+        If you want weeks:   [seconds] = [weeks] * 604800
+    -->
+    <integer name="icon_request_limit_interval">-1</integer>
 
     <!-- Public Base64 from the developer console for license checking, optional -->
     <string name="licensing_public_key"></string>

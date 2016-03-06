@@ -29,7 +29,7 @@
     <string name="no_apps">No apps</string>
     <string name="tap_to_select_app">Tap apps to select them!</string>
     <string name="tap_to_select_app_withmax">Tap apps to select them! (%1$d max)</string>
-    <string name="one_shot_used">You can\'t request any more icons!</string>
+    <string name="request_limited">Wait %1$s to request more</string>
     <string name="icon_request">Icon Request</string>
     <string name="preparing_icon_request">Preparing icon request…</string>
     <string name="write_storage_permission_denied">Write external storage permission denied!</string>

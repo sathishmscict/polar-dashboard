@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -37,6 +38,7 @@ import com.afollestad.polar.adapters.RequestsAdapter;
 import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.MainActivity;
+import com.afollestad.polar.util.RequestLimiter;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.views.DisableableViewPager;
@@ -55,7 +57,6 @@ public class RequestsFragment extends BasePageFragment implements
         DragSelectRecyclerViewAdapter.SelectionListener, RequestsAdapter.SelectionChangedListener {
 
     private static final Object LOCK = new Object();
-
     private final static int PERM_RQ = 69;
 
     @Bind(android.R.id.list)
@@ -68,12 +69,29 @@ public class RequestsFragment extends BasePageFragment implements
     TextView emptyText;
     @Bind(R.id.fab)
     FloatingActionButton fab;
-    DisableableViewPager mPager;
 
+    private DisableableViewPager mPager;
     private RequestsAdapter mAdapter;
     private MaterialDialog mDialog;
     private int mInitialSelection = -1;
     private boolean mAppsLoaded = false;
+
+    private final Runnable mInvalidateLimitRunnable = new Runnable() {
+        @Override
+        public void run() {
+            final Activity act = getActivity();
+            if (!isAdded() || act == null || act.isFinishing()) return;
+            mAdapter.invalidateAllowRequest(act);
+            if (!isAdded() || act.isFinishing()) return;
+            long nextCheck = RequestLimiter.get(act).intervalMs();
+            if (nextCheck < (1000 * 60 * 60))
+                nextCheck = 1000; // if less than a hour, update every 15 seconds
+            RequestLimiter.log("RequestsFragment adapter invalidated, will invalidate again in %d second(s).",
+                    RequestLimiter.msToS(nextCheck));
+            mHandler.postDelayed(this, nextCheck);
+        }
+    };
+    private Handler mHandler;
 
     public RequestsFragment() {
     }
@@ -199,9 +217,9 @@ public class RequestsFragment extends BasePageFragment implements
             }
         });
 
-        mAdapter = new RequestsAdapter(this);
+        mAdapter = new RequestsAdapter(getActivity(), this);
         mAdapter.setSelectionListener(this);
-        mAdapter.setMaxSelectionCount(getResources().getInteger(R.integer.icon_request_maxcount));
+        mAdapter.setMaxSelectionCount(Config.get().iconRequestMaxCount());
 
         list.setLayoutManager(lm);
         list.setAdapter(mAdapter);
@@ -257,6 +275,11 @@ public class RequestsFragment extends BasePageFragment implements
         reload();
         if (getActivity() != null)
             ((MainActivity) getActivity()).showChangelogIfNecessary(false);
+        if (RequestLimiter.needed(getActivity())) {
+            if (mHandler == null)
+                mHandler = new Handler();
+            mHandler.post(mInvalidateLimitRunnable);
+        }
     }
 
     @Override
@@ -306,6 +329,10 @@ public class RequestsFragment extends BasePageFragment implements
                 IconRequest.cleanup();
             if (mDialog != null)
                 mDialog.dismiss();
+        }
+        if (mHandler != null) {
+            mHandler.removeCallbacks(mInvalidateLimitRunnable);
+            mHandler = null;
         }
     }
 
@@ -399,7 +426,14 @@ public class RequestsFragment extends BasePageFragment implements
         progressText.post(new Runnable() {
             @Override
             public void run() {
-                mAdapter.setUsedOneShot(Config.get().iconRequestOneShotUsed(true));
+                final Activity act = getActivity();
+                RequestLimiter.get(act).update();
+                if (RequestLimiter.needed(getActivity())) {
+                    if (mHandler != null)
+                        mHandler.removeCallbacks(mInvalidateLimitRunnable);
+                    else mHandler = new Handler();
+                    mHandler.post(mInvalidateLimitRunnable);
+                }
                 mDialog.dismiss();
                 fab.hide();
                 IconRequest.get().unselectAllApps();

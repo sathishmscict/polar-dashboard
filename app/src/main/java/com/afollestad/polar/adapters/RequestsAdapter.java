@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.config.Config;
 import com.afollestad.polar.config.IConfig;
+import com.afollestad.polar.util.RequestLimiter;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 
@@ -32,14 +33,14 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
         void onClick(int index, boolean longClick);
     }
 
-    private boolean mUsedOneShot;
+    private boolean mAllowRequest;
     private final int mMax;
     private ArrayList<App> mApps;
     private final SelectionChangedListener mListener;
 
-    public RequestsAdapter(SelectionChangedListener listener) {
+    public RequestsAdapter(Context context, SelectionChangedListener listener) {
         final IConfig config = Config.get();
-        mUsedOneShot = config.iconRequestOneShotUsed();
+        mAllowRequest = !RequestLimiter.needed(context) || RequestLimiter.get(context).allow();
         mMax = config.iconRequestMaxCount();
         mListener = listener;
     }
@@ -49,14 +50,14 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
         notifyDataSetChanged();
     }
 
-    public void setUsedOneShot(boolean used) {
-        mUsedOneShot = used;
+    public void invalidateAllowRequest(Context context) {
+        mAllowRequest = RequestLimiter.get(context).allow();
         notifyItemChanged(0);
     }
 
     @Override
     protected boolean isIndexSelectable(int index) {
-        return !mUsedOneShot && index > 0;
+        return mAllowRequest && index > 0;
     }
 
     @Override
@@ -79,8 +80,10 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
         super.onBindViewHolder(holder, position);
         if (position == 0) {
             final Context c = holder.itemView.getContext();
-            if (mUsedOneShot) {
-                holder.title.setText(R.string.one_shot_used);
+            if (!mAllowRequest) {
+                final String msg = c.getString(R.string.request_limited,
+                        RequestLimiter.get(c).remainingIntervalString());
+                holder.title.setText(msg);
             } else if (mMax > -1) {
                 holder.title.setText(c.getResources().getString(R.string.tap_to_select_app_withmax, mMax));
             } else {

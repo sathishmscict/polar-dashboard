@@ -72,8 +72,4 @@ public interface IConfig {
     int gridWidthZooper();
 
     int iconRequestMaxCount();
-
-    boolean iconRequestOneShotUsed();
-
-    boolean iconRequestOneShotUsed(boolean used);
 }
