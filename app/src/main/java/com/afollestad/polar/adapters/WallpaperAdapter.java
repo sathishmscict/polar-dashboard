@@ -145,9 +145,10 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
             holder.name.setTextColor(Color.WHITE, false);
             holder.author.setTextColor(Color.WHITE, false);
             holder.colorFrame.setBackgroundColor(Color.DKGRAY, false);
+            //noinspection unchecked
             Glide.with(holder.itemView.getContext())
                     .load(wallpaper.url)
-                    .listener(GlidePalette.with(wallpaper.url)
+                    .listener(GlidePalette.with(wallpaper.getListingImageUrl())
                             .use(GlidePalette.Profile.VIBRANT)
                             .intoBackground(holder.colorFrame)
                             .intoTextColor(holder.name, GlidePalette.Swatch.TITLE_TEXT_COLOR)

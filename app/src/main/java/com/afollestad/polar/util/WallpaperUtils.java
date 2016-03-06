@@ -13,7 +13,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -45,7 +44,7 @@ import java.util.Locale;
  */
 public class WallpaperUtils {
 
-    public static final String TABLE_NAME = "wallpapers";
+    public static final String TABLE_NAME = "polar_wallpapers";
     public static final String DATABASE_NAME = "data_cache";
     public static final int DATABASE_VERSION = 1;
 
@@ -92,6 +91,13 @@ public class WallpaperUtils {
         @Body
         @Column
         public String name;
+        @Body
+        @Column
+        public String thumbnail;
+
+        public String getListingImageUrl() {
+            return thumbnail != null ? thumbnail : url;
+        }
 
         @Column
         private int paletteNameColor;
@@ -277,9 +283,9 @@ public class WallpaperUtils {
     private static File mFileCache;
     private static Toast mToast;
 
-    private static void showToast(Context context, @StringRes int msg) {
-        showToast(context, context.getString(msg));
-    }
+//    private static void showToast(Context context, @StringRes int msg) {
+//        showToast(context, context.getString(msg));
+//    }
 
     private static void showToast(Context context, String msg) {
         if (mToast != null)
