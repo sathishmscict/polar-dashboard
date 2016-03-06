@@ -156,8 +156,10 @@ public class DrawableXmlParser {
                             mCurrentCategory = new Category(parser.getAttributeValue(null, "title"));
                             mCategories.add(mCurrentCategory);
                         } else if (tagName.equalsIgnoreCase("item")) {
-                            if (mCurrentCategory == null)
+                            if (mCurrentCategory == null) {
                                 mCurrentCategory = new Category(context.getString(R.string.default_category));
+                                mCategories.add(mCurrentCategory);
+                            }
                             mCurrentCategory.addItem(new Icon(parser.getAttributeValue(null, "drawable"), mCurrentCategory));
                         }
                         break;
