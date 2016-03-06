@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -107,7 +108,7 @@ public class ApplyUtil {
             case GO:
                 new MaterialDialog.Builder(context)
                         .title(R.string.go_launcher)
-                        .content(R.string.go_launcher_notice)
+                        .content(Html.fromHtml(context.getString(R.string.go_launcher_notice)))
                         .positiveText(android.R.string.ok)
                         .dismissListener(new DialogInterface.OnDismissListener() {
                             @Override

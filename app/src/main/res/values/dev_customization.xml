@@ -16,7 +16,7 @@
 
     <!-- URL to JSON file containing a map of wallpapers, leave empty to disable wallpapers. -->
     <string name="wallpapers_json_url" formatted="false">
-        https://raw.githubusercontent.com/TWellington/polar_json/master/wallpapers
+        https://raw.githubusercontent.com/TWellington/polar_json/master/wallpapers.json
     </string>
 
     <!-- Email used to send icon requests, leave empty to disable this feature. -->

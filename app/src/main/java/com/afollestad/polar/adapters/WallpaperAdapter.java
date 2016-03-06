@@ -24,7 +24,6 @@ import java.util.Locale;
 
 import butterknife.ButterKnife;
 
-
 public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.WallpaperViewHolder> {
 
     public final static int SEARCH_RESULT_LIMIT = 10;

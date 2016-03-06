@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -283,9 +284,9 @@ public class WallpaperUtils {
     private static File mFileCache;
     private static Toast mToast;
 
-//    private static void showToast(Context context, @StringRes int msg) {
-//        showToast(context, context.getString(msg));
-//    }
+    private static void showToast(Context context, @StringRes int msg) {
+        showToast(context, context.getString(msg));
+    }
 
     private static void showToast(Context context, String msg) {
         if (mToast != null)
