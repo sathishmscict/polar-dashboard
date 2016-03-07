@@ -1,8 +1,6 @@
 package com.afollestad.polar.ui.base;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,24 +16,24 @@ public abstract class BaseDonateActivity extends BaseThemedActivity implements B
 
     private BillingProcessor bp;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (Config.get().donationEnabled() &&
-                BillingProcessor.isIabServiceAvailable(this)) {
-            bp = new BillingProcessor(this, Config.get().donationLicenseKey(), this);
-        }
-    }
-
     public void purchase(String donateId) {
         if (bp != null)
             bp.purchase(this, donateId);
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (Config.get().donationEnabled() &&
+                BillingProcessor.isIabServiceAvailable(this)) {
+            bp = new BillingProcessor(this, Config.get().donationLicenseKey(), this);
+        }
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
-        if (isFinishing() && bp != null) {
+        if (bp != null) {
             bp.release();
             bp = null;
         }
