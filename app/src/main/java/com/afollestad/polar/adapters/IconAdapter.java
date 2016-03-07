@@ -216,7 +216,7 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
                 mFiltered.get(section) : mCategories.get(section);
         holder.title.setText(category.getName());
 
-        if (category.size() > mIconsPerSection) {
+        if (mCategories.size() > 1 && category.size() > mIconsPerSection) {
             holder.moreButton.setVisibility(View.VISIBLE);
             holder.moreButton.setTag(section);
             holder.moreButton.setOnTouchListener(this);
