@@ -198,7 +198,8 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
     @Override
     public int getItemCount(int section) {
         int count = mFiltered != null ? mFiltered.get(section).size() : mCategories.get(section).size();
-        if (count > mIconsPerSection) return mIconsPerSection;
+        if (mCategories.size() > 1 && count > mIconsPerSection)
+            return mIconsPerSection;
         return count;
     }
 
