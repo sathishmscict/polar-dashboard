@@ -83,8 +83,11 @@
             In <code>/res/values/dev_customization.xml</code> there is a string resource called <code>wallpapers_json_url</code>
             which needs to be configured with your hosted JSON file (discussed below).
         </p>
-        <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/wallpapersurl.JPG"
-             class="app-image">
+        <pre><code class="xml"><!-- URL to JSON file containing a map of wallpapers, leave empty to disable wallpapers. -->
+<string name="wallpapers_json_url" formatted="false">
+    https://raw.githubusercontent.com/afollestad/polar_json/master/wallpapers.json
+</string></code></pre>
+
         <hr/>
 
         <h1 id="jsonfile">JSON File</h1>
