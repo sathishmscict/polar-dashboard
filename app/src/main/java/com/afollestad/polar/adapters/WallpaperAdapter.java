@@ -137,7 +137,7 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
             holder.author.setTextColor(wallpaper.getPaletteAuthorColor());
             holder.colorFrame.setBackgroundColor(wallpaper.getPaletteBgColor());
             Glide.with(holder.itemView.getContext())
-                    .load(wallpaper.url)
+                    .load(wallpaper.getListingImageUrl())
                     .into(holder.image);
         } else {
             Log.d("WallpaperAdapter", "Wallpaper " + index + ", palette is not complete...");
@@ -146,7 +146,7 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
             holder.colorFrame.setBackgroundColor(Color.DKGRAY, false);
             //noinspection unchecked
             Glide.with(holder.itemView.getContext())
-                    .load(wallpaper.url)
+                    .load(wallpaper.getListingImageUrl())
                     .listener(GlidePalette.with(wallpaper.getListingImageUrl())
                             .use(GlidePalette.Profile.VIBRANT)
                             .intoBackground(holder.colorFrame)
