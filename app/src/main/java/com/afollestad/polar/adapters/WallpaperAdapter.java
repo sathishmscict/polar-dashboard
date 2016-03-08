@@ -132,7 +132,8 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
 
         holder.progress.setVisibility(View.VISIBLE);
         if (wallpaper.isPaletteComplete()) {
-            Log.d("WallpaperAdapter", "Wallpaper " + index + ", palette is complete!");
+            Log.d("WallpaperAdapter", String.format("Wallpaper %d (%s) palette is complete!",
+                    index, wallpaper.getListingImageUrl()));
             holder.name.setTextColor(wallpaper.getPaletteNameColor());
             holder.author.setTextColor(wallpaper.getPaletteAuthorColor());
             holder.colorFrame.setBackgroundColor(wallpaper.getPaletteBgColor());
@@ -140,7 +141,8 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
                     .load(wallpaper.getListingImageUrl())
                     .into(holder.image);
         } else {
-            Log.d("WallpaperAdapter", "Wallpaper " + index + ", palette is not complete...");
+            Log.d("WallpaperAdapter", String.format("Wallpaper %d (%s) palette is not complete...",
+                    index, wallpaper.getListingImageUrl()));
             holder.name.setTextColor(Color.WHITE, false);
             holder.author.setTextColor(Color.WHITE, false);
             holder.colorFrame.setBackgroundColor(Color.DKGRAY, false);
