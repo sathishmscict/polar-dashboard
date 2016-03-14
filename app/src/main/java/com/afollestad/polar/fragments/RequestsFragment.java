@@ -27,6 +27,7 @@ import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
 import com.afollestad.iconrequest.App;
 import com.afollestad.iconrequest.AppsLoadCallback;
 import com.afollestad.iconrequest.AppsSelectionListener;
+import com.afollestad.iconrequest.BackendConfig;
 import com.afollestad.iconrequest.IconRequest;
 import com.afollestad.iconrequest.RequestSendCallback;
 import com.afollestad.materialdialogs.DialogAction;
@@ -304,6 +305,12 @@ public class RequestsFragment extends BasePageFragment implements
             if (IconRequest.get() == null) {
                 final File saveFolder = new File(Environment.getExternalStorageDirectory(), getString(R.string.app_name));
                 Utils.wipe(new File(saveFolder, "files"));
+
+                BackendConfig remoteConfig = null;
+                String remoteHost = Config.get().polarBackendHost();
+                if (remoteHost != null && !remoteHost.trim().isEmpty())
+                    remoteConfig = new BackendConfig(remoteHost, Config.get().polarBackendApiKey());
+
                 IconRequest.start(getActivity())
                         .toEmail(getString(R.string.icon_request_email))
                         .withSubject(String.format("%s %s", getString(R.string.app_name), getString(R.string.icon_request)))
@@ -311,6 +318,7 @@ public class RequestsFragment extends BasePageFragment implements
                         .loadCallback(this)
                         .selectionCallback(this)
                         .sendCallback(this)
+                        .remoteConfig(remoteConfig)
                         .withFooter(getString(R.string.x_version_x, getString(R.string.app_name),
                                 BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE))
                         .includeDeviceInfo(true)

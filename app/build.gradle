@@ -52,27 +52,27 @@ repositories {
 dependencies {
     compile project(path: ':licensing')
 
-    compile('com.github.afollestad.material-dialogs:core:d7edc91e76@aar') {
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.7@aar') {
         transitive = true
     }
     compile('com.github.afollestad:drag-select-recyclerview:a1144fe64e@aar') {
         transitive = true
     }
 
-    compile 'com.github.afollestad:bridge:2ba1614326'
+    compile 'com.github.afollestad:bridge:9a8fae5961'
     compile 'com.github.afollestad:sectioned-recyclerview:0.2.0'
     compile 'com.github.afollestad:assent:8ba161b711'
     compile 'com.github.afollestad:inquiry:b13a58b902'
-    compile 'com.github.afollestad:icon-request:39051d037d'
+    compile 'com.github.afollestad:icon-request:1406a4773b'
 
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.5'
 
-    compile 'com.android.support:appcompat-v7:23.2.0'
-    compile 'com.android.support:recyclerview-v7:23.2.0'
-    compile 'com.android.support:support-v13:23.2.0'
-    compile 'com.android.support:design:23.2.0'
-    compile 'com.android.support:cardview-v7:23.2.0'
-    compile 'com.android.support:palette-v7:23.2.0'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:recyclerview-v7:23.2.1'
+    compile 'com.android.support:support-v13:23.2.1'
+    compile 'com.android.support:design:23.2.1'
+    compile 'com.android.support:cardview-v7:23.2.1'
+    compile 'com.android.support:palette-v7:23.2.1'
 
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.florent37:glidepalette:1.0.6@aar'

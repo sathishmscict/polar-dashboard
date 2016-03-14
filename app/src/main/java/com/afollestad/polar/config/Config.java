@@ -233,4 +233,16 @@ public class Config implements IConfig {
         if (mR == null) return -1;
         return mR.getInteger(R.integer.icon_request_maxcount);
     }
+
+    @Override
+    public String polarBackendHost() {
+        if (mR == null) return null;
+        return mR.getString(R.string.polar_backend_host);
+    }
+
+    @Override
+    public String polarBackendApiKey() {
+        if (mR == null) return null;
+        return mR.getString(R.string.polar_backedn_apikey);
+    }
 }

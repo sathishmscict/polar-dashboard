@@ -72,4 +72,8 @@ public interface IConfig {
     int gridWidthZooper();
 
     int iconRequestMaxCount();
+
+    String polarBackendHost();
+
+    String polarBackendApiKey();
 }

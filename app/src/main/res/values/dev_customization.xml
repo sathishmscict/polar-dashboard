@@ -70,4 +70,11 @@
         <item>meal</item>
     </string-array>
 
+    <!-- Leave empty to disable. Will have more info about these two options below, soon. -->
+    <string name="polar_backend_host">
+    </string>
+    <string name="polar_backedn_apikey">
+        api-key-here
+    </string>
+
 </resources>
