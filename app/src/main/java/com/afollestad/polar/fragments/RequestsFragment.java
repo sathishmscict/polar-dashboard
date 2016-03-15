@@ -450,6 +450,10 @@ public class RequestsFragment extends BasePageFragment implements
                 IconRequest.get().unselectAllApps();
                 mAdapter.clearSelected();
                 mAdapter.notifyDataSetChanged();
+
+                final String backendHost = Config.get().polarBackendHost();
+                if (backendHost != null && !backendHost.trim().isEmpty())
+                    Toast.makeText(getActivity(), R.string.request_uploaded, Toast.LENGTH_LONG).show();
             }
         });
     }

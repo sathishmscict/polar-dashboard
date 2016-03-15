@@ -73,8 +73,8 @@
     <!-- Leave empty to disable. Will have more info about these two options below, soon. -->
     <string name="polar_backend_host">
     </string>
-    <string name="polar_backedn_apikey">
-        d752e950-e9ac-11e5-88bd-e96aca401c75
+    <string name="polar_backend_apikey">
+        3517b870-ea6d-11e5-a59e-a9ab57a88cec
     </string>
 
 </resources>

@@ -243,6 +243,6 @@ public class Config implements IConfig {
     @Override
     public String polarBackendApiKey() {
         if (mR == null) return null;
-        return mR.getString(R.string.polar_backedn_apikey);
+        return mR.getString(R.string.polar_backend_apikey);
     }
 }

@@ -90,6 +90,7 @@
     <string name="default_category">Default Category</string>
     <string name="go_launcher">GO Launcher</string>
     <string name="go_launcher_notice"><![CDATA[ If the icons do not apply once you click OK: please open <b>GO Settings</b>, press <b>Icon</b>, and select this icon pack. If you see unthemed icons looking distorted, please disable <b>Show Icon Base</b> in the same menu.]]></string>
+    <string name="request_uploaded">Your request has been uploaded to our server, thanks!</string>
 
     <string-array name="wallpaper_options" translatable="false">
         <item>@string/apply</item>
