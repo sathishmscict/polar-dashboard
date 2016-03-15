@@ -349,6 +349,7 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onLoadingFilter() {
         if (progressText == null) return;
+        emptyText.setVisibility(View.VISIBLE);
         mAppsLoaded = false;
         progressText.post(new Runnable() {
             @Override
@@ -378,6 +379,8 @@ public class RequestsFragment extends BasePageFragment implements
     public void onAppsLoaded(ArrayList<App> arrayList, Exception e) {
         synchronized (LOCK) {
             if (progressText == null || IconRequest.get() == null) return;
+            emptyText.setVisibility(arrayList == null || arrayList.isEmpty() ?
+                    View.VISIBLE : View.GONE);
             mAppsLoaded = true;
             progressText.post(new Runnable() {
                 @Override
