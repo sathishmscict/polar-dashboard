@@ -22,7 +22,6 @@
         <item name="tab_indicator_color">@color/tab_indicator_color_light</item>
         <item name="tab_icon_color">@color/tab_icon_color_light</item>
 
-        <item name="button_accent_selector">@drawable/selector_button_accent</item>
         <item name="force_light_status_bar">@bool/force_light_statusbar_icons_light</item>
         <item name="disable_auto_light_status_bar">@bool/disable_auto_light_statusbar_icons_light</item>
 
@@ -38,6 +37,8 @@
             @style/Widget.Responsive.Toolbar.Button.Navigation
         </item>
         <item name="actionOverflowButtonStyle">@style/Widget.Responsive.ActionButton.Overflow</item>
+
+        <item name="accent_button_theme">@style/AccentButtonLight</item>
     </style>
 
     <!-- Dark -->
@@ -61,7 +62,6 @@
 
         <item name="toolbar_shadow">@drawable/toolbar_shadow</item>
 
-        <item name="button_accent_selector">@drawable/selector_button_accent</item>
         <item name="force_light_status_bar">@bool/force_light_statusbar_icons_dark</item>
         <item name="disable_auto_light_status_bar">@bool/disable_auto_light_statusbar_icons_dark</item>
 
@@ -77,6 +77,8 @@
             @style/Widget.Responsive.Toolbar.Button.Navigation
         </item>
         <item name="actionOverflowButtonStyle">@style/Widget.Responsive.ActionButton.Overflow</item>
+
+        <item name="accent_button_theme">@style/AccentButtonDark</item>
     </style>
 
     <!--Correct responsive toolbar layout according to specs, see

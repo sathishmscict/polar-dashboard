@@ -2,9 +2,7 @@
 
     <!-- Light Theme -->
 
-    <style name="AppTheme.Light" parent="Base.AppTheme.Light">
-        <item name="button_accent_selector">@drawable/selector_button_accent_light</item>
-    </style>
+    <style name="AppTheme.Light" parent="Base.AppTheme.Light" />
 
     <style name="AppTheme.Light.Translucent" parent="AppTheme.Light">
         <item name="android:windowIsTranslucent">true</item>
@@ -14,9 +12,7 @@
 
     <!-- Dark Theme -->
 
-    <style name="AppTheme.Dark" parent="Base.AppTheme.Dark">
-        <item name="button_accent_selector">@drawable/selector_button_accent_dark</item>
-    </style>
+    <style name="AppTheme.Dark" parent="Base.AppTheme.Dark" />
 
     <style name="AppTheme.Dark.Translucent" parent="AppTheme.Dark">
         <item name="android:windowIsTranslucent">true</item>
@@ -52,20 +48,31 @@
         <item name="cardUseCompatPadding">true</item>
     </style>
 
+    <style name="AccentButtonLight" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#ffffff</item>
+        <item name="colorButtonNormal">@color/accent_1_light</item>
+    </style>
+
+    <style name="AccentButtonDark" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#ffffff</item>
+        <item name="colorButtonNormal">@color/accent_1_dark</item>
+    </style>
+
+
+    <!-- TODO are these needed? -->
     <declare-styleable name="WindowInsetsLayout_Layout">
         <attr name="layout_windowInsets">
-            <flag name="top" value="0x1"/>
-            <flag name="bottom" value="0x2"/>
+            <flag name="top" value="0x1" />
+            <flag name="bottom" value="0x2" />
         </attr>
-        <attr name="layout_windowInsetsUseMargin" format="boolean"/>
+        <attr name="layout_windowInsetsUseMargin" format="boolean" />
     </declare-styleable>
-
     <declare-styleable name="WindowInsetsLayout">
         <attr name="windowInsets">
-            <flag name="top" value="0x1"/>
-            <flag name="bottom" value="0x2"/>
+            <flag name="top" value="0x1" />
+            <flag name="bottom" value="0x2" />
         </attr>
-        <attr name="windowInsetsUseMargin" format="boolean"/>
+        <attr name="windowInsetsUseMargin" format="boolean" />
     </declare-styleable>
 
 </resources>
