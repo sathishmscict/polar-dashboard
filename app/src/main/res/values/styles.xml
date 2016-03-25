@@ -49,13 +49,13 @@
     </style>
 
     <style name="AccentButtonLight" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">#ffffff</item>
-        <item name="colorButtonNormal">@color/accent_1_light</item>
+        <item name="colorControlHighlight">@color/accent_1_light</item>
+        <item name="colorButtonNormal">@color/accent_2_light</item>
     </style>
 
     <style name="AccentButtonDark" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">#ffffff</item>
-        <item name="colorButtonNormal">@color/accent_1_dark</item>
+        <item name="colorControlHighlight">@color/accent_1_dark</item>
+        <item name="colorButtonNormal">@color/accent_2_dark</item>
     </style>
 
 
