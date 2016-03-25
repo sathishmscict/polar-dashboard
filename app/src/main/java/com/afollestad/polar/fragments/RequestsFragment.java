@@ -86,9 +86,7 @@ public class RequestsFragment extends BasePageFragment implements
             if (!isAdded() || act.isFinishing()) return;
             long nextCheck = RequestLimiter.get(act).intervalMs();
             if (nextCheck < (1000 * 60 * 60))
-                nextCheck = 1000; // if less than a hour, update every 15 seconds
-            RequestLimiter.log("RequestsFragment adapter invalidated, will invalidate again in %d second(s).",
-                    RequestLimiter.msToS(nextCheck));
+                nextCheck = 1000; // if less than a hour, update every second.
             mHandler.postDelayed(this, nextCheck);
         }
     };
@@ -438,7 +436,7 @@ public class RequestsFragment extends BasePageFragment implements
             @Override
             public void run() {
                 final Activity act = getActivity();
-                RequestLimiter.get(act).update();
+                RequestLimiter.get(act).update(IconRequest.get().getSelectedApps().size());
                 if (RequestLimiter.needed(getActivity())) {
                     if (mHandler != null)
                         mHandler.removeCallbacks(mInvalidateLimitRunnable);

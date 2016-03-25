@@ -33,15 +33,15 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
         void onClick(int index, boolean longClick);
     }
 
-    private boolean mAllowRequest;
-    private final int mMax;
+    private int mAllowRequest;
     private ArrayList<App> mApps;
     private final SelectionChangedListener mListener;
 
     public RequestsAdapter(Context context, SelectionChangedListener listener) {
-        final IConfig config = Config.get();
-        mAllowRequest = !RequestLimiter.needed(context) || RequestLimiter.get(context).allow();
-        mMax = config.iconRequestMaxCount();
+        if (!RequestLimiter.needed(context))
+            mAllowRequest = RequestLimiter.NO_LIMIT;
+        else
+            mAllowRequest = RequestLimiter.get(context).allow(Config.get().iconRequestMaxCount());
         mListener = listener;
     }
 
@@ -51,13 +51,13 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
     }
 
     public void invalidateAllowRequest(Context context) {
-        mAllowRequest = RequestLimiter.get(context).allow();
+        mAllowRequest = RequestLimiter.get(context).allow(Config.get().iconRequestMaxCount());
         notifyItemChanged(0);
     }
 
     @Override
     protected boolean isIndexSelectable(int index) {
-        return mAllowRequest && index > 0;
+        return mAllowRequest > 0 && index > 0;
     }
 
     @Override
@@ -80,14 +80,14 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
         super.onBindViewHolder(holder, position);
         if (position == 0) {
             final Context c = holder.itemView.getContext();
-            if (!mAllowRequest) {
+            if (mAllowRequest == RequestLimiter.WAIT) {
                 final String msg = c.getString(R.string.request_limited,
                         RequestLimiter.get(c).remainingIntervalString());
                 holder.title.setText(msg);
-            } else if (mMax > -1) {
-                holder.title.setText(c.getResources().getString(R.string.tap_to_select_app_withmax, mMax));
-            } else {
+            } else if (mAllowRequest == RequestLimiter.NO_LIMIT) {
                 holder.title.setText(R.string.tap_to_select_app);
+            } else {
+                holder.title.setText(c.getResources().getString(R.string.tap_to_select_app_withremaining, mAllowRequest));
             }
             final int bgColor = DialogUtils.resolveColor(holder.itemView.getContext(), R.attr.window_background_cards);
             final int titleColor = TintUtils.isColorLight(bgColor) ? Color.BLACK : Color.WHITE;

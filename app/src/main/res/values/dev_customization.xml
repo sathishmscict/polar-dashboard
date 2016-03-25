@@ -22,8 +22,8 @@
     <!-- Email used to send icon requests, leave empty to disable this feature. -->
     <string name="icon_request_email">fake-email@fake-website.com</string>
 
-    <!-- Max number of icons that can be sent per request. -1 disables max count. -->
-    <integer name="icon_request_maxcount">-1</integer>
+    <!-- Max number of icons that can be sent per request. -1 disables max count. The interval must ALSO be set below. -->
+    <integer name="icon_request_maxcount">3</integer>
 
     <!--
         The interval in seconds in which users must wait between sending icon requests. 0 or less disables it.
@@ -33,7 +33,7 @@
         If you want days:    [seconds] = [days] * 86400
         If you want weeks:   [seconds] = [weeks] * 604800
     -->
-    <integer name="icon_request_limit_interval">-1</integer>
+    <integer name="icon_request_limit_interval">30</integer>
 
     <!-- Public Base64 from the developer console for license checking, optional -->
     <string name="licensing_public_key"></string>

@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 public final class RequestLimiter {
 
     private final static String UPDATE_TIME = "[prl-ut]";
+    private final static String SENT_COUNT = "[prl-sc]";
 
     private final int mLimitInterval;
     private final SharedPreferences mPrefs;
@@ -54,26 +55,52 @@ public final class RequestLimiter {
         return sToMs(mLimitInterval);
     }
 
-    public void update() {
+    public void update(int sentCount) {
         if (mLimitInterval <= 0) return;
-        mPrefs.edit().putLong(UPDATE_TIME, System.currentTimeMillis()).commit();
+        final int newSentCount = mPrefs.getInt(SENT_COUNT, 0) + sentCount;
+        log("Updating sent count to %d.", newSentCount);
+        SharedPreferences.Editor editor = mPrefs.edit()
+                .putInt(SENT_COUNT, newSentCount);
+        if (newSentCount == sentCount) {
+            log("First request in the current interval, setting update time to now.");
+            editor.putLong(UPDATE_TIME, System.currentTimeMillis());
+        }
+        editor.commit();
     }
 
-    public boolean allow() {
-        if (mLimitInterval <= 0) return true;
+    public int allow(int allowedCount) {
+        if (mLimitInterval <= 0) {
+            // No limit interval set, disable limiting.
+            return NO_LIMIT;
+        }
         final long lastUpdate = mPrefs.getLong(UPDATE_TIME, -1);
-        if (lastUpdate == -1) return true;
+        if (lastUpdate == -1) {
+            // No previously recorded update time, first time sending a request.
+            return allowedCount;
+        }
         final long now = System.currentTimeMillis();
         final long nextAllowedTime = lastUpdate + sToMs(mLimitInterval);
-        boolean allow = now >= nextAllowedTime;
-        if (allow) {
-            log("An icon request is allowed!");
+        boolean pastInterval = now >= nextAllowedTime;
+        if (pastInterval) {
+            log("Past the previous interval! Resetting update time and sent count.");
+            mPrefs.edit().remove(UPDATE_TIME).remove(SENT_COUNT).commit();
+            return allowedCount;
         } else {
-            log("An icon request is not allowed... wait %d more seconds.",
-                    msToS(nextAllowedTime - now));
+            final int sentCount = mPrefs.getInt(SENT_COUNT, 0);
+            if (sentCount < allowedCount) {
+                log("The sent count (%d) hasn't reached the allowed count (%d) yet. Icon request is allowed!",
+                        sentCount, allowedCount);
+                return allowedCount - sentCount;
+            } else {
+                log("An icon request is not allowed... wait %d more seconds.",
+                        msToS(nextAllowedTime - now));
+                return WAIT;
+            }
         }
-        return allow;
     }
+
+    public static int NO_LIMIT = -1;
+    public static int WAIT = -2;
 
     private final static long MS_IN_SECOND = 1000;
     private final static long MS_IN_MINUTE = MS_IN_SECOND * 60;
