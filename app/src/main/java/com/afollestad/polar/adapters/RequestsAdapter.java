@@ -57,7 +57,7 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
 
     @Override
     protected boolean isIndexSelectable(int index) {
-        return mAllowRequest > 0 && index > 0;
+        return (mAllowRequest == -1 || mAllowRequest > 0) && index > 0;
     }
 
     @Override
