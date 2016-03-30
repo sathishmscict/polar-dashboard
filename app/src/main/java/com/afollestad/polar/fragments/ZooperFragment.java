@@ -1,6 +1,5 @@
 package com.afollestad.polar.fragments;
 
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,7 +31,6 @@ import com.afollestad.polar.adapters.ZooperAdapter;
 import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.MainActivity;
-import com.afollestad.polar.ui.base.BaseThemedActivity;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.zooper.ZooperUtil;
@@ -134,11 +131,7 @@ public class ZooperFragment extends BasePageFragment implements
                 zooperGridWidth, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
 
-        final int screenWidth = ((BaseThemedActivity) getActivity()).getScreenWidth();
-        final int sizeLimit = (int) Math.ceil((float) screenWidth / (float) zooperGridWidth);
-        Log.d("ZooperFragment", "Zooper widget preview size limit: " + sizeLimit);
-
-        ZooperUtil.getPreviews(getActivity(), sizeLimit, new ZooperUtil.PreviewCallback() {
+        ZooperUtil.getPreviews(getActivity(), new ZooperUtil.PreviewCallback() {
             @Override
             public void onPreviewsLoaded(ArrayList<PreviewItem> previews, Drawable wallpaper, Exception error) {
                 if (getActivity() == null || getActivity().isFinishing() || !isAdded())
@@ -164,8 +157,6 @@ public class ZooperFragment extends BasePageFragment implements
     public void onPause() {
         super.onPause();
         if (getActivity() != null && getActivity().isFinishing()) {
-            if (mAdapter != null)
-                mAdapter.recycle();
             Utils.wipe(ZooperUtil.getWidgetPreviewCache(getActivity()));
             mWallpaper = null;
             mPreviews = null;
@@ -256,11 +247,11 @@ public class ZooperFragment extends BasePageFragment implements
     public static class PreviewItem implements Serializable {
 
         public final String name;
-        public final Bitmap image;
+        public final String path;
 
-        public PreviewItem(String name, Bitmap image) {
+        public PreviewItem(String name, String path) {
             this.name = name;
-            this.image = image;
+            this.path = path;
         }
     }
 }

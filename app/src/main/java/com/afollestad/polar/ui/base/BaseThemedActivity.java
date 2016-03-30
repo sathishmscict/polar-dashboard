@@ -91,13 +91,6 @@ public abstract class BaseThemedActivity extends AssentActivity {
         }
     }
 
-    public final int getScreenWidth() {
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        return size.x;
-    }
-
     @Override
     protected void onResume() {
         super.onResume();

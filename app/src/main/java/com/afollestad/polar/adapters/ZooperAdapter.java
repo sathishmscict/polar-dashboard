@@ -17,7 +17,9 @@ import android.widget.Toast;
 import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.ZooperFragment;
 import com.afollestad.polar.util.Utils;
+import com.bumptech.glide.Glide;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -113,7 +115,9 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
             if (getItemViewType(0) == 1) position--;
             final ZooperFragment.PreviewItem preview = mPreviewsFiltered != null ?
                     mPreviewsFiltered.get(position) : mPreviews.get(position);
-            holder.image.setImageBitmap(preview.image);
+            Glide.with(holder.itemView.getContext())
+                    .load(new File(preview.path))
+                    .into(holder.image);
             holder.background.setImageDrawable(mWallpaper);
             if (position < mWidgetNames.length) {
                 holder.name.setText(mWidgetNames[position]);
@@ -134,15 +138,6 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
         else if (mPreviews != null && mPreviews.size() > 0)
             return mPreviews.size() + (!mZooperInstalled ? 1 : 0);
         else return 0;
-    }
-
-    public void recycle() {
-        if(mPreviews != null)  {
-            for (ZooperFragment.PreviewItem item : mPreviews) {
-                if (!item.image.isRecycled())
-                    item.image.recycle();
-            }
-        }
     }
 
     public static class ZooperVH extends RecyclerView.ViewHolder implements View.OnClickListener {
