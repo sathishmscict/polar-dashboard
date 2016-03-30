@@ -55,15 +55,15 @@ dependencies {
     compile('com.github.afollestad.material-dialogs:core:0.8.5.7@aar') {
         transitive = true
     }
-    compile('com.github.afollestad:drag-select-recyclerview:a1144fe64e@aar') {
+    compile('com.github.afollestad:drag-select-recyclerview:0.3.3@aar') {
         transitive = true
     }
 
-    compile 'com.github.afollestad:bridge:9a8fae5961'
-    compile 'com.github.afollestad:sectioned-recyclerview:0.2.0'
-    compile 'com.github.afollestad:assent:8ba161b711'
+    compile 'com.github.afollestad:bridge:3.2.0'
+    compile 'com.github.afollestad:sectioned-recyclerview:0.2.1'
+    compile 'com.github.afollestad:assent:0.2.1'
     compile 'com.github.afollestad:inquiry:b13a58b902'
-    compile 'com.github.afollestad:icon-request:1.3.0'
+    compile 'com.github.afollestad:icon-request:1.3.1'
 
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.5'
 
@@ -82,6 +82,5 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.2.1'
 
     compile 'com.anjlab.android.iab.v3:library:1.0.+'
-
     compile 'com.pluscubed:insets-dispatcher:0.1.3'
 }
