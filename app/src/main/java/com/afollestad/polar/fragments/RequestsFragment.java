@@ -322,8 +322,12 @@ public class RequestsFragment extends BasePageFragment implements
                         .includeDeviceInfo(true)
                         .build();
             }
-            if (!IconRequest.get().isAppsLoaded())
+            if (!IconRequest.get().isAppsLoaded()) {
+                showProgress();
                 IconRequest.get().loadApps();
+            } else {
+                onAppsLoaded(IconRequest.get().getApps(), null);
+            }
         }
     }
 
@@ -344,33 +348,28 @@ public class RequestsFragment extends BasePageFragment implements
 
     // Icon Requests
 
+    private void showProgress() {
+        emptyText.setVisibility(View.VISIBLE);
+        emptyText.setVisibility(View.GONE);
+        progress.setVisibility(View.VISIBLE);
+        list.setVisibility(View.GONE);
+        progressText.setText(R.string.please_wait);
+    }
+
     @Override
     public void onLoadingFilter() {
         if (progressText == null) return;
-        emptyText.setVisibility(View.VISIBLE);
         mAppsLoaded = false;
-        progressText.post(new Runnable() {
-            @Override
-            public void run() {
-                emptyText.setVisibility(View.GONE);
-                progress.setVisibility(View.VISIBLE);
-                list.setVisibility(View.GONE);
-                progressText.setText(R.string.loading_filter);
-            }
-        });
+        showProgress();
+        progressText.setText(R.string.loading_filter);
     }
 
     @Override
     public void onAppsLoadProgress(final int percent) {
         if (progressText == null) return;
-        progressText.post(new Runnable() {
-            @Override
-            public void run() {
-                if (!isAdded() || getActivity() == null) return;
-                // Percent isn't used here since it happens so fast anyways
-                progressText.setText(R.string.loading);
-            }
-        });
+        else if (!isAdded() || getActivity() == null) return;
+        // Percent isn't used here since it happens so fast anyways
+        progressText.setText(R.string.loading);
     }
 
     @Override
@@ -380,20 +379,15 @@ public class RequestsFragment extends BasePageFragment implements
             emptyText.setVisibility(arrayList == null || arrayList.isEmpty() ?
                     View.VISIBLE : View.GONE);
             mAppsLoaded = true;
-            progressText.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (IconRequest.get() == null) return;
-                    getActivity().invalidateOptionsMenu();
-                    mAdapter.setApps(IconRequest.get().getApps());
-                    mAdapter.notifyDataSetChanged();
-                    emptyText.setVisibility(mAdapter.getItemCount() == 0 ?
-                            View.VISIBLE : View.GONE);
-                    progress.setVisibility(View.GONE);
-                    list.setVisibility(mAdapter.getItemCount() == 0 ?
-                            View.GONE : View.VISIBLE);
-                }
-            });
+            if (IconRequest.get() == null) return;
+            getActivity().invalidateOptionsMenu();
+            mAdapter.setApps(IconRequest.get().getApps());
+            mAdapter.notifyDataSetChanged();
+            emptyText.setVisibility(mAdapter.getItemCount() == 0 ?
+                    View.VISIBLE : View.GONE);
+            progress.setVisibility(View.GONE);
+            list.setVisibility(mAdapter.getItemCount() == 0 ?
+                    View.GONE : View.VISIBLE);
         }
     }
 
@@ -411,16 +405,11 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onRequestPreparing() {
         if (getActivity() == null) return;
-        progressText.post(new Runnable() {
-            @Override
-            public void run() {
-                mDialog = new MaterialDialog.Builder(getActivity())
-                        .content(R.string.preparing_icon_request)
-                        .progress(true, -1)
-                        .cancelable(false)
-                        .show();
-            }
-        });
+        mDialog = new MaterialDialog.Builder(getActivity())
+                .content(R.string.preparing_icon_request)
+                .progress(true, -1)
+                .cancelable(false)
+                .show();
     }
 
     @Override
@@ -432,28 +421,23 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onRequestSent() {
         if (getActivity() == null) return;
-        progressText.post(new Runnable() {
-            @Override
-            public void run() {
-                final Activity act = getActivity();
-                RequestLimiter.get(act).update(IconRequest.get().getSelectedApps().size());
-                if (RequestLimiter.needed(getActivity())) {
-                    if (mHandler != null)
-                        mHandler.removeCallbacks(mInvalidateLimitRunnable);
-                    else mHandler = new Handler();
-                    mHandler.post(mInvalidateLimitRunnable);
-                }
-                mDialog.dismiss();
-                fab.hide();
-                IconRequest.get().unselectAllApps();
-                mAdapter.clearSelected();
-                mAdapter.notifyDataSetChanged();
+        final Activity act = getActivity();
+        RequestLimiter.get(act).update(IconRequest.get().getSelectedApps().size());
+        if (RequestLimiter.needed(getActivity())) {
+            if (mHandler != null)
+                mHandler.removeCallbacks(mInvalidateLimitRunnable);
+            else mHandler = new Handler();
+            mHandler.post(mInvalidateLimitRunnable);
+        }
+        mDialog.dismiss();
+        fab.hide();
+        IconRequest.get().unselectAllApps();
+        mAdapter.clearSelected();
+        mAdapter.notifyDataSetChanged();
 
-                final String backendHost = Config.get().polarBackendHost();
-                if (backendHost != null && !backendHost.trim().isEmpty())
-                    Toast.makeText(getActivity(), R.string.request_uploaded, Toast.LENGTH_LONG).show();
-            }
-        });
+        final String backendHost = Config.get().polarBackendHost();
+        if (backendHost != null && !backendHost.trim().isEmpty())
+            Toast.makeText(getActivity(), R.string.request_uploaded, Toast.LENGTH_LONG).show();
     }
 
     @OnClick(R.id.fab)
