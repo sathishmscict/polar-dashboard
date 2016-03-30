@@ -32,7 +32,7 @@ android {
 //        }
         release {
 //            signingConfig signingConfigs.production
-            minifyEnabled false
+            minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
