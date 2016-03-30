@@ -131,7 +131,6 @@ public class MainActivity extends BaseDonateActivity implements
         }
         dispatchFragmentUpdateTitle(!useNavDrawer);
 
-
         processIntent(getIntent());
     }
 

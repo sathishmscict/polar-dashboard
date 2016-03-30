@@ -2,11 +2,13 @@ package com.afollestad.polar.ui.base;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,6 +89,13 @@ public abstract class BaseThemedActivity extends AssentActivity {
                 toolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat);
             }
         }
+    }
+
+    public final int getScreenWidth() {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.x;
     }
 
     @Override

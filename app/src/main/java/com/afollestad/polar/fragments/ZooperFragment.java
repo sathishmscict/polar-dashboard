@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +33,7 @@ import com.afollestad.polar.adapters.ZooperAdapter;
 import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 import com.afollestad.polar.ui.MainActivity;
+import com.afollestad.polar.ui.base.BaseThemedActivity;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.zooper.ZooperUtil;
@@ -126,12 +128,17 @@ public class ZooperFragment extends BasePageFragment implements
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
+        final int zooperGridWidth = Config.get().gridWidthZooper();
         mAdapter = new ZooperAdapter(getActivity());
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(
-                Config.get().gridWidthZooper(), StaggeredGridLayoutManager.VERTICAL));
+                zooperGridWidth, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
 
-        ZooperUtil.getPreviews(getActivity(), new ZooperUtil.PreviewCallback() {
+        final int screenWidth = ((BaseThemedActivity) getActivity()).getScreenWidth();
+        final int sizeLimit = (int) Math.ceil((float) screenWidth / (float) zooperGridWidth);
+        Log.d("ZooperFragment", "Zooper widget preview size limit: " + sizeLimit);
+
+        ZooperUtil.getPreviews(getActivity(), sizeLimit, new ZooperUtil.PreviewCallback() {
             @Override
             public void onPreviewsLoaded(ArrayList<PreviewItem> previews, Drawable wallpaper, Exception error) {
                 if (getActivity() == null || getActivity().isFinishing() || !isAdded())
