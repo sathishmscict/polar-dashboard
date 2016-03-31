@@ -32,7 +32,8 @@ android {
 //        }
         release {
 //            signingConfig signingConfigs.production
-            minifyEnabled true
+            // Disable Proguard so our drawable-nodpi resources aren't removed
+            minifyEnabled false
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
