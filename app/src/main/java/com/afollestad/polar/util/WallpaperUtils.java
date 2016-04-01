@@ -254,6 +254,13 @@ public class WallpaperUtils {
                                 return;
                             }
                             try {
+                                for (Wallpaper wallpaper : holder.wallpapers) {
+                                    if (wallpaper.name == null)
+                                        wallpaper.name = "";
+                                    if (wallpaper.author == null)
+                                        wallpaper.author = "";
+                                }
+
                                 Log.d("WallpaperUtils", String.format("Loaded %d wallpapers from web.", holder.length()));
                                 if (holder.length() > 0) {
                                     try {
