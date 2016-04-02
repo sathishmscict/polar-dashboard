@@ -80,4 +80,10 @@
 
     </string>
 
+    <!--
+        If set to true, Polar will fallback to sending an email for icon requests IF backend upload
+        fails (e.g. if the server is down temporarily).
+    -->
+    <bool name="polar_backend_email_fallback">false</bool>
+
 </resources>

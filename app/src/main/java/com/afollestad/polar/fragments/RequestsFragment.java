@@ -306,8 +306,10 @@ public class RequestsFragment extends BasePageFragment implements
 
                 BackendConfig remoteConfig = null;
                 String remoteHost = Config.get().polarBackendHost();
-                if (remoteHost != null && !remoteHost.trim().isEmpty())
-                    remoteConfig = new BackendConfig(remoteHost, Config.get().polarBackendApiKey());
+                if (remoteHost != null && !remoteHost.trim().isEmpty()) {
+                    remoteConfig = new BackendConfig(remoteHost, Config.get().polarBackendApiKey())
+                            .fallbackToEmail(Config.get().polarBackendEmailFallback());
+                }
 
                 IconRequest.start(getActivity())
                         .toEmail(getString(R.string.icon_request_email))

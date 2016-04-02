@@ -76,4 +76,6 @@ public interface IConfig {
     String polarBackendHost();
 
     String polarBackendApiKey();
+
+    boolean polarBackendEmailFallback();
 }
