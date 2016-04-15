@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0a397bd4-2a8b-4bef-b4f2-9b4d4994a682" name="Default" comment="Fix">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polarrmapps.JPG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polarrmappview1.JPG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polarrmappview2.JPG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polarrmdashboardintegration.JPG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polarrmlogin.JPG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polarrmmyteam.JPG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polarrmsubscription.JPG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polarrmsubscription2.JPG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/polar-dashboard-web.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    <list default="true" id="0a397bd4-2a8b-4bef-b4f2-9b4d4994a682" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.css" afterPath="$PROJECT_DIR$/index.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requestmanager.html" afterPath="$PROJECT_DIR$/requestmanager.html" />
     </list>
     <ignored path="polar-dashboard-web.iws" />
@@ -42,8 +29,8 @@
       <file leaf-file-name="requestmanager.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/requestmanager.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1015">
-              <caret line="79" column="135" selection-start-line="79" selection-start-column="135" selection-end-line="79" selection-end-column="135" />
+            <state relative-caret-position="1289">
+              <caret line="126" column="35" selection-start-line="126" selection-start-column="35" selection-end-line="126" selection-end-column="35" />
               <folding>
                 <element signature="n#style#0;n#a#0;n#li#8;n#ul#0;n#div#0;n#nav#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -87,6 +74,7 @@
         <option value="$PROJECT_DIR$/wallpapers.html" />
         <option value="$PROJECT_DIR$/zooper.html" />
         <option value="$PROJECT_DIR$/customization.html" />
+        <option value="$PROJECT_DIR$/index.css" />
         <option value="$PROJECT_DIR$/requestmanager.html" />
       </list>
     </option>
@@ -700,7 +688,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1456775669686</updated>
-      <workItem from="1460676981204" duration="4071000" />
+      <workItem from="1460676981204" duration="4322000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <created>1456777598500</created>
@@ -863,11 +851,18 @@
       <option name="project" value="LOCAL" />
       <updated>1460677683857</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Added Polar RM info">
+      <created>1460681962815</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1460681962815</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4071000" />
+    <option name="totallyTimeSpent" value="4322000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="3026" height="1946" extended-state="6" />
@@ -920,7 +915,8 @@
     <MESSAGE value="FIxes" />
     <MESSAGE value="Update" />
     <MESSAGE value="Fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix" />
+    <MESSAGE value="Added Polar RM info" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Polar RM info" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1158,10 +1154,18 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="843">
+          <caret line="179" column="16" selection-start-line="179" selection-start-column="16" selection-end-line="179" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/requestmanager.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1015">
-          <caret line="79" column="135" selection-start-line="79" selection-start-column="135" selection-end-line="79" selection-end-column="135" />
+        <state relative-caret-position="1289">
+          <caret line="126" column="35" selection-start-line="126" selection-start-column="35" selection-end-line="126" selection-end-column="35" />
           <folding>
             <element signature="n#style#0;n#a#0;n#li#8;n#ul#0;n#div#0;n#nav#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>

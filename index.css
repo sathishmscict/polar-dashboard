@@ -177,6 +177,11 @@ a {
     height: auto;
 }
 
+.app-image-large {
+    max-width: 90%;
+    height: auto;
+}
+
 .valign-wrapper, .valign {
     position: absolute;
     top: 50%;
