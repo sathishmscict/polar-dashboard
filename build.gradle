@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
         // Don't use 2.0.0-alpha(x), there are issues caused by instant run.
-        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.android.tools.build:gradle:2.1.0-beta1'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
     }
 }
