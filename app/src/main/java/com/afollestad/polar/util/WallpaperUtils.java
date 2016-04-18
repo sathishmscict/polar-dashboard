@@ -221,6 +221,9 @@ public class WallpaperUtils {
                     });
         } catch (Throwable t) {
             t.printStackTrace();
+        } finally {
+            if (context instanceof Activity && ((Activity) context).isFinishing())
+                Inquiry.deinit();
         }
     }
 

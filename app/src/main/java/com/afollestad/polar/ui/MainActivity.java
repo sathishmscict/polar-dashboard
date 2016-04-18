@@ -460,7 +460,6 @@ public class MainActivity extends BaseDonateActivity implements
         if (isFinishing()) {
             Config.deinit();
             Bridge.destroy();
-            Inquiry.deinit();
             DrawableXmlParser.cleanup();
             LicensingUtils.cleanup();
         }
