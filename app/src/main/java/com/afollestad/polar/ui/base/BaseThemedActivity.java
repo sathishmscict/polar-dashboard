@@ -45,6 +45,7 @@ public abstract class BaseThemedActivity extends AssentActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Config.init(this);
+        VC.init(this);
         mLastDarkTheme = darkTheme();
         setTheme(getCurrentTheme());
         super.onCreate(savedInstanceState);
@@ -102,7 +103,10 @@ public abstract class BaseThemedActivity extends AssentActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        VC.destroy();
+        if (isFinishing()) {
+            VC.destroy();
+            Config.setContext(null);
+        }
     }
 
     @Override
