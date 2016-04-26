@@ -74,6 +74,12 @@
                 <action android:name="org.adw.launcher.icons.ACTION_PICK_ICON" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <!-- Xperia Home Launcher -->
+            <intent-filter>
+                <action android:name="com.sonymobile.home.ICON_PACK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
             <!-- Apex -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
