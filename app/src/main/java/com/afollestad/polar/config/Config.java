@@ -32,7 +32,8 @@ public class Config implements IConfig {
     public static void setContext(Context context) {
         if (mConfig != null) {
             mConfig.mContext = context;
-            mConfig.mR = context.getResources();
+            if (context != null)
+                mConfig.mR = context.getResources();
         }
     }
 

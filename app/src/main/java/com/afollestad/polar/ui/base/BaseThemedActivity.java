@@ -105,7 +105,7 @@ public abstract class BaseThemedActivity extends AssentActivity {
         super.onPause();
         if (isFinishing()) {
             VC.destroy();
-            Config.setContext(null);
+            Config.deinit();
         }
     }
 
