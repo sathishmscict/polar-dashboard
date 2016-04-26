@@ -76,6 +76,7 @@ public class RequestsFragment extends BasePageFragment implements
     private MaterialDialog mDialog;
     private int mInitialSelection = -1;
     private boolean mAppsLoaded = false;
+    private boolean mIsLoading = false;
 
     private final Runnable mInvalidateLimitRunnable = new Runnable() {
         @Override
@@ -254,10 +255,12 @@ public class RequestsFragment extends BasePageFragment implements
             if (ir != null && ir.isAppsLoaded()) {
                 mAdapter.setApps(ir.getApps());
                 mAdapter.restoreInstanceState(savedInstanceState);
-                emptyText.setVisibility(View.GONE);
-                progress.setVisibility(View.GONE);
-                progressText.setVisibility(View.GONE);
-                list.setVisibility(View.VISIBLE);
+                if (!mIsLoading && mAdapter.getItemCount() > 0) {
+                    emptyText.setVisibility(View.GONE);
+                    progress.setVisibility(View.GONE);
+                    progressText.setVisibility(View.GONE);
+                    list.setVisibility(View.VISIBLE);
+                }
             }
         }
     }
@@ -300,6 +303,8 @@ public class RequestsFragment extends BasePageFragment implements
     @SuppressLint("StringFormatInvalid")
     private void reload() {
         synchronized (LOCK) {
+            if (mIsLoading) return;
+            mIsLoading = true;
             if (IconRequest.get() == null) {
                 final File saveFolder = new File(Environment.getExternalStorageDirectory(), getString(R.string.app_name));
                 Utils.wipe(new File(saveFolder, "files"));
@@ -377,6 +382,7 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onAppsLoaded(ArrayList<App> arrayList, Exception e) {
         synchronized (LOCK) {
+            mIsLoading = false;
             if (progressText == null || IconRequest.get() == null) return;
             emptyText.setVisibility(arrayList == null || arrayList.isEmpty() ?
                     View.VISIBLE : View.GONE);

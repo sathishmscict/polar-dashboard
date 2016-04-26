@@ -51,7 +51,7 @@ dependencies {
     compile('com.github.afollestad.material-dialogs:core:0.8.5.8@aar') {
         transitive = true
     }
-    compile('com.github.afollestad:drag-select-recyclerview:0.3.4@aar') {
+    compile('com.github.afollestad:drag-select-recyclerview:56eccc10c7@aar') {
         transitive = true
     }
 
