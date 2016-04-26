@@ -43,8 +43,10 @@ public class Config implements IConfig {
     }
 
     public static void deinit() {
-        mConfig.destroy();
-        mConfig = null;
+        if (mConfig != null) {
+            mConfig.destroy();
+            mConfig = null;
+        }
     }
 
     @NonNull
