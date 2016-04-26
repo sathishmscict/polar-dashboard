@@ -32,7 +32,6 @@ import android.view.WindowInsets;
 import android.widget.LinearLayout;
 
 import com.afollestad.bridge.Bridge;
-import com.afollestad.inquiry.Inquiry;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
@@ -54,6 +53,7 @@ import com.afollestad.polar.util.LicensingUtils;
 import com.afollestad.polar.util.PagesBuilder;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
+import com.afollestad.polar.util.VC;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.views.DisableableViewPager;
 import com.google.android.vending.licensing.Policy;
@@ -273,7 +273,7 @@ public class MainActivity extends BaseDonateActivity implements
 
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Drawable menuIcon = ContextCompat.getDrawable(this, R.drawable.ic_action_menu);
+        Drawable menuIcon = VC.get(R.drawable.ic_action_menu);
         menuIcon = TintUtils.createTintedDrawable(menuIcon, DialogUtils.resolveColor(this, R.attr.tab_icon_color));
         getSupportActionBar().setHomeAsUpIndicator(menuIcon);
 
@@ -435,7 +435,7 @@ public class MainActivity extends BaseDonateActivity implements
 
     private void addTab(@DrawableRes int icon) {
         assert mTabs != null;
-        TabLayout.Tab tab = mTabs.newTab().setIcon(icon);
+        TabLayout.Tab tab = mTabs.newTab().setIcon(VC.get(icon));
         if (tab.getIcon() != null) {
             Drawable tintedIcon = DrawableCompat.wrap(tab.getIcon());
             DrawableCompat.setTint(tintedIcon, DialogUtils.resolveColor(this, R.attr.tab_icon_color));

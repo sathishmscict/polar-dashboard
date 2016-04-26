@@ -2,13 +2,11 @@ package com.afollestad.polar.ui.base;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.support.v7.widget.Toolbar;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +18,7 @@ import com.afollestad.polar.R;
 import com.afollestad.polar.config.Config;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
+import com.afollestad.polar.util.VC;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -94,9 +93,16 @@ public abstract class BaseThemedActivity extends AssentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        VC.init(this);
         Config.setContext(this);
         if (mLastDarkTheme != darkTheme())
             recreate();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        VC.destroy();
     }
 
     @Override

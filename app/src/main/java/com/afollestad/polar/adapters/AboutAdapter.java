@@ -22,6 +22,7 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.config.Config;
 import com.afollestad.polar.util.TintUtils;
+import com.afollestad.polar.util.VC;
 import com.afollestad.polar.views.SplitButtonsLayout;
 import com.bumptech.glide.Glide;
 
@@ -181,14 +182,14 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
 
             if (feedbackEnabled) {
                 holder.feedbackImage.setImageDrawable(TintUtils.createTintedDrawable(
-                        ContextCompat.getDrawable(mContext, R.drawable.ic_action_feedback), accentColor));
+                        VC.get(R.drawable.ic_action_feedback), accentColor));
             } else {
                 ((LinearLayout.LayoutParams) holder.donateButton.getLayoutParams()).weight = 2;
                 holder.feedbackButton.setVisibility(View.GONE);
             }
             if (donationEnabled) {
                 holder.donateImage.setImageDrawable(TintUtils.createTintedDrawable(
-                        ContextCompat.getDrawable(mContext, R.drawable.ic_action_donate), accentColor));
+                        VC.get(R.drawable.ic_action_donate), accentColor));
             } else {
                 ((LinearLayout.LayoutParams) holder.feedbackButton.getLayoutParams()).weight = 2;
                 holder.donateButton.setVisibility(View.GONE);
