@@ -133,12 +133,10 @@ public abstract class BaseThemedActivity extends AssentActivity {
     }
 
     protected final void darkTheme(boolean newValue) {
-        Config.setContext(this); // crash avoidance, just in case
         Config.get().darkTheme(newValue);
     }
 
     protected final boolean darkTheme() {
-        Config.setContext(this); // crash avoidance, just in case
         return Config.get().darkTheme();
     }
 }
