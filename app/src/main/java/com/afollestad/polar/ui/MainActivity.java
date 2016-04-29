@@ -462,6 +462,7 @@ public class MainActivity extends BaseDonateActivity implements
             Bridge.destroy();
             DrawableXmlParser.cleanup();
             LicensingUtils.cleanup();
+            VC.destroy();
         }
     }
 

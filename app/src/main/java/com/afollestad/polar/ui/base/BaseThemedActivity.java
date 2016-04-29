@@ -101,15 +101,6 @@ public abstract class BaseThemedActivity extends AssentActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        if (isFinishing()) {
-            VC.destroy();
-            Config.deinit();
-        }
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         themeMenu(this, menu);
         return super.onCreateOptionsMenu(menu);
