@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.Html;
@@ -330,7 +331,7 @@ public class RequestsFragment extends BasePageFragment implements
                         .build();
             }
             if (!IconRequest.get().isAppsLoaded()) {
-                showProgress();
+                showProgress(0);
                 IconRequest.get().loadApps();
             } else {
                 onAppsLoaded(IconRequest.get().getApps(), null);
@@ -355,20 +356,21 @@ public class RequestsFragment extends BasePageFragment implements
 
     // Icon Requests
 
-    private void showProgress() {
+    private void showProgress(@StringRes int text) {
         emptyText.setVisibility(View.VISIBLE);
         emptyText.setVisibility(View.GONE);
         progress.setVisibility(View.VISIBLE);
         list.setVisibility(View.GONE);
-        progressText.setText(R.string.please_wait);
+        if (text == 0)
+            text = R.string.please_wait;
+        progressText.setText(text);
     }
 
     @Override
     public void onLoadingFilter() {
         if (progressText == null) return;
         mAppsLoaded = false;
-        showProgress();
-        progressText.setText(R.string.loading_filter);
+        showProgress(R.string.loading_filter);
     }
 
     @Override
@@ -376,7 +378,7 @@ public class RequestsFragment extends BasePageFragment implements
         if (progressText == null) return;
         else if (!isAdded() || getActivity() == null) return;
         // Percent isn't used here since it happens so fast anyways
-        progressText.setText(R.string.loading);
+        showProgress(R.string.loading);
     }
 
     @Override
