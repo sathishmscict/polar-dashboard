@@ -55,20 +55,20 @@ dependencies {
         transitive = true
     }
 
-    compile 'com.github.afollestad:bridge:3.2.1'
-    compile 'com.github.afollestad:sectioned-recyclerview:0.2.2'
-    compile 'com.github.afollestad:assent:0.2.2'
+    compile 'com.afollestad:bridge:3.2.1'
+    compile 'com.afollestad:sectioned-recyclerview:0.2.2'
+    compile 'com.afollestad:assent:0.2.2'
     compile 'com.github.afollestad:inquiry:ac638bf1e8'
     compile 'com.github.afollestad:icon-request:5e43f6b433'
 
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.5'
 
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:recyclerview-v7:23.3.0'
-    compile 'com.android.support:support-v13:23.3.0'
-    compile 'com.android.support:design:23.3.0'
-    compile 'com.android.support:cardview-v7:23.3.0'
-    compile 'com.android.support:palette-v7:23.3.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:support-v13:23.4.0'
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:cardview-v7:23.4.0'
+    compile 'com.android.support:palette-v7:23.4.0'
 
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.florent37:glidepalette:1.0.6@aar'
