@@ -43,6 +43,7 @@ repositories {
     mavenCentral()
     jcenter()
     maven { url "https://jitpack.io" }
+    maven { url "https://dl.bintray.com/drummer-aidan/maven" }
 }
 
 dependencies {
@@ -58,8 +59,9 @@ dependencies {
     compile 'com.afollestad:bridge:3.2.1'
     compile 'com.afollestad:sectioned-recyclerview:0.2.2'
     compile 'com.afollestad:assent:0.2.2'
+    compile 'com.afollestad:icon-request:1.3.6'
+
     compile 'com.github.afollestad:inquiry:ac638bf1e8'
-    compile 'com.github.afollestad:icon-request:5e43f6b433'
 
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.5'
 
