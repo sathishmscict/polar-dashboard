@@ -1,7 +1,9 @@
 package com.afollestad.polar.ui.base;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -56,6 +58,15 @@ public abstract class BaseThemedActivity extends AssentActivity {
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Sets color of entry in the system recents page
+            ActivityManager.TaskDescription td = new ActivityManager.TaskDescription(
+                    getString(R.string.app_name),
+                    BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher),
+                    DialogUtils.resolveColor(this, R.attr.colorPrimary));
+            setTaskDescription(td);
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&

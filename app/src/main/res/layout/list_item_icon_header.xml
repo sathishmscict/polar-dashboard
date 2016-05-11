@@ -27,9 +27,13 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="@dimen/content_inset_half"
         android:layout_marginTop="@dimen/content_inset_half"
-        android:theme="?accent_button_theme"
         android:clickable="true"
+        android:ellipsize="none"
+        android:lines="1"
+        android:maxLength="48"
+        android:singleLine="true"
         android:text="@string/more"
-        android:textColor="#fff" />
+        android:textColor="#fff"
+        android:theme="?accent_button_theme" />
 
 </com.afollestad.polar.views.IconHeaderViewGroup>
