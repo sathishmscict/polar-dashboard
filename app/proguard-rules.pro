@@ -12,3 +12,5 @@
 #-ignorewarnings
 #
 #-keep class android.support.v7.graphics.** { *; }
+
+-keep public class * implements com.bumptech.glide.module.GlideModule

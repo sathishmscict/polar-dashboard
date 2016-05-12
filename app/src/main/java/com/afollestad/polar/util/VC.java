@@ -34,7 +34,11 @@ public class VC {
         try {
             return VectorDrawableCompat.create(mContext.getResources(), iconRes, null);
         } catch (Throwable t) {
-            return ContextCompat.getDrawable(mContext, iconRes);
+            try {
+                return ContextCompat.getDrawable(mContext, iconRes);
+            } catch (Throwable t2) {
+                return null;
+            }
         }
     }
 

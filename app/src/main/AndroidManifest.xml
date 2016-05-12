@@ -19,6 +19,11 @@
         android:theme="@style/AppTheme.Light"
         android:vmSafeMode="true"
         tools:ignore="GoogleAppIndexingWarning,RtlEnabled,UnusedAttribute">
+
+        <meta-data
+            android:name="com.afollestad.polar.util.GlideConfiguration"
+            android:value="GlideModule" />
+
         <service
             android:name=".services.GaufrerWallpaperSource"
             android:description="@string/muzei_description"
