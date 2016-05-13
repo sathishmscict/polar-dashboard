@@ -21,8 +21,8 @@ android {
         applicationId "com.afollestad.polar"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 21
-        versionName "1.5.1"
+        versionCode 22
+        versionName "1.5.2"
     }
 
     buildTypes {
@@ -42,28 +42,21 @@ android {
 repositories {
     mavenCentral()
     jcenter()
-    maven { url "https://jitpack.io" }
     maven { url "https://dl.bintray.com/drummer-aidan/maven" }
 }
 
 dependencies {
     compile project(path: ':licensing')
 
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.8@aar') {
-        transitive = true
-    }
-    compile('com.github.afollestad:drag-select-recyclerview:56eccc10c7@aar') {
-        transitive = true
-    }
-
+    compile 'com.afollestad.material-dialogs:core:0.8.5.9'
+    compile 'com.afollestad:drag-select-recyclerview:0.3.5'
     compile 'com.afollestad:bridge:3.2.1'
     compile 'com.afollestad:sectioned-recyclerview:0.2.2'
     compile 'com.afollestad:assent:0.2.2'
     compile 'com.afollestad:icon-request:1.3.6'
+    compile 'com.afollestad:inquiry:2.0.1'
 
-    compile 'com.github.afollestad:inquiry:ac638bf1e8'
-
-    compile 'me.zhanghai.android.materialprogressbar:library:1.1.5'
+    compile 'me.zhanghai.android.materialprogressbar:library:1.1.6'
 
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:recyclerview-v7:23.4.0'
