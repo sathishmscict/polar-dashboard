@@ -20,7 +20,7 @@
     </string>
 
     <!-- When false, the Save button for wallpapers is hidden. -->
-    <bool name="wallpapers_allow_download">false</bool>
+    <bool name="wallpapers_allow_download">true</bool>
 
     <!-- Email used to send icon requests, leave empty to disable this feature. -->
     <string name="icon_request_email">fake-email@fake-website.com</string>
