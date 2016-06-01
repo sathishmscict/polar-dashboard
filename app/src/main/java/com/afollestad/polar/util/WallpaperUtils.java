@@ -323,26 +323,28 @@ public class WallpaperUtils {
             return;
         }
 
-        final File saveFolder = new File(Environment.getExternalStorageDirectory(), context.getString(R.string.app_name));
-        //noinspection ResultOfMethodCallIgnored
-        saveFolder.mkdirs();
-
+        File saveFolder;
         final String name;
         final String extension = wallpaper.url.toLowerCase(Locale.getDefault()).endsWith(".png") ? "png" : "jpg";
+
         if (apply) {
             // Crop/Apply
+            saveFolder = context.getExternalCacheDir();
             name = String.format("%s_%s_wallpaper.%s",
                     wallpaper.name.replace(" ", "_"),
                     wallpaper.author.replace(" ", "_"),
                     extension);
         } else {
             // Save
+            saveFolder = new File(Environment.getExternalStorageDirectory(), context.getString(R.string.app_name));
             name = String.format("%s_%s.%s",
                     wallpaper.name.replace(" ", "_"),
                     wallpaper.author.replace(" ", "_"),
                     extension);
         }
 
+        //noinspection ResultOfMethodCallIgnored
+        saveFolder.mkdirs();
         mFileCache = new File(saveFolder, name);
 
         if (!mFileCache.exists()) {
@@ -386,14 +388,16 @@ public class WallpaperUtils {
     }
 
     private static void finishOption(final Activity context, boolean apply, @Nullable final MaterialDialog dialog) {
-        MediaScannerConnection.scanFile(context,
-                new String[]{mFileCache.getAbsolutePath()}, null,
-                new MediaScannerConnection.OnScanCompletedListener() {
-                    public void onScanCompleted(String path, Uri uri) {
-                        Log.i("WallpaperScan", "Scanned " + path + ":");
-                        Log.i("WallpaperScan", "-> uri = " + uri);
-                    }
-                });
+        if (!apply) {
+            MediaScannerConnection.scanFile(context,
+                    new String[]{mFileCache.getAbsolutePath()}, null,
+                    new MediaScannerConnection.OnScanCompletedListener() {
+                        public void onScanCompleted(String path, Uri uri) {
+                            Log.i("WallpaperScan", "Scanned " + path + ":");
+                            Log.i("WallpaperScan", "-> uri = " + uri);
+                        }
+                    });
+        }
 
         if (apply) {
             // Apply

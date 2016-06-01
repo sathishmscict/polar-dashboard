@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.afollestad.assent.AssentActivity;
 import com.afollestad.polar.R;
+import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.WallpapersFragment;
 import com.afollestad.polar.util.WallpaperUtils;
 
@@ -164,6 +165,7 @@ public class ViewerActivity extends AssentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.viewer, menu);
+        menu.findItem(R.id.save).setVisible(Config.get().wallpapersAllowDownload());
         return super.onCreateOptionsMenu(menu);
     }
 

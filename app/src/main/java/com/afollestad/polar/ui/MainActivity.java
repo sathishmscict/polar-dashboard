@@ -463,6 +463,7 @@ public class MainActivity extends BaseDonateActivity implements
             DrawableXmlParser.cleanup();
             LicensingUtils.cleanup();
             VC.destroy();
+            Utils.wipe(getExternalCacheDir());
         }
     }
 

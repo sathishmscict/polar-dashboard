@@ -53,6 +53,7 @@ public class WallpapersFragment extends BasePageFragment implements
     public static final int RQ_CROPANDSETWALLPAPER = 8585;
     public static final int RQ_VIEWWALLPAPER = 2001;
     private static Toast mToast;
+
     @Bind(android.R.id.list)
     RecyclerView mRecyclerView;
     @Bind(android.R.id.empty)
@@ -60,6 +61,7 @@ public class WallpapersFragment extends BasePageFragment implements
     @Bind(android.R.id.progress)
     View mProgress;
     WallpaperUtils.WallpapersHolder mWallpapers;
+
     private WallpaperAdapter mAdapter;
     private String mQueryText;
     private final Runnable searchRunnable = new Runnable() {
@@ -110,6 +112,7 @@ public class WallpapersFragment extends BasePageFragment implements
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.wallpapers, menu);
         super.onCreateOptionsMenu(menu, inflater);
+
         MenuItem mSearchItem = menu.findItem(R.id.search);
         SearchView mSearchView = (SearchView) MenuItemCompat.getActionView(mSearchItem);
         mSearchView.setQueryHint(getString(R.string.search_wallpapers));
@@ -168,6 +171,12 @@ public class WallpapersFragment extends BasePageFragment implements
     }
 
     private void showOptions(final int imageIndex) {
+        if (!Config.get().wallpapersAllowDownload()) {
+            final WallpaperUtils.Wallpaper wallpaper = mWallpapers.get(imageIndex);
+            WallpaperUtils.download(getActivity(), wallpaper, true);
+            return;
+        }
+
         new MaterialDialog.Builder(getActivity())
                 .title(R.string.wallpaper)
                 .items(R.array.wallpaper_options)
