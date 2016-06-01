@@ -223,7 +223,7 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
             holder.moreButton.setText(holder.itemView.getContext().getString(
                     R.string.more_x, category.size() - mIconsPerSection));
         } else {
-            holder.moreButton.setVisibility(View.GONE);
+            holder.moreButton.setVisibility(View.INVISIBLE);
             holder.moreButton.setTag(null);
             holder.moreButton.setOnClickListener(null);
         }
