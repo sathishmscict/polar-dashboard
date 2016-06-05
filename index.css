@@ -175,6 +175,11 @@ a {
     box-shadow: 3px 3px 5px 6px #ccc;
 }
 
+.app-image-noshadow {
+    max-width: 100%;
+    height: auto;
+}
+
 .app-image-small {
     max-width: 40%;
     height: auto;
@@ -189,12 +194,6 @@ a {
     -moz-box-shadow: 3px 3px 5px 6px #ccc;
     -webkit-box-shadow: 3px 3px 5px 6px #ccc;
     box-shadow: 3px 3px 5px 6px #ccc;
-}
-
-.noshadow {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
 }
 
 .valign-wrapper, .valign {
@@ -282,6 +281,14 @@ header, main, footer {
     .app-image {
         width: 100%;
         margin-left: -2%;
+        -moz-box-shadow: 3px 3px 5px 6px #ccc;
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+        box-shadow: 3px 3px 5px 6px #ccc;
+    }
+
+    .app-image-noshadow {
+        width: 100%;
+        margin-left: -2%;
     }
 
     .links a {
@@ -311,6 +318,13 @@ header, main, footer {
     }
 
     .app-image {
+        width: 90%;
+        -moz-box-shadow: 3px 3px 5px 6px #ccc;
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+        box-shadow: 3px 3px 5px 6px #ccc;
+    }
+
+    .app-image-noshadow {
         width: 90%;
     }
 
@@ -343,10 +357,20 @@ header, main, footer {
 
     .app-image {
         width: 80%;
+        -moz-box-shadow: 3px 3px 5px 6px #ccc;
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+        box-shadow: 3px 3px 5px 6px #ccc;
+    }
+
+    .app-image-noshadow {
+        width: 80%;
     }
 
     .app-image-small {
         width: 36%;
+        -moz-box-shadow: 3px 3px 5px 6px #ccc;
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+        box-shadow: 3px 3px 5px 6px #ccc;
     }
 }
 
@@ -354,10 +378,20 @@ header, main, footer {
     /* Very large desktops */
     .app-image {
         width: 70%;
+        -moz-box-shadow: 3px 3px 5px 6px #ccc;
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+        box-shadow: 3px 3px 5px 6px #ccc;
+    }
+
+    .app-image-noshadow {
+        width: 70%;
     }
 
     .app-image-small {
         max-width: 32%;
+        -moz-box-shadow: 3px 3px 5px 6px #ccc;
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+        box-shadow: 3px 3px 5px 6px #ccc;
     }
 }
 
@@ -365,9 +399,19 @@ header, main, footer {
     /* Even larger desktops */
     .app-image {
         width: 60%;
+        -moz-box-shadow: 3px 3px 5px 6px #ccc;
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+        box-shadow: 3px 3px 5px 6px #ccc;
+    }
+
+    .app-image-noshadow {
+        width: 60%;
     }
 
     .app-image-small {
         max-width: 25%;
+        -moz-box-shadow: 3px 3px 5px 6px #ccc;
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+        box-shadow: 3px 3px 5px 6px #ccc;
     }
 }
