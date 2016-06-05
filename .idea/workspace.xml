@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0a397bd4-2a8b-4bef-b4f2-9b4d4994a682" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.css" afterPath="$PROJECT_DIR$/index.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wallpapers.html" afterPath="$PROJECT_DIR$/wallpapers.html" />
     </list>
     <ignored path="polar-dashboard-web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,17 +25,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="wallpapers.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="wallpapers.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wallpapers.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-164">
-              <caret line="73" column="44" selection-start-line="73" selection-start-column="44" selection-end-line="73" selection-end-column="44" />
+            <state relative-caret-position="1148">
+              <caret line="103" column="99" selection-start-line="103" selection-start-column="99" selection-end-line="103" selection-end-column="99" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="884">
@@ -95,10 +95,10 @@
         <option value="$PROJECT_DIR$/requestmanager.html" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/icons.html" />
-        <option value="$PROJECT_DIR$/wallpapers.html" />
         <option value="$PROJECT_DIR$/zooper.html" />
         <option value="$PROJECT_DIR$/customization.html" />
         <option value="$PROJECT_DIR$/index.css" />
+        <option value="$PROJECT_DIR$/wallpapers.html" />
       </list>
     </option>
   </component>
@@ -721,7 +721,7 @@
       <updated>1456775669686</updated>
       <workItem from="1460676981204" duration="5018000" />
       <workItem from="1460744408858" duration="17000" />
-      <workItem from="1465093531880" duration="844000" />
+      <workItem from="1465093531880" duration="1240000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <created>1456777598500</created>
@@ -947,11 +947,18 @@
       <option name="project" value="LOCAL" />
       <updated>1465094282383</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Update">
+      <created>1465094378418</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1465094378418</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5879000" />
+    <option name="totallyTimeSpent" value="6275000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="3026" height="1946" extended-state="6" />
@@ -1249,18 +1256,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wallpapers.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-164">
-          <caret line="73" column="44" selection-start-line="73" selection-start-column="44" selection-end-line="73" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="884">
           <caret line="36" column="41" selection-start-line="36" selection-start-column="41" selection-end-line="36" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallpapers.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1148">
+          <caret line="103" column="99" selection-start-line="103" selection-start-column="99" selection-end-line="103" selection-end-column="99" />
           <folding />
         </state>
       </provider>

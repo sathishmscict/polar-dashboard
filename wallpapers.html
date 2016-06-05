@@ -66,6 +66,7 @@
         <ol class="tableofcontents">
             <li><a href="#thecloud">The Cloud</a></li>
             <li><a href="#urlconfig">URL Configuration</a></li>
+            <li><a href="#downloading">Downloading</a></li>
             <li><a href="#jsonfile">JSON File</a></li>
         </ol>
         <hr/>
@@ -91,6 +92,17 @@
 &lt;string name="wallpapers_json_url" formatted="false"&gt;
     https://raw.githubusercontent.com/afollestad/polar_json/master/wallpapers.json
 &lt;/string&gt;</code></pre>
+
+        <hr/>
+
+        <h1 id="downloading">Downloading</h1>
+        <p class="flow-text">
+            Below the <code>wallpapers_json_url</code> string mentioned in the section above, there is a boolean named
+            <code>wallpapers_allow_download</code>. This value is set to <b>true</b> by default, in which case users are allowed
+            to download your wallpapers to their device and share them externally. Otherwise, download options are hidden.
+        </p>
+        <pre><code class="xml">&lt;!-- When false, the Save button for wallpapers is hidden. --&gt;
+&lt;bool name="wallpapers_allow_download"&gt;true&lt;/bool&gt;</code></pre>
 
         <hr/>
 
