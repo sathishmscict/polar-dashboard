@@ -32,7 +32,9 @@ code {
     color: black;
     padding: 8px;
     border: 1px solid #E0E0E0;
+}
 
+code[class="json"], code[class="json hljs"] {
     -moz-box-shadow: 3px 3px 5px 6px #ccc;
     -webkit-box-shadow: 3px 3px 5px 6px #ccc;
     box-shadow: 3px 3px 5px 6px #ccc;
