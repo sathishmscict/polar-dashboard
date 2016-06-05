@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0a397bd4-2a8b-4bef-b4f2-9b4d4994a682" name="Default" comment="Update">
+    <list default="true" id="0a397bd4-2a8b-4bef-b4f2-9b4d4994a682" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customization.html" afterPath="$PROJECT_DIR$/customization.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icons.html" afterPath="$PROJECT_DIR$/icons.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.css" afterPath="$PROJECT_DIR$/index.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wallpapers.html" afterPath="$PROJECT_DIR$/wallpapers.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zooper.html" afterPath="$PROJECT_DIR$/zooper.html" />
     </list>
     <ignored path="polar-dashboard-web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,49 +29,33 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="requestmanager.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/requestmanager.html">
+      <file leaf-file-name="wallpapers.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wallpapers.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1080">
-              <caret line="170" column="11" selection-start-line="170" selection-start-column="11" selection-end-line="170" selection-end-column="11" />
-              <folding>
-                <element signature="n#style#0;n#a#0;n#li#8;n#ul#0;n#div#0;n#nav#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="286" column="5" selection-start-line="286" selection-start-column="5" selection-end-line="286" selection-end-column="5" />
+            <state relative-caret-position="909">
+              <caret line="73" column="44" selection-start-line="73" selection-start-column="44" selection-end-line="73" selection-end-column="44" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/index.html">
+      <file leaf-file-name="customization.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/customization.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="711">
-              <caret line="71" column="119" selection-start-line="71" selection-start-column="119" selection-end-line="71" selection-end-column="119" />
+            <state relative-caret-position="1280">
+              <caret line="159" column="38" selection-start-line="159" selection-start-column="38" selection-end-line="159" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="polarrmappview2.JPG" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/polarrmappview2.JPG">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="polarrmappview1.JPG" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/polarrmappview1.JPG">
-          <provider selected="true" editor-type-id="images">
-            <state />
+      <file leaf-file-name="zooper.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zooper.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="678">
+              <caret line="127" column="29" selection-start-line="127" selection-start-column="29" selection-end-line="127" selection-end-column="29" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
@@ -88,14 +75,14 @@
         <option value="$PROJECT_DIR$/prism.js" />
         <option value="$PROJECT_DIR$/prism.css" />
         <option value="$PROJECT_DIR$/gettingstarted.html" />
-        <option value="$PROJECT_DIR$/icons.html" />
         <option value="$PROJECT_DIR$/upgrades.html" />
+        <option value="$PROJECT_DIR$/requestmanager.html" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/index.css" />
+        <option value="$PROJECT_DIR$/icons.html" />
         <option value="$PROJECT_DIR$/wallpapers.html" />
         <option value="$PROJECT_DIR$/zooper.html" />
         <option value="$PROJECT_DIR$/customization.html" />
-        <option value="$PROJECT_DIR$/requestmanager.html" />
-        <option value="$PROJECT_DIR$/index.css" />
-        <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
@@ -718,7 +705,7 @@
       <updated>1456775669686</updated>
       <workItem from="1460676981204" duration="5018000" />
       <workItem from="1460744408858" duration="17000" />
-      <workItem from="1465093531880" duration="430000" />
+      <workItem from="1465093531880" duration="642000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <created>1456777598500</created>
@@ -923,11 +910,18 @@
       <option name="project" value="LOCAL" />
       <updated>1465093723759</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Update">
+      <created>1465093964278</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1465093964278</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5465000" />
+    <option name="totallyTimeSpent" value="5677000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="3026" height="1946" extended-state="6" />
@@ -1129,31 +1123,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/icons.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1202">
-          <caret line="52" column="21" selection-start-line="52" selection-start-column="21" selection-end-line="52" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/upgrades.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1188">
           <caret line="52" column="21" selection-start-line="52" selection-start-column="21" selection-end-line="52" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wallpapers.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="55" column="21" selection-start-line="55" selection-start-column="21" selection-end-line="55" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zooper.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="38" column="43" selection-start-line="38" selection-start-column="43" selection-end-line="38" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -1189,24 +1162,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/customization.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="945">
-          <caret line="187" column="17" selection-start-line="185" selection-start-column="12" selection-end-line="187" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/polarrmdashboardintegration.JPG">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/polarrmappview1.JPG">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/polarrmappview2.JPG">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -1221,18 +1182,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="286" column="5" selection-start-line="286" selection-start-column="5" selection-end-line="286" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="711">
           <caret line="71" column="119" selection-start-line="71" selection-start-column="119" selection-end-line="71" selection-end-column="119" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/polarrmappview2.JPG">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/icons.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="62" column="18" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1239">
+          <caret line="430" column="20" selection-start-line="430" selection-start-column="5" selection-end-line="430" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wallpapers.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="909">
+          <caret line="73" column="44" selection-start-line="73" selection-start-column="44" selection-end-line="73" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zooper.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="678">
+          <caret line="127" column="29" selection-start-line="127" selection-start-column="29" selection-end-line="127" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/customization.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1280">
+          <caret line="159" column="38" selection-start-line="159" selection-start-column="38" selection-end-line="159" selection-end-column="38" />
           <folding />
         </state>
       </provider>

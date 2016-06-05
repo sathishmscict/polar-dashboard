@@ -188,6 +188,11 @@ a {
     box-shadow: 3px 3px 5px 6px #ccc;
 }
 
+.app-image-small-noshadow {
+    max-width: 40%;
+    height: auto;
+}
+
 .app-image-large {
     max-width: 90%;
     height: auto;
@@ -372,6 +377,10 @@ header, main, footer {
         -webkit-box-shadow: 3px 3px 5px 6px #ccc;
         box-shadow: 3px 3px 5px 6px #ccc;
     }
+
+    .app-image-small-noshadow {
+        width: 36%;
+    }
 }
 
 @media only screen and (min-width: 1400px) {
@@ -393,6 +402,10 @@ header, main, footer {
         -webkit-box-shadow: 3px 3px 5px 6px #ccc;
         box-shadow: 3px 3px 5px 6px #ccc;
     }
+
+    .app-image-small-noshadow {
+        max-width: 32%;
+    }
 }
 
 @media only screen and (min-width: 1700px) {
@@ -413,5 +426,9 @@ header, main, footer {
         -moz-box-shadow: 3px 3px 5px 6px #ccc;
         -webkit-box-shadow: 3px 3px 5px 6px #ccc;
         box-shadow: 3px 3px 5px 6px #ccc;
+    }
+
+    .app-image-small-noshadow {
+        max-width: 25%;
     }
 }
