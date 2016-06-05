@@ -170,16 +170,25 @@ a {
 .app-image {
     max-width: 100%;
     height: auto;
+    -moz-box-shadow: 3px 3px 5px 6px #ccc;
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+    box-shadow: 3px 3px 5px 6px #ccc;
 }
 
 .app-image-small {
     max-width: 40%;
     height: auto;
+    -moz-box-shadow: 3px 3px 5px 6px #ccc;
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+    box-shadow: 3px 3px 5px 6px #ccc;
 }
 
 .app-image-large {
     max-width: 90%;
     height: auto;
+    -moz-box-shadow: 3px 3px 5px 6px #ccc;
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+    box-shadow: 3px 3px 5px 6px #ccc;
 }
 
 .valign-wrapper, .valign {
