@@ -191,6 +191,12 @@ a {
     box-shadow: 3px 3px 5px 6px #ccc;
 }
 
+.noshadow {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
 .valign-wrapper, .valign {
     position: absolute;
     top: 50%;
