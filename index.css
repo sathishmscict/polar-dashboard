@@ -31,9 +31,11 @@ code {
     font-size: 16px;
     color: black;
     padding: 8px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #E0E0E0;
+    border: 1px solid #E0E0E0;
+
+    -moz-box-shadow: 3px 3px 5px 6px #ccc;
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+    box-shadow: 3px 3px 5px 6px #ccc;
 }
 
 hr {
@@ -41,10 +43,7 @@ hr {
     height: 1px;
     border: 0;
     border-top: 1px solid #CECECE;
-    margin-top: 4%;
-    margin-bottom: 1%;
-    margin-left: 0;
-    margin-right: 0;
+    margin: 4% 0 1%;
     padding: 0;
 }
 
