@@ -18,22 +18,24 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * @author Aidan Follestad (afollestad)
  */
 public class ViewerPageFragment extends AssentFragment {
 
-    @Bind(R.id.progress)
+    @BindView(R.id.progress)
     ProgressBar mProgress;
-    @Bind(R.id.photo)
+    @BindView(R.id.photo)
     ImageView mPhoto;
 
     private WallpaperUtils.Wallpaper mWallpaper;
     private boolean isActive;
     private int mIndex;
+    private Unbinder unbinder;
 
     public String getTitle() {
         return mWallpaper.name;
@@ -85,7 +87,7 @@ public class ViewerPageFragment extends AssentFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         ViewCompat.setTransitionName(mPhoto, "view_" + mIndex);
         mProgress.setVisibility(View.VISIBLE);
 
@@ -109,7 +111,7 @@ public class ViewerPageFragment extends AssentFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

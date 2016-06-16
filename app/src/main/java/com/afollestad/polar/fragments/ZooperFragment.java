@@ -38,9 +38,10 @@ import com.afollestad.polar.zooper.ZooperUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -50,13 +51,13 @@ public class ZooperFragment extends BasePageFragment implements
 
     private static final int PERM_RQ = 61;
 
-    @Bind(android.R.id.list)
+    @BindView(android.R.id.list)
     RecyclerView mRecyclerView;
-    @Bind(android.R.id.empty)
+    @BindView(android.R.id.empty)
     TextView mEmpty;
-    @Bind(android.R.id.progress)
+    @BindView(android.R.id.progress)
     View mProgress;
-    @Bind(R.id.fabInstall)
+    @BindView(R.id.fabInstall)
     FloatingActionButton mFabInstall;
 
     private ZooperAdapter mAdapter;
@@ -70,6 +71,7 @@ public class ZooperFragment extends BasePageFragment implements
     };
     private ArrayList<PreviewItem> mPreviews;
     private Drawable mWallpaper;
+    private Unbinder unbinder;
 
     public ZooperFragment() {
     }
@@ -123,7 +125,7 @@ public class ZooperFragment extends BasePageFragment implements
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         final int zooperGridWidth = Config.get().gridWidthZooper();
         mAdapter = new ZooperAdapter(getActivity());
@@ -166,7 +168,7 @@ public class ZooperFragment extends BasePageFragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @OnClick(R.id.fabInstall)

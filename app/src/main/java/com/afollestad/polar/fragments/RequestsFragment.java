@@ -49,9 +49,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 
 public class RequestsFragment extends BasePageFragment implements
@@ -61,15 +62,15 @@ public class RequestsFragment extends BasePageFragment implements
     private static final Object LOCK = new Object();
     private final static int PERM_RQ = 69;
 
-    @Bind(android.R.id.list)
+    @BindView(android.R.id.list)
     DragSelectRecyclerView list;
-    @Bind(android.R.id.progress)
+    @BindView(android.R.id.progress)
     View progress;
-    @Bind(R.id.progressText)
+    @BindView(R.id.progressText)
     TextView progressText;
-    @Bind(android.R.id.empty)
+    @BindView(android.R.id.empty)
     TextView emptyText;
-    @Bind(R.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton fab;
 
     private DisableableViewPager mPager;
@@ -93,6 +94,7 @@ public class RequestsFragment extends BasePageFragment implements
         }
     };
     private Handler mHandler;
+    private Unbinder unbinder;
 
     public RequestsFragment() {
     }
@@ -206,7 +208,7 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         GridLayoutManager lm = new GridLayoutManager(getActivity(), Config.get().gridWidthRequests());
         lm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -269,7 +271,7 @@ public class RequestsFragment extends BasePageFragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

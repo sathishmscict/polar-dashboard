@@ -58,7 +58,7 @@ import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.views.DisableableViewPager;
 import com.google.android.vending.licensing.Policy;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.afollestad.polar.fragments.WallpapersFragment.RQ_CROPANDSETWALLPAPER;
@@ -73,25 +73,25 @@ public class MainActivity extends BaseDonateActivity implements
 
     public RecyclerView mRecyclerView;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
     @Nullable
-    @Bind(R.id.tabs)
+    @BindView(R.id.tabs)
     TabLayout mTabs;
 
     @Nullable
-    @Bind(R.id.navigation_view)
+    @BindView(R.id.navigation_view)
     NavigationView mNavView;
     @Nullable
-    @Bind(R.id.drawer)
+    @BindView(R.id.drawer)
     DrawerLayout mDrawer;
 
-    @Bind(R.id.pager)
+    @BindView(R.id.pager)
     DisableableViewPager mPager;
 
     @Nullable
-    @Bind(R.id.app_bar)
+    @BindView(R.id.app_bar)
     LinearLayout mAppBarLinear;
 
     int mDrawerModeTopInset;
@@ -442,12 +442,6 @@ public class MainActivity extends BaseDonateActivity implements
             tab.setIcon(tintedIcon);
         }
         mTabs.addTab(tab);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     @Override

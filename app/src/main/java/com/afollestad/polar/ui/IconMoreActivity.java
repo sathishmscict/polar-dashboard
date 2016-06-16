@@ -26,7 +26,7 @@ import com.afollestad.polar.util.DrawableXmlParser;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -38,9 +38,9 @@ public class IconMoreActivity extends BaseThemedActivity
     public static final String EXTRA_REVEAL_ANIM_LOCATION = "com.afollestad.polar.REVEAL_ANIM_LOCATION";
     public static final String EXTRA_CATEGORY = "com.afollestad.polar.CATEGORY";
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(android.R.id.list)
+    @BindView(android.R.id.list)
     RecyclerView mRecyclerView;
 
     private IconMoreAdapter mAdapter;
@@ -164,12 +164,6 @@ public class IconMoreActivity extends BaseThemedActivity
             return true;
         }
         return false;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     @Override

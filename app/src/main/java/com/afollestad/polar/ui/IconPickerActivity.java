@@ -12,7 +12,7 @@ import com.afollestad.polar.ui.base.BaseThemedActivity;
 import com.afollestad.polar.ui.base.ISelectionMode;
 import com.afollestad.polar.util.TintUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
  */
 public class IconPickerActivity extends BaseThemedActivity implements ISelectionMode {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     @Override
@@ -48,12 +48,6 @@ public class IconPickerActivity extends BaseThemedActivity implements ISelection
         }
 
         getFragmentManager().beginTransaction().replace(R.id.container, IconsFragment.create(true)).commit();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     @Override

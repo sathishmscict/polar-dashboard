@@ -18,7 +18,7 @@ import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.WallpapersFragment;
 import com.afollestad.polar.util.WallpaperUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.afollestad.polar.fragments.WallpapersFragment.RQ_CROPANDSETWALLPAPER;
@@ -30,7 +30,7 @@ import static com.afollestad.polar.fragments.WallpapersFragment.RQ_CROPANDSETWAL
 public class ViewerActivity extends AssentActivity {
 
     public static final String STATE_CURRENT_POSITION = "state_current_position";
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
     private WallpaperUtils.WallpapersHolder mWallpapers;
     @SuppressWarnings("FieldCanBeLocal")
@@ -145,12 +145,6 @@ public class ViewerActivity extends AssentActivity {
                 getNavigationBarHeight(false, true),
                 mToolbar.getPaddingBottom()
         );
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     @Override

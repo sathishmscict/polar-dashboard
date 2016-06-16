@@ -39,8 +39,9 @@ import com.afollestad.polar.viewer.ViewerActivity;
 
 import java.net.SocketTimeoutException;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 import static com.afollestad.polar.viewer.ViewerActivity.STATE_CURRENT_POSITION;
 
@@ -54,11 +55,11 @@ public class WallpapersFragment extends BasePageFragment implements
     public static final int RQ_VIEWWALLPAPER = 2001;
     private static Toast mToast;
 
-    @Bind(android.R.id.list)
+    @BindView(android.R.id.list)
     RecyclerView mRecyclerView;
-    @Bind(android.R.id.empty)
+    @BindView(android.R.id.empty)
     TextView mEmpty;
-    @Bind(android.R.id.progress)
+    @BindView(android.R.id.progress)
     View mProgress;
     WallpaperUtils.WallpapersHolder mWallpapers;
 
@@ -71,6 +72,7 @@ public class WallpapersFragment extends BasePageFragment implements
             setListShown(true);
         }
     };
+    private Unbinder unbinder;
 
     public WallpapersFragment() {
     }
@@ -204,7 +206,7 @@ public class WallpapersFragment extends BasePageFragment implements
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         mAdapter = new WallpaperAdapter(new WallpaperAdapter.ClickListener() {
             @Override
@@ -230,7 +232,7 @@ public class WallpapersFragment extends BasePageFragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
         WallpaperUtils.resetOptionCache(true);
     }
 
