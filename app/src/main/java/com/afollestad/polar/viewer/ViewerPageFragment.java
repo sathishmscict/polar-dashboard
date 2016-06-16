@@ -128,7 +128,7 @@ public class ViewerPageFragment extends AssentFragment {
                             public void run() {
                                 loadFullPhoto();
                             }
-                        }, 200);
+                        }, ViewerActivity.SHARED_ELEMENT_TRANSITION_DURATION);
                         return false;
                     }
                 })
@@ -144,7 +144,6 @@ public class ViewerPageFragment extends AssentFragment {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                         mProgress.setVisibility(View.GONE);
-                        mPhoto.setVisibility(View.VISIBLE);
                         return false;
                     }
 
@@ -152,6 +151,14 @@ public class ViewerPageFragment extends AssentFragment {
                     public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                         mProgress.setVisibility(View.GONE);
                         mPhoto.setVisibility(View.VISIBLE);
+                        thumbnail.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (thumbnail != null)
+                                    thumbnail.setVisibility(View.INVISIBLE);
+                            }
+                        }, 500);
+
                         ViewCompat.setTransitionName(mPhoto, "view_" + mIndex);
                         ViewCompat.setTransitionName(thumbnail, null);
                         isFullImageLoaded = true;

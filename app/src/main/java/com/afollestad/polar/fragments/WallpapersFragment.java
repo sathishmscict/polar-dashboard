@@ -150,24 +150,6 @@ public class WallpapersFragment extends BasePageFragment implements
         final String transName = "view_" + index;
         final ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 getActivity(), iv, transName);
-
-     /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //Somehow this works (setting status bar color in both MainActivity and here)
-            //to avoid image glitching through on when ViewActivity is first created.
-            getActivity().getWindow().setStatusBarColor(
-                    DialogUtils.resolveColor(getActivity(), R.attr.colorPrimaryDark));
-            View statusBar = getActivity().getWindow().getDecorView().findViewById(android.R.id.statusBarBackground);
-            if (statusBar != null) {
-                statusBar.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        ActivityCompat.startActivityForResult(getActivity(), intent, RQ_VIEWWALLPAPER, options.toBundle());
-                    }
-                });
-                return;
-            }
-        }*/
-
         ActivityCompat.startActivityForResult(getActivity(), intent, RQ_VIEWWALLPAPER, options.toBundle());
     }
 

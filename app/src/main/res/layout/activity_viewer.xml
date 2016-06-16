@@ -12,10 +12,11 @@
         android:layout_height="match_parent" />
 
     <FrameLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/viewer_overlay"
-        android:elevation="@dimen/toolbar_elevation"
+        android:transitionGroup="true"
         app:layout_windowInsets="top|left|right"
         tools:ignore="UnusedAttribute">
 
@@ -24,7 +25,6 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:transitionName="Toolbar"
             app:contentInsetStart="@dimen/second_keyline"
             app:popupTheme="@style/ThemeOverlay.AppCompat"
             tools:ignore="UnusedAttribute" />

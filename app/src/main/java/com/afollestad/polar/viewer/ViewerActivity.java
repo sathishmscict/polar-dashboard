@@ -8,13 +8,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.widget.Toolbar;
 import android.transition.ChangeBounds;
 import android.transition.ChangeClipBounds;
 import android.transition.ChangeImageTransform;
 import android.transition.ChangeTransform;
+import android.transition.Slide;
 import android.transition.TransitionSet;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,18 +42,18 @@ import static com.afollestad.polar.fragments.WallpapersFragment.RQ_CROPANDSETWAL
 /**
  * @author Aidan Follestad (afollestad)
  */
-@SuppressLint("MissingSuperCall")
 public class ViewerActivity extends AssentActivity {
 
     public static final String EXTRA_WIDTH = "com.afollestad.impression.Width";
     public static final String EXTRA_HEIGHT = "com.afollestad.impression.Height";
     public static final String STATE_CURRENT_POSITION = "state_current_position";
-    private static final long SHARED_ELEMENT_TRANSITION_DURATION = 300;
+    public static final long SHARED_ELEMENT_TRANSITION_DURATION = 300;
 
+    @BindView(R.id.app_bar)
+    View appBar;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     private WallpaperUtils.WallpapersHolder mWallpapers;
-    @SuppressWarnings("FieldCanBeLocal")
     private ViewerPageAdapter mAdapter;
     private int mCurrentPosition;
     private boolean isReturning;
@@ -89,6 +93,18 @@ public class ViewerActivity extends AssentActivity {
 
         getWindow().setSharedElementEnterTransition(transition);
         getWindow().setSharedElementReturnTransition(transition);
+        getWindow().setSharedElementsUseOverlay(false);
+
+        Slide slide = new Slide(Gravity.TOP);
+        slide.setInterpolator(new LinearOutSlowInInterpolator());
+        slide.addTarget(appBar);
+        slide.setDuration(225);
+        slide.setStartDelay(100);
+        getWindow().setEnterTransition(slide);
+        Slide slideOut = (Slide) slide.clone();
+        slideOut.setInterpolator(new FastOutLinearInInterpolator());
+        slideOut.setStartDelay(0);
+        getWindow().setReturnTransition(slideOut);
     }
 
     @SuppressLint("PrivateResource")
