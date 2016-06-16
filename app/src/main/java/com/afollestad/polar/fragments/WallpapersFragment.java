@@ -2,14 +2,12 @@ package com.afollestad.polar.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -138,7 +136,7 @@ public class WallpapersFragment extends BasePageFragment implements
         return super.onOptionsItemSelected(item);
     }
 
-    void openViewer(View view, int index) {
+    private void openViewer(View view, int index) {
         ImageView iv = (ImageView) view.findViewById(R.id.image);
 
         final Intent intent = new Intent(getActivity(), ViewerActivity.class);
@@ -148,11 +146,10 @@ public class WallpapersFragment extends BasePageFragment implements
         intent.putExtras(extras);
 
         final String transName = "view_" + index;
-        ViewCompat.setTransitionName(iv, transName);
         final ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 getActivity(), iv, transName);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+     /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //Somehow this works (setting status bar color in both MainActivity and here)
             //to avoid image glitching through on when ViewActivity is first created.
             getActivity().getWindow().setStatusBarColor(
@@ -167,7 +164,7 @@ public class WallpapersFragment extends BasePageFragment implements
                 });
                 return;
             }
-        }
+        }*/
 
         ActivityCompat.startActivityForResult(getActivity(), intent, RQ_VIEWWALLPAPER, options.toBundle());
     }
@@ -208,7 +205,7 @@ public class WallpapersFragment extends BasePageFragment implements
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
 
-        mAdapter = new WallpaperAdapter(new WallpaperAdapter.ClickListener() {
+        mAdapter = new WallpaperAdapter(getActivity(), new WallpaperAdapter.ClickListener() {
             @Override
             public boolean onClick(View view, int index, boolean longPress) {
                 if (longPress) {
@@ -309,5 +306,9 @@ public class WallpapersFragment extends BasePageFragment implements
         mAdapter.filter(null);
         setListShown(true);
         return false;
+    }
+
+    public RecyclerView getRecyclerView() {
+        return mRecyclerView;
     }
 }

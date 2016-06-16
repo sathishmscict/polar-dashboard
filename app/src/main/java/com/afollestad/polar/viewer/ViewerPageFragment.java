@@ -12,8 +12,10 @@ import android.widget.ProgressBar;
 
 import com.afollestad.assent.AssentFragment;
 import com.afollestad.polar.R;
+import com.afollestad.polar.util.KeepRatio;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -93,6 +95,8 @@ public class ViewerPageFragment extends AssentFragment {
 
         Glide.with(this)
                 .load(mWallpaper.url)
+                .transform(new KeepRatio(getActivity()))
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
@@ -103,6 +107,9 @@ public class ViewerPageFragment extends AssentFragment {
                     @Override
                     public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                         mProgress.setVisibility(View.GONE);
+                        if (isActive) {
+                            ((ViewerActivity) getActivity()).supportStartPostponedEnterTransition();
+                        }
                         return false;
                     }
                 }).into(mPhoto);
@@ -111,12 +118,16 @@ public class ViewerPageFragment extends AssentFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+        //unbinder.unbind();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         setIsActive(isActive);
+    }
+
+    public ImageView getImage() {
+        return mPhoto;
     }
 }

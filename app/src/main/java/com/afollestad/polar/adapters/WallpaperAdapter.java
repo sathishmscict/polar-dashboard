@@ -1,5 +1,6 @@
 package com.afollestad.polar.adapters;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
@@ -11,12 +12,14 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.afollestad.polar.R;
+import com.afollestad.polar.util.KeepRatio;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.views.WallpaperAuthorView;
 import com.afollestad.polar.views.WallpaperBgFrame;
 import com.afollestad.polar.views.WallpaperImageView;
 import com.afollestad.polar.views.WallpaperNameView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.florent37.glidepalette.GlidePalette;
 
 import java.util.ArrayList;
@@ -32,10 +35,12 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
         boolean onClick(View view, int index, boolean longPress);
     }
 
-    public WallpaperAdapter(ClickListener listener) {
+    public WallpaperAdapter(Context context, ClickListener listener) {
+        this.context = context;
         mListener = listener;
     }
 
+    private final Context context;
     private final ClickListener mListener;
     private WallpaperUtils.WallpapersHolder mWallpapers;
     private ArrayList<WallpaperUtils.Wallpaper> mFiltered;
@@ -123,6 +128,7 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
         holder.name.setText(wallpaper.name);
         holder.author.setText(wallpaper.author);
 
+        holder.itemView.setTag("view_" + index);
         ViewCompat.setTransitionName(holder.image, "view_" + index);
 
         holder.name.setWallpaper(wallpaper);
@@ -139,6 +145,8 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
             holder.colorFrame.setBackgroundColor(wallpaper.getPaletteBgColor());
             Glide.with(holder.itemView.getContext())
                     .load(wallpaper.getListingImageUrl())
+                    .transform(new KeepRatio(context))
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .into(holder.image);
         } else {
             Log.d("WallpaperAdapter", String.format("Wallpaper %d (%s) palette is not complete...",
@@ -149,6 +157,8 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
             //noinspection unchecked
             Glide.with(holder.itemView.getContext())
                     .load(wallpaper.getListingImageUrl())
+                    .transform(new KeepRatio(context))
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .listener(GlidePalette.with(wallpaper.getListingImageUrl())
                             .use(GlidePalette.Profile.VIBRANT)
                             .intoBackground(holder.colorFrame)

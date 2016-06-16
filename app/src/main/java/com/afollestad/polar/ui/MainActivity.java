@@ -3,6 +3,7 @@ package com.afollestad.polar.ui;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -58,6 +60,9 @@ import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.views.DisableableViewPager;
 import com.google.android.vending.licensing.Policy;
 
+import java.util.List;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -70,8 +75,6 @@ import static com.afollestad.polar.viewer.ViewerActivity.STATE_CURRENT_POSITION;
  */
 public class MainActivity extends BaseDonateActivity implements
         LicensingUtils.LicensingCallback, NavigationView.OnNavigationItemSelectedListener {
-
-    public RecyclerView mRecyclerView;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -97,6 +100,9 @@ public class MainActivity extends BaseDonateActivity implements
     int mDrawerModeTopInset;
 
     private PagesBuilder mPages;
+
+    private boolean isReentering;
+    private int reenterPos;
 
     @Override
     public Toolbar getToolbar() {
@@ -130,6 +136,28 @@ public class MainActivity extends BaseDonateActivity implements
             if (mNavView != null) invalidateNavViewSelection(lastPage);
         }
         dispatchFragmentUpdateTitle(!useNavDrawer);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setExitSharedElementCallback(new SharedElementCallback() {
+                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                    if (isReentering) {
+                        WallpapersFragment frag = (WallpapersFragment) getFragmentManager().findFragmentByTag("page:" + mPager.getCurrentItem());
+                        final RecyclerView recyclerView = frag.getRecyclerView();
+                        View item = recyclerView.findViewWithTag("view_" + reenterPos);
+                        View image = item.findViewById(R.id.image);
+
+                        names.clear();
+                        names.add(image.getTransitionName());
+                        sharedElements.clear();
+                        sharedElements.put(image.getTransitionName(), image);
+
+                        isReentering = false;
+                    }
+                }
+            });
+        }
 
         processIntent(getIntent());
     }
@@ -486,16 +514,36 @@ public class MainActivity extends BaseDonateActivity implements
                 getWindow().setStatusBarColor(Color.TRANSPARENT);
                 mDrawer.setStatusBarBackgroundColor(DialogUtils.resolveColor(this, R.attr.colorPrimaryDark));
             }
-            if (mRecyclerView != null) {
-                mRecyclerView.requestFocus();
-                final int currentPos = data.getIntExtra(STATE_CURRENT_POSITION, 0);
-                mRecyclerView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mRecyclerView.smoothScrollToPosition(currentPos);
-                    }
-                });
-            }
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onActivityReenter(int resultCode, Intent data) {
+        super.onActivityReenter(resultCode, data);
+
+        isReentering = true;
+        reenterPos = data.getIntExtra(STATE_CURRENT_POSITION, 0);
+
+        WallpapersFragment frag = (WallpapersFragment) getFragmentManager().findFragmentByTag("page:" + mPager.getCurrentItem());
+        final RecyclerView recyclerView = frag.getRecyclerView();
+        if (recyclerView != null) {
+            postponeEnterTransition();
+            recyclerView.scrollToPosition(reenterPos);
+            recyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    recyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                        @Override
+                        public boolean onPreDraw() {
+                            recyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                            startPostponedEnterTransition();
+                            return true;
+                        }
+                    });
+                }
+            });
         }
     }
 }

@@ -1,9 +1,12 @@
 package com.afollestad.polar.viewer;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.SharedElementCallback;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
@@ -11,12 +14,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.afollestad.assent.AssentActivity;
 import com.afollestad.polar.R;
 import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.WallpapersFragment;
 import com.afollestad.polar.util.WallpaperUtils;
+
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +43,7 @@ public class ViewerActivity extends AssentActivity {
     @SuppressWarnings("FieldCanBeLocal")
     private ViewerPageAdapter mAdapter;
     private int mCurrentPosition;
+    private boolean isReturning;
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -71,7 +79,6 @@ public class ViewerActivity extends AssentActivity {
         setContentView(R.layout.activity_viewer);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
-        setResult(RESULT_OK);
 
         mToolbar.setNavigationIcon(R.drawable.ic_action_back);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -89,6 +96,8 @@ public class ViewerActivity extends AssentActivity {
             mCurrentPosition = savedInstanceState.getInt(STATE_CURRENT_POSITION);
         }
 
+        setResult(RESULT_OK, getIntent().putExtra(STATE_CURRENT_POSITION, mCurrentPosition));
+
         if (getIntent() != null) {
             mWallpapers = (WallpaperUtils.WallpapersHolder) getIntent().getSerializableExtra("wallpapers");
         }
@@ -98,6 +107,25 @@ public class ViewerActivity extends AssentActivity {
         pager.setOffscreenPageLimit(1);
         pager.setAdapter(mAdapter);
         pager.setCurrentItem(mCurrentPosition);
+
+        supportPostponeEnterTransition();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setEnterSharedElementCallback(new SharedElementCallback() {
+                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                    if (isReturning) {
+                        ViewerPageFragment active = (ViewerPageFragment) getFragmentManager().findFragmentByTag("page:" + mCurrentPosition);
+                        ImageView sharedElement = active.getImage();
+
+                        names.clear();
+                        names.add(sharedElement.getTransitionName());
+                        sharedElements.clear();
+                        sharedElements.put(sharedElement.getTransitionName(), sharedElement);
+                    }
+                }
+            });
+        }
 
         // When the view pager is swiped, fragments are notified if they're active or not
         // And the menu updates based on the color mode (light or dark).
@@ -145,6 +173,12 @@ public class ViewerActivity extends AssentActivity {
                 getNavigationBarHeight(false, true),
                 mToolbar.getPaddingBottom()
         );
+    }
+
+    @Override
+    public void finishAfterTransition() {
+        isReturning = true;
+        super.finishAfterTransition();
     }
 
     @Override
