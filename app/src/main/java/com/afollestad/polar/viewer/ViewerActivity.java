@@ -4,13 +4,17 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.SharedElementCallback;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.widget.Toolbar;
+import android.transition.ChangeBounds;
+import android.transition.ChangeClipBounds;
+import android.transition.ChangeImageTransform;
+import android.transition.ChangeTransform;
+import android.transition.TransitionSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +24,7 @@ import com.afollestad.assent.AssentActivity;
 import com.afollestad.polar.R;
 import com.afollestad.polar.config.Config;
 import com.afollestad.polar.fragments.WallpapersFragment;
+import com.afollestad.polar.util.GravityArcMotion;
 import com.afollestad.polar.util.WallpaperUtils;
 
 import java.util.List;
@@ -36,7 +41,11 @@ import static com.afollestad.polar.fragments.WallpapersFragment.RQ_CROPANDSETWAL
 @SuppressLint("MissingSuperCall")
 public class ViewerActivity extends AssentActivity {
 
+    public static final String EXTRA_WIDTH = "com.afollestad.impression.Width";
+    public static final String EXTRA_HEIGHT = "com.afollestad.impression.Height";
     public static final String STATE_CURRENT_POSITION = "state_current_position";
+    private static final long SHARED_ELEMENT_TRANSITION_DURATION = 300;
+
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     private WallpaperUtils.WallpapersHolder mWallpapers;
@@ -51,25 +60,35 @@ public class ViewerActivity extends AssentActivity {
         outState.putInt(STATE_CURRENT_POSITION, mCurrentPosition);
     }
 
-    public int getNavigationBarHeight(boolean portraitOnly, boolean landscapeOnly) {
-        final Configuration config = getResources().getConfiguration();
-        if ((config.screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE) {
-            // Cancel out for tablets~
-            return 0;
+    private void setTransition() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return;
         }
 
-        final Resources r = getResources();
-        int id;
-        if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            if (portraitOnly) return 0;
-            id = r.getIdentifier("navigation_bar_height_landscape", "dimen", "android");
-        } else {
-            if (landscapeOnly) return 0;
-            id = r.getIdentifier("navigation_bar_height", "dimen", "android");
-        }
-        if (id > 0)
-            return r.getDimensionPixelSize(id);
-        return 0;
+        final TransitionSet transition = new TransitionSet();
+
+        ChangeBounds transition1 = new ChangeBounds();
+        transition.addTransition(transition1);
+        ChangeTransform transition2 = new ChangeTransform();
+        transition.addTransition(transition2);
+        ChangeClipBounds transition3 = new ChangeClipBounds();
+        transition.addTransition(transition3);
+        ChangeImageTransform transition4 = new ChangeImageTransform();
+        transition.addTransition(transition4);
+
+        transition.setDuration(SHARED_ELEMENT_TRANSITION_DURATION);
+
+        FastOutSlowInInterpolator interpolator = new FastOutSlowInInterpolator();
+        transition1.setInterpolator(interpolator);
+        transition2.setInterpolator(interpolator);
+        transition3.setInterpolator(interpolator);
+        transition4.setInterpolator(interpolator);
+
+        final GravityArcMotion pathMotion = new GravityArcMotion();
+        transition.setPathMotion(pathMotion);
+
+        getWindow().setSharedElementEnterTransition(transition);
+        getWindow().setSharedElementReturnTransition(transition);
     }
 
     @SuppressLint("PrivateResource")
@@ -102,13 +121,16 @@ public class ViewerActivity extends AssentActivity {
             mWallpapers = (WallpaperUtils.WallpapersHolder) getIntent().getSerializableExtra("wallpapers");
         }
 
-        mAdapter = new ViewerPageAdapter(this, mCurrentPosition, mWallpapers);
+        mAdapter = new ViewerPageAdapter(this, mCurrentPosition, mWallpapers,
+                getIntent().getIntExtra(EXTRA_WIDTH, -1),
+                getIntent().getIntExtra(EXTRA_HEIGHT, -1));
         final ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setOffscreenPageLimit(1);
         pager.setAdapter(mAdapter);
         pager.setCurrentItem(mCurrentPosition);
 
         supportPostponeEnterTransition();
+        setTransition();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setEnterSharedElementCallback(new SharedElementCallback() {
                 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -116,7 +138,7 @@ public class ViewerActivity extends AssentActivity {
                 public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
                     if (isReturning) {
                         ViewerPageFragment active = (ViewerPageFragment) getFragmentManager().findFragmentByTag("page:" + mCurrentPosition);
-                        ImageView sharedElement = active.getImage();
+                        ImageView sharedElement = active.getSharedElement();
 
                         names.clear();
                         names.add(sharedElement.getTransitionName());
@@ -165,14 +187,6 @@ public class ViewerActivity extends AssentActivity {
                 previousState = state;
             }
         });
-
-        // Prevents nav bar from overlapping toolbar options in landscape
-        mToolbar.setPadding(
-                mToolbar.getPaddingLeft(),
-                mToolbar.getPaddingTop(),
-                getNavigationBarHeight(false, true),
-                mToolbar.getPaddingBottom()
-        );
     }
 
     @Override

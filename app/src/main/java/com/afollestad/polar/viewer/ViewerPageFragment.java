@@ -15,6 +15,7 @@ import com.afollestad.polar.R;
 import com.afollestad.polar.util.KeepRatio;
 import com.afollestad.polar.util.WallpaperUtils;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
@@ -29,15 +30,22 @@ import butterknife.Unbinder;
  */
 public class ViewerPageFragment extends AssentFragment {
 
+    private int thumbHeight;
+    private int thumbWidth;
+
     @BindView(R.id.progress)
     ProgressBar mProgress;
     @BindView(R.id.photo)
     ImageView mPhoto;
+    @BindView(R.id.thumbnail)
+    ImageView thumbnail;
 
     private WallpaperUtils.Wallpaper mWallpaper;
     private boolean isActive;
     private int mIndex;
     private Unbinder unbinder;
+
+    private boolean isFullImageLoaded;
 
     public String getTitle() {
         return mWallpaper.name;
@@ -47,12 +55,14 @@ public class ViewerPageFragment extends AssentFragment {
         return mWallpaper.author;
     }
 
-    public static ViewerPageFragment create(WallpaperUtils.Wallpaper wallpaper, int index) {
+    public static ViewerPageFragment create(WallpaperUtils.Wallpaper wallpaper, int index, int thumbWidth, int thumbHeight) {
         ViewerPageFragment frag = new ViewerPageFragment();
         frag.mWallpaper = wallpaper;
         Bundle args = new Bundle();
         args.putSerializable("wallpaper", wallpaper);
         args.putInt("index", index);
+        args.putInt("thumbWidth", thumbWidth);
+        args.putInt("thumbHeight", thumbHeight);
         frag.setArguments(args);
         return frag;
     }
@@ -62,6 +72,8 @@ public class ViewerPageFragment extends AssentFragment {
         super.onCreate(savedInstanceState);
         mWallpaper = (WallpaperUtils.Wallpaper) getArguments().getSerializable("wallpaper");
         mIndex = getArguments().getInt("index");
+        thumbWidth = getArguments().getInt("thumbWidth");
+        thumbHeight = getArguments().getInt("thumbHeight");
     }
 
     @Override
@@ -90,10 +102,41 @@ public class ViewerPageFragment extends AssentFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
-        ViewCompat.setTransitionName(mPhoto, "view_" + mIndex);
+        ViewCompat.setTransitionName(thumbnail, "view_" + mIndex);
         mProgress.setVisibility(View.VISIBLE);
+        mPhoto.setVisibility(View.INVISIBLE);
 
         Glide.with(this)
+                .load(mWallpaper.getListingImageUrl())
+                .priority(Priority.IMMEDIATE)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .transform(new KeepRatio(getActivity()))
+                .override(thumbWidth, thumbHeight)
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        if (isActive) {
+                            ((ViewerActivity) getActivity()).supportStartPostponedEnterTransition();
+                        }
+                        mPhoto.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadFullPhoto();
+                            }
+                        }, 200);
+                        return false;
+                    }
+                })
+                .into(thumbnail);
+    }
+
+    private void loadFullPhoto() {
+        Glide.with(ViewerPageFragment.this)
                 .load(mWallpaper.url)
                 .transform(new KeepRatio(getActivity()))
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
@@ -101,33 +144,35 @@ public class ViewerPageFragment extends AssentFragment {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                         mProgress.setVisibility(View.GONE);
+                        mPhoto.setVisibility(View.VISIBLE);
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                         mProgress.setVisibility(View.GONE);
-                        if (isActive) {
-                            ((ViewerActivity) getActivity()).supportStartPostponedEnterTransition();
-                        }
+                        mPhoto.setVisibility(View.VISIBLE);
+                        ViewCompat.setTransitionName(mPhoto, "view_" + mIndex);
+                        ViewCompat.setTransitionName(thumbnail, null);
+                        isFullImageLoaded = true;
                         return false;
                     }
                 }).into(mPhoto);
     }
 
+    public ImageView getSharedElement() {
+        return isFullImageLoaded ? mPhoto : thumbnail;
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        //unbinder.unbind();
+        unbinder.unbind();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         setIsActive(isActive);
-    }
-
-    public ImageView getImage() {
-        return mPhoto;
     }
 }

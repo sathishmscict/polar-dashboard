@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:background="@color/viewer_overlay"
         android:elevation="@dimen/toolbar_elevation"
-        app:layout_windowInsets="top"
+        app:layout_windowInsets="top|left|right"
         tools:ignore="UnusedAttribute">
 
         <android.support.v7.widget.Toolbar

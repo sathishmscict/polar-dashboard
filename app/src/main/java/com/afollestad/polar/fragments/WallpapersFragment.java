@@ -143,6 +143,8 @@ public class WallpapersFragment extends BasePageFragment implements
         Bundle extras = new Bundle();
         extras.putSerializable("wallpapers", mWallpapers);
         extras.putInt(STATE_CURRENT_POSITION, index);
+        extras.putInt(ViewerActivity.EXTRA_WIDTH, iv.getWidth());
+        extras.putInt(ViewerActivity.EXTRA_HEIGHT, iv.getHeight());
         intent.putExtras(extras);
 
         final String transName = "view_" + index;
