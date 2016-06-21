@@ -37,8 +37,8 @@ android {
         applicationId "com.afollestad.polar"
         minSdkVersion 17
         targetSdkVersion TARGET_SDK
-        versionCode 22
-        versionName "1.5.2"
+        versionCode 23
+        versionName "1.6.0"
     }
 
     buildTypes {
