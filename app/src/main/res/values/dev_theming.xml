@@ -18,6 +18,7 @@
     <color name="window_bg_cards_light">@color/default_window_bg_cards_lighttheme</color>
     <color name="tab_indicator_color_light">@color/default_tab_indicator_color_lighttheme</color>
     <color name="tab_icon_color_light">@color/default_tab_icon_color_lighttheme</color>
+    <color name="tab_ripple_color_light">@color/default_tab_ripple_color_lighttheme</color>
     <color name="card_background_light">@color/default_card_background_lighttheme</color>
     <color name="toolbar_title_color_light">@color/default_toolbar_title_color_lighttheme</color>
     <color name="toolbar_icons_color_light">@color/default_toolbar_icons_color_lighttheme</color>
@@ -36,6 +37,7 @@
     <color name="window_bg_cards_dark">@color/default_window_bg_cards_darktheme</color>
     <color name="tab_indicator_color_dark">@color/default_tab_indicator_color_darktheme</color>
     <color name="tab_icon_color_dark">@color/default_tab_icon_color_darktheme</color>
+    <color name="tab_ripple_color_dark">@color/default_tab_ripple_color_darktheme</color>
     <color name="card_background_dark">@color/default_card_background_darktheme</color>
     <color name="toolbar_title_color_dark">@color/default_toolbar_title_color_darktheme</color>
     <color name="toolbar_icons_color_dark">@color/default_toolbar_icons_color_darktheme</color>
@@ -54,6 +56,7 @@
     <color name="default_window_bg_cards_lighttheme">#EAEAEA</color>
     <color name="default_tab_indicator_color_lighttheme">#E1F5FE</color>
     <color name="default_tab_icon_color_lighttheme">#F5F5F5</color>
+    <color name="default_tab_ripple_color_lighttheme">#BFFFFFFF</color>
     <color name="default_card_background_lighttheme">#FFFFFF</color>
     <color name="default_toolbar_title_color_lighttheme">#fff</color>
     <color name="default_toolbar_icons_color_lighttheme">#fff</color>
@@ -65,6 +68,7 @@
     <color name="default_window_bg_cards_darktheme">#546E7A</color>
     <color name="default_tab_indicator_color_darktheme">#F5F5F5</color>
     <color name="default_tab_icon_color_darktheme">#F5F5F5</color>
+    <color name="default_tab_ripple_color_darktheme">#BFFFFFFF</color>
     <color name="default_card_background_darktheme">#607D8B</color>
     <color name="default_toolbar_title_color_darktheme">#fff</color>
     <color name="default_toolbar_icons_color_darktheme">#fff</color>

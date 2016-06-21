@@ -21,6 +21,8 @@
         <item name="toolbar_icons_color">@color/toolbar_icons_color_light</item>
         <item name="tab_indicator_color">@color/tab_indicator_color_light</item>
         <item name="tab_icon_color">@color/tab_icon_color_light</item>
+        <item name="tab_ripple_color">@color/tab_ripple_color_light</item>
+        <item name="tab_ripple_mask">@color/tab_ripple_color_light</item>
 
         <item name="force_light_status_bar">@bool/force_light_statusbar_icons_light</item>
         <item name="disable_auto_light_status_bar">@bool/disable_auto_light_statusbar_icons_light</item>
@@ -59,6 +61,8 @@
         <item name="toolbar_icons_color">@color/toolbar_icons_color_dark</item>
         <item name="tab_indicator_color">@color/tab_indicator_color_dark</item>
         <item name="tab_icon_color">@color/tab_icon_color_dark</item>
+        <item name="tab_ripple_color">@color/tab_ripple_color_dark</item>
+        <item name="tab_ripple_mask">@color/tab_ripple_color_dark</item>
 
         <item name="toolbar_shadow">@drawable/toolbar_shadow</item>
 
