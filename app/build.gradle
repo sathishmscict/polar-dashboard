@@ -64,7 +64,7 @@ repositories {
 dependencies {
     compile project(path: ':licensing')
 
-    compile 'com.afollestad.material-dialogs:core:0.8.6.0'
+    compile 'com.afollestad.material-dialogs:core:0.8.6.1'
     compile 'com.afollestad:drag-select-recyclerview:0.3.6'
     compile 'com.afollestad:bridge:3.2.2'
     compile 'com.afollestad:sectioned-recyclerview:0.2.3'
