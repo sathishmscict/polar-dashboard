@@ -3,10 +3,10 @@
 - [ ] I have given my issue a non-generic title.
 
 ###### Include the following:
- - Polar Dashboard version: `0.8.5.8`
- - Device OS version: `6.0.1`
- - Device Manufacturer: `Huawei`
- - Device Name: `Nexus 6P`
+ - Polar Dashboard version: `?`
+ - Device OS version: `?`
+ - Device Manufacturer: `?`
+ - Device Name: `?`
 
 Please wrap Java with correct syntax highlighting.
 
