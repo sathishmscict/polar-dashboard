@@ -73,14 +73,40 @@
         <item>meal</item>
     </string-array>
 
+    <!--
+        Leave array empty to disable paid requests.
+        Each item is how many icons a user can request.
+     -->
+    <integer-array name="paid_requests_counts">
+        <item>3</item>
+        <item>10</item>
+        <item>15</item>
+    </integer-array>
+
+    <!--
+        The price for each paid request option.
+        THIS DOESN'T DETERMINE THE ACTUAL COST OF THE IN-APP PURCHASES ON THE DEV CONSOLE.
+        These prices should match what you configure for the associated in-app purchases.
+    -->
+    <string-array name="paid_request_prices">
+        <item>$1.00</item>
+        <item>$3.00</item>
+        <item>$5.00</item>
+    </string-array>
+
+    <!-- The IDs of the in-app purchase items in the Developer Console for your paid request options. -->
+    <string-array name="paid_request_ids">
+        <item>three</item>
+        <item>ten</item>
+        <item>fifteen</item>
+    </string-array>
+
     <!-- Leave empty to disable. A URL to a Polar Request Manager server. -->
     <string name="polar_backend_host">
-
     </string>
 
     <!-- Host must also be filled in first. An app API key from Polar Request Manager. -->
     <string name="polar_backend_apikey">
-
     </string>
 
     <!--
