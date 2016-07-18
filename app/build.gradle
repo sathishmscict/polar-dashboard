@@ -37,8 +37,8 @@ android {
         applicationId "com.afollestad.polar"
         minSdkVersion 17
         targetSdkVersion TARGET_SDK
-        versionCode 23
-        versionName "1.6.0"
+        versionCode 24
+        versionName "1.6.1"
 
         vectorDrawables.useSupportLibrary = true
     }
