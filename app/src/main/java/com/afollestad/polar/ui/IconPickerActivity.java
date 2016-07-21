@@ -72,4 +72,14 @@ public class IconPickerActivity extends BaseThemedActivity implements ISelection
     public boolean inSelectionMode() {
         return true;
     }
+
+    @Override
+    public boolean allowResourceResult() {
+        for (String extra : EXTRAS_PICKER_RESOURCE_MODE) {
+            if (getIntent().getBooleanExtra(extra, false)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
