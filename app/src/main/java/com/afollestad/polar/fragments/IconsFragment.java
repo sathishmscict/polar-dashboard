@@ -76,6 +76,13 @@ public class IconsFragment extends BasePageFragment implements
             return;
         }
         if (context instanceof ISelectionMode && ((ISelectionMode) context).inSelectionMode()) {
+            if (((ISelectionMode) context).allowResourceResult()) {
+                Intent.ShortcutIconResource iconResource = Intent.ShortcutIconResource.fromContext(context, icon.getDrawableId(context));
+                context.setResult(Activity.RESULT_OK, new Intent()
+                        .putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource));
+                context.finish();
+                return;
+            }
             final ProgressDialogFragment progress = ProgressDialogFragment.show((AppCompatActivity) context, R.string.please_wait);
             new Thread(new Runnable() {
                 @Override
