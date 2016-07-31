@@ -175,4 +175,14 @@ public class IconMoreActivity extends BaseThemedActivity
     public boolean inSelectionMode() {
         return getIntent().getBooleanExtra("selection_mode", false);
     }
+
+    @Override
+    public boolean allowResourceResult() {
+        for (String extra : EXTRAS_PICKER_RESOURCE_MODE) {
+            if (getIntent().getBooleanExtra(extra, false)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
