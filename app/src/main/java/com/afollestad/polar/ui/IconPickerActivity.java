@@ -15,7 +15,6 @@ import com.afollestad.polar.util.TintUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
 /**
  * @author Aidan Follestad (afollestad)
  */
