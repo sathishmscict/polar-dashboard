@@ -164,16 +164,20 @@ public class WallpaperUtils {
     }
 
     public static WallpapersHolder getAll(final Context context, boolean allowCached) throws Exception {
-        Inquiry.init(context, DATABASE_NAME, DATABASE_VERSION);
+        final String iname = "get_walldb_instance";
+        new Inquiry.Builder(context, DATABASE_NAME)
+                .databaseVersion(DATABASE_VERSION)
+                .instanceName(iname)
+                .build();
         try {
             if (allowCached) {
-                Wallpaper[] cache = Inquiry.get().selectFrom(TABLE_NAME, Wallpaper.class).all();
+                Wallpaper[] cache = Inquiry.get(iname).selectFrom(TABLE_NAME, Wallpaper.class).all();
                 if (cache != null && cache.length > 0) {
                     Log.d("WallpaperUtils", String.format("Loaded %d wallpapers from cache.", cache.length));
                     return new WallpapersHolder(cache);
                 }
             } else {
-                Inquiry.get().deleteFrom(TABLE_NAME, Wallpaper.class).run();
+                Inquiry.get(iname).deleteFrom(TABLE_NAME, Wallpaper.class).run();
             }
         } catch (Throwable t) {
             t.printStackTrace();
@@ -189,8 +193,7 @@ public class WallpaperUtils {
             Log.d("WallpaperUtils", String.format("Loaded %d wallpapers from web.", holder.length()));
             if (holder.length() > 0) {
                 try {
-                    Inquiry.init(context, DATABASE_NAME, DATABASE_VERSION);
-                    Inquiry.get().insertInto(TABLE_NAME, Wallpaper.class)
+                    Inquiry.get(iname).insertInto(TABLE_NAME, Wallpaper.class)
                             .values(holder.wallpapers)
                             .run();
                 } catch (Throwable t) {
@@ -202,43 +205,48 @@ public class WallpaperUtils {
             Log.d("WallpaperUtils", String.format("Failed to load wallpapers... %s", e1.getMessage()));
             throw e1;
         } finally {
-            Inquiry.deinit();
+            Inquiry.destroy(iname);
         }
     }
 
     public static void saveDb(@Nullable final Context context, @Nullable final WallpapersHolder holder) {
         if (context == null || holder == null || holder.length() == 0) return;
-        Inquiry.init(context, DATABASE_NAME, DATABASE_VERSION);
+        final String iname = "save_walldb_instance";
+        new Inquiry.Builder(context, DATABASE_NAME)
+                .databaseVersion(DATABASE_VERSION)
+                .instanceName(iname)
+                .build();
         try {
-            Inquiry.get().deleteFrom(TABLE_NAME, Wallpaper.class).run();
-            Inquiry.get().insertInto(TABLE_NAME, Wallpaper.class)
+            Inquiry.get(iname).deleteFrom(TABLE_NAME, Wallpaper.class).run();
+            Inquiry.get(iname).insertInto(TABLE_NAME, Wallpaper.class)
                     .values(holder.wallpapers)
                     .run(new RunCallback<Long[]>() {
                         @Override
                         public void result(Long[] changed) {
-                            Inquiry.deinit();
+                            Inquiry.destroy(iname);
                         }
                     });
         } catch (Throwable t) {
             t.printStackTrace();
-        } finally {
-            if (context instanceof Activity && ((Activity) context).isFinishing())
-                Inquiry.deinit();
         }
     }
 
     public static void getAll(final Context context, boolean allowCached, final WallpapersCallback callback) {
-        Inquiry.init(context, DATABASE_NAME, DATABASE_VERSION);
+        final String iname = "save_walldb_instance2";
+        new Inquiry.Builder(context, DATABASE_NAME)
+                .databaseVersion(DATABASE_VERSION)
+                .instanceName(iname)
+                .build();
         try {
             if (allowCached) {
-                Wallpaper[] cache = Inquiry.get().selectFrom(TABLE_NAME, Wallpaper.class).all();
+                Wallpaper[] cache = Inquiry.get(iname).selectFrom(TABLE_NAME, Wallpaper.class).all();
                 if (cache != null && cache.length > 0) {
                     Log.d("WallpaperUtils", String.format("Loaded %d wallpapers from cache.", cache.length));
                     callback.onRetrievedWallpapers(new WallpapersHolder(cache), null, false);
                     return;
                 }
             } else {
-                Inquiry.get().deleteFrom(TABLE_NAME, Wallpaper.class).run();
+                Inquiry.get(iname).deleteFrom(TABLE_NAME, Wallpaper.class).run();
             }
         } catch (Throwable t) {
             t.printStackTrace();
@@ -267,8 +275,7 @@ public class WallpaperUtils {
                                 Log.d("WallpaperUtils", String.format("Loaded %d wallpapers from web.", holder.length()));
                                 if (holder.length() > 0) {
                                     try {
-                                        Inquiry.init(context, DATABASE_NAME, DATABASE_VERSION);
-                                        Inquiry.get().insertInto(TABLE_NAME, Wallpaper.class)
+                                        Inquiry.get(iname).insertInto(TABLE_NAME, Wallpaper.class)
                                                 .values(holder.wallpapers)
                                                 .run();
                                     } catch (Throwable t) {
@@ -281,7 +288,7 @@ public class WallpaperUtils {
                                 if (e1 instanceof Exception)
                                     callback.onRetrievedWallpapers(null, (Exception) e1, false);
                             } finally {
-                                Inquiry.deinit();
+                                Inquiry.destroy(iname);
                             }
                         }
                     }
