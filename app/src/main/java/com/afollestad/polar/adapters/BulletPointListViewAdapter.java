@@ -7,21 +7,19 @@ package com.afollestad.polar.adapters;
 import android.content.Context;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.afollestad.polar.R;
 
-import butterknife.ButterKnife;
-
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class BulletPointListViewAdapter extends BaseAdapter {
+public class BulletPointListViewAdapter extends RecyclerView.Adapter<BulletPointListViewAdapter.ChangelogVH> {
 
     private final CharSequence[] mItems;
 
@@ -30,13 +28,15 @@ public class BulletPointListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return mItems != null ? mItems.length : 0;
+    public ChangelogVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        final View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.list_item_bullet, parent, false);
+        return new ChangelogVH(view);
     }
 
     @Override
-    public Object getItem(int position) {
-        return mItems[position];
+    public void onBindViewHolder(ChangelogVH holder, int position) {
+        holder.title.setText(Html.fromHtml(mItems[position].toString()));
     }
 
     @Override
@@ -45,18 +45,17 @@ public class BulletPointListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.list_item_bullet, parent, false);
-        }
-        TextView title = ButterKnife.findById(convertView, R.id.title);
-        title.setText(Html.fromHtml(mItems[position].toString()));
-        return convertView;
+    public int getItemCount() {
+        return mItems != null ? mItems.length : 0;
     }
 
-    @Override
-    public boolean isEnabled(int position) {
-        return false;
+    public static class ChangelogVH extends RecyclerView.ViewHolder {
+
+        final TextView title;
+
+        public ChangelogVH(View itemView) {
+            super(itemView);
+            title = (TextView) itemView.findViewById(R.id.title);
+        }
     }
 }

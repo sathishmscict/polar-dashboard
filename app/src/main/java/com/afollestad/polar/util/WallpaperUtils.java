@@ -165,7 +165,7 @@ public class WallpaperUtils {
 
     public static WallpapersHolder getAll(final Context context, boolean allowCached) throws Exception {
         final String iname = "get_walldb_instance";
-        new Inquiry.Builder(context, DATABASE_NAME)
+        Inquiry.newInstance(context, DATABASE_NAME)
                 .databaseVersion(DATABASE_VERSION)
                 .instanceName(iname)
                 .build();
@@ -212,7 +212,7 @@ public class WallpaperUtils {
     public static void saveDb(@Nullable final Context context, @Nullable final WallpapersHolder holder) {
         if (context == null || holder == null || holder.length() == 0) return;
         final String iname = "save_walldb_instance";
-        new Inquiry.Builder(context, DATABASE_NAME)
+        Inquiry.newInstance(context, DATABASE_NAME)
                 .databaseVersion(DATABASE_VERSION)
                 .instanceName(iname)
                 .build();
@@ -233,7 +233,7 @@ public class WallpaperUtils {
 
     public static void getAll(final Context context, boolean allowCached, final WallpapersCallback callback) {
         final String iname = "save_walldb_instance2";
-        new Inquiry.Builder(context, DATABASE_NAME)
+        Inquiry.newInstance(context, DATABASE_NAME)
                 .databaseVersion(DATABASE_VERSION)
                 .instanceName(iname)
                 .build();
