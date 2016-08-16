@@ -238,7 +238,7 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if (mTransitionSection == section) {
-                String transitionName = mContext.getString(R.string.transition_name_recyclerview_item) + relativePos;
+                final String transitionName = mContext.getString(R.string.transition_name_recyclerview_item) + relativePos;
                 holder.itemView.setTransitionName(transitionName);
                 mTransitionViews.put(relativePos, new Pair<>(holder.itemView, transitionName));
             } else {
@@ -246,10 +246,12 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
             }
         }
 
+        holder.image.setBackground(null);
+        holder.image.setImageDrawable(null);
+
         if (res == 0) {
             holder.image.setBackgroundColor(Color.parseColor("#40000000"));
         } else {
-            holder.image.setBackground(null);
             Glide.with(c)
                     .fromResource()
                     .load(res)

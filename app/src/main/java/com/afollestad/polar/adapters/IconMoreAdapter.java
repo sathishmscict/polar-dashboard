@@ -71,10 +71,12 @@ public class IconMoreAdapter extends RecyclerView.Adapter<IconMoreAdapter.MainVi
             holder.itemView.setTransitionName(transitionName);
         }
 
+        holder.image.setBackground(null);
+        holder.image.setImageDrawable(null);
+
         if (res == 0) {
             holder.image.setBackgroundColor(Color.parseColor("#40000000"));
         } else {
-            holder.image.setBackground(null);
             Glide.with(c)
                     .load(res)
                     .into(new SimpleTarget<GlideDrawable>() {
