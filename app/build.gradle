@@ -29,7 +29,7 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             output.processManifest.doLast {
-                replaceInManifest(output, '{myApplicationId}', variant.applicationId)
+                replaceInManifest(output, '\\[myApplicationId\\]', variant.applicationId)
             }
             output.outputFile = new File(
                     output.outputFile.parent, "MyPolarPack-${variant.versionName}.apk")

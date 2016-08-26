@@ -220,11 +220,11 @@
         <!-- TODO: Uncomment next three lines for Zooper -->
         <!--<provider-->
         <!--android:name=".zooper.TemplateProvider"-->
-        <!--android:authorities="{myApplicationId}.zwprovider"/>-->
+        <!--android:authorities="[myApplicationId].zwprovider"/>-->
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="{myApplicationId}.iconFileProvider"
+            android:authorities="[myApplicationId].iconFileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
