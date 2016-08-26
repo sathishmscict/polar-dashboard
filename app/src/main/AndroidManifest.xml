@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.afollestad.polar">
 
-    <!-- TODO: Replace com.afollestad.polar above with your app ID (package name), ONLY IF you rename the folder inside of /src/main/java -->
+    <!-- NOTE: you do NOT need to change the value of "package" above. -->
 
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />
@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Light"
         android:vmSafeMode="true"
-        tools:ignore="GoogleAppIndexingWarning,RtlEnabled,UnusedAttribute">
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning,RtlEnabled,UnusedAttribute">
 
         <meta-data
             android:name="com.afollestad.polar.util.GlideConfiguration"
