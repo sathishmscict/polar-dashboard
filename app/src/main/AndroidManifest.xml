@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.afollestad.polar">
 
+    <!-- TODO: Replace com.afollestad.polar above with your app ID (package name), ONLY IF you rename the folder inside of /src/main/java -->
+
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -25,7 +27,7 @@
             android:value="GlideModule" />
 
         <service
-            android:name=".services.GaufrerWallpaperSource"
+            android:name=".services.PolarWallpaperSource"
             android:description="@string/muzei_description"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
@@ -38,9 +40,6 @@
             <meta-data
                 android:name="color"
                 android:value="@color/primary_1_light" />
-            <!-- <meta-data -->
-            <!-- android:name="settingsActivity" -->
-            <!-- android:value=".ExampleSettingsActivity" /> -->
         </service>
 
         <activity
@@ -203,7 +202,7 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
 
-            <!-- Uncomment for Zooper -->
+            <!-- TODO: Uncomment next three lines for Zooper -->
             <!--<intent-filter>-->
             <!--<action android:name="org.zooper.zw.TEMPLATES" />-->
             <!--</intent-filter>-->
@@ -218,17 +217,17 @@
             android:label="@string/app_name_wallpaper"
             android:theme="@style/AppTheme.Viewer" />
 
-        <!-- Uncomment for Zooper, MAKE SURE YOU RENAME COM.AFOLLESTAD.POLAR TO BE UNIQUE TO YOUR PACK -->
+        <!-- TODO: Uncomment next three lines for Zooper. Replace com.afollestad.polar with your app ID (package name). -->
         <!--<provider-->
         <!--android:name=".zooper.TemplateProvider"-->
         <!--android:authorities="com.afollestad.polar.zwprovider"/>-->
 
+        <!-- TODO: Replace com.afollestad.polar with your app ID (package name). -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.iconFileProvider"
+            android:authorities="com.afollestad.polar.iconFileProvider"
             android:exported="false"
-            android:grantUriPermissions="true"
-            >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />

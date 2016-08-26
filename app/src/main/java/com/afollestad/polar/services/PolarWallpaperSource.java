@@ -14,10 +14,10 @@ import com.google.android.apps.muzei.api.RemoteMuzeiArtSource;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class GaufrerWallpaperSource extends RemoteMuzeiArtSource {
+public class PolarWallpaperSource extends RemoteMuzeiArtSource {
 
-    public GaufrerWallpaperSource() {
-        super(GaufrerWallpaperSource.class.getSimpleName());
+    public PolarWallpaperSource() {
+        super(PolarWallpaperSource.class.getSimpleName());
     }
 
     private static final int ROTATE_TIME_MILLIS = 3 * 60 * 60 * 1000; // rotate every 3 hours
@@ -44,12 +44,12 @@ public class GaufrerWallpaperSource extends RemoteMuzeiArtSource {
         try {
             wallpapers = WallpaperUtils.getAll(this, !WallpaperUtils.didExpire(this));
         } catch (Exception e) {
-            Log.d(GaufrerWallpaperSource.class.getSimpleName(), String.format("Failed to retrieve wallpapers for Muzei... %s", e.getMessage()));
+            Log.d(PolarWallpaperSource.class.getSimpleName(), String.format("Failed to retrieve wallpapers for Muzei... %s", e.getMessage()));
             throw new RetryException();
         }
 
         if (wallpapers == null || wallpapers.length() == 0) {
-            Log.d(GaufrerWallpaperSource.class.getSimpleName(), "No wallpapers were found for Muzei.");
+            Log.d(PolarWallpaperSource.class.getSimpleName(), "No wallpapers were found for Muzei.");
             throw new RetryException();
         }
 
@@ -59,7 +59,7 @@ public class GaufrerWallpaperSource extends RemoteMuzeiArtSource {
         setActiveIndex(currentActive);
         WallpaperUtils.Wallpaper currentWallpaper = wallpapers.get(currentActive);
 
-        Log.d(GaufrerWallpaperSource.class.getSimpleName(), String.format("Publishing artwork to Muzei: %s", currentWallpaper.url));
+        Log.d(PolarWallpaperSource.class.getSimpleName(), String.format("Publishing artwork to Muzei: %s", currentWallpaper.url));
         final Artwork currentArt = new Artwork.Builder()
                 .imageUri(Uri.parse(currentWallpaper.url))
                 .title(currentWallpaper.name)

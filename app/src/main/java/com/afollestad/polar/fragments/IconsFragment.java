@@ -104,6 +104,17 @@ public class IconsFragment extends BasePageFragment implements
                                 .setData(uri)
                                 .setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION));
                         context.finish();
+                    } catch (NullPointerException npe) {
+                        dest.delete();
+                        progress.dismiss();
+                        if (!context.isFinishing()) {
+                            context.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Utils.showError(context, new Exception("An error occurred while retrieving the icon. Tell the designer of this icon pack to make sure the FileProvider at the bottom of AndroidManifest.xml is using the correct app ID."));
+                                }
+                            });
+                        }
                     } catch (final Exception e) {
                         dest.delete();
                         progress.dismiss();
