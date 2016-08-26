@@ -32,7 +32,7 @@ android {
                 replaceInManifest(output, '\\[myApplicationId\\]', variant.applicationId)
             }
             output.outputFile = new File(
-                    output.outputFile.parent, "MyPolarPack-${variant.versionName}.apk")
+                    output.outputFile.parent, "${variant.applicationId}-${variant.versionName}.apk")
         }
     }
 
@@ -46,8 +46,8 @@ android {
         applicationId "com.afollestad.polar"
         minSdkVersion 17
         targetSdkVersion TARGET_SDK
-        versionCode 25
-        versionName "1.6.2"
+        versionCode 26
+        versionName "1.6.3"
 
         vectorDrawables.useSupportLibrary = true
     }
@@ -80,7 +80,7 @@ dependencies {
     compile 'com.afollestad:bridge:3.2.5'
     compile 'com.afollestad:sectioned-recyclerview:0.2.3'
     compile 'com.afollestad:assent:0.2.5'
-    compile 'com.afollestad:icon-request:1.3.8'
+    compile 'com.afollestad:icon-request:1.4.0'
     compile 'com.afollestad:inquiry:3.2.1'
 
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.7'
