@@ -16,18 +16,27 @@ ext {
     GOOGLE_LIBS = "24.2.0"
 }
 
+def replaceInManifest(output, fromString, toString) {
+    def manifestOutFile = output.processManifest.manifestOutputFile
+    def updatedContent = manifestOutFile.getText('UTF-8').replaceAll(fromString, toString)
+    manifestOutFile.write(updatedContent, 'UTF-8')
+}
+
 android {
     compileSdkVersion TARGET_SDK
     buildToolsVersion BUILD_TOOLS
 
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
+            output.processManifest.doLast {
+                replaceInManifest(output, '{myApplicationId}', variant.applicationId)
+            }
             output.outputFile = new File(
                     output.outputFile.parent, "MyPolarPack-${variant.versionName}.apk")
         }
     }
 
-    // Note to self, sample uses same keystore as Cabinet
+    // Note to Aidan sample uses same keystore as Cabinet
 
     lintOptions {
         abortOnError false

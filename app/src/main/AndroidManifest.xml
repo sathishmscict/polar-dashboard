@@ -217,15 +217,14 @@
             android:label="@string/app_name_wallpaper"
             android:theme="@style/AppTheme.Viewer" />
 
-        <!-- TODO: Uncomment next three lines for Zooper. Replace com.afollestad.polar with your app ID (package name). -->
+        <!-- TODO: Uncomment next three lines for Zooper -->
         <!--<provider-->
         <!--android:name=".zooper.TemplateProvider"-->
-        <!--android:authorities="com.afollestad.polar.zwprovider"/>-->
+        <!--android:authorities="{myApplicationId}.zwprovider"/>-->
 
-        <!-- TODO: Replace com.afollestad.polar with your app ID (package name). -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.afollestad.polar.iconFileProvider"
+            android:authorities="{myApplicationId}.iconFileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
