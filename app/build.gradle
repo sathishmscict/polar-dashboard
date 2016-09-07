@@ -16,21 +16,12 @@ ext {
     GOOGLE_LIBS = "24.2.0"
 }
 
-def replaceInManifest(output, fromString, toString) {
-    def manifestOutFile = output.processManifest.manifestOutputFile
-    def updatedContent = manifestOutFile.getText('UTF-8').replaceAll(fromString, toString)
-    manifestOutFile.write(updatedContent, 'UTF-8')
-}
-
 android {
     compileSdkVersion TARGET_SDK
     buildToolsVersion BUILD_TOOLS
 
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
-            output.processManifest.doLast {
-                replaceInManifest(output, '\\[myApplicationId\\]', variant.applicationId)
-            }
             output.outputFile = new File(
                     output.outputFile.parent, "${variant.applicationId}-${variant.versionName}.apk")
         }
@@ -46,8 +37,8 @@ android {
         applicationId "com.afollestad.polar"
         minSdkVersion 17
         targetSdkVersion TARGET_SDK
-        versionCode 26
-        versionName "1.6.3"
+        versionCode 27
+        versionName "1.6.4"
 
         vectorDrawables.useSupportLibrary = true
     }

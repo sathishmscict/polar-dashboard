@@ -42,15 +42,23 @@
                 android:value="@color/primary_1_light" />
         </service>
 
+        <!-- Replace AppTheme.SplashLight with AppTheme.SplashDark to use dark splash screen theme -->
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.SplashScreen"
             android:exported="true"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.SplashLight">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -220,11 +228,11 @@
         <!-- TODO: Uncomment next three lines for Zooper -->
         <!--<provider-->
         <!--android:name=".zooper.TemplateProvider"-->
-        <!--android:authorities="[myApplicationId].zwprovider"/>-->
+        <!--android:authorities="${applicationId}.zwprovider"/>-->
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="[myApplicationId].iconFileProvider"
+            android:authorities="${applicationId}.iconFileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

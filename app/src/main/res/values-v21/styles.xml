@@ -3,6 +3,10 @@
 
     <!-- Light Theme -->
 
+    <style name="AppTheme.SplashLight.Parent" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:navigationBarColor">@color/splash_light_status</item>
+    </style>
+
     <style name="AppTheme.Light" parent="Base.AppTheme.Light">
         <item name="android:windowTranslucentNavigation">@bool/translucent_nav</item>
         <item name="android:colorControlHighlight">@color/accent_1_light</item>
@@ -10,6 +14,10 @@
     </style>
 
     <!-- Dark Theme -->
+
+    <style name="AppTheme.SplashDark.Parent" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:navigationBarColor">@color/splash_dark_status</item>
+    </style>
 
     <style name="AppTheme.Dark" parent="Base.AppTheme.Dark">
         <item name="android:windowTranslucentNavigation">@bool/translucent_nav</item>

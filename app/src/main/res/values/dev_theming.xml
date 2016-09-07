@@ -28,6 +28,10 @@
     <bool name="force_light_statusbar_icons_light">false</bool>
     <bool name="disable_auto_light_statusbar_icons_light">false</bool>
 
+    <!-- Splash screen can only be switched between light and dark themes manually from AndroidManifest.xml -->
+    <color name="splash_light_bg">#E0E0E0</color>
+    <color name="splash_light_status">#BDBDBD</color>
+
     <!-- DARK THEME -->
 
     <color name="primary_1_dark">@color/default_primary_darktheme</color>
@@ -46,6 +50,10 @@
     -->
     <bool name="force_light_statusbar_icons_dark">false</bool>
     <bool name="disable_auto_light_statusbar_icons_dark">false</bool>
+
+    <!-- Splash screen can only be switched between light and dark themes manually from AndroidManifest.xml -->
+    <color name="splash_dark_bg">#616161</color>
+    <color name="splash_dark_status">#424242</color>
 
     <!-- Default theme colors, don't change these -->
 
