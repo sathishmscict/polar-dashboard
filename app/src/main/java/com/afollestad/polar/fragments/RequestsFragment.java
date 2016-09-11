@@ -297,8 +297,8 @@ public class RequestsFragment extends BasePageFragment implements
             if (mIsLoading) return;
             mIsLoading = true;
             if (IconRequest.get() == null) {
-                final File saveFolder = new File(Environment.getExternalStorageDirectory(), getString(R.string.app_name));
-                Utils.wipe(new File(saveFolder, "files"));
+                final File saveFolder = new File(getActivity().getCacheDir(), "requests");
+                Utils.wipe(saveFolder);
 
                 RemoteConfig remoteConfig = null;
                 String remoteHost = Config.get().polarBackendHost();
