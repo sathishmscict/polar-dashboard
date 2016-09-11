@@ -253,9 +253,4 @@ public class Config implements IConfig {
         if (mR == null) return null;
         return mR.getString(R.string.polar_backend_apikey);
     }
-
-    @Override
-    public boolean polarBackendEmailFallback() {
-        return mR != null && mR.getBoolean(R.bool.polar_backend_email_fallback);
-    }
 }

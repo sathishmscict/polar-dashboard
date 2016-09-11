@@ -14,6 +14,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.WallpapersFragment;
 
 import java.io.File;
+import java.io.FilePermission;
 import java.io.Serializable;
 import java.util.Locale;
 
@@ -317,7 +319,7 @@ public class WallpaperUtils {
         mWallpaperCache = wallpaper;
         mApplyCache = apply;
 
-        if (!Assent.isPermissionGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
+        if (!Assent.isPermissionGranted(Assent.WRITE_EXTERNAL_STORAGE) && !apply) {
             Assent.requestPermissions(new AssentCallback() {
                 @Override
                 public void onPermissionResult(PermissionResultSet permissionResultSet) {
@@ -336,7 +338,7 @@ public class WallpaperUtils {
 
         if (apply) {
             // Crop/Apply
-            saveFolder = context.getExternalCacheDir();
+            saveFolder = context.getCacheDir();
             name = String.format("%s_%s_wallpaper.%s",
                     wallpaper.name.replace(" ", "_"),
                     wallpaper.author.replace(" ", "_"),
@@ -410,9 +412,13 @@ public class WallpaperUtils {
             // Apply
             if (dialog != null)
                 dialog.dismiss();
+            final Uri uri = FileProvider.getUriForFile(context,
+                    BuildConfig.APPLICATION_ID + ".fileProvider",
+                    mFileCache);
             final Intent intent = new Intent(Intent.ACTION_ATTACH_DATA)
-                    .setDataAndType(Uri.fromFile(mFileCache), "image/*")
-                    .putExtra("mimeType", "image/*");
+                    .setDataAndType(uri, "image/*")
+                    .putExtra("mimeType", "image/*")
+                    .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             context.startActivity(Intent.createChooser(intent, context.getString(R.string.set_wallpaper_using)));
         } else {
             // Save

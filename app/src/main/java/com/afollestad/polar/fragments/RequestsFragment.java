@@ -2,15 +2,15 @@ package com.afollestad.polar.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,10 +28,9 @@ import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
 import com.afollestad.iconrequest.App;
 import com.afollestad.iconrequest.AppsLoadCallback;
 import com.afollestad.iconrequest.AppsSelectionListener;
-import com.afollestad.iconrequest.BackendConfig;
 import com.afollestad.iconrequest.IconRequest;
+import com.afollestad.iconrequest.RemoteConfig;
 import com.afollestad.iconrequest.RequestSendCallback;
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.BuildConfig;
@@ -54,13 +53,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-
 public class RequestsFragment extends BasePageFragment implements
-        AppsLoadCallback, AppsSelectionListener, RequestSendCallback, AssentCallback,
+        AppsLoadCallback, AppsSelectionListener, RequestSendCallback,
         DragSelectRecyclerViewAdapter.SelectionListener, RequestsAdapter.SelectionChangedListener {
 
     private static final Object LOCK = new Object();
-    private final static int PERM_RQ = 69;
 
     @BindView(android.R.id.list)
     DragSelectRecyclerView list;
@@ -248,7 +245,7 @@ public class RequestsFragment extends BasePageFragment implements
         emptyText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Assent.requestPermissions(RequestsFragment.this, PERM_RQ, Assent.WRITE_EXTERNAL_STORAGE);
+                onClickFab();
             }
         });
 
@@ -288,15 +285,6 @@ public class RequestsFragment extends BasePageFragment implements
     }
 
     @Override
-    public void onPermissionResult(PermissionResultSet permissionResultSet) {
-        if (permissionResultSet.isGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
-            onClickFab();
-        } else {
-            Toast.makeText(getActivity(), R.string.write_storage_permission_denied, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mAdapter.saveInstanceState(outState);
@@ -312,11 +300,10 @@ public class RequestsFragment extends BasePageFragment implements
                 final File saveFolder = new File(Environment.getExternalStorageDirectory(), getString(R.string.app_name));
                 Utils.wipe(new File(saveFolder, "files"));
 
-                BackendConfig remoteConfig = null;
+                RemoteConfig remoteConfig = null;
                 String remoteHost = Config.get().polarBackendHost();
                 if (remoteHost != null && !remoteHost.trim().isEmpty()) {
-                    remoteConfig = new BackendConfig(remoteHost, Config.get().polarBackendApiKey())
-                            .fallbackToEmail(Config.get().polarBackendEmailFallback());
+                    remoteConfig = new RemoteConfig(remoteHost, Config.get().polarBackendApiKey());
                 }
 
                 IconRequest.start(getActivity())
@@ -431,6 +418,14 @@ public class RequestsFragment extends BasePageFragment implements
     }
 
     @Override
+    public Uri onRequestProcessUri(Uri uri) {
+        return FileProvider.getUriForFile(
+                getActivity(),
+                BuildConfig.APPLICATION_ID + ".fileProvider",
+                new File(uri.getPath()));
+    }
+
+    @Override
     public void onRequestSent() {
         if (getActivity() == null) return;
         final Activity act = getActivity();
@@ -456,18 +451,6 @@ public class RequestsFragment extends BasePageFragment implements
     public void onClickFab() {
         if (!Config.get().iconRequestEnabled()) {
             Utils.showError(getActivity(), new Exception("The developer has not set an email for icon requests yet."));
-            return;
-        } else if (!Assent.isPermissionGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
-            new MaterialDialog.Builder(getActivity())
-                    .title(R.string.permission_needed)
-                    .content(Html.fromHtml(getString(R.string.permission_needed_request_desc, getString(R.string.app_name))))
-                    .positiveText(android.R.string.ok)
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            Assent.requestPermissions(RequestsFragment.this, PERM_RQ, Assent.WRITE_EXTERNAL_STORAGE);
-                        }
-                    }).show();
             return;
         }
 

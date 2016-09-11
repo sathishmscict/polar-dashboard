@@ -97,7 +97,7 @@ public class IconsFragment extends BasePageFragment implements
 
                         Uri uri = FileProvider.getUriForFile(
                                 context,
-                                BuildConfig.APPLICATION_ID + ".iconFileProvider",
+                                BuildConfig.APPLICATION_ID + ".fileProvider",
                                 dest);
                         context.setResult(Activity.RESULT_OK, new Intent()
                                 .putExtra(Intent.EXTRA_STREAM, uri)
