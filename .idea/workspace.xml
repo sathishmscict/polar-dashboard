@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a397bd4-2a8b-4bef-b4f2-9b4d4994a682" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/splash_dark_colors.PNG" afterPath="$PROJECT_DIR$/splash_dark_colors.PNG" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/splash_light_colors.PNG" afterPath="$PROJECT_DIR$/splash_light_colors.PNG" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/splashscreen.html" afterPath="$PROJECT_DIR$/splashscreen.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/splash_dark_colors.PNG" afterPath="$PROJECT_DIR$/splash_dark_colors.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/splash_light_colors.PNG" afterPath="$PROJECT_DIR$/splash_light_colors.png" />
     </list>
     <ignored path="polar-dashboard-web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,8 +29,8 @@
       <file leaf-file-name="splashscreen.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/splashscreen.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="78" column="26" selection-start-line="78" selection-start-column="26" selection-end-line="78" selection-end-column="26" />
+            <state relative-caret-position="654">
+              <caret line="105" column="110" selection-start-line="105" selection-start-column="110" selection-end-line="105" selection-end-column="110" />
               <folding>
                 <element signature="e#48#55#0" expanded="true" />
               </folding>
@@ -462,7 +463,7 @@
       <workItem from="1460676981204" duration="5018000" />
       <workItem from="1460744408858" duration="17000" />
       <workItem from="1465093531880" duration="1240000" />
-      <workItem from="1473628323453" duration="1820000" />
+      <workItem from="1473628323453" duration="1867000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <created>1456777598500</created>
@@ -702,19 +703,26 @@
       <option name="project" value="LOCAL" />
       <updated>1473630172395</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Added a splash screen page.">
+      <created>1473630304652</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1473630304652</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8095000" />
+    <option name="totallyTimeSpent" value="8142000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14322917" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14322917" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -1057,10 +1065,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/splash_dark_colors.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/splash_light_colors.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/splashscreen.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="78" column="26" selection-start-line="78" selection-start-column="26" selection-end-line="78" selection-end-column="26" />
+        <state relative-caret-position="654">
+          <caret line="105" column="110" selection-start-line="105" selection-start-column="110" selection-end-line="105" selection-end-column="110" />
           <folding>
             <element signature="e#48#55#0" expanded="true" />
           </folding>
