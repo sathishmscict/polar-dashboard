@@ -78,16 +78,16 @@
         <p class="flow-text">
             There are two XML files in <code>/res/drawable</code> called <code>splash_light.xml</code> and <code>splash_dark.xml</code>.
             These files represent the actual entire background of your splash screen, including the backgroud color and the icon
-            in the center. You can replace <code>@drawable/homepage_landing_icon</code> with whatever drawable you wish, such as
-            just your regular app icon, or a custom PNG on <code>drawable-nodpi</code>. Make sure you test on different screen
+            in the center. You can replace <code>@drawable/homepage_landing_icon</code> with whatever drawable you wish (such as
+            just your regular app icon, or a custom PNG in <code>drawable-nodpi</code>). Make sure you test on different screen
             sizes, though!
         </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/splash_drawable_xml.PNG"
                  class="app-image">
 
         <h1 id="lightanddarkthemes">Light and Dark Themes</h1>
         <p class="flow-text">
-            Since splash screens work by displaying an image <i>before</i> the app initializes, and <i>before</i> any Java
-            code can actually run, you can only switch the splash screen theme statically (not after the app is running).
+            Since splash screens work by displaying an image <i>before</i> the app initializes and <i>before</i> any Java
+            code can actually run, you can only switch the splash screen theme statically (before your app is built into an APK).
             You can switch between the light and dark themes manually from <code>AndroidManifest.xml</code>. Just replace
             <code>AppTheme.SplashLight</code> with <code>AppTheme.SplashDark</code> if you want to use the dark splash screen
             theme.
