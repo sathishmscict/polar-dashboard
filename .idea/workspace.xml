@@ -2,21 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a397bd4-2a8b-4bef-b4f2-9b4d4994a682" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/preview_splashscreen.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/splash_dark_colors.PNG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/splash_drawable_xml.PNG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/splash_light_colors.PNG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/splash_manifest.PNG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/splashscreen.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/splash_dark_colors.PNG" afterPath="$PROJECT_DIR$/splash_dark_colors.PNG" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/splash_light_colors.PNG" afterPath="$PROJECT_DIR$/splash_light_colors.PNG" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/customization.html" afterPath="$PROJECT_DIR$/customization.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gettingstarted.html" afterPath="$PROJECT_DIR$/gettingstarted.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icons.html" afterPath="$PROJECT_DIR$/icons.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requestmanager.html" afterPath="$PROJECT_DIR$/requestmanager.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/upgrades.html" afterPath="$PROJECT_DIR$/upgrades.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wallpapers.html" afterPath="$PROJECT_DIR$/wallpapers.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zooper.html" afterPath="$PROJECT_DIR$/zooper.html" />
     </list>
     <ignored path="polar-dashboard-web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,8 +28,8 @@
       <file leaf-file-name="splashscreen.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/splashscreen.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="501">
-              <caret line="93" column="50" selection-start-line="93" selection-start-column="50" selection-end-line="93" selection-end-column="50" />
+            <state relative-caret-position="195">
+              <caret line="78" column="26" selection-start-line="78" selection-start-column="26" selection-end-line="78" selection-end-column="26" />
               <folding>
                 <element signature="e#48#55#0" expanded="true" />
               </folding>
@@ -474,7 +462,7 @@
       <workItem from="1460676981204" duration="5018000" />
       <workItem from="1460744408858" duration="17000" />
       <workItem from="1465093531880" duration="1240000" />
-      <workItem from="1473628323453" duration="1683000" />
+      <workItem from="1473628323453" duration="1820000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <created>1456777598500</created>
@@ -707,19 +695,26 @@
       <option name="project" value="LOCAL" />
       <updated>1465094378418</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Added a splash screen page.">
+      <created>1473630172395</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1473630172395</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7958000" />
+    <option name="totallyTimeSpent" value="8095000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14322917" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14322917" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -765,7 +760,8 @@
     <MESSAGE value="Fix" />
     <MESSAGE value="Added Polar RM info" />
     <MESSAGE value="Update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update" />
+    <MESSAGE value="Added a splash screen page." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a splash screen page." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1063,8 +1059,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/splashscreen.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="501">
-          <caret line="93" column="50" selection-start-line="93" selection-start-column="50" selection-end-line="93" selection-end-column="50" />
+        <state relative-caret-position="195">
+          <caret line="78" column="26" selection-start-line="78" selection-start-column="26" selection-end-line="78" selection-end-column="26" />
           <folding>
             <element signature="e#48#55#0" expanded="true" />
           </folding>
