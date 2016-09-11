@@ -12,7 +12,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 
 ext {
     TARGET_SDK = 24
-    BUILD_TOOLS = "24.0.2"
+    BUILD_TOOLS = "24.0.1"
     GOOGLE_LIBS = "24.2.0"
 }
 
