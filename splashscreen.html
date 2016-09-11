@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Polar &#8212; Splash Screen</title>
+    <!-- jQuery-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Compiled and minified CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#81D4FA">
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+
+<body>
+<header>
+    <nav class="top-nav">
+        <div class="nav-wrapper">
+            <a href="//afollestad.github.io/polar-dashboard" class="page-title">Splash Screen</a>
+            <ul id="slide-out" class="side-nav fixed">
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard" class="waves-effect">Home</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/gettingstarted.html" class="waves-effect">Getting
+                        Started</a>
+                </li>
+                <li class="active">
+                    <a href="//afollestad.github.io/polar-dashboard/splashscreen.html" class="waves-effect">Splash Screen</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/icons.html" class="waves-effect">Icons</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/wallpapers.html" class="waves-effect">Wallpapers</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/customization.html" class="waves-effect">Customization</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/zooper.html" class="waves-effect">Zooper</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/upgrades.html" class="waves-effect">Upgrades</a>
+                </li>
+                <li>
+                    <a href="//afollestad.github.io/polar-dashboard/requestmanager.html" class="waves-effect">Request Manager</a>
+                </li>
+                <li>
+                    <a href="https://github.com/afollestad/polar-dashboard" class="waves-effect" style="color: #BDBDBD">Back
+                        to GitHub</a>
+                </li>
+            </ul>
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+        </div>
+    </nav>
+</header>
+<main class="mainContent">
+    <div class="container">
+
+        <h1>Table of Contents</h1>
+        <ol class="tableofcontents">
+            <li><a href="#drawablexml">Splash Drawable XML</a></li>
+            <li><a href="#lightanddarkthemes">Light and Dark Themes</a></li>
+            <li><a href="#colorcustomization">Color Customization</a></li>
+        </ol>
+        <hr/>
+
+        <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/preview_splashscreen.png"
+             class="app-image-small-noshadow">
+        <hr/>
+
+        <h1 id="drawablexml">Splash Drawable XML</h1>
+        <p class="flow-text">
+            There are two XML files in <code>/res/drawable</code> called <code>splash_light.xml</code> and <code>splash_dark.xml</code>.
+            These files represent the actual entire background of your splash screen, including the backgroud color and the icon
+            in the center. You can replace <code>@drawable/homepage_landing_icon</code> with whatever drawable you wish, such as
+            just your regular app icon, or a custom PNG on <code>drawable-nodpi</code>. Make sure you test on different screen
+            sizes, though!
+        </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/splash_drawable_xml.PNG"
+                 class="app-image">
+
+        <h1 id="lightanddarkthemes">Light and Dark Themes</h1>
+        <p class="flow-text">
+            Since splash screens work by displaying an image <i>before</i> the app initializes, and <i>before</i> any Java
+            code can actually run, you can only switch the splash screen theme statically (not after the app is running).
+            You can switch between the light and dark themes manually from <code>AndroidManifest.xml</code>. Just replace
+            <code>AppTheme.SplashLight</code> with <code>AppTheme.SplashDark</code> if you want to use the dark splash screen
+            theme.
+        </p><img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/splash_manifest.PNG"
+                 class="app-image">
+
+        <h1 id="colorcustomization">Color Customization</h1>
+        <p class="flow-text">
+            You can of course change the colors used in the splash screen. The <code>_bg</code> colors shown below are used
+            as the background color of the light or dark splash screens. The <code>_status</code> colors shown below are used
+            for the status bar and navigation bar colors. <b>Note that the light splash screen will always use light status
+            bar mode (black icons) on Marshmallow and above unless you change that in values-v23/styles.xml.</b>
+        </p>
+        <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/splash_light_colors.PNG"
+                 class="app-image">
+        <img src="https://raw.githubusercontent.com/afollestad/polar-dashboard/gh-pages/splash_dark_colors.PNG"
+             class="app-image">
+
+    </div>
+</main>
+<script src="https://rawgit.com/afollestad/polar-dashboard/gh-pages/init.js" type="text/javascript"></script>
+</body>
+
+</html>
