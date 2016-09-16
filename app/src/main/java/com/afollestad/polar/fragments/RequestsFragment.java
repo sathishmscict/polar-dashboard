@@ -297,9 +297,6 @@ public class RequestsFragment extends BasePageFragment implements
             if (mIsLoading) return;
             mIsLoading = true;
             if (IconRequest.get() == null) {
-                final File saveFolder = new File(getActivity().getCacheDir(), "requests");
-                Utils.wipe(saveFolder);
-
                 RemoteConfig remoteConfig = null;
                 String remoteHost = Config.get().polarBackendHost();
                 if (remoteHost != null && !remoteHost.trim().isEmpty()) {
@@ -309,7 +306,6 @@ public class RequestsFragment extends BasePageFragment implements
                 IconRequest.start(getActivity())
                         .toEmail(getString(R.string.icon_request_email))
                         .withSubject(String.format("%s %s", getString(R.string.app_name), getString(R.string.icon_request)))
-                        .saveDir(saveFolder)
                         .loadCallback(this)
                         .selectionCallback(this)
                         .sendCallback(this)
