@@ -47,7 +47,8 @@
             android:name=".ui.SplashScreen"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.SplashLight">
+            android:theme="@style/AppTheme.SplashLight"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
