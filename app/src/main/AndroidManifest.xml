@@ -226,24 +226,20 @@
             android:label="@string/app_name_wallpaper"
             android:theme="@style/AppTheme.Viewer" />
 
-        <!-- TODO: Uncomment next lines for Kustom -->
+        <!-- TODO: Uncomment next 13 lines for Kustom. The <action />'s inside of <intent-filter> are optional, comment out what you don't need. -->
         <!--
         <provider
             android:name="org.kustom.api.Provider"
             android:authorities="${applicationId}.kustomprovider"
             android:exported="true"
             tools:ignore="ExportedContentProvider">
-            <intent-filter> -->
-                <!-- TODO Uncomment this if you are going to provide Wallpapers -->
-                <!-- <action android:name="org.kustom.provider.WALLPAPERS" /> -->
-                <!-- TODO Uncomment this if you are going to provide Widgets -->
-                <!-- <action android:name="org.kustom.provider.WIDGETS" /> -->
-                <!-- TODO Uncomment this if you are going to provide Komponents -->
-                <!-- <action android:name="org.kustom.provider.KOMPONENTS" /> -->
-        <!-- TODO: Uncomment next lines for Kustom -->
-        <!--
+            <intent-filter>
+                <action android:name="org.kustom.provider.WALLPAPERS" />
+                <action android:name="org.kustom.provider.WIDGETS" />
+                <action android:name="org.kustom.provider.KOMPONENTS" />
             </intent-filter>
-        </provider> -->
+        </provider>
+        -->
 
         <!-- TODO: Uncomment next three lines for Zooper -->
         <!--<provider-->
