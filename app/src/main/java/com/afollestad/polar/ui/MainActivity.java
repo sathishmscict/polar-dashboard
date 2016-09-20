@@ -46,10 +46,12 @@ import com.afollestad.polar.fragments.AboutFragment;
 import com.afollestad.polar.fragments.ApplyFragment;
 import com.afollestad.polar.fragments.HomeFragment;
 import com.afollestad.polar.fragments.IconsFragment;
+import com.afollestad.polar.fragments.KustomFragment;
 import com.afollestad.polar.fragments.RequestsFragment;
 import com.afollestad.polar.fragments.WallpapersFragment;
 import com.afollestad.polar.fragments.ZooperFragment;
 import com.afollestad.polar.fragments.base.BasePageFragment;
+import com.afollestad.polar.kustom.KustomUtil;
 import com.afollestad.polar.ui.base.BaseDonateActivity;
 import com.afollestad.polar.util.DrawableXmlParser;
 import com.afollestad.polar.util.LicensingUtils;
@@ -193,6 +195,10 @@ public class MainActivity extends BaseDonateActivity implements
         if (Config.get().iconRequestEnabled())
             mPages.add(new PagesBuilder.Page(R.id.drawer_requestIcons, R.drawable.tab_requests, R.string.request_icons, new RequestsFragment()));
         mPages.add(new PagesBuilder.Page(R.id.drawer_apply, R.drawable.tab_apply, R.string.apply, new ApplyFragment()));
+        if (Config.get().kustomWidgetEnabled())
+            mPages.add(new PagesBuilder.Page(R.id.drawer_kwgt, R.drawable.tab_kwgt, R.string.kwgt, KustomFragment.newInstance(KustomUtil.FOLDER_WIDGETS)));
+        if (Config.get().kustomWallpaperEnabled())
+            mPages.add(new PagesBuilder.Page(R.id.drawer_klwp, R.drawable.tab_klwp, R.string.klwp, KustomFragment.newInstance(KustomUtil.FOLDER_WALLPAPERS)));
         if (Config.get().zooperEnabled())
             mPages.add(new PagesBuilder.Page(R.id.drawer_zooper, R.drawable.tab_zooper, R.string.zooper, new ZooperFragment()));
         mPages.add(new PagesBuilder.Page(R.id.drawer_about, R.drawable.tab_about, R.string.about, new AboutFragment()));

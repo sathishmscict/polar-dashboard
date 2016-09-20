@@ -20,6 +20,7 @@
     <string name="changelog" translatable="false">Changelog</string>
     <string name="error">Error</string>
     <string name="search_icons">Search icons…</string>
+    <string name="search">Search</string>
     <string name="no_results">No results</string>
     <string name="about">About</string>
     <string name="request_icons">Request Icons</string>
@@ -65,6 +66,8 @@
     <string name="home">Home</string>
     <string name="nav_drawer_mode">Nav drawer mode</string>
     <string name="zooper">Zooper</string>
+    <string name="klwp">KLWP</string>
+    <string name="kwgt">KWGT</string>
     <string name="permission_needed">Permission Needed</string>
     <string name="permission_needed_zooper_desc"><![CDATA[ <b>%1$s</b> needs permission to access your phone\'s storage in order to save Zooper assets!]]></string>
     <string name="download_cancelled">Download cancelled!</string>
@@ -79,6 +82,9 @@
     <string name="search_widgets">Search widgets…</string>
     <string name="made_for_zooper">These widgets are made for Zooper Pro</string>
     <string name="zooper_already_installed">Zooper Pro is already installed!</string>
+    <string name="made_for_klwp">These wallpapers are made for Kustom Wallpaper PRO (KLWP)</string>
+    <string name="made_for_kwgt">These widgets are made for Kustom Widget PRO (KWGT)</string>
+    <string name="kustom_already_installed">Kustom is already installed!</string>
     <string name="assets_installed">Assets installed successfully!</string>
     <string name="please_wait">Please wait…</string>
     <string name="installing_fonts">Installing fonts…</string>

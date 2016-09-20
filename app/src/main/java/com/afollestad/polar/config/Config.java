@@ -129,6 +129,16 @@ public class Config implements IConfig {
         return mR != null && mR.getBoolean(R.bool.enable_zooper_page);
     }
 
+    @Override
+    public boolean kustomWidgetEnabled() {
+        return mR != null && mR.getBoolean(R.bool.enable_kustom_widgets_page);
+    }
+
+    @Override
+    public boolean kustomWallpaperEnabled() {
+        return mR != null && mR.getBoolean(R.bool.enable_kustom_wallpapers_page);
+    }
+
     @Nullable
     @Override
     public String iconRequestEmail() {
@@ -234,6 +244,12 @@ public class Config implements IConfig {
     public int gridWidthZooper() {
         if (mR == null) return 2;
         return mR.getInteger(R.integer.zooper_grid_width);
+    }
+
+    @Override
+    public int gridWidthKustom() {
+        if (mR == null) return 2;
+        return mR.getInteger(R.integer.kustom_grid_width);
     }
 
     @Override
