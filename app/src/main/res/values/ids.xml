@@ -6,6 +6,8 @@
     <item name="drawer_wallpapers" type="id" />
     <item name="drawer_requestIcons" type="id" />
     <item name="drawer_apply" type="id" />
+    <item name="drawer_kwgt" type="id" />
+    <item name="drawer_klwp" type="id" />
     <item name="drawer_zooper" type="id" />
     <item name="drawer_about" type="id" />
 

@@ -32,6 +32,10 @@ public interface IConfig {
 
     boolean zooperEnabled();
 
+    boolean kustomWidgetEnabled();
+
+    boolean kustomWallpaperEnabled();
+
     @Nullable
     String iconRequestEmail();
 
@@ -72,6 +76,8 @@ public interface IConfig {
     int gridWidthRequests();
 
     int gridWidthZooper();
+
+    int gridWidthKustom();
 
     int iconRequestMaxCount();
 
