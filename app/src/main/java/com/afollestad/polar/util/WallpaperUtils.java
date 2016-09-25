@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.ColorInt;
@@ -38,7 +39,6 @@ import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.WallpapersFragment;
 
 import java.io.File;
-import java.io.FilePermission;
 import java.io.Serializable;
 import java.util.Locale;
 
@@ -412,9 +412,14 @@ public class WallpaperUtils {
             // Apply
             if (dialog != null)
                 dialog.dismiss();
-            final Uri uri = FileProvider.getUriForFile(context,
-                    BuildConfig.APPLICATION_ID + ".fileProvider",
-                    mFileCache);
+            Uri uri;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                uri = FileProvider.getUriForFile(context,
+                        BuildConfig.APPLICATION_ID + ".fileProvider",
+                        mFileCache);
+            } else {
+                uri = Uri.fromFile(mFileCache);
+            }
             final Intent intent = new Intent(Intent.ACTION_ATTACH_DATA)
                     .setDataAndType(uri, "image/*")
                     .putExtra("mimeType", "image/*")
