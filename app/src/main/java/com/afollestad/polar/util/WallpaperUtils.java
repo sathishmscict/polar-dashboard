@@ -338,7 +338,7 @@ public class WallpaperUtils {
 
         if (apply) {
             // Crop/Apply
-            saveFolder = context.getCacheDir();
+            saveFolder = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N ? context.getCacheDir() : context.getExternalCacheDir();
             name = String.format("%s_%s_wallpaper.%s",
                     wallpaper.name.replace(" ", "_"),
                     wallpaper.author.replace(" ", "_"),
