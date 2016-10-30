@@ -50,6 +50,8 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
     }
 
     public void setPreviews(ArrayList<ZooperFragment.PreviewItem> previewFiles, Drawable wallpaper) {
+        if (previewFiles == null)
+            previewFiles = new ArrayList<>();
         this.mPreviews = previewFiles;
         if (mWidgetNames == null || mWidgetNames.length == 0) {
             mWidgetNames = new String[previewFiles.size()];
