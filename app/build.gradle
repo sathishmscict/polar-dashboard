@@ -54,6 +54,10 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        // Required by Kustom support to avoid assets being compressed
+        aaptOptions {
+            noCompress 'zip', 'komp', 'klwp', 'kwgt', 'klck', 'kwch'
+        }
     }
 }
 
