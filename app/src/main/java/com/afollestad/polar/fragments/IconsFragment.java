@@ -44,13 +44,12 @@ import com.afollestad.polar.util.Utils;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
-import java.util.TimerTask;
 
 public class IconsFragment extends BasePageFragment implements
     SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
-  IconAdapter mAdapter;
-  RecyclerView mRecyclerView;
+  IconAdapter adapter;
+  RecyclerView recyclerView;
 
   public IconsFragment() {
   }
@@ -81,6 +80,9 @@ public class IconsFragment extends BasePageFragment implements
         context.setResult(Activity.RESULT_OK, new Intent()
             .putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource));
         context.finish();
+        if(bmp != null && !bmp.isRecycled()) {
+          bmp.recycle();
+        }
         return;
       }
       final ProgressDialogFragment progress = ProgressDialogFragment
@@ -90,21 +92,27 @@ public class IconsFragment extends BasePageFragment implements
         public void run() {
           File dest = context.getCacheDir();
           dest.mkdirs();
-          dest = new File(dest, icon.getName() + ".png");
+          dest = new File(dest, icon.getDrawable() + ".png");
           FileOutputStream os = null;
           try {
             os = new FileOutputStream(dest);
             bmp.compress(Bitmap.CompressFormat.PNG, 100, os);
+            closeQuietly(os);
 
-            Uri uri = FileProvider.getUriForFile(
+            final Uri uri = FileProvider.getUriForFile(
                 context,
                 BuildConfig.APPLICATION_ID + ".fileProvider",
                 dest);
-            context.setResult(Activity.RESULT_OK, new Intent()
-                .putExtra(Intent.EXTRA_STREAM, uri)
-                .setData(uri)
-                .setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION));
-            context.finish();
+            context.runOnUiThread(new Runnable() {
+              @Override
+              public void run() {
+                context.setResult(Activity.RESULT_OK, new Intent()
+                    .putExtra(Intent.EXTRA_STREAM, uri)
+                    .setDataAndType(uri, "image/png")
+                    .setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION));
+                context.finish();
+              }
+            });
           } catch (NullPointerException npe) {
             dest.delete();
             progress.dismiss();
@@ -113,7 +121,9 @@ public class IconsFragment extends BasePageFragment implements
                 @Override
                 public void run() {
                   Utils.showError(context, new Exception(
-                      "An error occurred while retrieving the icon. Tell the designer of this icon pack to make sure the FileProvider at the bottom of AndroidManifest.xml is using the correct app ID."));
+                      "An error occurred while retrieving the icon. Tell the designer "
+                          + "of this icon pack to make sure the FileProvider at the bottom "
+                          + "of AndroidManifest.xml is using the correct app ID."));
                 }
               });
             }
@@ -129,6 +139,9 @@ public class IconsFragment extends BasePageFragment implements
               });
             }
           } finally {
+            if(bmp != null && !bmp.isRecycled()) {
+              bmp.recycle();
+            }
             progress.dismiss();
             closeQuietly(os);
           }
@@ -178,19 +191,19 @@ public class IconsFragment extends BasePageFragment implements
     emptyView.setText(R.string.no_results);
 
     final int gridWidth = Config.get().gridWidthIcons();
-    mRecyclerView = ButterKnife.findById(v, android.R.id.list);
+    recyclerView = ButterKnife.findById(v, android.R.id.list);
 
-    mAdapter = new IconAdapter(getActivity(), gridWidth, new IconAdapter.ClickListener() {
+    adapter = new IconAdapter(getActivity(), gridWidth, new IconAdapter.ClickListener() {
       @Override
       public void onClick(View view, int section, int relative, int absolute) {
-        selectItem(getActivity(), IconsFragment.this, mAdapter.getIcon(section, relative));
+        selectItem(getActivity(), IconsFragment.this, adapter.getIcon(section, relative));
       }
-    }, mRecyclerView);
+    }, recyclerView);
 
     final GridLayoutManager lm = new GridLayoutManager(getActivity(), gridWidth);
-    mAdapter.setLayoutManager(lm);
-    mRecyclerView.setLayoutManager(lm);
-    mRecyclerView.setAdapter(mAdapter);
+    adapter.setLayoutManager(lm);
+    recyclerView.setLayoutManager(lm);
+    recyclerView.setAdapter(adapter);
     return v;
   }
 
@@ -201,7 +214,7 @@ public class IconsFragment extends BasePageFragment implements
           View.VISIBLE : View.GONE);
       v.findViewById(android.R.id.progress).setVisibility(shown ?
           View.GONE : View.VISIBLE);
-      v.findViewById(android.R.id.empty).setVisibility(shown && mAdapter.getItemCount() == 0 ?
+      v.findViewById(android.R.id.empty).setVisibility(shown && adapter.getItemCount() == 0 ?
           View.VISIBLE : View.GONE);
     }
   }
@@ -220,11 +233,11 @@ public class IconsFragment extends BasePageFragment implements
   }
 
   private void load() {
-    if (mAdapter.getItemCount() > 0) {
+    if (adapter.getItemCount() > 0) {
       return;
     }
     setListShown(false);
-    final Handler mHandler = new Handler();
+    final Handler handler = new Handler();
     new Thread(new Runnable() {
       @Override
       public void run() {
@@ -236,10 +249,10 @@ public class IconsFragment extends BasePageFragment implements
         }
         final List<DrawableXmlParser.Category> categories = DrawableXmlParser
             .parse(getActivity(), id);
-        mHandler.post(new TimerTask() {
+        handler.post(new Runnable() {
           @Override
           public void run() {
-            mAdapter.set(categories);
+            adapter.set(categories);
             setListShown(true);
           }
         });
@@ -254,14 +267,14 @@ public class IconsFragment extends BasePageFragment implements
 
   @Override
   public boolean onQueryTextChange(String s) {
-    mAdapter.filter(s);
+    adapter.filter(s);
     setListShown(true);
     return false;
   }
 
   @Override
   public boolean onClose() {
-    mAdapter.filter(null);
+    adapter.filter(null);
     setListShown(true);
     return false;
   }
