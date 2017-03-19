@@ -11,26 +11,26 @@ import android.widget.FrameLayout;
  */
 public class SquareFrameLayout extends FrameLayout {
 
-    public SquareFrameLayout(Context context) {
-        super(context);
-    }
+  public SquareFrameLayout(Context context) {
+    super(context);
+  }
 
-    public SquareFrameLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+  public SquareFrameLayout(Context context, AttributeSet attrs) {
+    super(context, attrs);
+  }
 
-    public SquareFrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
+  public SquareFrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+  }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public SquareFrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
+  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+  public SquareFrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    super(context, attrs, defStyleAttr, defStyleRes);
+  }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(getMeasuredWidth(), getMeasuredWidth());
-    }
+  @Override
+  protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    setMeasuredDimension(getMeasuredWidth(), getMeasuredWidth());
+  }
 }

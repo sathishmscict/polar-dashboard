@@ -10,13 +10,13 @@ import android.support.v7.app.AppCompatActivity;
  */
 public class SplashScreen extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        // Theme can only be switched (between light and dark) manually from AndroidManifest.xml for this splash screen.
+    // Theme can only be switched (between light and dark) manually from AndroidManifest.xml for this splash screen.
 
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
-    }
+    startActivity(new Intent(this, MainActivity.class));
+    finish();
+  }
 }

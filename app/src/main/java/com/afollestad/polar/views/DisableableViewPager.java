@@ -3,7 +3,6 @@ package com.afollestad.polar.views;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-
 import com.pluscubed.insetsdispatcher.view.InsetsDispatcherViewPager;
 
 /**
@@ -11,28 +10,28 @@ import com.pluscubed.insetsdispatcher.view.InsetsDispatcherViewPager;
  */
 public class DisableableViewPager extends InsetsDispatcherViewPager {
 
-    private boolean isPagingEnabled = true;
+  private boolean isPagingEnabled = true;
 
-    public DisableableViewPager(Context context) {
-        super(context);
-    }
+  public DisableableViewPager(Context context) {
+    super(context);
+  }
 
-    public DisableableViewPager(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+  public DisableableViewPager(Context context, AttributeSet attrs) {
+    super(context, attrs);
+  }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return this.isPagingEnabled && super.onTouchEvent(event);
-    }
+  @Override
+  public boolean onTouchEvent(MotionEvent event) {
+    return this.isPagingEnabled && super.onTouchEvent(event);
+  }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent event) {
-        return this.isPagingEnabled && super.onInterceptTouchEvent(event);
-    }
+  @Override
+  public boolean onInterceptTouchEvent(MotionEvent event) {
+    return this.isPagingEnabled && super.onInterceptTouchEvent(event);
+  }
 
-    public void setPagingEnabled(boolean b) {
-        this.isPagingEnabled = b;
-    }
+  public void setPagingEnabled(boolean b) {
+    this.isPagingEnabled = b;
+  }
 
 }

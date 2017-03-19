@@ -15,41 +15,44 @@ import android.widget.ProgressBar;
  */
 public class WallpaperImageView extends SquareImageView {
 
-    public WallpaperImageView(Context context) {
-        super(context);
-    }
+  public WallpaperImageView(Context context) {
+    super(context);
+  }
 
-    public WallpaperImageView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+  public WallpaperImageView(Context context, AttributeSet attrs) {
+    super(context, attrs);
+  }
 
-    public WallpaperImageView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
+  public WallpaperImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+  }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public WallpaperImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
+  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+  public WallpaperImageView(Context context, AttributeSet attrs, int defStyleAttr,
+      int defStyleRes) {
+    super(context, attrs, defStyleAttr, defStyleRes);
+  }
 
-    @Nullable
-    private ProgressBar mProgressBar;
+  @Nullable
+  private ProgressBar mProgressBar;
 
-    @Override
-    public void setImageBitmap(Bitmap bm) {
-        super.setImageBitmap(bm);
-        if (mProgressBar != null)
-            mProgressBar.setVisibility(View.GONE);
+  @Override
+  public void setImageBitmap(Bitmap bm) {
+    super.setImageBitmap(bm);
+    if (mProgressBar != null) {
+      mProgressBar.setVisibility(View.GONE);
     }
+  }
 
-    @Override
-    public void setImageDrawable(Drawable drawable) {
-        super.setImageDrawable(drawable);
-        if (mProgressBar != null)
-            mProgressBar.setVisibility(View.GONE);
+  @Override
+  public void setImageDrawable(Drawable drawable) {
+    super.setImageDrawable(drawable);
+    if (mProgressBar != null) {
+      mProgressBar.setVisibility(View.GONE);
     }
+  }
 
-    public void setProgressBar(ProgressBar progressBar) {
-        this.mProgressBar = progressBar;
-    }
+  public void setProgressBar(ProgressBar progressBar) {
+    this.mProgressBar = progressBar;
+  }
 }

@@ -7,81 +7,81 @@ import android.support.annotation.Nullable;
  */
 public interface IConfig {
 
-    boolean allowThemeSwitching();
+  boolean allowThemeSwitching();
 
-    boolean darkTheme();
+  boolean darkTheme();
 
-    void darkTheme(boolean enabled);
+  void darkTheme(boolean enabled);
 
-    boolean darkThemeDefault();
+  boolean darkThemeDefault();
 
-    boolean navDrawerModeEnabled();
+  boolean navDrawerModeEnabled();
 
-    void navDrawerModeEnabled(boolean enabled);
+  void navDrawerModeEnabled(boolean enabled);
 
-    boolean navDrawerModeAllowSwitch();
+  boolean navDrawerModeAllowSwitch();
 
-    boolean homepageEnabled();
+  boolean homepageEnabled();
 
-    @Nullable
-    String wallpapersJsonUrl();
+  @Nullable
+  String wallpapersJsonUrl();
 
-    boolean wallpapersAllowDownload();
+  boolean wallpapersAllowDownload();
 
-    boolean wallpapersEnabled();
+  boolean wallpapersEnabled();
 
-    boolean zooperEnabled();
+  boolean zooperEnabled();
 
-    boolean kustomWidgetEnabled();
+  boolean kustomWidgetEnabled();
 
-    boolean kustomWallpaperEnabled();
+  boolean kustomWallpaperEnabled();
 
-    @Nullable
-    String iconRequestEmail();
+  @Nullable
+  String iconRequestEmail();
 
-    boolean iconRequestEnabled();
+  boolean iconRequestEnabled();
 
-    @Nullable
-    String feedbackEmail();
+  @Nullable
+  String feedbackEmail();
 
-    @Nullable
-    String feedbackSubjectLine();
+  @Nullable
+  String feedbackSubjectLine();
 
-    boolean feedbackEnabled();
+  boolean feedbackEnabled();
 
-    @Nullable
-    String donationLicenseKey();
+  @Nullable
+  String donationLicenseKey();
 
-    boolean donationEnabled();
+  boolean donationEnabled();
 
-    @Nullable
-    String[] donateOptionsNames();
+  @Nullable
+  String[] donateOptionsNames();
 
-    @Nullable
-    String[] donateOptionsIds();
+  @Nullable
+  String[] donateOptionsIds();
 
-    @Nullable
-    String licensingPublicKey();
+  @Nullable
+  String licensingPublicKey();
 
-    boolean persistSelectedPage();
+  boolean persistSelectedPage();
 
-    boolean changelogEnabled();
+  boolean changelogEnabled();
 
-    int gridWidthWallpaper();
+  int gridWidthWallpaper();
 
-    int gridWidthApply();
+  int gridWidthApply();
 
-    int gridWidthIcons();
+  int gridWidthIcons();
 
-    int gridWidthRequests();
+  int gridWidthRequests();
 
-    int gridWidthZooper();
+  int gridWidthZooper();
 
-    int gridWidthKustom();
+  int gridWidthKustom();
 
-    int iconRequestMaxCount();
+  int iconRequestMaxCount();
 
-    String polarBackendHost();
+  String polarBackendHost();
 
-    String polarBackendApiKey();
+  String polarBackendApiKey();
 }

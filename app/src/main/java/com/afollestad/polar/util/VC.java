@@ -13,35 +13,39 @@ import android.support.v4.content.ContextCompat;
  */
 public class VC {
 
-    private static Context mContext;
+  private static Context mContext;
 
-    public static void init(Context context) {
-        mContext = context;
-    }
+  public static void init(Context context) {
+    mContext = context;
+  }
 
-    public static void init(Fragment context) {
-        mContext = context.getActivity();
-    }
+  public static void init(Fragment context) {
+    mContext = context.getActivity();
+  }
 
-    public static void destroy() {
-        mContext = null;
-    }
+  public static void destroy() {
+    mContext = null;
+  }
 
-    @Nullable
-    public static Drawable get(@DrawableRes int iconRes) {
-        if (iconRes == 0) return null;
-        if (mContext == null) return null;
-        try {
-            return VectorDrawableCompat.create(mContext.getResources(), iconRes, null);
-        } catch (Throwable t) {
-            try {
-                return ContextCompat.getDrawable(mContext, iconRes);
-            } catch (Throwable t2) {
-                return null;
-            }
-        }
+  @Nullable
+  public static Drawable get(@DrawableRes int iconRes) {
+    if (iconRes == 0) {
+      return null;
     }
+    if (mContext == null) {
+      return null;
+    }
+    try {
+      return VectorDrawableCompat.create(mContext.getResources(), iconRes, null);
+    } catch (Throwable t) {
+      try {
+        return ContextCompat.getDrawable(mContext, iconRes);
+      } catch (Throwable t2) {
+        return null;
+      }
+    }
+  }
 
-    private VC() {
-    }
+  private VC() {
+  }
 }
