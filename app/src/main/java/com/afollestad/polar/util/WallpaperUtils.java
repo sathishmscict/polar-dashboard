@@ -318,6 +318,7 @@ public class WallpaperUtils {
         });
   }
 
+  @SuppressLint("StaticFieldLeak")
   private static Activity contextCache;
   private static Wallpaper wallpaperCache;
   private static boolean applyCache;
