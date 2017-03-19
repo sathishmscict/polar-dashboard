@@ -46,7 +46,6 @@ import java.util.Locale;
  */
 public class WallpaperUtils {
 
-  private static final String TABLE_NAME = "polar_wallpapers";
   private static final String DATABASE_NAME = "data_cache";
   private static final int DATABASE_VERSION = 1;
 
@@ -76,7 +75,7 @@ public class WallpaperUtils {
     }
   }
 
-  @Table(name = TABLE_NAME)
+  @Table(name = "polar_wallpapers")
   @ContentType("application/json")
   public static class Wallpaper implements Serializable {
 
@@ -172,9 +171,10 @@ public class WallpaperUtils {
         .build();
     try {
       if (allowCached) {
-        Wallpaper[] cache = Inquiry.get(iname)
-            .select(Wallpaper.class)
-            .all();
+        Wallpaper[] cache =
+            Inquiry.get(iname)
+                .select(Wallpaper.class)
+                .all();
         if (cache != null && cache.length > 0) {
           Log.d("WallpaperUtils", String.format("Loaded %d wallpapers from cache.", cache.length));
           return new WallpapersHolder(cache);
@@ -253,14 +253,18 @@ public class WallpaperUtils {
         .build();
     try {
       if (allowCached) {
-        Wallpaper[] cache = Inquiry.get(iname).selectFrom(TABLE_NAME, Wallpaper.class).all();
+        Wallpaper[] cache = Inquiry.get(iname)
+            .select(Wallpaper.class)
+            .all();
         if (cache != null && cache.length > 0) {
           Log.d("WallpaperUtils", String.format("Loaded %d wallpapers from cache.", cache.length));
           callback.onRetrievedWallpapers(new WallpapersHolder(cache), null, false);
           return;
         }
       } else {
-        Inquiry.get(iname).deleteFrom(TABLE_NAME, Wallpaper.class).run();
+        Inquiry.get(iname)
+            .delete(Wallpaper.class)
+            .run();
       }
     } catch (Throwable t) {
       t.printStackTrace();

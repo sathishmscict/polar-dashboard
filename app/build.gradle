@@ -72,7 +72,7 @@ dependencies {
 
     compile 'com.afollestad.material-dialogs:core:0.9.4.2'
     compile 'com.afollestad:drag-select-recyclerview:0.4.0'
-    compile('com.afollestad:bridge:5.1.1') {
+    compile('com.afollestad:bridge:5.1.2') {
         exclude group: 'org.json', module: 'json'
     }
     compile 'com.afollestad:sectioned-recyclerview:0.2.3'
