@@ -16,8 +16,10 @@
 
 package com.afollestad.polar.util;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Path;
+import android.os.Build.VERSION_CODES;
 import android.transition.ArcMotion;
 import android.util.AttributeSet;
 
@@ -27,9 +29,10 @@ import android.util.AttributeSet;
  * make motion paths appear more natural. <p> See https://www.google.com/design/spec/motion/movement.html#movement-movement-within-screen-bounds
  * <p> Taken from Plaid: https://github.com/nickbutcher/plaid/blob/master/app/src/main/java/io/plaidapp/ui/transitions/GravityArcMotion.java
  */
+@TargetApi(VERSION_CODES.LOLLIPOP)
 public class GravityArcMotion extends ArcMotion {
 
-  private static final float DEFAULT_MIN_ANGLE_DEGREES = 0;
+//  private static final float DEFAULT_MIN_ANGLE_DEGREES = 0;
   private static final float DEFAULT_MAX_ANGLE_DEGREES = 70;
   private static final float DEFAULT_MAX_TANGENT = (float)
       Math.tan(Math.toRadians(DEFAULT_MAX_ANGLE_DEGREES / 2));
