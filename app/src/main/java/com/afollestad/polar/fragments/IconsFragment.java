@@ -1,5 +1,7 @@
 package com.afollestad.polar.fragments;
 
+import static com.afollestad.polar.util.Utils.closeQuietly;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -39,10 +41,8 @@ import com.afollestad.polar.ui.base.ISelectionMode;
 import com.afollestad.polar.util.DrawableXmlParser;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 import java.util.TimerTask;
 
@@ -61,13 +61,6 @@ public class IconsFragment extends BasePageFragment implements
     args.putBoolean("selection_mode", selectionMode);
     frag.setArguments(args);
     return frag;
-  }
-
-  private static void closeQuietly(Closeable c) {
-    try {
-      c.close();
-    } catch (IOException ignored) {
-    }
   }
 
   @SuppressWarnings("ResultOfMethodCallIgnored")

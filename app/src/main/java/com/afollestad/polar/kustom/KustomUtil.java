@@ -1,5 +1,7 @@
 package com.afollestad.polar.kustom;
 
+import static com.afollestad.polar.util.Utils.closeQuietly;
+
 import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.Context;
@@ -9,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
 import android.support.annotation.StringRes;
-import com.afollestad.bridge.BridgeUtil;
 import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.KustomFragment;
 import com.afollestad.polar.util.Utils;
@@ -105,8 +106,8 @@ public class KustomUtil {
               is = am.open(folder + "/" + file);
               os = new FileOutputStream(kFileCache);
               Utils.copy(is, os);
-              BridgeUtil.closeQuietly(is);
-              BridgeUtil.closeQuietly(os);
+              closeQuietly(is);
+              closeQuietly(os);
 
               if (kFileCache.exists()) {
                 final String widgetName = Utils.removeExtension(kFileCache.getName());
@@ -125,8 +126,8 @@ public class KustomUtil {
                       pos = new FileOutputStream(webpFile);
                       Utils.copy(zis, pos);
                     } finally {
-                      BridgeUtil.closeQuietly(zis);
-                      BridgeUtil.closeQuietly(pos);
+                      closeQuietly(zis);
+                      closeQuietly(pos);
                     }
                   }
                   if (entry.getName().endsWith("preset.json")) {
@@ -143,8 +144,8 @@ public class KustomUtil {
                       JSONObject preset = new JSONObject(responseStrBuilder.toString());
                       info = preset.getJSONObject("preset_info");
                     } finally {
-                      BridgeUtil.closeQuietly(zis);
-                      BridgeUtil.closeQuietly(os);
+                      closeQuietly(zis);
+                      closeQuietly(os);
                     }
                   }
                   if (info != null && webpFile != null) {
@@ -166,8 +167,8 @@ public class KustomUtil {
               break;
             } finally {
               kFileCache.delete();
-              BridgeUtil.closeQuietly(is);
-              BridgeUtil.closeQuietly(os);
+              closeQuietly(is);
+              closeQuietly(os);
             }
           }
 

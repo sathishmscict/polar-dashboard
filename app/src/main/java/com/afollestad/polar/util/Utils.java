@@ -21,16 +21,24 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.config.Config;
+import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-
 /**
  * @author Aidan Follestad (afollestad)
  */
-public abstract class Utils {
+public final class Utils {
+
+  public static void closeQuietly(Closeable c) {
+    try {
+      c.close();
+    } catch (IOException ignored) {
+    }
+  }
 
   public static void showError(Context context, Exception e) {
     e.printStackTrace();
@@ -146,13 +154,9 @@ public abstract class Utils {
   }
 
   @SuppressWarnings("deprecation")
-  public static void removeOnGlobalLayoutListener(View v,
-      ViewTreeObserver.OnGlobalLayoutListener listener) {
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-      v.getViewTreeObserver().removeGlobalOnLayoutListener(listener);
-    } else {
-      v.getViewTreeObserver().removeOnGlobalLayoutListener(listener);
-    }
+  private static void removeOnGlobalLayoutListener(
+      View v, ViewTreeObserver.OnGlobalLayoutListener listener) {
+    v.getViewTreeObserver().removeOnGlobalLayoutListener(listener);
   }
 
   public static Drawable createCardSelector(Context context) {

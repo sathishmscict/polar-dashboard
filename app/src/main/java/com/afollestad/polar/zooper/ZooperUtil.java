@@ -1,5 +1,7 @@
 package com.afollestad.polar.zooper;
 
+import static com.afollestad.polar.util.Utils.closeQuietly;
+
 import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.Context;
@@ -11,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import com.afollestad.bridge.BridgeUtil;
 import com.afollestad.polar.R;
 import com.afollestad.polar.dialogs.ProgressDialogFragment;
 import com.afollestad.polar.fragments.ZooperFragment;
@@ -33,9 +34,9 @@ import java.util.zip.ZipFile;
  */
 public class ZooperUtil {
 
-  public static final String FOLDER_ICONSETS = "IconSets";
-  public static final String FOLDER_FONTS = "fonts";
-  public static final String FOLDER_BITMAPS = "bitmaps";
+  static final String FOLDER_ICONSETS = "IconSets";
+  static final String FOLDER_FONTS = "fonts";
+  static final String FOLDER_BITMAPS = "bitmaps";
 
   private static final int BUFFER_SIZE = 2048;
 
@@ -48,21 +49,21 @@ public class ZooperUtil {
 
   @StringDef({FOLDER_ICONSETS, FOLDER_FONTS, FOLDER_BITMAPS})
   @Retention(RetentionPolicy.SOURCE)
-  public @interface ZooperDir {
+  private @interface ZooperDir {
 
   }
 
   @NonNull
-  public static File getZooperWidgetDir() {
+  private static File getZooperWidgetDir() {
     return new File(Environment.getExternalStorageDirectory(), "ZooperWidget");
   }
 
   @NonNull
-  public static File getZooperWidgetDir(@NonNull @ZooperDir String folder) {
+  private static File getZooperWidgetDir(@NonNull @ZooperDir String folder) {
     return new File(getZooperWidgetDir(), folder);
   }
 
-  public static boolean checkInstalled(@NonNull Context context,
+  private static boolean checkInstalled(@NonNull Context context,
       @NonNull @ZooperDir String folder) {
     final AssetManager assetManager = context.getAssets();
     final String[] files;
@@ -86,7 +87,7 @@ public class ZooperUtil {
   }
 
   @SuppressWarnings("ResultOfMethodCallIgnored")
-  public static void install(@NonNull Context context, @NonNull @ZooperDir String folder)
+  private static void install(@NonNull Context context, @NonNull @ZooperDir String folder)
       throws IOException {
     getZooperWidgetDir(folder).mkdirs();
     final AssetManager assetManager = context.getAssets();
@@ -106,8 +107,8 @@ public class ZooperUtil {
         }
         out.flush();
       } finally {
-        BridgeUtil.closeQuietly(in);
-        BridgeUtil.closeQuietly(out);
+        closeQuietly(in);
+        closeQuietly(out);
       }
     }
   }
@@ -274,8 +275,8 @@ public class ZooperUtil {
               is = am.open("templates/" + file);
               os = new FileOutputStream(zwFileCache);
               Utils.copy(is, os);
-              BridgeUtil.closeQuietly(is);
-              BridgeUtil.closeQuietly(os);
+              closeQuietly(is);
+              closeQuietly(os);
 
               if (zwFileCache.exists()) {
                 final String widgetName = Utils.removeExtension(zwFileCache.getName());
@@ -293,8 +294,8 @@ public class ZooperUtil {
                       zos = new FileOutputStream(pngFile);
                       Utils.copy(zis, zos);
                     } finally {
-                      BridgeUtil.closeQuietly(zis);
-                      BridgeUtil.closeQuietly(zos);
+                      closeQuietly(zis);
+                      closeQuietly(zos);
                     }
                     break;
                   }
@@ -314,8 +315,8 @@ public class ZooperUtil {
               break;
             } finally {
               zwFileCache.delete();
-              BridgeUtil.closeQuietly(is);
-              BridgeUtil.closeQuietly(os);
+              closeQuietly(is);
+              closeQuietly(os);
             }
           }
 
