@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- DO NOT REMOVE THE BOTTOM 3 ITEMS OF EACH ARRAY, OTHERWISE TERMS ARE VIOLATED. -->
+    <!-- DO NOT REMOVE THE BOTTOM 5 ITEMS OF EACH ARRAY, OTHERWISE TERMS ARE VIOLATED. -->
 
     <string-array name="about_images" formatted="false" tools:ignore="TypographyDashes">
         <item>https://lh3.googleusercontent.com/-0mdcClKXlgM/AAAAAAAAAAI/AAAAAAAAAAA/xgdLWeAg7pM/s120-c/photo.jpg</item>
