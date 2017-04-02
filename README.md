@@ -14,7 +14,3 @@ A tutorial is available on [this repository's website](http://afollestad.github.
   <img alt="Get it on Google Play"
        src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="60"/>
 </a>
-
-# Upgrade Tool
-
-[PUT](https://github.com/afollestad/polar-dashboard-upgrade-tool) is available for automatic upgrades. 
