@@ -103,10 +103,12 @@
 
     <!-- Leave empty to disable. A URL to a Polar Request Manager server. -->
     <string name="polar_backend_host">
+        https://polar.aidanfollestad.com
     </string>
 
     <!-- Host must also be filled in first. An app API key from Polar Request Manager. -->
     <string name="polar_backend_apikey">
+
     </string>
 
 </resources>
