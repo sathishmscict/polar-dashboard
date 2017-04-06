@@ -101,9 +101,9 @@
         <item>fifteen</item>
     </string-array>
 
-    <!-- Leave empty to disable. A URL to a Polar Request Manager server. -->
+    <!-- Leave empty to disable. A URL to a Polar Request Manager server, e.g. https://polar.aidanfollestad.com -->
     <string name="polar_backend_host">
-        https://polar.aidanfollestad.com
+        
     </string>
 
     <!-- Host must also be filled in first. An app API key from Polar Request Manager. -->
