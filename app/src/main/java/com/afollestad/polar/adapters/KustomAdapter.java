@@ -161,26 +161,26 @@ public class KustomAdapter extends RecyclerView.Adapter<KustomAdapter.KustomVH> 
     @Override
     public void onClick(View view) {
       final Context c = view.getContext();
-      if (showInstaller) {
         String pkg = KustomUtil.getPkgByFolder(folder);
-        if (!Utils.isPkgInstalled(c, pkg)) {
-          Toast.makeText(c, R.string.kustom_already_installed, Toast.LENGTH_SHORT).show();
+        if (Utils.isPkgInstalled(c, pkg)) {
+            if (showInstaller) {
+                Toast.makeText(c, R.string.kustom_already_installed, Toast.LENGTH_SHORT).show();
+            } else {
+                Intent i = new Intent();
+                i.setComponent(new ComponentName(KustomUtil.getPkgByFolder(folder),
+                        KustomUtil.getEditorActivityByFolder(folder)));
+                i.setData(new Uri.Builder()
+                        .scheme("kfile")
+                        .authority(String.format("%s.kustomprovider", c.getPackageName()))
+                        .appendPath(folder)
+                        .appendPath(file)
+                        .build());
+                c.startActivity(i);
+            }
         } else {
           c.startActivity(new Intent(Intent.ACTION_VIEW)
               .setData(Uri.parse(String.format(GOOGLE_PLAY_URL, pkg))));
         }
-      } else {
-        Intent i = new Intent();
-        i.setComponent(new ComponentName(KustomUtil.getPkgByFolder(folder),
-            KustomUtil.getEditorActivityByFolder(folder)));
-        i.setData(new Uri.Builder()
-            .scheme("kfile")
-            .authority(String.format("%s.kustomprovider", c.getPackageName()))
-            .appendPath(folder)
-            .appendPath(file)
-            .build());
-        c.startActivity(i);
-      }
     }
   }
 }
