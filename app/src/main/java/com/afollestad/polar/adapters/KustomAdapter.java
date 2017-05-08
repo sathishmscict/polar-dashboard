@@ -163,7 +163,7 @@ public class KustomAdapter extends RecyclerView.Adapter<KustomAdapter.KustomVH> 
       final Context c = view.getContext();
       if (showInstaller) {
         String pkg = KustomUtil.getPkgByFolder(folder);
-        if (!Utils.isPkgInstalled(c, pkg)) {
+        if (Utils.isPkgInstalled(c, pkg)) {
           Toast.makeText(c, R.string.kustom_already_installed, Toast.LENGTH_SHORT).show();
         } else {
           c.startActivity(new Intent(Intent.ACTION_VIEW)
