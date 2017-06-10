@@ -58,8 +58,9 @@ public class NoDragImageView extends ImageView {
         break;
       case MotionEvent.ACTION_MOVE:
         final float SCROLL_THRESHOLD = 10;
-        if (isOnClick && (Math.abs(mDownX - ev.getX()) > SCROLL_THRESHOLD
-            || Math.abs(mDownY - ev.getY()) > SCROLL_THRESHOLD)) {
+        if (isOnClick
+            && (Math.abs(mDownX - ev.getX()) > SCROLL_THRESHOLD
+                || Math.abs(mDownY - ev.getY()) > SCROLL_THRESHOLD)) {
           isOnClick = false;
         }
         break;

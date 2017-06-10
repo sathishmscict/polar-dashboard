@@ -44,14 +44,11 @@ public abstract class FragmentStatePagerAdapter extends PagerAdapter {
     mFragmentManager = fm;
   }
 
-  /**
-   * Return the Fragment associated with a specified position.
-   */
+  /** Return the Fragment associated with a specified position. */
   protected abstract Fragment getItem(int position);
 
   @Override
-  public void startUpdate(ViewGroup container) {
-  }
+  public void startUpdate(ViewGroup container) {}
 
   @SuppressLint("CommitTransaction")
   @Override
@@ -101,8 +98,9 @@ public abstract class FragmentStatePagerAdapter extends PagerAdapter {
       mCurTransaction = mFragmentManager.beginTransaction();
     }
     if (DEBUG) {
-      Log.v(TAG, "Removing item #" + position + ": f=" + object
-          + " v=" + ((Fragment) object).getView());
+      Log.v(
+          TAG,
+          "Removing item #" + position + ": f=" + object + " v=" + ((Fragment) object).getView());
     }
     while (mSavedState.size() <= position) {
       mSavedState.add(null);

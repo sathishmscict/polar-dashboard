@@ -14,13 +14,10 @@ import java.util.Locale;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class DrawableXmlParser {
 
-  private DrawableXmlParser() {
-  }
+  private DrawableXmlParser() {}
 
   private static Category mCurrentCategory;
 
@@ -104,7 +101,8 @@ public class DrawableXmlParser {
       if (mDrawable == null) {
         return 0;
       }
-      return context.getResources()
+      return context
+          .getResources()
           .getIdentifier(mDrawable, "drawable", BuildConfig.APPLICATION_ID);
     }
 
@@ -164,8 +162,8 @@ public class DrawableXmlParser {
                 mCurrentCategory = new Category(context.getString(R.string.default_category));
                 mCategories.add(mCurrentCategory);
               }
-              mCurrentCategory
-                  .addItem(new Icon(parser.getAttributeValue(null, "drawable"), mCurrentCategory));
+              mCurrentCategory.addItem(
+                  new Icon(parser.getAttributeValue(null, "drawable"), mCurrentCategory));
             }
             break;
         }

@@ -40,11 +40,9 @@ import com.afollestad.polar.util.WallpaperUtils;
 import com.afollestad.polar.viewer.ViewerActivity;
 import java.net.SocketTimeoutException;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
-public class WallpapersFragment extends BasePageFragment implements
-    SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+/** @author Aidan Follestad (afollestad) */
+public class WallpapersFragment extends BasePageFragment
+    implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
   public static final int RQ_CROPANDSETWALLPAPER = 8585;
   public static final int RQ_VIEWWALLPAPER = 2001;
@@ -52,25 +50,28 @@ public class WallpapersFragment extends BasePageFragment implements
 
   @BindView(android.R.id.list)
   RecyclerView mRecyclerView;
+
   @BindView(android.R.id.empty)
   TextView mEmpty;
+
   @BindView(android.R.id.progress)
   View mProgress;
+
   WallpaperUtils.WallpapersHolder mWallpapers;
 
   private WallpaperAdapter mAdapter;
   private String mQueryText;
-  private final Runnable searchRunnable = new Runnable() {
-    @Override
-    public void run() {
-      mAdapter.filter(mQueryText);
-      setListShown(true);
-    }
-  };
+  private final Runnable searchRunnable =
+      new Runnable() {
+        @Override
+        public void run() {
+          mAdapter.filter(mQueryText);
+          setListShown(true);
+        }
+      };
   private Unbinder unbinder;
 
-  public WallpapersFragment() {
-  }
+  public WallpapersFragment() {}
 
   public static void showToast(Context context, @StringRes int message) {
     showToast(context, context.getString(message));
@@ -102,8 +103,8 @@ public class WallpapersFragment extends BasePageFragment implements
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+  public View onCreateView(
+      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     return inflater.inflate(R.layout.fragment_recyclerview, container, false);
   }
 
@@ -121,8 +122,8 @@ public class WallpapersFragment extends BasePageFragment implements
 
     if (getActivity() != null) {
       final MainActivity act = (MainActivity) getActivity();
-      TintUtils.themeSearchView(act.getToolbar(), mSearchView,
-          DialogUtils.resolveColor(act, R.attr.tab_icon_color));
+      TintUtils.themeSearchView(
+          act.getToolbar(), mSearchView, DialogUtils.resolveColor(act, R.attr.tab_icon_color));
     }
   }
 
@@ -148,10 +149,10 @@ public class WallpapersFragment extends BasePageFragment implements
     intent.putExtras(extras);
 
     final String transName = "view_" + index;
-    final ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-        getActivity(), iv, transName);
-    ActivityCompat
-        .startActivityForResult(getActivity(), intent, RQ_VIEWWALLPAPER, options.toBundle());
+    final ActivityOptionsCompat options =
+        ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), iv, transName);
+    ActivityCompat.startActivityForResult(
+        getActivity(), intent, RQ_VIEWWALLPAPER, options.toBundle());
   }
 
   private void showOptions(final int imageIndex) {
@@ -164,25 +165,27 @@ public class WallpapersFragment extends BasePageFragment implements
     new MaterialDialog.Builder(getActivity())
         .title(R.string.wallpaper)
         .items(R.array.wallpaper_options)
-        .itemsCallback(new MaterialDialog.ListCallback() {
-          @Override
-          public void onSelection(MaterialDialog materialDialog, View view, final int i,
-              CharSequence charSequence) {
-            final WallpaperUtils.Wallpaper wallpaper = mWallpapers.get(imageIndex);
-            WallpaperUtils.download(getActivity(), wallpaper, i == 0);
-          }
-        }).show();
+        .itemsCallback(
+            new MaterialDialog.ListCallback() {
+              @Override
+              public void onSelection(
+                  MaterialDialog materialDialog,
+                  View view,
+                  final int i,
+                  CharSequence charSequence) {
+                final WallpaperUtils.Wallpaper wallpaper = mWallpapers.get(imageIndex);
+                WallpaperUtils.download(getActivity(), wallpaper, i == 0);
+              }
+            })
+        .show();
   }
 
   private void setListShown(boolean shown) {
     final View v = getView();
     if (v != null) {
-      mRecyclerView.setVisibility(shown ?
-          View.VISIBLE : View.GONE);
-      mProgress.setVisibility(shown ?
-          View.GONE : View.VISIBLE);
-      mEmpty.setVisibility(shown && mAdapter.getItemCount() == 0 ?
-          View.VISIBLE : View.GONE);
+      mRecyclerView.setVisibility(shown ? View.VISIBLE : View.GONE);
+      mProgress.setVisibility(shown ? View.GONE : View.VISIBLE);
+      mEmpty.setVisibility(shown && mAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
   }
 
@@ -191,25 +194,29 @@ public class WallpapersFragment extends BasePageFragment implements
     super.onViewCreated(view, savedInstanceState);
     unbinder = ButterKnife.bind(this, view);
 
-    mAdapter = new WallpaperAdapter(getActivity(), new WallpaperAdapter.ClickListener() {
-      @Override
-      public boolean onClick(View view, int index, boolean longPress) {
-        if (longPress) {
-          showOptions(index);
-          return true;
-        } else {
-          openViewer(view, index);
-          return false;
-        }
-      }
-    });
-    mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(
-        Config.get().gridWidthWallpaper(), StaggeredGridLayoutManager.VERTICAL));
+    mAdapter =
+        new WallpaperAdapter(
+            getActivity(),
+            new WallpaperAdapter.ClickListener() {
+              @Override
+              public boolean onClick(View view, int index, boolean longPress) {
+                if (longPress) {
+                  showOptions(index);
+                  return true;
+                } else {
+                  openViewer(view, index);
+                  return false;
+                }
+              }
+            });
+    mRecyclerView.setLayoutManager(
+        new StaggeredGridLayoutManager(
+            Config.get().gridWidthWallpaper(), StaggeredGridLayoutManager.VERTICAL));
     mRecyclerView.setAdapter(mAdapter);
 
     if (savedInstanceState != null) {
-      mWallpapers = (WallpaperUtils.WallpapersHolder) savedInstanceState
-          .getSerializable("wallpapers");
+      mWallpapers =
+          (WallpaperUtils.WallpapersHolder) savedInstanceState.getSerializable("wallpapers");
     }
     if (getActivity() != null) {
       load();
@@ -236,33 +243,36 @@ public class WallpapersFragment extends BasePageFragment implements
     setListShown(false);
     mAdapter.clear();
     Bridge.config().logging(true);
-    WallpaperUtils.getAll(getActivity(), allowCached, new WallpaperUtils.WallpapersCallback() {
-      @Override
-      public void onRetrievedWallpapers(WallpaperUtils.WallpapersHolder wallpapers, Exception error,
-          boolean cancelled) {
-        if (error != null) {
-          if (error instanceof BridgeException) {
-            BridgeException e = (BridgeException) error;
-            if (e.reason() == BridgeException.REASON_REQUEST_FAILED) {
-              mEmpty.setText(R.string.unable_to_contact_server);
-            } else if (e.reason() == BridgeException.REASON_REQUEST_TIMEOUT ||
-                (e.underlyingException() != null && e
-                    .underlyingException() instanceof SocketTimeoutException)) {
-              mEmpty.setText(R.string.unable_to_contact_server);
+    WallpaperUtils.getAll(
+        getActivity(),
+        allowCached,
+        new WallpaperUtils.WallpapersCallback() {
+          @Override
+          public void onRetrievedWallpapers(
+              WallpaperUtils.WallpapersHolder wallpapers, Exception error, boolean cancelled) {
+            if (error != null) {
+              if (error instanceof BridgeException) {
+                BridgeException e = (BridgeException) error;
+                if (e.reason() == BridgeException.REASON_REQUEST_FAILED) {
+                  mEmpty.setText(R.string.unable_to_contact_server);
+                } else if (e.reason() == BridgeException.REASON_REQUEST_TIMEOUT
+                    || (e.underlyingException() != null
+                        && e.underlyingException() instanceof SocketTimeoutException)) {
+                  mEmpty.setText(R.string.unable_to_contact_server);
+                } else {
+                  mEmpty.setText(e.getMessage());
+                }
+              } else {
+                mEmpty.setText(error.getMessage());
+              }
             } else {
-              mEmpty.setText(e.getMessage());
+              mEmpty.setText(cancelled ? R.string.request_cancelled : R.string.no_wallpapers);
+              mWallpapers = wallpapers;
+              mAdapter.set(mWallpapers);
             }
-          } else {
-            mEmpty.setText(error.getMessage());
+            setListShown(true);
           }
-        } else {
-          mEmpty.setText(cancelled ? R.string.request_cancelled : R.string.no_wallpapers);
-          mWallpapers = wallpapers;
-          mAdapter.set(mWallpapers);
-        }
-        setListShown(true);
-      }
-    });
+        });
   }
 
   // Search
@@ -275,9 +285,7 @@ public class WallpapersFragment extends BasePageFragment implements
         WallpaperUtils.saveDb(getActivity(), mAdapter.getWallpapers());
       }
       if (getActivity().isFinishing()) {
-        Bridge.cancelAll()
-            .tag(WallpapersFragment.class.getName())
-            .commit();
+        Bridge.cancelAll().tag(WallpapersFragment.class.getName()).commit();
       }
     }
   }

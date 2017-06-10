@@ -13,9 +13,7 @@ import com.afollestad.polar.ui.base.BaseThemedActivity;
 import com.afollestad.polar.ui.base.ISelectionMode;
 import com.afollestad.polar.util.TintUtils;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class IconPickerActivity extends BaseThemedActivity implements ISelectionMode {
 
   @BindView(R.id.toolbar)
@@ -40,11 +38,14 @@ public class IconPickerActivity extends BaseThemedActivity implements ISelection
     getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_close);
 
     if (toolbar.getNavigationIcon() != null) {
-      toolbar.setNavigationIcon(TintUtils.createTintedDrawable(toolbar.getNavigationIcon(),
-          DialogUtils.resolveColor(this, R.attr.tab_icon_color)));
+      toolbar.setNavigationIcon(
+          TintUtils.createTintedDrawable(
+              toolbar.getNavigationIcon(), DialogUtils.resolveColor(this, R.attr.tab_icon_color)));
     }
 
-    getFragmentManager().beginTransaction().replace(R.id.container, IconsFragment.create(true))
+    getFragmentManager()
+        .beginTransaction()
+        .replace(R.id.container, IconsFragment.create(true))
         .commit();
   }
 

@@ -8,9 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class VC {
 
   private static Context mContext;
@@ -46,6 +44,5 @@ public class VC {
     }
   }
 
-  private VC() {
-  }
+  private VC() {}
 }

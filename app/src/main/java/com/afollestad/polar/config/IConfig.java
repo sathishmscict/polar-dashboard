@@ -2,9 +2,7 @@ package com.afollestad.polar.config;
 
 import android.support.annotation.Nullable;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public interface IConfig {
 
   boolean allowThemeSwitching();

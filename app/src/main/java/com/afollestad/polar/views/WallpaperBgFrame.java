@@ -8,9 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.afollestad.polar.util.WallpaperUtils;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class WallpaperBgFrame extends LinearLayout {
 
   public WallpaperBgFrame(Context context) {

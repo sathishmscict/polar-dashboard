@@ -27,17 +27,17 @@ import com.afollestad.polar.util.DrawableXmlParser;
 import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class IconMoreActivity extends BaseThemedActivity
     implements IconMoreAdapter.ClickListener, ISelectionMode {
 
-  public static final String EXTRA_REVEAL_ANIM_LOCATION = "com.afollestad.polar.REVEAL_ANIM_LOCATION";
+  public static final String EXTRA_REVEAL_ANIM_LOCATION =
+      "com.afollestad.polar.REVEAL_ANIM_LOCATION";
   public static final String EXTRA_CATEGORY = "com.afollestad.polar.CATEGORY";
 
   @BindView(R.id.toolbar)
   Toolbar mToolbar;
+
   @BindView(android.R.id.list)
   RecyclerView mRecyclerView;
 
@@ -62,8 +62,8 @@ public class IconMoreActivity extends BaseThemedActivity
     setContentView(R.layout.activity_icons_more);
     ButterKnife.bind(this);
 
-    final DrawableXmlParser.Category category = (DrawableXmlParser.Category) getIntent()
-        .getSerializableExtra(EXTRA_CATEGORY);
+    final DrawableXmlParser.Category category =
+        (DrawableXmlParser.Category) getIntent().getSerializableExtra(EXTRA_CATEGORY);
 
     setSupportActionBar(mToolbar);
     //noinspection ConstantConditions
@@ -71,8 +71,9 @@ public class IconMoreActivity extends BaseThemedActivity
     getSupportActionBar().setTitle(category.getName());
 
     if (mToolbar.getNavigationIcon() != null) {
-      mToolbar.setNavigationIcon(TintUtils.createTintedDrawable(mToolbar.getNavigationIcon(),
-          DialogUtils.resolveColor(this, R.attr.tab_icon_color)));
+      mToolbar.setNavigationIcon(
+          TintUtils.createTintedDrawable(
+              mToolbar.getNavigationIcon(), DialogUtils.resolveColor(this, R.attr.tab_icon_color)));
     }
 
     final int gridWidth = Config.get().gridWidthIcons();
@@ -85,20 +86,23 @@ public class IconMoreActivity extends BaseThemedActivity
     setUpTransitions();
 
     supportPostponeEnterTransition();
-    Utils.waitForLayout(mRecyclerView, new Utils.LayoutCallback<RecyclerView>() {
-      @Override
-      public void onLayout(RecyclerView view) {
-        //A small delay for RecyclerView to draw images
-        //TODO: Use a better method than just waiting
-        view.postDelayed(new Runnable() {
+    Utils.waitForLayout(
+        mRecyclerView,
+        new Utils.LayoutCallback<RecyclerView>() {
           @Override
-          public void run() {
-            supportStartPostponedEnterTransition();
+          public void onLayout(RecyclerView view) {
+            //A small delay for RecyclerView to draw images
+            //TODO: Use a better method than just waiting
+            view.postDelayed(
+                new Runnable() {
+                  @Override
+                  public void run() {
+                    supportStartPostponedEnterTransition();
+                  }
+                },
+                50);
           }
-        }, 50);
-
-      }
-    });
+        });
   }
 
   private void setUpTransitions() {
@@ -126,13 +130,11 @@ public class IconMoreActivity extends BaseThemedActivity
       returnSide.excludeTarget(getString(R.string.transition_name_circular_reveal), true);
       returnSide.excludeTarget(Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME, true);
 
-      TransitionSet set = new TransitionSet()
-          .addTransition(circularRevealTransition)
-          .addTransition(enterSlide);
+      TransitionSet set =
+          new TransitionSet().addTransition(circularRevealTransition).addTransition(enterSlide);
 
-      TransitionSet set2 = new TransitionSet()
-          .addTransition(returnSide)
-          .addTransition(circularRevealTransition);
+      TransitionSet set2 =
+          new TransitionSet().addTransition(returnSide).addTransition(circularRevealTransition);
 
       getWindow().setEnterTransition(set);
       getWindow().setReturnTransition(set2);

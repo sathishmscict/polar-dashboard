@@ -10,9 +10,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class PagesBuilder implements Iterable<PagesBuilder.Page> {
 
   private final ArrayList<Page> mPages;
@@ -51,16 +49,15 @@ public class PagesBuilder implements Iterable<PagesBuilder.Page> {
 
   public static class Page {
 
-    @IdRes
-    public final int drawerId;
-    @DrawableRes
-    public final int iconRes;
-    @StringRes
-    public final int titleRes;
-    @NonNull
-    public final Fragment fragment;
+    @IdRes public final int drawerId;
+    @DrawableRes public final int iconRes;
+    @StringRes public final int titleRes;
+    @NonNull public final Fragment fragment;
 
-    public Page(@IdRes int drawerId, @DrawableRes int iconRes, @StringRes int titleRes,
+    public Page(
+        @IdRes int drawerId,
+        @DrawableRes int iconRes,
+        @StringRes int titleRes,
         @NonNull Fragment fragment) {
       this.drawerId = drawerId;
       this.iconRes = iconRes;

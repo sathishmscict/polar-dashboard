@@ -40,38 +40,39 @@ import com.afollestad.polar.zooper.ZooperUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
-public class ZooperFragment extends BasePageFragment implements
-    SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+/** @author Aidan Follestad (afollestad) */
+public class ZooperFragment extends BasePageFragment
+    implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
   private static final int PERM_RQ = 61;
 
   @BindView(android.R.id.list)
   RecyclerView mRecyclerView;
+
   @BindView(android.R.id.empty)
   TextView mEmpty;
+
   @BindView(android.R.id.progress)
   View mProgress;
+
   @BindView(R.id.fabInstall)
   FloatingActionButton mFabInstall;
 
   private ZooperAdapter mAdapter;
   private String mQueryText;
-  private final Runnable searchRunnable = new Runnable() {
-    @Override
-    public void run() {
-      mAdapter.filter(mQueryText);
-      setListShown(true);
-    }
-  };
+  private final Runnable searchRunnable =
+      new Runnable() {
+        @Override
+        public void run() {
+          mAdapter.filter(mQueryText);
+          setListShown(true);
+        }
+      };
   private ArrayList<PreviewItem> mPreviews;
   private Drawable mWallpaper;
   private Unbinder unbinder;
 
-  public ZooperFragment() {
-  }
+  public ZooperFragment() {}
 
   @Override
   public int getTitle() {
@@ -85,8 +86,8 @@ public class ZooperFragment extends BasePageFragment implements
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+  public View onCreateView(
+      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     return inflater.inflate(R.layout.fragment_zooper, container, false);
   }
 
@@ -103,20 +104,17 @@ public class ZooperFragment extends BasePageFragment implements
 
     if (getActivity() != null) {
       final MainActivity act = (MainActivity) getActivity();
-      TintUtils.themeSearchView(act.getToolbar(), mSearchView,
-          DialogUtils.resolveColor(act, R.attr.tab_icon_color));
+      TintUtils.themeSearchView(
+          act.getToolbar(), mSearchView, DialogUtils.resolveColor(act, R.attr.tab_icon_color));
     }
   }
 
   private void setListShown(boolean shown) {
     final View v = getView();
     if (v != null) {
-      mRecyclerView.setVisibility(shown ?
-          View.VISIBLE : View.GONE);
-      mProgress.setVisibility(shown ?
-          View.GONE : View.VISIBLE);
-      mEmpty.setVisibility(shown && mAdapter.getItemCount() == 0 ?
-          View.VISIBLE : View.GONE);
+      mRecyclerView.setVisibility(shown ? View.VISIBLE : View.GONE);
+      mProgress.setVisibility(shown ? View.GONE : View.VISIBLE);
+      mEmpty.setVisibility(shown && mAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
   }
 
@@ -128,33 +126,35 @@ public class ZooperFragment extends BasePageFragment implements
 
     final int zooperGridWidth = Config.get().gridWidthZooper();
     mAdapter = new ZooperAdapter(getActivity());
-    mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(
-        zooperGridWidth, StaggeredGridLayoutManager.VERTICAL));
+    mRecyclerView.setLayoutManager(
+        new StaggeredGridLayoutManager(zooperGridWidth, StaggeredGridLayoutManager.VERTICAL));
     mRecyclerView.setAdapter(mAdapter);
 
-    ZooperUtil.getPreviews(getActivity(), new ZooperUtil.PreviewCallback() {
-      @Override
-      public void onPreviewsLoaded(ArrayList<PreviewItem> previews, Drawable wallpaper,
-          Exception error) {
-        if (getActivity() == null || getActivity().isFinishing() || !isAdded()) {
-          return;
-        } else if (error != null) {
-          error.printStackTrace();
-          setListShown(true);
-          mAdapter.setPreviews(null, null);
-          mEmpty.setVisibility(View.VISIBLE);
-          if (error.getMessage().trim().isEmpty()) {
-            mEmpty.setText(error.toString());
-          } else {
-            mEmpty.setText(error.getMessage());
+    ZooperUtil.getPreviews(
+        getActivity(),
+        new ZooperUtil.PreviewCallback() {
+          @Override
+          public void onPreviewsLoaded(
+              ArrayList<PreviewItem> previews, Drawable wallpaper, Exception error) {
+            if (getActivity() == null || getActivity().isFinishing() || !isAdded()) {
+              return;
+            } else if (error != null) {
+              error.printStackTrace();
+              setListShown(true);
+              mAdapter.setPreviews(null, null);
+              mEmpty.setVisibility(View.VISIBLE);
+              if (error.getMessage().trim().isEmpty()) {
+                mEmpty.setText(error.toString());
+              } else {
+                mEmpty.setText(error.getMessage());
+              }
+              return;
+            }
+            mPreviews = previews;
+            mWallpaper = wallpaper;
+            mAdapter.setPreviews(mPreviews, mWallpaper);
           }
-          return;
-        }
-        mPreviews = previews;
-        mWallpaper = wallpaper;
-        mAdapter.setPreviews(mPreviews, mWallpaper);
-      }
-    });
+        });
   }
 
   @Override
@@ -177,45 +177,60 @@ public class ZooperFragment extends BasePageFragment implements
   public void onInstall() {
     mFabInstall.hide();
     if (!Assent.isPermissionGranted(Assent.WRITE_EXTERNAL_STORAGE)) {
-      Assent.requestPermissions(new AssentCallback() {
-        @Override
-        public void onPermissionResult(PermissionResultSet permissionResultSet) {
-          if (permissionResultSet.allPermissionsGranted()) {
-            checkInstalled();
-          } else {
-            new MaterialDialog.Builder(getActivity())
-                .title(R.string.permission_needed)
-                .content(Html.fromHtml(getString(R.string.permission_needed_zooper_desc,
-                    getString(R.string.app_name))))
-                .positiveText(android.R.string.ok)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                  @Override
-                  public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                    Assent.requestPermissions(ZooperFragment.this, PERM_RQ,
-                        Assent.WRITE_EXTERNAL_STORAGE);
-                  }
-                }).show();
-          }
-        }
-      }, PERM_RQ, Assent.WRITE_EXTERNAL_STORAGE);
+      Assent.requestPermissions(
+          new AssentCallback() {
+            @Override
+            public void onPermissionResult(PermissionResultSet permissionResultSet) {
+              if (permissionResultSet.allPermissionsGranted()) {
+                checkInstalled();
+              } else {
+                new MaterialDialog.Builder(getActivity())
+                    .title(R.string.permission_needed)
+                    .content(
+                        Html.fromHtml(
+                            getString(
+                                R.string.permission_needed_zooper_desc,
+                                getString(R.string.app_name))))
+                    .positiveText(android.R.string.ok)
+                    .onPositive(
+                        new MaterialDialog.SingleButtonCallback() {
+                          @Override
+                          public void onClick(
+                              @NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            Assent.requestPermissions(
+                                ZooperFragment.this, PERM_RQ, Assent.WRITE_EXTERNAL_STORAGE);
+                          }
+                        })
+                    .show();
+              }
+            }
+          },
+          PERM_RQ,
+          Assent.WRITE_EXTERNAL_STORAGE);
     } else {
       checkInstalled();
     }
   }
 
   private void checkInstalled() {
-    ZooperUtil.checkInstalled(getActivity(), new ZooperUtil.CheckResult() {
-      @Override
-      public void onCheckResult(boolean fontsInstalled, boolean iconsetsInstalled,
-          boolean bitmapsInstalled) {
-        performInstallZooper(fontsInstalled, iconsetsInstalled, bitmapsInstalled);
-      }
-    });
+    ZooperUtil.checkInstalled(
+        getActivity(),
+        new ZooperUtil.CheckResult() {
+          @Override
+          public void onCheckResult(
+              boolean fontsInstalled, boolean iconsetsInstalled, boolean bitmapsInstalled) {
+            performInstallZooper(fontsInstalled, iconsetsInstalled, bitmapsInstalled);
+          }
+        });
   }
 
-  private void performInstallZooper(boolean fontsInstalled, boolean iconsetsInstalled,
-      boolean bitmapsInstalled) {
-    ZooperUtil.install(getActivity(), !fontsInstalled, !iconsetsInstalled, !bitmapsInstalled,
+  private void performInstallZooper(
+      boolean fontsInstalled, boolean iconsetsInstalled, boolean bitmapsInstalled) {
+    ZooperUtil.install(
+        getActivity(),
+        !fontsInstalled,
+        !iconsetsInstalled,
+        !bitmapsInstalled,
         new ZooperUtil.InstallResult() {
           @Override
           public void onInstallResult(Exception e) {

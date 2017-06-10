@@ -1,24 +1,19 @@
+apply from: '../dependencies.gradle'
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
 buildscript {
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:' + versions.aptPlugin
     }
 }
 
-apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
-
-ext {
-    TARGET_SDK = 25
-    BUILD_TOOLS = "25.0.3"
-    GOOGLE_LIBS = "25.3.1"
-}
-
 android {
-    compileSdkVersion TARGET_SDK
-    buildToolsVersion BUILD_TOOLS
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
 
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
@@ -35,11 +30,10 @@ android {
 
     defaultConfig {
         applicationId "com.afollestad.polar"
-        minSdkVersion 19
-        targetSdkVersion TARGET_SDK
-        versionCode 32
-        versionName "1.9.0"
-
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.compileSdk
+        versionCode versions.publishVersionCode
+        versionName versions.publishVersion
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -70,36 +64,36 @@ repositories {
 dependencies {
     compile project(path: ':licensing')
 
-    compile 'com.afollestad.material-dialogs:core:0.9.4.5'
-    compile 'com.afollestad:drag-select-recyclerview:0.4.0'
-    compile('com.afollestad:bridge:5.1.2') {
+    compile 'com.afollestad.material-dialogs:core:' + versions.materialDialogs
+    compile 'com.afollestad:drag-select-recyclerview:' + versions.dragSelectRv
+    compile('com.afollestad:bridge:' + versions.bridge) {
         exclude group: 'org.json', module: 'json'
     }
-    compile 'com.afollestad:sectioned-recyclerview:0.4.1'
-    compile 'com.afollestad:assent:0.2.5'
-    compile 'com.afollestad:icon-request:1.5.2'
-    compile 'com.afollestad:inquiry:5.0.0'
+    compile 'com.afollestad:sectioned-recyclerview:' + versions.sectionedRv
+    compile 'com.afollestad:assent:' + versions.assent
+    compile 'com.afollestad:icon-request:' + versions.iconRequest
+    compile 'com.afollestad:inquiry:' + versions.inquiry
 
-    compile 'me.zhanghai.android.materialprogressbar:library:1.3.0'
+    compile 'me.zhanghai.android.materialprogressbar:library:' + versions.mdProgressBar
 
-    compile "com.android.support:appcompat-v7:$GOOGLE_LIBS"
-    compile "com.android.support:recyclerview-v7:$GOOGLE_LIBS"
-    compile "com.android.support:support-v13:$GOOGLE_LIBS"
-    compile "com.android.support:design:$GOOGLE_LIBS"
-    compile "com.android.support:cardview-v7:$GOOGLE_LIBS"
-    compile "com.android.support:palette-v7:$GOOGLE_LIBS"
+    compile 'com.android.support:appcompat-v7:' + versions.supportLib
+    compile 'com.android.support:recyclerview-v7:' + versions.supportLib
+    compile 'com.android.support:support-v13:' + versions.supportLib
+    compile 'com.android.support:design:' + versions.supportLib
+    compile 'com.android.support:cardview-v7:' + versions.supportLib
+    compile 'com.android.support:palette-v7:' + versions.supportLib
 
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.github.florent37:glidepalette:1.0.6@aar'
+    compile 'com.github.bumptech.glide:glide:' + versions.glide
+    compile "com.github.florent37:glidepalette:$versions.glidePalette@aar"
 
-    compile 'com.jakewharton:butterknife:8.6.0'
-    apt 'com.jakewharton:butterknife-compiler:8.6.0'
+    compile 'com.jakewharton:butterknife:' + versions.butterKnife
+    apt 'com.jakewharton:butterknife-compiler:' + versions.butterKnife
 
-    compile 'com.google.android.apps.muzei:muzei-api:2.0'
-    compile 'com.makeramen:roundedimageview:2.3.0'
+    compile 'com.google.android.apps.muzei:muzei-api:' + versions.muzei
+    compile 'com.makeramen:roundedimageview:' + versions.roundImageView
 
-    compile 'com.anjlab.android.iab.v3:library:1.0.32'
-    compile 'com.pluscubed:insets-dispatcher:0.1.3'
+    compile 'com.anjlab.android.iab.v3:library:' + versions.iab
+    compile 'com.pluscubed:insets-dispatcher:' + versions.insetDispatcher
 
     compile 'org.bitbucket.frankmonza:kustomapi:+'
 }

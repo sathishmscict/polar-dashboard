@@ -9,10 +9,7 @@ import com.afollestad.polar.util.WallpaperUtils;
 import com.google.android.apps.muzei.api.Artwork;
 import com.google.android.apps.muzei.api.RemoteMuzeiArtSource;
 
-
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class PolarWallpaperSource extends RemoteMuzeiArtSource {
 
   public PolarWallpaperSource() {
@@ -23,7 +20,9 @@ public class PolarWallpaperSource extends RemoteMuzeiArtSource {
 
   private void setActiveIndex(int index) {
     PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
-        .edit().putInt("muzei_index", index).commit();
+        .edit()
+        .putInt("muzei_index", index)
+        .commit();
   }
 
   private int getActiveIndex() {
@@ -43,7 +42,8 @@ public class PolarWallpaperSource extends RemoteMuzeiArtSource {
     try {
       wallpapers = WallpaperUtils.getAll(this, !WallpaperUtils.didExpire(this));
     } catch (Exception e) {
-      Log.d(PolarWallpaperSource.class.getSimpleName(),
+      Log.d(
+          PolarWallpaperSource.class.getSimpleName(),
           String.format("Failed to retrieve wallpapers for Muzei... %s", e.getMessage()));
       throw new RetryException();
     }
@@ -60,17 +60,20 @@ public class PolarWallpaperSource extends RemoteMuzeiArtSource {
     setActiveIndex(currentActive);
     WallpaperUtils.Wallpaper currentWallpaper = wallpapers.get(currentActive);
 
-    Log.d(PolarWallpaperSource.class.getSimpleName(),
+    Log.d(
+        PolarWallpaperSource.class.getSimpleName(),
         String.format("Publishing artwork to Muzei: %s", currentWallpaper.url));
-    final Artwork currentArt = new Artwork.Builder()
-        .imageUri(Uri.parse(currentWallpaper.url))
-        .title(currentWallpaper.name)
-        .byline(currentWallpaper.author)
-        .viewIntent(new Intent(getApplicationContext(), MainActivity.class)
-            .setAction(Intent.ACTION_SET_WALLPAPER)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-        .token(String.format("%s:%s", currentWallpaper.name, currentWallpaper.author))
-        .build();
+    final Artwork currentArt =
+        new Artwork.Builder()
+            .imageUri(Uri.parse(currentWallpaper.url))
+            .title(currentWallpaper.name)
+            .byline(currentWallpaper.author)
+            .viewIntent(
+                new Intent(getApplicationContext(), MainActivity.class)
+                    .setAction(Intent.ACTION_SET_WALLPAPER)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            .token(String.format("%s:%s", currentWallpaper.name, currentWallpaper.author))
+            .build();
 
     publishArtwork(currentArt);
     scheduleUpdate(System.currentTimeMillis() + ROTATE_TIME_MILLIS);

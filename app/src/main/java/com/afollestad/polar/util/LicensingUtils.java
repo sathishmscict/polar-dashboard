@@ -18,13 +18,11 @@ import com.google.android.vending.licensing.LicenseCheckerCallback;
 import com.google.android.vending.licensing.ServerManagedPolicy;
 import java.util.Random;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class LicensingUtils {
 
-  private final static String KEY_SALT = "[licensing-salt]";
-  private final static String KEY_VALID = "[license-valid]";
+  private static final String KEY_SALT = "[licensing-salt]";
+  private static final String KEY_VALID = "[license-valid]";
 
   public interface LicensingCallback {
 
@@ -45,8 +43,7 @@ public class LicensingUtils {
     }
   }
 
-  private LicensingUtils() {
-  }
+  private LicensingUtils() {}
 
   private static byte[] mSalt;
   private static LicenseCheckerCallback mLicenseCheckerCallback;
@@ -60,8 +57,10 @@ public class LicensingUtils {
       mSalt[i] = (byte) (randomGenerator.nextInt(600) - 300);
     }
     final String saltStr = getSaltString();
-    PreferenceManager.getDefaultSharedPreferences(context).edit()
-        .putString(KEY_SALT, saltStr).commit();
+    PreferenceManager.getDefaultSharedPreferences(context)
+        .edit()
+        .putString(KEY_SALT, saltStr)
+        .commit();
     if (BuildConfig.DEBUG) {
       LOG("Generated new licensing salt: %s", saltStr);
     }
@@ -113,8 +112,9 @@ public class LicensingUtils {
     }
 
     if (BuildConfig.DEBUG) {
-      Toast.makeText(context, "License checking is disabled for this debug build.",
-          Toast.LENGTH_SHORT).show();
+      Toast.makeText(
+              context, "License checking is disabled for this debug build.", Toast.LENGTH_SHORT)
+          .show();
       return true;
     }
 
@@ -125,15 +125,17 @@ public class LicensingUtils {
       return false;
     }
     mProgress = ProgressDialogFragment.show(context, R.string.checking_license);
-    final String deviceId = Settings.Secure
-        .getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    final String deviceId =
+        Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     // Library calls this when it's done.
     mLicenseCheckerCallback = new MyLicenseCheckerCallback(context, cb);
     // Construct the LicenseChecker with a policy.
-    mChecker = new LicenseChecker(
-        context, new ServerManagedPolicy(context,
-        new AESObfuscator(getSalt(context), BuildConfig.APPLICATION_ID, deviceId)),
-        key);
+    mChecker =
+        new LicenseChecker(
+            context,
+            new ServerManagedPolicy(
+                context, new AESObfuscator(getSalt(context), BuildConfig.APPLICATION_ID, deviceId)),
+            key);
     mChecker.checkAccess(mLicenseCheckerCallback);
     return false;
   }
@@ -164,8 +166,10 @@ public class LicensingUtils {
       if (mCb != null) {
         mCb.onLicensingResult(true, policyReason);
       }
-      PreferenceManager.getDefaultSharedPreferences(mContext).edit()
-          .putBoolean(KEY_VALID, true).commit();
+      PreferenceManager.getDefaultSharedPreferences(mContext)
+          .edit()
+          .putBoolean(KEY_VALID, true)
+          .commit();
       Toast.makeText(mContext, R.string.license_valid, Toast.LENGTH_SHORT).show();
     }
 

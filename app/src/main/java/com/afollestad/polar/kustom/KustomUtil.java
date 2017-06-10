@@ -28,23 +28,19 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import org.json.JSONObject;
 
-/**
- * @author Frank Monza (fmonza)
- */
+/** @author Frank Monza (fmonza) */
 public class KustomUtil {
 
   public static final String FOLDER_WALLPAPERS = "wallpapers";
   public static final String FOLDER_WIDGETS = "widgets";
 
-  private final static String PKG_KLWP = "org.kustom.wallpaper";
-  private final static String PKG_KWGT = "org.kustom.widget";
+  private static final String PKG_KLWP = "org.kustom.wallpaper";
+  private static final String PKG_KWGT = "org.kustom.widget";
 
-  private final static String EDITOR_KLWP = "org.kustom.lib.editor.WpAdvancedEditorActivity";
-  private final static String EDITOR_KWGT = "org.kustom.widget.picker.WidgetPicker";
+  private static final String EDITOR_KLWP = "org.kustom.lib.editor.WpAdvancedEditorActivity";
+  private static final String EDITOR_KWGT = "org.kustom.widget.picker.WidgetPicker";
 
-
-  private KustomUtil() {
-  }
+  private KustomUtil() {}
 
   @StringRes
   public static int getInstallMsg(String pkg) {
@@ -74,136 +70,149 @@ public class KustomUtil {
   }
 
   @SuppressWarnings("ResultOfMethodCallIgnored")
-  public static void getPreviews(final Activity context, final PreviewCallback cb,
-      final @NonNull @KustomDir String folder) {
-    new Thread(new Runnable() {
-      @Override
-      public void run() {
-        try {
-          final AssetManager am = context.getAssets();
-          final String[] templates = am.list(folder);
-
-          if (templates == null || templates.length == 0) {
-            post(context, new Runnable() {
+  public static void getPreviews(
+      final Activity context, final PreviewCallback cb, final @NonNull @KustomDir String folder) {
+    new Thread(
+            new Runnable() {
               @Override
               public void run() {
-                cb.onPreviewsLoaded(null, null, null);
-              }
-            });
-            return;
-          }
+                try {
+                  final AssetManager am = context.getAssets();
+                  final String[] templates = am.list(folder);
 
-          final File cacheDir = getKustomPreviewCache(context);
-          Utils.wipe(cacheDir);
-          cacheDir.mkdirs();
-          final ArrayList<KustomFragment.PreviewItem> results = new ArrayList<>();
-
-          for (String file : templates) {
-            final File kFileCache = new File(cacheDir, file);
-            InputStream is = null;
-            OutputStream os = null;
-            try {
-              is = am.open(folder + "/" + file);
-              os = new FileOutputStream(kFileCache);
-              Utils.copy(is, os);
-              closeQuietly(is);
-              closeQuietly(os);
-
-              if (kFileCache.exists()) {
-                final String widgetName = Utils.removeExtension(kFileCache.getName());
-                final ZipFile zipFile = new ZipFile(kFileCache);
-                final Enumeration<? extends ZipEntry> entryEnum = zipFile.entries();
-                JSONObject info = null;
-                File webpFile = null;
-                ZipEntry entry;
-                while ((entry = entryEnum.nextElement()) != null) {
-                  if (entry.getName().endsWith("preset_thumb_portrait.jpg")) {
-                    webpFile = new File(cacheDir, widgetName + ".webp");
-                    InputStream zis = null;
-                    OutputStream pos = null;
-                    try {
-                      zis = zipFile.getInputStream(entry);
-                      pos = new FileOutputStream(webpFile);
-                      Utils.copy(zis, pos);
-                    } finally {
-                      closeQuietly(zis);
-                      closeQuietly(pos);
-                    }
+                  if (templates == null || templates.length == 0) {
+                    post(
+                        context,
+                        new Runnable() {
+                          @Override
+                          public void run() {
+                            cb.onPreviewsLoaded(null, null, null);
+                          }
+                        });
+                    return;
                   }
-                  if (entry.getName().endsWith("preset.json")) {
-                    InputStream zis = null;
+
+                  final File cacheDir = getKustomPreviewCache(context);
+                  Utils.wipe(cacheDir);
+                  cacheDir.mkdirs();
+                  final ArrayList<KustomFragment.PreviewItem> results = new ArrayList<>();
+
+                  for (String file : templates) {
+                    final File kFileCache = new File(cacheDir, file);
+                    InputStream is = null;
+                    OutputStream os = null;
                     try {
-                      zis = zipFile.getInputStream(entry);
-                      BufferedReader streamReader = new BufferedReader(
-                          new InputStreamReader(zis, "UTF-8"));
-                      StringBuilder responseStrBuilder = new StringBuilder();
-                      String inputStr;
-                      while ((inputStr = streamReader.readLine()) != null) {
-                        responseStrBuilder.append(inputStr);
+                      is = am.open(folder + "/" + file);
+                      os = new FileOutputStream(kFileCache);
+                      Utils.copy(is, os);
+                      closeQuietly(is);
+                      closeQuietly(os);
+
+                      if (kFileCache.exists()) {
+                        final String widgetName = Utils.removeExtension(kFileCache.getName());
+                        final ZipFile zipFile = new ZipFile(kFileCache);
+                        final Enumeration<? extends ZipEntry> entryEnum = zipFile.entries();
+                        JSONObject info = null;
+                        File webpFile = null;
+                        ZipEntry entry;
+                        while ((entry = entryEnum.nextElement()) != null) {
+                          if (entry.getName().endsWith("preset_thumb_portrait.jpg")) {
+                            webpFile = new File(cacheDir, widgetName + ".webp");
+                            InputStream zis = null;
+                            OutputStream pos = null;
+                            try {
+                              zis = zipFile.getInputStream(entry);
+                              pos = new FileOutputStream(webpFile);
+                              Utils.copy(zis, pos);
+                            } finally {
+                              closeQuietly(zis);
+                              closeQuietly(pos);
+                            }
+                          }
+                          if (entry.getName().endsWith("preset.json")) {
+                            InputStream zis = null;
+                            try {
+                              zis = zipFile.getInputStream(entry);
+                              BufferedReader streamReader =
+                                  new BufferedReader(new InputStreamReader(zis, "UTF-8"));
+                              StringBuilder responseStrBuilder = new StringBuilder();
+                              String inputStr;
+                              while ((inputStr = streamReader.readLine()) != null) {
+                                responseStrBuilder.append(inputStr);
+                              }
+                              JSONObject preset = new JSONObject(responseStrBuilder.toString());
+                              info = preset.getJSONObject("preset_info");
+                            } finally {
+                              closeQuietly(zis);
+                              closeQuietly(os);
+                            }
+                          }
+                          if (info != null && webpFile != null) {
+                            results.add(
+                                new KustomFragment.PreviewItem(
+                                    info,
+                                    folder,
+                                    kFileCache.getName(),
+                                    webpFile.getAbsolutePath()));
+                            break;
+                          }
+                        }
                       }
-                      JSONObject preset = new JSONObject(responseStrBuilder.toString());
-                      info = preset.getJSONObject("preset_info");
+                    } catch (final Exception e) {
+                      if (cb != null) {
+                        post(
+                            context,
+                            new Runnable() {
+                              @Override
+                              public void run() {
+                                cb.onPreviewsLoaded(null, null, e);
+                              }
+                            });
+                      }
+                      break;
                     } finally {
-                      closeQuietly(zis);
+                      kFileCache.delete();
+                      closeQuietly(is);
                       closeQuietly(os);
                     }
                   }
-                  if (info != null && webpFile != null) {
-                    results.add(new KustomFragment.PreviewItem(info, folder,
-                        kFileCache.getName(), webpFile.getAbsolutePath()));
-                    break;
+
+                  if (cb != null) {
+                    final Drawable wallpaperDrawable =
+                        WallpaperManager.getInstance(context).getDrawable();
+                    post(
+                        context,
+                        new Runnable() {
+                          @Override
+                          public void run() {
+                            cb.onPreviewsLoaded(results, wallpaperDrawable, null);
+                          }
+                        });
+                  }
+                } catch (final Exception e) {
+                  if (cb != null) {
+                    post(
+                        context,
+                        new Runnable() {
+                          @Override
+                          public void run() {
+                            cb.onPreviewsLoaded(null, null, e);
+                          }
+                        });
                   }
                 }
               }
-            } catch (final Exception e) {
-              if (cb != null) {
-                post(context, new Runnable() {
-                  @Override
-                  public void run() {
-                    cb.onPreviewsLoaded(null, null, e);
-                  }
-                });
-              }
-              break;
-            } finally {
-              kFileCache.delete();
-              closeQuietly(is);
-              closeQuietly(os);
-            }
-          }
-
-          if (cb != null) {
-            final Drawable wallpaperDrawable = WallpaperManager.getInstance(context).getDrawable();
-            post(context, new Runnable() {
-              @Override
-              public void run() {
-                cb.onPreviewsLoaded(results, wallpaperDrawable, null);
-              }
-            });
-          }
-        } catch (final Exception e) {
-          if (cb != null) {
-            post(context, new Runnable() {
-              @Override
-              public void run() {
-                cb.onPreviewsLoaded(null, null, e);
-              }
-            });
-          }
-        }
-      }
-    }).start();
+            })
+        .start();
   }
 
   @StringDef({FOLDER_WALLPAPERS, FOLDER_WIDGETS})
   @Retention(RetentionPolicy.SOURCE)
-  public @interface KustomDir {
-
-  }
+  public @interface KustomDir {}
 
   public interface PreviewCallback {
 
-    void onPreviewsLoaded(ArrayList<KustomFragment.PreviewItem> previews, Drawable wallpaper,
-        Exception error);
+    void onPreviewsLoaded(
+        ArrayList<KustomFragment.PreviewItem> previews, Drawable wallpaper, Exception error);
   }
 }

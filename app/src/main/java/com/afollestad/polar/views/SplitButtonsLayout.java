@@ -8,9 +8,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import com.afollestad.polar.R;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class SplitButtonsLayout extends LinearLayout {
 
   public SplitButtonsLayout(Context context) {
@@ -39,9 +37,7 @@ public class SplitButtonsLayout extends LinearLayout {
     }
   }
 
-  /**
-   * Sets how many buttons the layout will have.
-   */
+  /** Sets how many buttons the layout will have. */
   public void setButtonCount(int buttonCount) {
     this.mButtonCount = buttonCount;
     setWeightSum(buttonCount);
@@ -51,8 +47,9 @@ public class SplitButtonsLayout extends LinearLayout {
     if (getChildCount() == mButtonCount) {
       throw new IllegalStateException(mButtonCount + " buttons have already been added.");
     }
-    final Button newButton = (Button) LayoutInflater.from(getContext())
-        .inflate(R.layout.list_item_about_button, this, false);
+    final Button newButton =
+        (Button)
+            LayoutInflater.from(getContext()).inflate(R.layout.list_item_about_button, this, false);
     // width can be 0 since weight is used
     final LinearLayout.LayoutParams lp = new LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
     lp.weight = 1;

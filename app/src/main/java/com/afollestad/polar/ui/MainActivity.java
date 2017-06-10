@@ -70,11 +70,9 @@ import com.google.android.vending.licensing.Policy;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
-public class MainActivity extends BaseDonateActivity implements
-    LicensingUtils.LicensingCallback, NavigationView.OnNavigationItemSelectedListener {
+/** @author Aidan Follestad (afollestad) */
+public class MainActivity extends BaseDonateActivity
+    implements LicensingUtils.LicensingCallback, NavigationView.OnNavigationItemSelectedListener {
 
   @BindView(R.id.toolbar)
   Toolbar mToolbar;
@@ -86,6 +84,7 @@ public class MainActivity extends BaseDonateActivity implements
   @Nullable
   @BindView(R.id.navigation_view)
   NavigationView mNavView;
+
   @Nullable
   @BindView(R.id.drawer)
   DrawerLayout mDrawer;
@@ -134,8 +133,9 @@ public class MainActivity extends BaseDonateActivity implements
 
     // Restore last selected page, tab/nav-drawer-item
     if (Config.get().persistSelectedPage()) {
-      int lastPage = PreferenceManager.getDefaultSharedPreferences(MainActivity.this)
-          .getInt("last_selected_page", 0);
+      int lastPage =
+          PreferenceManager.getDefaultSharedPreferences(MainActivity.this)
+              .getInt("last_selected_page", 0);
       if (lastPage > mPager.getAdapter().getCount() - 1) {
         lastPage = 0;
       }
@@ -147,26 +147,28 @@ public class MainActivity extends BaseDonateActivity implements
     dispatchFragmentUpdateTitle(!useNavDrawer);
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      setExitSharedElementCallback(new SharedElementCallback() {
-        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-        @Override
-        public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-          if (isReentering) {
-            WallpapersFragment frag = (WallpapersFragment) getFragmentManager()
-                .findFragmentByTag("page:" + mPager.getCurrentItem());
-            final RecyclerView recyclerView = frag.getRecyclerView();
-            View item = recyclerView.findViewWithTag("view_" + reenterPos);
-            View image = item.findViewById(R.id.image);
+      setExitSharedElementCallback(
+          new SharedElementCallback() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+              if (isReentering) {
+                WallpapersFragment frag =
+                    (WallpapersFragment)
+                        getFragmentManager().findFragmentByTag("page:" + mPager.getCurrentItem());
+                final RecyclerView recyclerView = frag.getRecyclerView();
+                View item = recyclerView.findViewWithTag("view_" + reenterPos);
+                View image = item.findViewById(R.id.image);
 
-            names.clear();
-            names.add(image.getTransitionName());
-            sharedElements.clear();
-            sharedElements.put(image.getTransitionName(), image);
+                names.clear();
+                names.add(image.getTransitionName());
+                sharedElements.clear();
+                sharedElements.put(image.getTransitionName(), image);
 
-            isReentering = false;
-          }
-        }
-      });
+                isReentering = false;
+              }
+            }
+          });
     }
 
     processIntent(getIntent());
@@ -193,35 +195,56 @@ public class MainActivity extends BaseDonateActivity implements
   private void setupPages() {
     mPages = new PagesBuilder(7);
     if (Config.get().homepageEnabled()) {
-      mPages.add(new PagesBuilder.Page(R.id.drawer_home, R.drawable.tab_home, R.string.home,
-          new HomeFragment()));
+      mPages.add(
+          new PagesBuilder.Page(
+              R.id.drawer_home, R.drawable.tab_home, R.string.home, new HomeFragment()));
     }
-    mPages.add(new PagesBuilder.Page(R.id.drawer_icons, R.drawable.tab_icons, R.string.icons,
-        new IconsFragment()));
+    mPages.add(
+        new PagesBuilder.Page(
+            R.id.drawer_icons, R.drawable.tab_icons, R.string.icons, new IconsFragment()));
     if (Config.get().wallpapersEnabled()) {
-      mPages.add(new PagesBuilder.Page(R.id.drawer_wallpapers, R.drawable.tab_wallpapers,
-          R.string.wallpapers, new WallpapersFragment()));
+      mPages.add(
+          new PagesBuilder.Page(
+              R.id.drawer_wallpapers,
+              R.drawable.tab_wallpapers,
+              R.string.wallpapers,
+              new WallpapersFragment()));
     }
     if (Config.get().iconRequestEnabled()) {
-      mPages.add(new PagesBuilder.Page(R.id.drawer_requestIcons, R.drawable.tab_requests,
-          R.string.request_icons, new RequestsFragment()));
+      mPages.add(
+          new PagesBuilder.Page(
+              R.id.drawer_requestIcons,
+              R.drawable.tab_requests,
+              R.string.request_icons,
+              new RequestsFragment()));
     }
-    mPages.add(new PagesBuilder.Page(R.id.drawer_apply, R.drawable.tab_apply, R.string.apply,
-        new ApplyFragment()));
+    mPages.add(
+        new PagesBuilder.Page(
+            R.id.drawer_apply, R.drawable.tab_apply, R.string.apply, new ApplyFragment()));
     if (Config.get().kustomWidgetEnabled()) {
-      mPages.add(new PagesBuilder.Page(R.id.drawer_kwgt, R.drawable.tab_kwgt, R.string.kwgt,
-          KustomFragment.newInstance(KustomUtil.FOLDER_WIDGETS)));
+      mPages.add(
+          new PagesBuilder.Page(
+              R.id.drawer_kwgt,
+              R.drawable.tab_kwgt,
+              R.string.kwgt,
+              KustomFragment.newInstance(KustomUtil.FOLDER_WIDGETS)));
     }
     if (Config.get().kustomWallpaperEnabled()) {
-      mPages.add(new PagesBuilder.Page(R.id.drawer_klwp, R.drawable.tab_klwp, R.string.klwp,
-          KustomFragment.newInstance(KustomUtil.FOLDER_WALLPAPERS)));
+      mPages.add(
+          new PagesBuilder.Page(
+              R.id.drawer_klwp,
+              R.drawable.tab_klwp,
+              R.string.klwp,
+              KustomFragment.newInstance(KustomUtil.FOLDER_WALLPAPERS)));
     }
     if (Config.get().zooperEnabled()) {
-      mPages.add(new PagesBuilder.Page(R.id.drawer_zooper, R.drawable.tab_zooper, R.string.zooper,
-          new ZooperFragment()));
+      mPages.add(
+          new PagesBuilder.Page(
+              R.id.drawer_zooper, R.drawable.tab_zooper, R.string.zooper, new ZooperFragment()));
     }
-    mPages.add(new PagesBuilder.Page(R.id.drawer_about, R.drawable.tab_about, R.string.about,
-        new AboutFragment()));
+    mPages.add(
+        new PagesBuilder.Page(
+            R.id.drawer_about, R.drawable.tab_about, R.string.about, new AboutFragment()));
   }
 
   public boolean retryLicenseCheck() {
@@ -239,9 +262,11 @@ public class MainActivity extends BaseDonateActivity implements
 
   @Override
   public void onLicensingError(int errorCode) {
-    Utils.showError(this, new Exception(
-        "License checking error occurred, make sure everything is setup correctly. Error code: "
-            + errorCode));
+    Utils.showError(
+        this,
+        new Exception(
+            "License checking error occurred, make sure everything is setup correctly. Error code: "
+                + errorCode));
   }
 
   public void showChangelogIfNecessary(boolean licenseAllowed) {
@@ -288,12 +313,14 @@ public class MainActivity extends BaseDonateActivity implements
       return true;
     } else if (item.getItemId() == R.id.darkTheme) {
       darkTheme(!darkTheme());
-      mToolbar.postDelayed(new Runnable() {
-        @Override
-        public void run() {
-          recreate();
-        }
-      }, 500);
+      mToolbar.postDelayed(
+          new Runnable() {
+            @Override
+            public void run() {
+              recreate();
+            }
+          },
+          500);
       return true;
     } else if (item.getItemId() == R.id.navDrawerMode) {
       item.setChecked(!item.isChecked());
@@ -317,36 +344,39 @@ public class MainActivity extends BaseDonateActivity implements
     }
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      mDrawer.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+      mDrawer.setOnApplyWindowInsetsListener(
+          new View.OnApplyWindowInsetsListener() {
 
-        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-        @Override
-        public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
-          //TODO: Check if NavigationView needs bottom padding
-          WindowInsets drawerLayoutInsets = insets.replaceSystemWindowInsets(
-              insets.getSystemWindowInsetLeft(),
-              insets.getSystemWindowInsetTop(),
-              insets.getSystemWindowInsetRight(),
-              0
-          );
-          mDrawerModeTopInset = drawerLayoutInsets.getSystemWindowInsetTop();
-          ((DrawerLayout) v).setChildInsets(drawerLayoutInsets,
-              drawerLayoutInsets.getSystemWindowInsetTop() > 0);
-          return insets;
-        }
-      });
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+              //TODO: Check if NavigationView needs bottom padding
+              WindowInsets drawerLayoutInsets =
+                  insets.replaceSystemWindowInsets(
+                      insets.getSystemWindowInsetLeft(),
+                      insets.getSystemWindowInsetTop(),
+                      insets.getSystemWindowInsetRight(),
+                      0);
+              mDrawerModeTopInset = drawerLayoutInsets.getSystemWindowInsetTop();
+              ((DrawerLayout) v)
+                  .setChildInsets(
+                      drawerLayoutInsets, drawerLayoutInsets.getSystemWindowInsetTop() > 0);
+              return insets;
+            }
+          });
     }
 
     assert getSupportActionBar() != null;
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     Drawable menuIcon = VC.get(R.drawable.ic_action_menu);
-    menuIcon = TintUtils
-        .createTintedDrawable(menuIcon, DialogUtils.resolveColor(this, R.attr.tab_icon_color));
+    menuIcon =
+        TintUtils.createTintedDrawable(
+            menuIcon, DialogUtils.resolveColor(this, R.attr.tab_icon_color));
     getSupportActionBar().setHomeAsUpIndicator(menuIcon);
 
     mDrawer.addDrawerListener(
-        new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.drawer_open,
-            R.string.drawer_close));
+        new ActionBarDrawerToggle(
+            this, mDrawer, mToolbar, R.string.drawer_open, R.string.drawer_close));
     mDrawer.setStatusBarBackgroundColor(DialogUtils.resolveColor(this, R.attr.colorPrimaryDark));
     mNavView.setNavigationItemSelectedListener(this);
 
@@ -365,46 +395,48 @@ public class MainActivity extends BaseDonateActivity implements
       selectedBg = ContextCompat.getColor(this, R.color.navigationview_selectedbg_dark);
     }
 
-    final ColorStateList iconSl = new ColorStateList(
-        new int[][]{
-            new int[]{-android.R.attr.state_checked},
-            new int[]{android.R.attr.state_checked}
-        },
-        new int[]{iconColor, selectedIconText});
-    final ColorStateList textSl = new ColorStateList(
-        new int[][]{
-            new int[]{-android.R.attr.state_checked},
-            new int[]{android.R.attr.state_checked}
-        },
-        new int[]{titleColor, selectedIconText});
+    final ColorStateList iconSl =
+        new ColorStateList(
+            new int[][] {
+              new int[] {-android.R.attr.state_checked}, new int[] {android.R.attr.state_checked}
+            },
+            new int[] {iconColor, selectedIconText});
+    final ColorStateList textSl =
+        new ColorStateList(
+            new int[][] {
+              new int[] {-android.R.attr.state_checked}, new int[] {android.R.attr.state_checked}
+            },
+            new int[] {titleColor, selectedIconText});
     mNavView.setItemTextColor(textSl);
     mNavView.setItemIconTintList(iconSl);
 
     StateListDrawable bgDrawable = new StateListDrawable();
-    bgDrawable.addState(new int[]{android.R.attr.state_checked}, new ColorDrawable(selectedBg));
+    bgDrawable.addState(new int[] {android.R.attr.state_checked}, new ColorDrawable(selectedBg));
     mNavView.setItemBackground(bgDrawable);
 
-    mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-      @Override
-      public void onPageSelected(int position) {
-        dispatchFragmentUpdateTitle(false);
-        invalidateNavViewSelection(position);
-      }
-    });
+    mPager.addOnPageChangeListener(
+        new ViewPager.SimpleOnPageChangeListener() {
+          @Override
+          public void onPageSelected(int position) {
+            dispatchFragmentUpdateTitle(false);
+            invalidateNavViewSelection(position);
+          }
+        });
 
-    mToolbar
-        .setContentInsetsRelative(getResources().getDimensionPixelSize(R.dimen.second_keyline), 0);
+    mToolbar.setContentInsetsRelative(
+        getResources().getDimensionPixelSize(R.dimen.second_keyline), 0);
   }
 
   void invalidateNavViewSelection(int position) {
     assert mNavView != null;
     final int selectedId = mPages.get(position).drawerId;
-    mNavView.post(new Runnable() {
-      @Override
-      public void run() {
-        mNavView.setCheckedItem(selectedId);
-      }
-    });
+    mNavView.post(
+        new Runnable() {
+          @Override
+          public void run() {
+            mNavView.setCheckedItem(selectedId);
+          }
+        });
   }
 
   @Override
@@ -432,13 +464,14 @@ public class MainActivity extends BaseDonateActivity implements
     assert mTabs != null;
     mTabs.setTabMode(mPages.size() > 6 ? TabLayout.MODE_SCROLLABLE : TabLayout.MODE_FIXED);
     mTabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mPager));
-    mPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabs) {
-      @Override
-      public void onPageSelected(int position) {
-        super.onPageSelected(position);
-        dispatchFragmentUpdateTitle(false);
-      }
-    });
+    mPager.addOnPageChangeListener(
+        new TabLayout.TabLayoutOnPageChangeListener(mTabs) {
+          @Override
+          public void onPageSelected(int position) {
+            super.onPageSelected(position);
+            dispatchFragmentUpdateTitle(false);
+          }
+        });
 
     for (PagesBuilder.Page page : mPages) {
       addTab(page.iconRes);
@@ -450,20 +483,22 @@ public class MainActivity extends BaseDonateActivity implements
     //First set the presumed title, then let fragment do anything specific.
     setTitle(mPages.get(mPager.getCurrentItem()).titleRes);
 
-    mPager.post(new Runnable() {
-      @Override
-      public void run() {
-        final BasePageFragment frag = (BasePageFragment) getFragmentManager()
-            .findFragmentByTag("page:" + mPager.getCurrentItem());
-        if (frag != null) {
-          frag.updateTitle();
-        }
+    mPager.post(
+        new Runnable() {
+          @Override
+          public void run() {
+            final BasePageFragment frag =
+                (BasePageFragment)
+                    getFragmentManager().findFragmentByTag("page:" + mPager.getCurrentItem());
+            if (frag != null) {
+              frag.updateTitle();
+            }
 
-        if (checkTabsLocation) {
-          moveTabsIfNeeded();
-        }
-      }
-    });
+            if (checkTabsLocation) {
+              moveTabsIfNeeded();
+            }
+          }
+        });
   }
 
   void moveTabsIfNeeded() {
@@ -480,21 +515,22 @@ public class MainActivity extends BaseDonateActivity implements
 
     if (mTabs != null) {
       ViewTreeObserver vto = mToolbar.getViewTreeObserver();
-      vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-        @SuppressWarnings("deprecation")
-        @Override
-        public void onGlobalLayout() {
-          if (mToolbar.isTitleTruncated() && mTabs.getParent() == mToolbar) {
-            mToolbar.removeView(mTabs);
-            //noinspection ConstantConditions
-            mAppBarLinear.addView(mTabs);
-          }
+      vto.addOnGlobalLayoutListener(
+          new ViewTreeObserver.OnGlobalLayoutListener() {
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onGlobalLayout() {
+              if (mToolbar.isTitleTruncated() && mTabs.getParent() == mToolbar) {
+                mToolbar.removeView(mTabs);
+                //noinspection ConstantConditions
+                mAppBarLinear.addView(mTabs);
+              }
 
-          setTitle(currentTitle);
+              setTitle(currentTitle);
 
-          mToolbar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-        }
-      });
+              mToolbar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+          });
     }
   }
 
@@ -524,7 +560,9 @@ public class MainActivity extends BaseDonateActivity implements
     super.onPause();
     if (Config.get().persistSelectedPage()) {
       PreferenceManager.getDefaultSharedPreferences(MainActivity.this)
-          .edit().putInt("last_selected_page", mPager.getCurrentItem()).commit();
+          .edit()
+          .putInt("last_selected_page", mPager.getCurrentItem())
+          .commit();
     }
     if (isFinishing()) {
       Config.deinit();
@@ -541,8 +579,9 @@ public class MainActivity extends BaseDonateActivity implements
     if (mPager != null) {
       FragmentManager fm = getFragmentManager();
       Fragment current = fm.findFragmentByTag("page:" + mPager.getCurrentItem());
-      if (current != null && current instanceof RequestsFragment &&
-          ((RequestsFragment) current).onBackPressed()) {
+      if (current != null
+          && current instanceof RequestsFragment
+          && ((RequestsFragment) current).onBackPressed()) {
         return;
       }
     }
@@ -559,8 +598,8 @@ public class MainActivity extends BaseDonateActivity implements
     } else if (requestCode == RQ_VIEWWALLPAPER) {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mDrawer != null) {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
-        mDrawer
-            .setStatusBarBackgroundColor(DialogUtils.resolveColor(this, R.attr.colorPrimaryDark));
+        mDrawer.setStatusBarBackgroundColor(
+            DialogUtils.resolveColor(this, R.attr.colorPrimaryDark));
       }
     }
   }
@@ -573,27 +612,31 @@ public class MainActivity extends BaseDonateActivity implements
     isReentering = true;
     reenterPos = data.getIntExtra(STATE_CURRENT_POSITION, 0);
 
-    WallpapersFragment frag = (WallpapersFragment) getFragmentManager()
-        .findFragmentByTag("page:" + mPager.getCurrentItem());
+    WallpapersFragment frag =
+        (WallpapersFragment)
+            getFragmentManager().findFragmentByTag("page:" + mPager.getCurrentItem());
     final RecyclerView recyclerView = frag.getRecyclerView();
     if (recyclerView != null) {
       postponeEnterTransition();
       recyclerView.scrollToPosition(reenterPos);
-      recyclerView.post(new Runnable() {
-        @Override
-        public void run() {
-          recyclerView.getViewTreeObserver()
-              .addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                @Override
-                public boolean onPreDraw() {
-                  recyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+      recyclerView.post(
+          new Runnable() {
+            @Override
+            public void run() {
+              recyclerView
+                  .getViewTreeObserver()
+                  .addOnPreDrawListener(
+                      new ViewTreeObserver.OnPreDrawListener() {
+                        @Override
+                        public boolean onPreDraw() {
+                          recyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
 
-                  startPostponedEnterTransition();
-                  return true;
-                }
-              });
-        }
-      });
+                          startPostponedEnterTransition();
+                          return true;
+                        }
+                      });
+            }
+          });
     }
   }
 }

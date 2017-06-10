@@ -10,9 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ProgressBar;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class WallpaperImageView extends SquareImageView {
 
   public WallpaperImageView(Context context) {
@@ -28,13 +26,12 @@ public class WallpaperImageView extends SquareImageView {
   }
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  public WallpaperImageView(Context context, AttributeSet attrs, int defStyleAttr,
-      int defStyleRes) {
+  public WallpaperImageView(
+      Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
   }
 
-  @Nullable
-  private ProgressBar mProgressBar;
+  @Nullable private ProgressBar mProgressBar;
 
   @Override
   public void setImageBitmap(Bitmap bm) {

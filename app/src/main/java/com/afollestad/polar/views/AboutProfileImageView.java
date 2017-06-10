@@ -5,9 +5,7 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import com.makeramen.roundedimageview.RoundedImageView;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class AboutProfileImageView extends RoundedImageView {
 
   public AboutProfileImageView(Context context) {

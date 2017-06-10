@@ -5,10 +5,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import com.afollestad.polar.util.WallpaperUtils;
 
-
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class ViewerPageAdapter extends FragmentStatePagerAdapter {
 
   private final int thumbHeight;
@@ -16,8 +13,12 @@ public class ViewerPageAdapter extends FragmentStatePagerAdapter {
   public int mCurrentPage;
   private final WallpaperUtils.WallpapersHolder mWallpapers;
 
-  public ViewerPageAdapter(AppCompatActivity context, int initialOffset,
-      WallpaperUtils.WallpapersHolder wallpapers, int thumbWidth, int thumbHeight) {
+  public ViewerPageAdapter(
+      AppCompatActivity context,
+      int initialOffset,
+      WallpaperUtils.WallpapersHolder wallpapers,
+      int thumbWidth,
+      int thumbHeight) {
     super(context.getFragmentManager());
     mCurrentPage = initialOffset;
     mWallpapers = wallpapers;

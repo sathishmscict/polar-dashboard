@@ -20,9 +20,7 @@ import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 import java.util.ArrayList;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapter.RequestVH> {
 
   public interface SelectionChangedListener {
@@ -68,9 +66,12 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
 
   @Override
   public RequestVH onCreateViewHolder(ViewGroup parent, int viewType) {
-    View view = LayoutInflater.from(parent.getContext())
-        .inflate(viewType == 1 ? R.layout.list_item_header :
-            R.layout.list_item_iconrequest, parent, false);
+    View view =
+        LayoutInflater.from(parent.getContext())
+            .inflate(
+                viewType == 1 ? R.layout.list_item_header : R.layout.list_item_iconrequest,
+                parent,
+                false);
     return new RequestVH(view);
   }
 
@@ -80,8 +81,8 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
     if (position == 0) {
       final Context c = holder.itemView.getContext();
       if (mAllowRequest == RequestLimiter.WAIT) {
-        final String msg = c.getString(R.string.request_limited,
-            RequestLimiter.get(c).remainingIntervalString());
+        final String msg =
+            c.getString(R.string.request_limited, RequestLimiter.get(c).remainingIntervalString());
         holder.title.setText(msg);
       } else if (mAllowRequest == RequestLimiter.NO_LIMIT) {
         holder.title.setText(R.string.tap_to_select_app);
@@ -89,8 +90,8 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
         holder.title.setText(
             c.getResources().getString(R.string.tap_to_select_app_withremaining, mAllowRequest));
       }
-      final int bgColor = DialogUtils
-          .resolveColor(holder.itemView.getContext(), R.attr.window_background_cards);
+      final int bgColor =
+          DialogUtils.resolveColor(holder.itemView.getContext(), R.attr.window_background_cards);
       final int titleColor = TintUtils.isColorLight(bgColor) ? Color.BLACK : Color.WHITE;
       holder.title.setTextColor(TintUtils.adjustAlpha(titleColor, 0.5f));
       return;
@@ -111,8 +112,8 @@ public class RequestsAdapter extends DragSelectRecyclerViewAdapter<RequestsAdapt
     return mApps != null ? mApps.size() + 1 : 0;
   }
 
-  public class RequestVH extends RecyclerView.ViewHolder implements View.OnClickListener,
-      View.OnLongClickListener {
+  public class RequestVH extends RecyclerView.ViewHolder
+      implements View.OnClickListener, View.OnLongClickListener {
 
     final CardView card;
     final TextView title;

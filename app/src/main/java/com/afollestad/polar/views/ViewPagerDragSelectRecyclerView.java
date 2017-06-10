@@ -5,9 +5,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerView;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class ViewPagerDragSelectRecyclerView extends DragSelectRecyclerView {
 
   public ViewPagerDragSelectRecyclerView(Context context) {

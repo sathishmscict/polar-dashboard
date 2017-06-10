@@ -23,25 +23,20 @@ import com.afollestad.polar.util.TintUtils;
 import java.util.Arrays;
 import java.util.Comparator;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ApplyVH> {
 
   public static class Launcher {
 
-    @DrawableRes
-    public final int icon;
+    @DrawableRes public final int icon;
     public final String title;
     public final String pkg;
-    @ColorInt
-    public final int color;
-    @ColorInt
-    public final int colorDark;
+    @ColorInt public final int color;
+    @ColorInt public final int colorDark;
     public final boolean isInstalled;
 
-    public Launcher(Context context, @DrawableRes int icon, String title, String pkg,
-        @ColorInt int color) {
+    public Launcher(
+        Context context, @DrawableRes int icon, String title, String pkg, @ColorInt int color) {
       this.icon = icon;
       this.title = title;
       this.pkg = pkg;
@@ -108,8 +103,8 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ApplyVH> {
     final String[] titles = context.getResources().getStringArray(R.array.launcher_names);
     final String[] packages = context.getResources().getStringArray(R.array.launcher_packages);
 
-    final String[] colorHexes = context.getResources()
-        .getStringArray(R.array.launcher_colors_primary);
+    final String[] colorHexes =
+        context.getResources().getStringArray(R.array.launcher_colors_primary);
     final int[] colors = new int[colorHexes.length];
     for (int i = 0; i < colorHexes.length; i++) {
       colors[i] = Color.parseColor(colorHexes[i]);
@@ -155,18 +150,21 @@ public class ApplyAdapter extends RecyclerView.Adapter<ApplyAdapter.ApplyVH> {
 
   @Override
   public ApplyVH onCreateViewHolder(ViewGroup parent, int viewType) {
-    View v = LayoutInflater.from(parent.getContext())
-        .inflate(viewType == 1 ? R.layout.list_item_quickapply :
-            R.layout.list_item_apply, parent, false);
+    View v =
+        LayoutInflater.from(parent.getContext())
+            .inflate(
+                viewType == 1 ? R.layout.list_item_quickapply : R.layout.list_item_apply,
+                parent,
+                false);
     return new ApplyVH(v);
   }
 
   @Override
   public void onBindViewHolder(ApplyVH holder, int position) {
     if (getItemViewType(position) == 1) {
-      holder.icon
-          .setColorFilter(DialogUtils.resolveColor(mContext, android.R.attr.textColorSecondary),
-              PorterDuff.Mode.SRC_IN);
+      holder.icon.setColorFilter(
+          DialogUtils.resolveColor(mContext, android.R.attr.textColorSecondary),
+          PorterDuff.Mode.SRC_IN);
       return;
     }
 

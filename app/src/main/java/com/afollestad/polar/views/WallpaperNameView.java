@@ -5,9 +5,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 import com.afollestad.polar.util.WallpaperUtils;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class WallpaperNameView extends TextView {
 
   public WallpaperNameView(Context context) {

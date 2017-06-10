@@ -23,9 +23,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class ViewerPageFragment extends AssentFragment {
 
   private int thumbHeight;
@@ -33,8 +31,10 @@ public class ViewerPageFragment extends AssentFragment {
 
   @BindView(R.id.progress)
   ProgressBar mProgress;
+
   @BindView(R.id.photo)
   ImageView mPhoto;
+
   @BindView(R.id.thumbnail)
   ImageView thumbnail;
 
@@ -53,8 +53,8 @@ public class ViewerPageFragment extends AssentFragment {
     return mWallpaper.author;
   }
 
-  public static ViewerPageFragment create(WallpaperUtils.Wallpaper wallpaper, int index,
-      int thumbWidth, int thumbHeight) {
+  public static ViewerPageFragment create(
+      WallpaperUtils.Wallpaper wallpaper, int index, int thumbWidth, int thumbHeight) {
     ViewerPageFragment frag = new ViewerPageFragment();
     frag.mWallpaper = wallpaper;
     Bundle args = new Bundle();
@@ -83,8 +83,8 @@ public class ViewerPageFragment extends AssentFragment {
 
   @Nullable
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+  public View onCreateView(
+      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     return inflater.inflate(R.layout.fragment_viewer, container, false);
   }
 
@@ -112,28 +112,38 @@ public class ViewerPageFragment extends AssentFragment {
         .diskCacheStrategy(DiskCacheStrategy.RESULT)
         .transform(new KeepRatio(getActivity()))
         .override(thumbWidth, thumbHeight)
-        .listener(new RequestListener<String, GlideDrawable>() {
-          @Override
-          public boolean onException(Exception e, String model, Target<GlideDrawable> target,
-              boolean isFirstResource) {
-            return false;
-          }
-
-          @Override
-          public boolean onResourceReady(GlideDrawable resource, String model,
-              Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-            if (isActive) {
-              ((ViewerActivity) getActivity()).supportStartPostponedEnterTransition();
-            }
-            mPhoto.postDelayed(new Runnable() {
+        .listener(
+            new RequestListener<String, GlideDrawable>() {
               @Override
-              public void run() {
-                loadFullPhoto();
+              public boolean onException(
+                  Exception e,
+                  String model,
+                  Target<GlideDrawable> target,
+                  boolean isFirstResource) {
+                return false;
               }
-            }, ViewerActivity.SHARED_ELEMENT_TRANSITION_DURATION);
-            return false;
-          }
-        })
+
+              @Override
+              public boolean onResourceReady(
+                  GlideDrawable resource,
+                  String model,
+                  Target<GlideDrawable> target,
+                  boolean isFromMemoryCache,
+                  boolean isFirstResource) {
+                if (isActive) {
+                  ((ViewerActivity) getActivity()).supportStartPostponedEnterTransition();
+                }
+                mPhoto.postDelayed(
+                    new Runnable() {
+                      @Override
+                      public void run() {
+                        loadFullPhoto();
+                      }
+                    },
+                    ViewerActivity.SHARED_ELEMENT_TRANSITION_DURATION);
+                return false;
+              }
+            })
         .into(thumbnail);
   }
 
@@ -142,34 +152,45 @@ public class ViewerPageFragment extends AssentFragment {
         .load(mWallpaper.url)
         .transform(new KeepRatio(getActivity()))
         .diskCacheStrategy(DiskCacheStrategy.RESULT)
-        .listener(new RequestListener<String, GlideDrawable>() {
-          @Override
-          public boolean onException(Exception e, String model, Target<GlideDrawable> target,
-              boolean isFirstResource) {
-            mProgress.setVisibility(View.GONE);
-            return false;
-          }
-
-          @Override
-          public boolean onResourceReady(GlideDrawable resource, String model,
-              Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-            mProgress.setVisibility(View.GONE);
-            mPhoto.setVisibility(View.VISIBLE);
-            thumbnail.postDelayed(new Runnable() {
+        .listener(
+            new RequestListener<String, GlideDrawable>() {
               @Override
-              public void run() {
-                if (thumbnail != null) {
-                  thumbnail.setVisibility(View.INVISIBLE);
-                }
+              public boolean onException(
+                  Exception e,
+                  String model,
+                  Target<GlideDrawable> target,
+                  boolean isFirstResource) {
+                mProgress.setVisibility(View.GONE);
+                return false;
               }
-            }, 500);
 
-            ViewCompat.setTransitionName(mPhoto, "view_" + mIndex);
-            ViewCompat.setTransitionName(thumbnail, null);
-            isFullImageLoaded = true;
-            return false;
-          }
-        }).into(mPhoto);
+              @Override
+              public boolean onResourceReady(
+                  GlideDrawable resource,
+                  String model,
+                  Target<GlideDrawable> target,
+                  boolean isFromMemoryCache,
+                  boolean isFirstResource) {
+                mProgress.setVisibility(View.GONE);
+                mPhoto.setVisibility(View.VISIBLE);
+                thumbnail.postDelayed(
+                    new Runnable() {
+                      @Override
+                      public void run() {
+                        if (thumbnail != null) {
+                          thumbnail.setVisibility(View.INVISIBLE);
+                        }
+                      }
+                    },
+                    500);
+
+                ViewCompat.setTransitionName(mPhoto, "view_" + mIndex);
+                ViewCompat.setTransitionName(thumbnail, null);
+                isFullImageLoaded = true;
+                return false;
+              }
+            })
+        .into(mPhoto);
   }
 
   public ImageView getSharedElement() {

@@ -32,7 +32,7 @@ import java.util.Locale;
 public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainViewHolder>
     implements View.OnClickListener, View.OnTouchListener {
 
-  public final static int SEARCH_RESULT_LIMIT = 20;
+  public static final int SEARCH_RESULT_LIMIT = 20;
 
   @Override
   public void onClick(View view) {
@@ -40,10 +40,8 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
       if (view.getTag() instanceof String) {
         // Grid item
         final String[] tag = view.getTag().toString().split(":");
-        mListener.onClick(view,
-            Integer.parseInt(tag[0]),
-            Integer.parseInt(tag[1]),
-            Integer.parseInt(tag[2]));
+        mListener.onClick(
+            view, Integer.parseInt(tag[0]), Integer.parseInt(tag[1]), Integer.parseInt(tag[2]));
       }
     }
   }
@@ -53,20 +51,19 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
     //More button
     if (event.getAction() == MotionEvent.ACTION_UP) {
       final int index = (Integer) v.getTag();
-      final DrawableXmlParser.Category category = mFiltered != null ?
-          mFiltered.get(index) : mCategories.get(index);
+      final DrawableXmlParser.Category category =
+          mFiltered != null ? mFiltered.get(index) : mCategories.get(index);
 
       int topPadding = ((BaseThemedActivity) mContext).getLastStatusBarInsetHeight();
-      float[] pressedLocation = new float[]{
-          event.getRawX(),
-          event.getRawY() - topPadding};
+      float[] pressedLocation = new float[] {event.getRawX(), event.getRawY() - topPadding};
 
       int[] headerLocation = new int[2];
       ((View) v.getParent()).getLocationOnScreen(headerLocation);
 
-      final Intent intent = new Intent(mContext, IconMoreActivity.class)
-          .putExtra(IconMoreActivity.EXTRA_CATEGORY, category)
-          .putExtra(IconMoreActivity.EXTRA_REVEAL_ANIM_LOCATION, pressedLocation);
+      final Intent intent =
+          new Intent(mContext, IconMoreActivity.class)
+              .putExtra(IconMoreActivity.EXTRA_CATEGORY, category)
+              .putExtra(IconMoreActivity.EXTRA_REVEAL_ANIM_LOCATION, pressedLocation);
 
       if (mContext instanceof ISelectionMode) {
         intent.putExtra("selection_mode", ((ISelectionMode) mContext).inSelectionMode());
@@ -77,18 +74,21 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
         mTransitionViews = new SparseArray<>();
 
         notifyDataSetChanged();
-        Utils.waitForLayout(mRecyclerView, new Utils.LayoutCallback<RecyclerView>() {
-          @Override
-          public void onLayout(RecyclerView view) {
-            List<Pair<View, String>> pairs = asList(mTransitionViews);
-            //noinspection unchecked
-            final Bundle activityOptions =
-                ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
-                    pairs.toArray(new Pair[pairs.size()])).toBundle();
+        Utils.waitForLayout(
+            mRecyclerView,
+            new Utils.LayoutCallback<RecyclerView>() {
+              @Override
+              public void onLayout(RecyclerView view) {
+                List<Pair<View, String>> pairs = asList(mTransitionViews);
+                //noinspection unchecked
+                final Bundle activityOptions =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            (Activity) mContext, pairs.toArray(new Pair[pairs.size()]))
+                        .toBundle();
 
-            ((Activity) mContext).startActivityForResult(intent, 6969, activityOptions);
-          }
-        });
+                ((Activity) mContext).startActivityForResult(intent, 6969, activityOptions);
+              }
+            });
       } else {
         ((Activity) mContext).startActivityForResult(intent, 6969);
       }
@@ -112,8 +112,8 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
     void onClick(View view, int section, int relative, int absolute);
   }
 
-  public IconAdapter(Context context, int gridWidth, ClickListener listener,
-      RecyclerView recyclerView) {
+  public IconAdapter(
+      Context context, int gridWidth, ClickListener listener, RecyclerView recyclerView) {
     mContext = context;
     mIconsPerSection = gridWidth * 2;
     mListener = listener;
@@ -190,8 +190,8 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
   }
 
   public DrawableXmlParser.Icon getIcon(int section, int relative) {
-    final DrawableXmlParser.Category category = mFiltered != null ?
-        mFiltered.get(section) : mCategories.get(section);
+    final DrawableXmlParser.Category category =
+        mFiltered != null ? mFiltered.get(section) : mCategories.get(section);
     return category.getIcons().get(relative);
   }
 
@@ -211,24 +211,32 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
 
   @Override
   public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View v = LayoutInflater.from(parent.getContext()).inflate(
-        viewType == VIEW_TYPE_HEADER ? R.layout.list_item_icon_header : R.layout.list_item_icon,
-        parent, false);
+    View v =
+        LayoutInflater.from(parent.getContext())
+            .inflate(
+                viewType == VIEW_TYPE_HEADER
+                    ? R.layout.list_item_icon_header
+                    : R.layout.list_item_icon,
+                parent,
+                false);
     return new MainViewHolder(v);
   }
 
   @Override
   public void onBindHeaderViewHolder(MainViewHolder holder, int section) {
-    final DrawableXmlParser.Category category = mFiltered != null ?
-        mFiltered.get(section) : mCategories.get(section);
+    final DrawableXmlParser.Category category =
+        mFiltered != null ? mFiltered.get(section) : mCategories.get(section);
     holder.title.setText(category.getName());
 
     if (mCategories.size() > 1 && category.size() > mIconsPerSection) {
       holder.moreButton.setVisibility(View.VISIBLE);
       holder.moreButton.setTag(section);
       holder.moreButton.setOnTouchListener(this);
-      holder.moreButton.setText(holder.itemView.getContext().getString(
-          R.string.more_x, category.size() - mIconsPerSection));
+      holder.moreButton.setText(
+          holder
+              .itemView
+              .getContext()
+              .getString(R.string.more_x, category.size() - mIconsPerSection));
     } else {
       holder.moreButton.setVisibility(View.INVISIBLE);
       holder.moreButton.setTag(null);
@@ -237,11 +245,11 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
   }
 
   @Override
-  public void onBindViewHolder(MainViewHolder holder, int section, int relativePos,
-      int absolutePos) {
+  public void onBindViewHolder(
+      MainViewHolder holder, int section, int relativePos, int absolutePos) {
     final Context c = holder.itemView.getContext();
-    final DrawableXmlParser.Category category = mFiltered != null ?
-        mFiltered.get(section) : mCategories.get(section);
+    final DrawableXmlParser.Category category =
+        mFiltered != null ? mFiltered.get(section) : mCategories.get(section);
     final int res = category.getIcons().get(relativePos).getDrawableId(c);
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -261,14 +269,11 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
     if (res == 0) {
       holder.image.setBackgroundColor(Color.parseColor("#40000000"));
     } else {
-      Glide.with(c)
-          .fromResource()
-          .load(res)
-          .into(holder.image);
+      Glide.with(c).fromResource().load(res).into(holder.image);
     }
 
-    holder.itemView
-        .setTag(String.format(Locale.getDefault(), "%d:%d:%d", section, relativePos, absolutePos));
+    holder.itemView.setTag(
+        String.format(Locale.getDefault(), "%d:%d:%d", section, relativePos, absolutePos));
     holder.itemView.setOnClickListener(this);
   }
 }

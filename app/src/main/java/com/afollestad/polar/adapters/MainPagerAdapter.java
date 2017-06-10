@@ -1,14 +1,11 @@
 package com.afollestad.polar.adapters;
 
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import com.afollestad.polar.util.PagesBuilder;
 import com.afollestad.polar.viewer.FragmentStatePagerAdapter;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class MainPagerAdapter extends FragmentStatePagerAdapter {
 
   private final PagesBuilder mPages;

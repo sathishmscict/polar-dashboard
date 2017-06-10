@@ -26,7 +26,7 @@ import java.util.Locale;
 
 public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.WallpaperViewHolder> {
 
-  public final static int SEARCH_RESULT_LIMIT = 10;
+  public static final int SEARCH_RESULT_LIMIT = 10;
 
   public interface ClickListener {
 
@@ -64,8 +64,8 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
       if (mFiltered.size() == SEARCH_RESULT_LIMIT) {
         break;
       }
-      if (wallpaper.name.toLowerCase(Locale.getDefault()).contains(str) ||
-          wallpaper.author.toLowerCase(Locale.getDefault()).contains(str)) {
+      if (wallpaper.name.toLowerCase(Locale.getDefault()).contains(str)
+          || wallpaper.author.toLowerCase(Locale.getDefault()).contains(str)) {
         mFiltered.add(wallpaper);
       }
     }
@@ -118,8 +118,9 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
 
   @Override
   public WallpaperViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View v = LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.list_item_wallpaper, parent, false);
+    View v =
+        LayoutInflater.from(parent.getContext())
+            .inflate(R.layout.list_item_wallpaper, parent, false);
     return new WallpaperViewHolder(v, mListener);
   }
 
@@ -140,8 +141,10 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
 
     holder.progress.setVisibility(View.VISIBLE);
     if (wallpaper.isPaletteComplete()) {
-      Log.d("WallpaperAdapter", String.format("Wallpaper %d (%s) palette is complete!",
-          index, wallpaper.getListingImageUrl()));
+      Log.d(
+          "WallpaperAdapter",
+          String.format(
+              "Wallpaper %d (%s) palette is complete!", index, wallpaper.getListingImageUrl()));
       holder.name.setTextColor(wallpaper.getPaletteNameColor());
       holder.author.setTextColor(wallpaper.getPaletteAuthorColor());
       holder.colorFrame.setBackgroundColor(wallpaper.getPaletteBgColor());
@@ -151,8 +154,11 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
           .diskCacheStrategy(DiskCacheStrategy.RESULT)
           .into(holder.image);
     } else {
-      Log.d("WallpaperAdapter", String.format("Wallpaper %d (%s) palette is not complete...",
-          index, wallpaper.getListingImageUrl()));
+      Log.d(
+          "WallpaperAdapter",
+          String.format(
+              "Wallpaper %d (%s) palette is not complete...",
+              index, wallpaper.getListingImageUrl()));
       holder.name.setTextColor(Color.WHITE, false);
       holder.author.setTextColor(Color.WHITE, false);
       holder.colorFrame.setBackgroundColor(Color.DKGRAY, false);
@@ -161,12 +167,13 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.Wall
           .load(wallpaper.getListingImageUrl())
           .transform(new KeepRatio(context))
           .diskCacheStrategy(DiskCacheStrategy.RESULT)
-          .listener(GlidePalette.with(wallpaper.getListingImageUrl())
-              .use(GlidePalette.Profile.VIBRANT)
-              .intoBackground(holder.colorFrame)
-              .intoTextColor(holder.name, GlidePalette.Swatch.TITLE_TEXT_COLOR)
-              .intoTextColor(holder.author, GlidePalette.Swatch.BODY_TEXT_COLOR)
-          ).into(holder.image);
+          .listener(
+              GlidePalette.with(wallpaper.getListingImageUrl())
+                  .use(GlidePalette.Profile.VIBRANT)
+                  .intoBackground(holder.colorFrame)
+                  .intoTextColor(holder.name, GlidePalette.Swatch.TITLE_TEXT_COLOR)
+                  .intoTextColor(holder.author, GlidePalette.Swatch.BODY_TEXT_COLOR))
+          .into(holder.image);
     }
   }
 

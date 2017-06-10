@@ -36,9 +36,7 @@ import com.afollestad.polar.util.WallpaperUtils;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class ViewerActivity extends AssentActivity {
 
   public static final String EXTRA_WIDTH = "com.afollestad.impression.Width";
@@ -48,8 +46,10 @@ public class ViewerActivity extends AssentActivity {
 
   @BindView(R.id.app_bar)
   View appBar;
+
   @BindView(R.id.toolbar)
   Toolbar mToolbar;
+
   private WallpaperUtils.WallpapersHolder mWallpapers;
   private ViewerPageAdapter mAdapter;
   private int mCurrentPosition;
@@ -113,12 +113,13 @@ public class ViewerActivity extends AssentActivity {
     setSupportActionBar(mToolbar);
 
     mToolbar.setNavigationIcon(R.drawable.ic_action_back);
-    mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        onBackPressed();
-      }
-    });
+    mToolbar.setNavigationOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            onBackPressed();
+          }
+        });
 
     if (savedInstanceState == null) {
       if (getIntent() != null && getIntent().getExtras() != null) {
@@ -131,13 +132,17 @@ public class ViewerActivity extends AssentActivity {
     setResult(RESULT_OK, getIntent().putExtra(STATE_CURRENT_POSITION, mCurrentPosition));
 
     if (getIntent() != null) {
-      mWallpapers = (WallpaperUtils.WallpapersHolder) getIntent()
-          .getSerializableExtra("wallpapers");
+      mWallpapers =
+          (WallpaperUtils.WallpapersHolder) getIntent().getSerializableExtra("wallpapers");
     }
 
-    mAdapter = new ViewerPageAdapter(this, mCurrentPosition, mWallpapers,
-        getIntent().getIntExtra(EXTRA_WIDTH, -1),
-        getIntent().getIntExtra(EXTRA_HEIGHT, -1));
+    mAdapter =
+        new ViewerPageAdapter(
+            this,
+            mCurrentPosition,
+            mWallpapers,
+            getIntent().getIntExtra(EXTRA_WIDTH, -1),
+            getIntent().getIntExtra(EXTRA_HEIGHT, -1));
     final ViewPager pager = (ViewPager) findViewById(R.id.pager);
     pager.setOffscreenPageLimit(1);
     pager.setAdapter(mAdapter);
@@ -146,66 +151,71 @@ public class ViewerActivity extends AssentActivity {
     supportPostponeEnterTransition();
     setTransition();
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      setEnterSharedElementCallback(new SharedElementCallback() {
-        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-        @Override
-        public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-          if (isReturning) {
-            ViewerPageFragment active = (ViewerPageFragment) getFragmentManager()
-                .findFragmentByTag("page:" + mCurrentPosition);
-            ImageView sharedElement = active.getSharedElement();
+      setEnterSharedElementCallback(
+          new SharedElementCallback() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+              if (isReturning) {
+                ViewerPageFragment active =
+                    (ViewerPageFragment)
+                        getFragmentManager().findFragmentByTag("page:" + mCurrentPosition);
+                ImageView sharedElement = active.getSharedElement();
 
-            names.clear();
-            names.add(sharedElement.getTransitionName());
-            sharedElements.clear();
-            sharedElements.put(sharedElement.getTransitionName(), sharedElement);
-          }
-        }
-      });
+                names.clear();
+                names.add(sharedElement.getTransitionName());
+                sharedElements.clear();
+                sharedElements.put(sharedElement.getTransitionName(), sharedElement);
+              }
+            }
+          });
     }
 
     // When the view pager is swiped, fragments are notified if they're active or not
     // And the menu updates based on the color mode (light or dark).
-    pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+    pager.addOnPageChangeListener(
+        new ViewPager.OnPageChangeListener() {
 
-      int previousState;
-      boolean userScrollChange;
+          int previousState;
+          boolean userScrollChange;
 
-      @Override
-      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-      }
+          @Override
+          public void onPageScrolled(
+              int position, float positionOffset, int positionOffsetPixels) {}
 
-      @Override
-      public void onPageSelected(int position) {
-        ViewerPageFragment noActive = (ViewerPageFragment) getFragmentManager()
-            .findFragmentByTag("page:" + mCurrentPosition);
-        if (noActive != null) {
-          noActive.setIsActive(false);
-        }
-        mCurrentPosition = position;
-        ViewerPageFragment active = (ViewerPageFragment) getFragmentManager()
-            .findFragmentByTag("page:" + mCurrentPosition);
-        if (active != null) {
-          active.setIsActive(true);
-        }
-        mAdapter.mCurrentPage = position;
-        setResult(RESULT_OK, getIntent().putExtra(STATE_CURRENT_POSITION, position));
-        invalidateOptionsMenu();
-      }
+          @Override
+          public void onPageSelected(int position) {
+            ViewerPageFragment noActive =
+                (ViewerPageFragment)
+                    getFragmentManager().findFragmentByTag("page:" + mCurrentPosition);
+            if (noActive != null) {
+              noActive.setIsActive(false);
+            }
+            mCurrentPosition = position;
+            ViewerPageFragment active =
+                (ViewerPageFragment)
+                    getFragmentManager().findFragmentByTag("page:" + mCurrentPosition);
+            if (active != null) {
+              active.setIsActive(true);
+            }
+            mAdapter.mCurrentPage = position;
+            setResult(RESULT_OK, getIntent().putExtra(STATE_CURRENT_POSITION, position));
+            invalidateOptionsMenu();
+          }
 
-      @Override
-      public void onPageScrollStateChanged(int state) {
-        if (previousState == ViewPager.SCROLL_STATE_DRAGGING
-            && state == ViewPager.SCROLL_STATE_SETTLING) {
-          userScrollChange = true;
-        } else if (previousState == ViewPager.SCROLL_STATE_SETTLING
-            && state == ViewPager.SCROLL_STATE_IDLE) {
-          userScrollChange = false;
-        }
+          @Override
+          public void onPageScrollStateChanged(int state) {
+            if (previousState == ViewPager.SCROLL_STATE_DRAGGING
+                && state == ViewPager.SCROLL_STATE_SETTLING) {
+              userScrollChange = true;
+            } else if (previousState == ViewPager.SCROLL_STATE_SETTLING
+                && state == ViewPager.SCROLL_STATE_IDLE) {
+              userScrollChange = false;
+            }
 
-        previousState = state;
-      }
-    });
+            previousState = state;
+          }
+        });
   }
 
   @Override
@@ -232,8 +242,8 @@ public class ViewerActivity extends AssentActivity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    ViewerPageFragment active = (ViewerPageFragment) getFragmentManager()
-        .findFragmentByTag("page:" + mCurrentPosition);
+    ViewerPageFragment active =
+        (ViewerPageFragment) getFragmentManager().findFragmentByTag("page:" + mCurrentPosition);
     if (active != null) {
       active.onOptionsItemSelected(item);
     }

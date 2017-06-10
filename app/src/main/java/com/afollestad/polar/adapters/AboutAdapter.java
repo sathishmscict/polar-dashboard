@@ -26,9 +26,8 @@ import com.afollestad.polar.views.SplitButtonsLayout;
 import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
-
-public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHolder> implements
-    View.OnClickListener {
+public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHolder>
+    implements View.OnClickListener {
 
   public static class AboutItem {
 
@@ -39,8 +38,13 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
     public final String[] buttonNames;
     public final String[] buttonLinks;
 
-    public AboutItem(String coverImage, String profileImage,
-        String title, String description, String[] buttonNames, String[] buttonLinks) {
+    public AboutItem(
+        String coverImage,
+        String profileImage,
+        String title,
+        String description,
+        String[] buttonNames,
+        String[] buttonLinks) {
       this.coverImage = coverImage;
       this.profileImage = profileImage;
       this.title = title;
@@ -61,8 +65,8 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
   public void onClick(View view) {
     if (view.getTag() instanceof String) {
       try {
-        mContext.startActivity(new Intent(Intent.ACTION_VIEW)
-            .setData(Uri.parse((String) view.getTag())));
+        mContext.startActivity(
+            new Intent(Intent.ACTION_VIEW).setData(Uri.parse((String) view.getTag())));
       } catch (Exception e) {
         Toast.makeText(mContext, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
       }
@@ -92,8 +96,14 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
 
     mItems = new ArrayList<>(titles.length);
     for (int i = 0; i < titles.length; i++) {
-      mItems.add(new AboutItem(covers[i], images[i], titles[i], descriptions[i],
-          buttonNames3d[i], buttonLinks3d[i]));
+      mItems.add(
+          new AboutItem(
+              covers[i],
+              images[i],
+              titles[i],
+              descriptions[i],
+              buttonNames3d[i],
+              buttonLinks3d[i]));
     }
 
     mOptionCb = cb;
@@ -105,8 +115,8 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
   private final OptionsClickListener mOptionCb;
   private final boolean mOptionsEnabled;
 
-  public static class MainViewHolder extends RecyclerView.ViewHolder implements
-      View.OnClickListener {
+  public static class MainViewHolder extends RecyclerView.ViewHolder
+      implements View.OnClickListener {
 
     public MainViewHolder(View itemView, OptionsClickListener optionsCb) {
       super(itemView);
@@ -164,8 +174,7 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
 
   @Override
   public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    @LayoutRes
-    int layoutRes = getLayoutResourceForViewType(viewType);
+    @LayoutRes int layoutRes = getLayoutResourceForViewType(viewType);
     final View v = LayoutInflater.from(parent.getContext()).inflate(layoutRes, parent, false);
     return new MainViewHolder(v, mOptionCb);
   }
@@ -187,15 +196,15 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
       final int accentColor = DialogUtils.resolveColor(mContext, R.attr.colorAccent);
 
       if (feedbackEnabled) {
-        holder.feedbackImage.setImageDrawable(TintUtils.createTintedDrawable(
-            VC.get(R.drawable.ic_action_feedback), accentColor));
+        holder.feedbackImage.setImageDrawable(
+            TintUtils.createTintedDrawable(VC.get(R.drawable.ic_action_feedback), accentColor));
       } else {
         ((LinearLayout.LayoutParams) holder.donateButton.getLayoutParams()).weight = 2;
         holder.feedbackButton.setVisibility(View.GONE);
       }
       if (donationEnabled) {
-        holder.donateImage.setImageDrawable(TintUtils.createTintedDrawable(
-            VC.get(R.drawable.ic_action_donate), accentColor));
+        holder.donateImage.setImageDrawable(
+            TintUtils.createTintedDrawable(VC.get(R.drawable.ic_action_donate), accentColor));
       } else {
         ((LinearLayout.LayoutParams) holder.feedbackButton.getLayoutParams()).weight = 2;
         holder.donateButton.setVisibility(View.GONE);
@@ -211,19 +220,16 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.MainViewHold
     holder.description.setText(Html.fromHtml(item.description));
     holder.description.setMovementMethod(LinkMovementMethod.getInstance());
 
-    Glide.with(mContext)
-        .load(item.coverImage)
-        .into(holder.cover);
-    Glide.with(mContext)
-        .load(item.profileImage)
-        .into(holder.image);
+    Glide.with(mContext).load(item.coverImage).into(holder.cover);
+    Glide.with(mContext).load(item.profileImage).into(holder.image);
 
     if (item.buttonNames.length > 0) {
       holder.buttons.setButtonCount(item.buttonNames.length);
       if (!holder.buttons.hasAllButtons()) {
         if (item.buttonNames.length != item.buttonLinks.length) {
           throw new IllegalStateException(
-              "Button names and button links must have the same number of items (item " + index
+              "Button names and button links must have the same number of items (item "
+                  + index
                   + ")");
         }
         for (int i = 0; i < item.buttonNames.length; i++) {

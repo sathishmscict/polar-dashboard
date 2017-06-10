@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class CircularRevealTransition extends Visibility {
 
-  private final static int REVEAL_ANIMATION_DURATION = 550;
+  private static final int REVEAL_ANIMATION_DURATION = 550;
 
   private final float startX;
   private final float startY;
@@ -25,14 +25,14 @@ public class CircularRevealTransition extends Visibility {
   }
 
   @Override
-  public Animator onAppear(ViewGroup sceneRoot, View view, TransitionValues startValues,
-      TransitionValues endValues) {
+  public Animator onAppear(
+      ViewGroup sceneRoot, View view, TransitionValues startValues, TransitionValues endValues) {
     return createAnimator(view, true);
   }
 
   @Override
-  public Animator onDisappear(ViewGroup sceneRoot, View view, TransitionValues startValues,
-      TransitionValues endValues) {
+  public Animator onDisappear(
+      ViewGroup sceneRoot, View view, TransitionValues startValues, TransitionValues endValues) {
     return createAnimator(view, false);
   }
 
@@ -42,9 +42,9 @@ public class CircularRevealTransition extends Visibility {
 
     float radius = (float) Math.hypot(dx, dy);
 
-    Animator anim = ViewAnimationUtils
-        .createCircularReveal(view, (int) startX, (int) startY, appear ? 0 : radius,
-            appear ? radius : 0);
+    Animator anim =
+        ViewAnimationUtils.createCircularReveal(
+            view, (int) startX, (int) startY, appear ? 0 : radius, appear ? radius : 0);
     anim.setDuration(REVEAL_ANIMATION_DURATION);
     anim.setInterpolator(new FastOutSlowInInterpolator());
 

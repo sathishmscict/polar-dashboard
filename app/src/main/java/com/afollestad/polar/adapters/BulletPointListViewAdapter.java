@@ -1,9 +1,6 @@
 package com.afollestad.polar.adapters;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
-
+/** @author Aidan Follestad (afollestad) */
 import android.content.Context;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.NonNull;
@@ -15,11 +12,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.afollestad.polar.R;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
-public class BulletPointListViewAdapter extends
-    RecyclerView.Adapter<BulletPointListViewAdapter.ChangelogVH> {
+/** @author Aidan Follestad (afollestad) */
+public class BulletPointListViewAdapter
+    extends RecyclerView.Adapter<BulletPointListViewAdapter.ChangelogVH> {
 
   private final CharSequence[] mItems;
 
@@ -29,8 +24,8 @@ public class BulletPointListViewAdapter extends
 
   @Override
   public ChangelogVH onCreateViewHolder(ViewGroup parent, int viewType) {
-    final View view = LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.list_item_bullet, parent, false);
+    final View view =
+        LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_bullet, parent, false);
     return new ChangelogVH(view);
   }
 

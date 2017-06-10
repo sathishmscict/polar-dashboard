@@ -8,9 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.afollestad.polar.R;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class Config implements IConfig {
 
   private Config(@Nullable Context context) {
@@ -89,8 +87,8 @@ public class Config implements IConfig {
 
   @Override
   public boolean navDrawerModeEnabled() {
-    return !(mR == null || mContext == null) &&
-        prefs().getBoolean("nav_drawer_mode", mR.getBoolean(R.bool.nav_drawer_mode_default));
+    return !(mR == null || mContext == null)
+        && prefs().getBoolean("nav_drawer_mode", mR.getBoolean(R.bool.nav_drawer_mode_default));
   }
 
   @Override

@@ -12,10 +12,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.polar.R;
 import com.afollestad.polar.adapters.BulletPointListViewAdapter;
 
-
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class ChangelogDialog extends DialogFragment {
 
   public static void show(AppCompatActivity context) {

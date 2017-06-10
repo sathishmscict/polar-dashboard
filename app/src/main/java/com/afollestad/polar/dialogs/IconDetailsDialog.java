@@ -16,14 +16,12 @@ import com.afollestad.materialdialogs.util.DialogUtils;
 import com.afollestad.polar.R;
 import com.afollestad.polar.util.DrawableXmlParser;
 
-
 public class IconDetailsDialog extends DialogFragment {
 
-  public IconDetailsDialog() {
-  }
+  public IconDetailsDialog() {}
 
-  public static IconDetailsDialog create(@Nullable Bitmap bmp,
-      @NonNull DrawableXmlParser.Icon icon) {
+  public static IconDetailsDialog create(
+      @Nullable Bitmap bmp, @NonNull DrawableXmlParser.Icon icon) {
     IconDetailsDialog dialog = new IconDetailsDialog();
     Bundle args = new Bundle();
     if (bmp != null) {
@@ -38,13 +36,14 @@ public class IconDetailsDialog extends DialogFragment {
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     assert getArguments() != null;
-    DrawableXmlParser.Icon icon = (DrawableXmlParser.Icon) getArguments()
-        .getSerializable("iconobj");
+    DrawableXmlParser.Icon icon =
+        (DrawableXmlParser.Icon) getArguments().getSerializable("iconobj");
     assert icon != null;
 
-    final MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
-        .title(icon.getName())
-        .negativeText(R.string.dismiss);
+    final MaterialDialog.Builder builder =
+        new MaterialDialog.Builder(getActivity())
+            .title(icon.getName())
+            .negativeText(R.string.dismiss);
     final MaterialDialog dialog;
 
     if (getArguments().containsKey("icon")) {
@@ -57,33 +56,36 @@ public class IconDetailsDialog extends DialogFragment {
 
       final TextView negative = dialog.getActionButton(DialogAction.NEGATIVE);
       negative.setAlpha(0f);
-      negative.animate().setDuration(500)
-          .alpha(1f).start();
+      negative.animate().setDuration(500).alpha(1f).start();
 
       if (bmp != null) {
-        Palette.from(bmp).generate(new Palette.PaletteAsyncListener() {
-          @Override
-          public void onGenerated(Palette palette) {
-            if (getDialog() == null || !isAdded() || getActivity() == null) {
-              return;
-            }
-            final MaterialDialog dialog = (MaterialDialog) getDialog();
-            int color = palette.getVibrantColor(0);
-            if (color == 0) {
-              color = palette.getMutedColor(0);
-            }
-            if (color == 0) {
-              color = DialogUtils.resolveColor(getActivity(), R.attr.colorAccent);
-            }
-            dialog.getActionButton(DialogAction.NEGATIVE).setTextColor(color);
-          }
-        });
+        Palette.from(bmp)
+            .generate(
+                new Palette.PaletteAsyncListener() {
+                  @Override
+                  public void onGenerated(Palette palette) {
+                    if (getDialog() == null || !isAdded() || getActivity() == null) {
+                      return;
+                    }
+                    final MaterialDialog dialog = (MaterialDialog) getDialog();
+                    int color = palette.getVibrantColor(0);
+                    if (color == 0) {
+                      color = palette.getMutedColor(0);
+                    }
+                    if (color == 0) {
+                      color = DialogUtils.resolveColor(getActivity(), R.attr.colorAccent);
+                    }
+                    dialog.getActionButton(DialogAction.NEGATIVE).setTextColor(color);
+                  }
+                });
       }
     } else {
-      dialog = builder
-          .content(Html.fromHtml(getString(R.string.invalid_drawable_error, icon.getDrawable())))
-          .contentLineSpacing(1.4f)
-          .build();
+      dialog =
+          builder
+              .content(
+                  Html.fromHtml(getString(R.string.invalid_drawable_error, icon.getDrawable())))
+              .contentLineSpacing(1.4f)
+              .build();
     }
 
     return dialog;

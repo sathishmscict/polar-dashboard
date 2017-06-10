@@ -5,9 +5,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import com.pluscubed.insetsdispatcher.view.InsetsDispatcherViewPager;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class DisableableViewPager extends InsetsDispatcherViewPager {
 
   private boolean isPagingEnabled = true;
@@ -33,5 +31,4 @@ public class DisableableViewPager extends InsetsDispatcherViewPager {
   public void setPagingEnabled(boolean b) {
     this.isPagingEnabled = b;
   }
-
 }

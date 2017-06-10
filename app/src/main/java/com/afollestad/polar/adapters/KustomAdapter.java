@@ -25,14 +25,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
-/**
- * @author Frank Monza (fmonza)
- */
+/** @author Frank Monza (fmonza) */
 public class KustomAdapter extends RecyclerView.Adapter<KustomAdapter.KustomVH> {
 
-  private final static String GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=%s";
+  private static final String GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=%s";
 
-  public final static int SEARCH_RESULT_LIMIT = 10;
+  public static final int SEARCH_RESULT_LIMIT = 10;
 
   private final Object LOCK = new Object();
 
@@ -70,9 +68,7 @@ public class KustomAdapter extends RecyclerView.Adapter<KustomAdapter.KustomVH> 
           if (mPreviewsFiltered.size() == SEARCH_RESULT_LIMIT) {
             break;
           }
-          if (mPreviews.get(i).title
-              .toLowerCase(Locale.getDefault())
-              .contains(name)) {
+          if (mPreviews.get(i).title.toLowerCase(Locale.getDefault()).contains(name)) {
             mPreviewsFiltered.add(mPreviews.get(i));
           }
         }
@@ -94,8 +90,12 @@ public class KustomAdapter extends RecyclerView.Adapter<KustomAdapter.KustomVH> 
 
   @Override
   public KustomVH onCreateViewHolder(ViewGroup parent, int viewType) {
-    View view = LayoutInflater.from(parent.getContext()).inflate(viewType == 1 ?
-        R.layout.list_item_kustom_header : R.layout.list_item_kustom, parent, false);
+    View view =
+        LayoutInflater.from(parent.getContext())
+            .inflate(
+                viewType == 1 ? R.layout.list_item_kustom_header : R.layout.list_item_kustom,
+                parent,
+                false);
     return new KustomVH(view, mFolder, viewType == 1);
   }
 
@@ -105,8 +105,8 @@ public class KustomAdapter extends RecyclerView.Adapter<KustomAdapter.KustomVH> 
       if (getItemViewType(0) == 1) {
         position--;
       }
-      final KustomFragment.PreviewItem preview = mPreviewsFiltered != null ?
-          mPreviewsFiltered.get(position) : mPreviews.get(position);
+      final KustomFragment.PreviewItem preview =
+          mPreviewsFiltered != null ? mPreviewsFiltered.get(position) : mPreviews.get(position);
       Glide.with(holder.itemView.getContext())
           .load(new File(preview.previewPath))
           .into(holder.image);
@@ -114,8 +114,8 @@ public class KustomAdapter extends RecyclerView.Adapter<KustomAdapter.KustomVH> 
       holder.name.setText(preview.title);
       holder.file = preview.fileName;
     } else {
-      StaggeredGridLayoutManager.LayoutParams lp = (StaggeredGridLayoutManager.LayoutParams) holder.itemView
-          .getLayoutParams();
+      StaggeredGridLayoutManager.LayoutParams lp =
+          (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
       lp.setFullSpan(true);
       holder.itemView.setLayoutParams(lp);
     }
@@ -161,26 +161,28 @@ public class KustomAdapter extends RecyclerView.Adapter<KustomAdapter.KustomVH> 
     @Override
     public void onClick(View view) {
       final Context c = view.getContext();
-        String pkg = KustomUtil.getPkgByFolder(folder);
-        if (Utils.isPkgInstalled(c, pkg)) {
-            if (showInstaller) {
-                Toast.makeText(c, R.string.kustom_already_installed, Toast.LENGTH_SHORT).show();
-            } else {
-                Intent i = new Intent();
-                i.setComponent(new ComponentName(KustomUtil.getPkgByFolder(folder),
-                        KustomUtil.getEditorActivityByFolder(folder)));
-                i.setData(new Uri.Builder()
-                        .scheme("kfile")
-                        .authority(String.format("%s.kustomprovider", c.getPackageName()))
-                        .appendPath(folder)
-                        .appendPath(file)
-                        .build());
-                c.startActivity(i);
-            }
+      String pkg = KustomUtil.getPkgByFolder(folder);
+      if (Utils.isPkgInstalled(c, pkg)) {
+        if (showInstaller) {
+          Toast.makeText(c, R.string.kustom_already_installed, Toast.LENGTH_SHORT).show();
         } else {
-          c.startActivity(new Intent(Intent.ACTION_VIEW)
-              .setData(Uri.parse(String.format(GOOGLE_PLAY_URL, pkg))));
+          Intent i = new Intent();
+          i.setComponent(
+              new ComponentName(
+                  KustomUtil.getPkgByFolder(folder), KustomUtil.getEditorActivityByFolder(folder)));
+          i.setData(
+              new Uri.Builder()
+                  .scheme("kfile")
+                  .authority(String.format("%s.kustomprovider", c.getPackageName()))
+                  .appendPath(folder)
+                  .appendPath(file)
+                  .build());
+          c.startActivity(i);
         }
+      } else {
+        c.startActivity(
+            new Intent(Intent.ACTION_VIEW).setData(Uri.parse(String.format(GOOGLE_PLAY_URL, pkg))));
+      }
     }
   }
 }

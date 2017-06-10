@@ -9,11 +9,9 @@ import com.afollestad.polar.util.Utils;
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
-public abstract class BaseDonateActivity extends BaseThemedActivity implements
-    BillingProcessor.IBillingHandler {
+/** @author Aidan Follestad (afollestad) */
+public abstract class BaseDonateActivity extends BaseThemedActivity
+    implements BillingProcessor.IBillingHandler {
 
   private BillingProcessor bp;
 
@@ -26,8 +24,7 @@ public abstract class BaseDonateActivity extends BaseThemedActivity implements
   @Override
   protected void onResume() {
     super.onResume();
-    if (Config.get().donationEnabled() &&
-        BillingProcessor.isIabServiceAvailable(this)) {
+    if (Config.get().donationEnabled() && BillingProcessor.isIabServiceAvailable(this)) {
       bp = new BillingProcessor(this, Config.get().donationLicenseKey(), this);
     }
   }
@@ -57,8 +54,7 @@ public abstract class BaseDonateActivity extends BaseThemedActivity implements
   }
 
   @Override
-  public void onPurchaseHistoryRestored() {
-  }
+  public void onPurchaseHistoryRestored() {}
 
   @Override
   public void onBillingError(int errorCode, Throwable error) {

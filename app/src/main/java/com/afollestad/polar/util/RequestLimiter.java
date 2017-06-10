@@ -11,14 +11,12 @@ import com.afollestad.polar.R;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 @SuppressLint("CommitPrefEdits")
 public final class RequestLimiter {
 
-  private final static String UPDATE_TIME = "[prl-ut]";
-  private final static String SENT_COUNT = "[prl-sc]";
+  private static final String UPDATE_TIME = "[prl-ut]";
+  private static final String SENT_COUNT = "[prl-sc]";
 
   private final int mLimitInterval;
   private final SharedPreferences mPrefs;
@@ -62,8 +60,7 @@ public final class RequestLimiter {
     }
     final int newSentCount = mPrefs.getInt(SENT_COUNT, 0) + sentCount;
     log("Updating sent count to %d.", newSentCount);
-    SharedPreferences.Editor editor = mPrefs.edit()
-        .putInt(SENT_COUNT, newSentCount);
+    SharedPreferences.Editor editor = mPrefs.edit().putInt(SENT_COUNT, newSentCount);
     if (newSentCount == sentCount) {
       log("First request in the current interval, setting update time to now.");
       editor.putLong(UPDATE_TIME, System.currentTimeMillis());
@@ -91,11 +88,13 @@ public final class RequestLimiter {
     } else {
       final int sentCount = mPrefs.getInt(SENT_COUNT, 0);
       if (sentCount < allowedCount) {
-        log("The sent count (%d) hasn't reached the allowed count (%d) yet. Icon request is allowed!",
+        log(
+            "The sent count (%d) hasn't reached the allowed count (%d) yet. Icon request is allowed!",
             sentCount, allowedCount);
         return allowedCount - sentCount;
       } else {
-        log("An icon request is not allowed... wait %d more seconds.",
+        log(
+            "An icon request is not allowed... wait %d more seconds.",
             msToS(nextAllowedTime - now));
         return WAIT;
       }
@@ -105,13 +104,13 @@ public final class RequestLimiter {
   public static int NO_LIMIT = -1;
   public static int WAIT = -2;
 
-  private final static long MS_IN_SECOND = 1000;
-  private final static long MS_IN_MINUTE = MS_IN_SECOND * 60;
-  private final static long MS_IN_HOUR = MS_IN_MINUTE * 60;
-  private final static long MS_IN_DAY = MS_IN_HOUR * 24;
-  private final static long MS_IN_WEEK = MS_IN_DAY * 7;
-  private final static long MS_IN_MONTH = MS_IN_WEEK * 4;
-  private final static long MS_IN_YEAR = MS_IN_MONTH * 12;
+  private static final long MS_IN_SECOND = 1000;
+  private static final long MS_IN_MINUTE = MS_IN_SECOND * 60;
+  private static final long MS_IN_HOUR = MS_IN_MINUTE * 60;
+  private static final long MS_IN_DAY = MS_IN_HOUR * 24;
+  private static final long MS_IN_WEEK = MS_IN_DAY * 7;
+  private static final long MS_IN_MONTH = MS_IN_WEEK * 4;
+  private static final long MS_IN_YEAR = MS_IN_MONTH * 12;
 
   @SuppressLint("DefaultLocale")
   public String remainingIntervalString() {
@@ -129,11 +128,11 @@ public final class RequestLimiter {
       unit = "second";
     } else if (diff < MS_IN_HOUR) {
       // Less than an hour, unit in minute and seconds
-      return String.format("%d min, %d sec",
+      return String.format(
+          "%d min, %d sec",
           TimeUnit.MILLISECONDS.toMinutes(diff),
-          TimeUnit.MILLISECONDS.toSeconds(diff) -
-              TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(diff))
-      );
+          TimeUnit.MILLISECONDS.toSeconds(diff)
+              - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(diff)));
     } else if (diff < MS_IN_DAY) {
       // Less than a day, unit in hours
       value = diff / MS_IN_HOUR;

@@ -22,14 +22,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> {
 
-  private final static String GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=%s";
-  private final static String ZOOPER_PRO_PKG = "org.zooper.zwpro";
-  public final static int SEARCH_RESULT_LIMIT = 10;
+  private static final String GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=%s";
+  private static final String ZOOPER_PRO_PKG = "org.zooper.zwpro";
+  public static final int SEARCH_RESULT_LIMIT = 10;
 
   private final Object LOCK = new Object();
 
@@ -84,8 +82,7 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
         if (mFilteredNames.size() == SEARCH_RESULT_LIMIT) {
           break;
         }
-        if (mWidgetNames[i].toLowerCase(Locale.getDefault())
-            .contains(name)) {
+        if (mWidgetNames[i].toLowerCase(Locale.getDefault()).contains(name)) {
           mFilteredNames.add(mWidgetNames[i]);
           mPreviewsFiltered.add(mPreviews.get(i));
         }
@@ -107,8 +104,12 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
 
   @Override
   public ZooperVH onCreateViewHolder(ViewGroup parent, int viewType) {
-    View view = LayoutInflater.from(parent.getContext()).inflate(viewType == 1 ?
-        R.layout.list_item_zooper_header : R.layout.list_item_zooper, parent, false);
+    View view =
+        LayoutInflater.from(parent.getContext())
+            .inflate(
+                viewType == 1 ? R.layout.list_item_zooper_header : R.layout.list_item_zooper,
+                parent,
+                false);
     return new ZooperVH(view, viewType == 1);
   }
 
@@ -118,11 +119,9 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
       if (getItemViewType(0) == 1) {
         position--;
       }
-      final ZooperFragment.PreviewItem preview = mPreviewsFiltered != null ?
-          mPreviewsFiltered.get(position) : mPreviews.get(position);
-      Glide.with(holder.itemView.getContext())
-          .load(new File(preview.path))
-          .into(holder.image);
+      final ZooperFragment.PreviewItem preview =
+          mPreviewsFiltered != null ? mPreviewsFiltered.get(position) : mPreviews.get(position);
+      Glide.with(holder.itemView.getContext()).load(new File(preview.path)).into(holder.image);
       holder.background.setImageDrawable(mWallpaper);
       if (position < mWidgetNames.length) {
         holder.name.setText(mWidgetNames[position]);
@@ -131,11 +130,10 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
         holder.name.setText(preview.name);
       }
     } else {
-      StaggeredGridLayoutManager.LayoutParams lp = (StaggeredGridLayoutManager.LayoutParams) holder.itemView
-          .getLayoutParams();
+      StaggeredGridLayoutManager.LayoutParams lp =
+          (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
       lp.setFullSpan(true);
       holder.itemView.setLayoutParams(lp);
-
     }
   }
 
@@ -174,8 +172,9 @@ public class ZooperAdapter extends RecyclerView.Adapter<ZooperAdapter.ZooperVH> 
       if (Utils.isPkgInstalled(c, ZOOPER_PRO_PKG)) {
         Toast.makeText(c, R.string.zooper_already_installed, Toast.LENGTH_SHORT).show();
       } else {
-        c.startActivity(new Intent(Intent.ACTION_VIEW)
-            .setData(Uri.parse(String.format(GOOGLE_PLAY_URL, ZOOPER_PRO_PKG))));
+        c.startActivity(
+            new Intent(Intent.ACTION_VIEW)
+                .setData(Uri.parse(String.format(GOOGLE_PLAY_URL, ZOOPER_PRO_PKG))));
       }
     }
   }

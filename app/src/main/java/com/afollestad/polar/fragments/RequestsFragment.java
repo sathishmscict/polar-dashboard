@@ -46,20 +46,27 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestsFragment extends BasePageFragment implements
-    AppsLoadCallback, AppsSelectionListener, RequestSendCallback,
-    DragSelectRecyclerViewAdapter.SelectionListener, RequestsAdapter.SelectionChangedListener {
+public class RequestsFragment extends BasePageFragment
+    implements AppsLoadCallback,
+        AppsSelectionListener,
+        RequestSendCallback,
+        DragSelectRecyclerViewAdapter.SelectionListener,
+        RequestsAdapter.SelectionChangedListener {
 
   private static final Object LOCK = new Object();
 
   @BindView(android.R.id.list)
   DragSelectRecyclerView list;
+
   @BindView(android.R.id.progress)
   View progress;
+
   @BindView(R.id.progressText)
   TextView progressText;
+
   @BindView(android.R.id.empty)
   TextView emptyText;
+
   @BindView(R.id.fab)
   FloatingActionButton fab;
 
@@ -70,29 +77,29 @@ public class RequestsFragment extends BasePageFragment implements
   private boolean mAppsLoaded = false;
   private boolean mIsLoading = false;
 
-  private final Runnable mInvalidateLimitRunnable = new Runnable() {
-    @Override
-    public void run() {
-      final Activity act = getActivity();
-      if (!isAdded() || act == null || act.isFinishing()) {
-        return;
-      }
-      mAdapter.invalidateAllowRequest(act);
-      if (!isAdded() || act.isFinishing()) {
-        return;
-      }
-      long nextCheck = RequestLimiter.get(act).intervalMs();
-      if (nextCheck < (1000 * 60 * 60)) {
-        nextCheck = 1000; // if less than a hour, update every second.
-      }
-      mHandler.postDelayed(this, nextCheck);
-    }
-  };
+  private final Runnable mInvalidateLimitRunnable =
+      new Runnable() {
+        @Override
+        public void run() {
+          final Activity act = getActivity();
+          if (!isAdded() || act == null || act.isFinishing()) {
+            return;
+          }
+          mAdapter.invalidateAllowRequest(act);
+          if (!isAdded() || act.isFinishing()) {
+            return;
+          }
+          long nextCheck = RequestLimiter.get(act).intervalMs();
+          if (nextCheck < (1000 * 60 * 60)) {
+            nextCheck = 1000; // if less than a hour, update every second.
+          }
+          mHandler.postDelayed(this, nextCheck);
+        }
+      };
   private Handler mHandler;
   private Unbinder unbinder;
 
-  public RequestsFragment() {
-  }
+  public RequestsFragment() {}
 
   @Override
   public int getTitle() {
@@ -154,8 +161,8 @@ public class RequestsFragment extends BasePageFragment implements
 
   @Nullable
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+  public View onCreateView(
+      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     return inflater.inflate(R.layout.fragment_requesticons, container, false);
   }
 
@@ -172,8 +179,8 @@ public class RequestsFragment extends BasePageFragment implements
           selectAll.setIcon(
               TintUtils.createTintedDrawable(act, R.drawable.ic_action_selectall, tintColor));
         } else {
-          selectAll
-              .setIcon(TintUtils.createTintedDrawable(act, R.drawable.ic_action_close, tintColor));
+          selectAll.setIcon(
+              TintUtils.createTintedDrawable(act, R.drawable.ic_action_close, tintColor));
         }
       } catch (Throwable e) {
         e.printStackTrace();
@@ -212,15 +219,16 @@ public class RequestsFragment extends BasePageFragment implements
     unbinder = ButterKnife.bind(this, view);
 
     GridLayoutManager lm = new GridLayoutManager(getActivity(), Config.get().gridWidthRequests());
-    lm.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-      @Override
-      public int getSpanSize(int position) {
-        if (position == 0) {
-          return Config.get().gridWidthRequests();
-        }
-        return 1;
-      }
-    });
+    lm.setSpanSizeLookup(
+        new GridLayoutManager.SpanSizeLookup() {
+          @Override
+          public int getSpanSize(int position) {
+            if (position == 0) {
+              return Config.get().gridWidthRequests();
+            }
+            return 1;
+          }
+        });
 
     mAdapter = new RequestsAdapter(getActivity(), this);
     mAdapter.setSelectionListener(this);
@@ -239,20 +247,22 @@ public class RequestsFragment extends BasePageFragment implements
     mPager = (DisableableViewPager) getActivity().findViewById(R.id.pager);
     if (!Config.get().navDrawerModeEnabled()) {
       // Swiping is only enabled in nav drawer mode, so no need to run this code in nav drawer mode
-      list.setFingerListener(new DragSelectRecyclerView.FingerListener() {
-        @Override
-        public void onDragSelectFingerAction(boolean dragActive) {
-          mPager.setPagingEnabled(!dragActive);
-        }
-      });
+      list.setFingerListener(
+          new DragSelectRecyclerView.FingerListener() {
+            @Override
+            public void onDragSelectFingerAction(boolean dragActive) {
+              mPager.setPagingEnabled(!dragActive);
+            }
+          });
     }
 
-    emptyText.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        onClickFab();
-      }
-    });
+    emptyText.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            onClickFab();
+          }
+        });
 
     if (savedInstanceState != null) {
       IconRequest.restoreInstanceState(getActivity(), savedInstanceState, this, this, this);
@@ -314,14 +324,19 @@ public class RequestsFragment extends BasePageFragment implements
 
         IconRequest.start(getActivity())
             .toEmail(getString(R.string.icon_request_email))
-            .withSubject(String
-                .format("%s %s", getString(R.string.app_name), getString(R.string.icon_request)))
+            .withSubject(
+                String.format(
+                    "%s %s", getString(R.string.app_name), getString(R.string.icon_request)))
             .loadCallback(this)
             .selectionCallback(this)
             .sendCallback(this)
             .remoteConfig(remoteConfig)
-            .withFooter(getString(R.string.x_version_x, getString(R.string.app_name),
-                BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE))
+            .withFooter(
+                getString(
+                    R.string.x_version_x,
+                    getString(R.string.app_name),
+                    BuildConfig.VERSION_NAME,
+                    BuildConfig.VERSION_CODE))
             .includeDeviceInfo(true)
             .build();
       }
@@ -391,8 +406,7 @@ public class RequestsFragment extends BasePageFragment implements
       if (progressText == null || IconRequest.get() == null) {
         return;
       }
-      emptyText.setVisibility(arrayList == null || arrayList.isEmpty() ?
-          View.VISIBLE : View.GONE);
+      emptyText.setVisibility(arrayList == null || arrayList.isEmpty() ? View.VISIBLE : View.GONE);
       mAppsLoaded = true;
       if (IconRequest.get() == null) {
         return;
@@ -400,11 +414,9 @@ public class RequestsFragment extends BasePageFragment implements
       getActivity().invalidateOptionsMenu();
       mAdapter.setApps(IconRequest.get().getApps());
       mAdapter.notifyDataSetChanged();
-      emptyText.setVisibility(mAdapter.getItemCount() == 0 ?
-          View.VISIBLE : View.GONE);
+      emptyText.setVisibility(mAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
       progress.setVisibility(View.GONE);
-      list.setVisibility(mAdapter.getItemCount() == 0 ?
-          View.GONE : View.VISIBLE);
+      list.setVisibility(mAdapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
     }
   }
 
@@ -426,11 +438,12 @@ public class RequestsFragment extends BasePageFragment implements
     if (getActivity() == null) {
       return;
     }
-    mDialog = new MaterialDialog.Builder(getActivity())
-        .content(R.string.preparing_icon_request)
-        .progress(true, -1)
-        .cancelable(false)
-        .show();
+    mDialog =
+        new MaterialDialog.Builder(getActivity())
+            .content(R.string.preparing_icon_request)
+            .progress(true, -1)
+            .cancelable(false)
+            .show();
   }
 
   @Override
@@ -442,9 +455,7 @@ public class RequestsFragment extends BasePageFragment implements
   @Override
   public Uri onRequestProcessUri(Uri uri) {
     return FileProvider.getUriForFile(
-        getActivity(),
-        BuildConfig.APPLICATION_ID + ".fileProvider",
-        new File(uri.getPath()));
+        getActivity(), BuildConfig.APPLICATION_ID + ".fileProvider", new File(uri.getPath()));
   }
 
   @Override
@@ -477,7 +488,8 @@ public class RequestsFragment extends BasePageFragment implements
   @OnClick(R.id.fab)
   public void onClickFab() {
     if (!Config.get().iconRequestEnabled()) {
-      Utils.showError(getActivity(),
+      Utils.showError(
+          getActivity(),
           new Exception("The developer has not set an email for icon requests yet."));
       return;
     }

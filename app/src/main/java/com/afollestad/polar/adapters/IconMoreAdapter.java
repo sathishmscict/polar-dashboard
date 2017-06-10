@@ -55,8 +55,8 @@ public class IconMoreAdapter extends RecyclerView.Adapter<IconMoreAdapter.MainVi
 
   @Override
   public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View v = LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.list_item_icon, parent, false);
+    View v =
+        LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_icon, parent, false);
     return new MainViewHolder(v);
   }
 
@@ -79,13 +79,14 @@ public class IconMoreAdapter extends RecyclerView.Adapter<IconMoreAdapter.MainVi
     } else {
       Glide.with(c)
           .load(res)
-          .into(new SimpleTarget<GlideDrawable>() {
-            @Override
-            public void onResourceReady(GlideDrawable resource,
-                GlideAnimation<? super GlideDrawable> glideAnimation) {
-              holder.image.setImageDrawable(resource);
-            }
-          });
+          .into(
+              new SimpleTarget<GlideDrawable>() {
+                @Override
+                public void onResourceReady(
+                    GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                  holder.image.setImageDrawable(resource);
+                }
+              });
     }
   }
 
@@ -101,12 +102,13 @@ public class IconMoreAdapter extends RecyclerView.Adapter<IconMoreAdapter.MainVi
     public MainViewHolder(View itemView) {
       super(itemView);
       image = (ImageView) itemView.findViewById(R.id.image);
-      itemView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          mListener.onClick(v, getAdapterPosition());
-        }
-      });
+      itemView.setOnClickListener(
+          new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              mListener.onClick(v, getAdapterPosition());
+            }
+          });
     }
   }
 }

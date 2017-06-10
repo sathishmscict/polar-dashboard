@@ -14,20 +14,18 @@ import com.afollestad.polar.BuildConfig;
 import com.afollestad.polar.R;
 import com.afollestad.polar.fragments.base.BasePageFragment;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class HomeFragment extends BasePageFragment {
 
   private Unbinder unbinder;
 
-//    @BindView(R.id.fab)
-//    FloatingActionButton mFab;
+  //    @BindView(R.id.fab)
+  //    FloatingActionButton mFab;
 
   @Nullable
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+  public View onCreateView(
+      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     return inflater.inflate(R.layout.fragment_homepage, container, false);
   }
 
@@ -45,9 +43,13 @@ public class HomeFragment extends BasePageFragment {
 
   @OnClick(R.id.fab)
   public void onTapReview() {
-    startActivity(new Intent(Intent.ACTION_VIEW)
-        .setData(Uri.parse(String.format("https://play.google.com/store/apps/details?id=%s",
-            BuildConfig.APPLICATION_ID))));
+    startActivity(
+        new Intent(Intent.ACTION_VIEW)
+            .setData(
+                Uri.parse(
+                    String.format(
+                        "https://play.google.com/store/apps/details?id=%s",
+                        BuildConfig.APPLICATION_ID))));
   }
 
   @Override

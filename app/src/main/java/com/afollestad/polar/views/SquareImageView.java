@@ -6,9 +6,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public class SquareImageView extends ImageView {
 
   public SquareImageView(Context context) {

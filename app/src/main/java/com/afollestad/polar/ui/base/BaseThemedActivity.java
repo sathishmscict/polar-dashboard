@@ -21,9 +21,7 @@ import com.afollestad.polar.util.TintUtils;
 import com.afollestad.polar.util.Utils;
 import com.afollestad.polar.util.VC;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public abstract class BaseThemedActivity extends AssentActivity {
 
   private boolean mLastDarkTheme = false;
@@ -62,19 +60,20 @@ public abstract class BaseThemedActivity extends AssentActivity {
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       // Sets color of entry in the system recents page
-      ActivityManager.TaskDescription td = new ActivityManager.TaskDescription(
-          getString(R.string.app_name),
-          BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher),
-          DialogUtils.resolveColor(this, R.attr.colorPrimary));
+      ActivityManager.TaskDescription td =
+          new ActivityManager.TaskDescription(
+              getString(R.string.app_name),
+              BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher),
+              DialogUtils.resolveColor(this, R.attr.colorPrimary));
       setTaskDescription(td);
     }
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-        !DialogUtils.resolveBoolean(this, R.attr.disable_auto_light_status_bar)) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+        && !DialogUtils.resolveBoolean(this, R.attr.disable_auto_light_status_bar)) {
       final View decorView = getWindow().getDecorView();
       final boolean lightStatusEnabled =
-          DialogUtils.resolveBoolean(this, R.attr.force_light_status_bar) ||
-              TintUtils.isColorLight(DialogUtils.resolveColor(this, R.attr.colorPrimaryDark));
+          DialogUtils.resolveBoolean(this, R.attr.force_light_status_bar)
+              || TintUtils.isColorLight(DialogUtils.resolveColor(this, R.attr.colorPrimaryDark));
       final int systemUiVisibility = decorView.getSystemUiVisibility();
       if (lightStatusEnabled) {
         decorView.setSystemUiVisibility(systemUiVisibility | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);

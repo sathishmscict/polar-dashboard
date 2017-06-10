@@ -6,9 +6,7 @@ import android.view.MenuInflater;
 import com.afollestad.assent.AssentFragment;
 import com.afollestad.polar.ui.base.BaseThemedActivity;
 
-/**
- * @author Aidan Follestad (afollestad)
- */
+/** @author Aidan Follestad (afollestad) */
 public abstract class BasePageFragment extends AssentFragment {
 
   @StringRes

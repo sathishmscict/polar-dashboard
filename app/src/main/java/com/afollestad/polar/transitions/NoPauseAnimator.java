@@ -19,8 +19,7 @@ public class NoPauseAnimator extends Animator {
 
   @Override
   public void addListener(AnimatorListener listener) {
-    AnimatorListener wrapper = new AnimatorListenerWrapper(this,
-        listener);
+    AnimatorListener wrapper = new AnimatorListenerWrapper(this, listener);
     if (!mListeners.containsKey(listener)) {
       mListeners.put(listener, wrapper);
       mAnimator.addListener(wrapper);
@@ -82,13 +81,13 @@ public class NoPauseAnimator extends Animator {
     return mAnimator.isStarted();
   }
 
-    /* We don't want to override pause or resume methods
-     * because we don't want them to affect mAnimator.
-    public void pause();
-    public void resume();
-    public void addPauseListener(AnimatorPauseListener listener);
-    public void removePauseListener(AnimatorPauseListener listener);
-     */
+  /* We don't want to override pause or resume methods
+   * because we don't want them to affect mAnimator.
+  public void pause();
+  public void resume();
+  public void addPauseListener(AnimatorPauseListener listener);
+  public void removePauseListener(AnimatorPauseListener listener);
+   */
 
   @Override
   public void removeAllListeners() {
@@ -132,15 +131,12 @@ public class NoPauseAnimator extends Animator {
     mAnimator.start();
   }
 
-
-  public static class AnimatorListenerWrapper
-      implements Animator.AnimatorListener {
+  public static class AnimatorListenerWrapper implements Animator.AnimatorListener {
 
     private final Animator mAnimator;
     private final Animator.AnimatorListener mListener;
 
-    public AnimatorListenerWrapper(Animator animator,
-        Animator.AnimatorListener listener) {
+    public AnimatorListenerWrapper(Animator animator, Animator.AnimatorListener listener) {
       mAnimator = animator;
       mListener = listener;
     }

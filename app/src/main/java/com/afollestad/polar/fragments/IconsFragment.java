@@ -45,14 +45,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 
-public class IconsFragment extends BasePageFragment implements
-    SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+public class IconsFragment extends BasePageFragment
+    implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
   IconAdapter adapter;
   RecyclerView recyclerView;
 
-  public IconsFragment() {
-  }
+  public IconsFragment() {}
 
   public static IconsFragment create(boolean selectionMode) {
     IconsFragment frag = new IconsFragment();
@@ -63,90 +62,102 @@ public class IconsFragment extends BasePageFragment implements
   }
 
   @SuppressWarnings("ResultOfMethodCallIgnored")
-  public static void selectItem(final Activity context, Fragment context2,
-      final DrawableXmlParser.Icon icon) {
+  public static void selectItem(
+      final Activity context, Fragment context2, final DrawableXmlParser.Icon icon) {
     final Bitmap bmp;
     if (icon.getDrawableId(context) != 0) {
       //noinspection ConstantConditions
-      bmp = ((BitmapDrawable) ResourcesCompat.getDrawable(context.getResources(),
-          icon.getDrawableId(context), null)).getBitmap();
+      bmp =
+          ((BitmapDrawable)
+                  ResourcesCompat.getDrawable(
+                      context.getResources(), icon.getDrawableId(context), null))
+              .getBitmap();
     } else {
       return;
     }
     if (context instanceof ISelectionMode && ((ISelectionMode) context).inSelectionMode()) {
       if (((ISelectionMode) context).allowResourceResult()) {
-        Intent.ShortcutIconResource iconResource = Intent.ShortcutIconResource
-            .fromContext(context, icon.getDrawableId(context));
-        context.setResult(Activity.RESULT_OK, new Intent()
-            .putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource));
+        Intent.ShortcutIconResource iconResource =
+            Intent.ShortcutIconResource.fromContext(context, icon.getDrawableId(context));
+        context.setResult(
+            Activity.RESULT_OK,
+            new Intent().putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource));
         context.finish();
-        if(bmp != null && !bmp.isRecycled()) {
+        if (bmp != null && !bmp.isRecycled()) {
           bmp.recycle();
         }
         return;
       }
-      final ProgressDialogFragment progress = ProgressDialogFragment
-          .show((AppCompatActivity) context, R.string.please_wait);
-      new Thread(new Runnable() {
-        @Override
-        public void run() {
-          File dest = context.getCacheDir();
-          dest.mkdirs();
-          dest = new File(dest, icon.getDrawable() + ".png");
-          FileOutputStream os = null;
-          try {
-            os = new FileOutputStream(dest);
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, os);
-            closeQuietly(os);
+      final ProgressDialogFragment progress =
+          ProgressDialogFragment.show((AppCompatActivity) context, R.string.please_wait);
+      new Thread(
+              new Runnable() {
+                @Override
+                public void run() {
+                  File dest = context.getCacheDir();
+                  dest.mkdirs();
+                  dest = new File(dest, icon.getDrawable() + ".png");
+                  FileOutputStream os = null;
+                  try {
+                    os = new FileOutputStream(dest);
+                    bmp.compress(Bitmap.CompressFormat.PNG, 100, os);
+                    closeQuietly(os);
 
-            final Uri uri = FileProvider.getUriForFile(
-                context,
-                BuildConfig.APPLICATION_ID + ".fileProvider",
-                dest);
-            context.runOnUiThread(new Runnable() {
-              @Override
-              public void run() {
-                context.setResult(Activity.RESULT_OK, new Intent()
-                    .putExtra(Intent.EXTRA_STREAM, uri)
-                    .setDataAndType(uri, "image/png")
-                    .setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION));
-                context.finish();
-              }
-            });
-          } catch (NullPointerException npe) {
-            dest.delete();
-            progress.dismiss();
-            if (!context.isFinishing()) {
-              context.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                  Utils.showError(context, new Exception(
-                      "An error occurred while retrieving the icon. Tell the designer "
-                          + "of this icon pack to make sure the FileProvider at the bottom "
-                          + "of AndroidManifest.xml is using the correct app ID."));
+                    final Uri uri =
+                        FileProvider.getUriForFile(
+                            context, BuildConfig.APPLICATION_ID + ".fileProvider", dest);
+                    context.runOnUiThread(
+                        new Runnable() {
+                          @Override
+                          public void run() {
+                            context.setResult(
+                                Activity.RESULT_OK,
+                                new Intent()
+                                    .putExtra(Intent.EXTRA_STREAM, uri)
+                                    .setDataAndType(uri, "image/png")
+                                    .setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION));
+                            context.finish();
+                          }
+                        });
+                  } catch (NullPointerException npe) {
+                    dest.delete();
+                    progress.dismiss();
+                    if (!context.isFinishing()) {
+                      context.runOnUiThread(
+                          new Runnable() {
+                            @Override
+                            public void run() {
+                              Utils.showError(
+                                  context,
+                                  new Exception(
+                                      "An error occurred while retrieving the icon. Tell the designer "
+                                          + "of this icon pack to make sure the FileProvider at the bottom "
+                                          + "of AndroidManifest.xml is using the correct app ID."));
+                            }
+                          });
+                    }
+                  } catch (final Exception e) {
+                    dest.delete();
+                    progress.dismiss();
+                    if (!context.isFinishing()) {
+                      context.runOnUiThread(
+                          new Runnable() {
+                            @Override
+                            public void run() {
+                              Utils.showError(context, e);
+                            }
+                          });
+                    }
+                  } finally {
+                    if (bmp != null && !bmp.isRecycled()) {
+                      bmp.recycle();
+                    }
+                    progress.dismiss();
+                    closeQuietly(os);
+                  }
                 }
-              });
-            }
-          } catch (final Exception e) {
-            dest.delete();
-            progress.dismiss();
-            if (!context.isFinishing()) {
-              context.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                  Utils.showError(context, e);
-                }
-              });
-            }
-          } finally {
-            if(bmp != null && !bmp.isRecycled()) {
-              bmp.recycle();
-            }
-            progress.dismiss();
-            closeQuietly(os);
-          }
-        }
-      }).start();
+              })
+          .start();
     } else {
       FragmentManager fm;
       if (context2 != null) {
@@ -177,14 +188,14 @@ public class IconsFragment extends BasePageFragment implements
 
     if (getActivity() != null) {
       final BaseThemedActivity act = (BaseThemedActivity) getActivity();
-      TintUtils.themeSearchView(act.getToolbar(), mSearchView,
-          DialogUtils.resolveColor(act, R.attr.tab_icon_color));
+      TintUtils.themeSearchView(
+          act.getToolbar(), mSearchView, DialogUtils.resolveColor(act, R.attr.tab_icon_color));
     }
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+  public View onCreateView(
+      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_recyclerview, container, false);
 
     TextView emptyView = (TextView) v.findViewById(android.R.id.empty);
@@ -193,12 +204,17 @@ public class IconsFragment extends BasePageFragment implements
     final int gridWidth = Config.get().gridWidthIcons();
     recyclerView = ButterKnife.findById(v, android.R.id.list);
 
-    adapter = new IconAdapter(getActivity(), gridWidth, new IconAdapter.ClickListener() {
-      @Override
-      public void onClick(View view, int section, int relative, int absolute) {
-        selectItem(getActivity(), IconsFragment.this, adapter.getIcon(section, relative));
-      }
-    }, recyclerView);
+    adapter =
+        new IconAdapter(
+            getActivity(),
+            gridWidth,
+            new IconAdapter.ClickListener() {
+              @Override
+              public void onClick(View view, int section, int relative, int absolute) {
+                selectItem(getActivity(), IconsFragment.this, adapter.getIcon(section, relative));
+              }
+            },
+            recyclerView);
 
     final GridLayoutManager lm = new GridLayoutManager(getActivity(), gridWidth);
     adapter.setLayoutManager(lm);
@@ -210,12 +226,10 @@ public class IconsFragment extends BasePageFragment implements
   void setListShown(boolean shown) {
     final View v = getView();
     if (v != null) {
-      v.findViewById(android.R.id.list).setVisibility(shown ?
-          View.VISIBLE : View.GONE);
-      v.findViewById(android.R.id.progress).setVisibility(shown ?
-          View.GONE : View.VISIBLE);
-      v.findViewById(android.R.id.empty).setVisibility(shown && adapter.getItemCount() == 0 ?
-          View.VISIBLE : View.GONE);
+      v.findViewById(android.R.id.list).setVisibility(shown ? View.VISIBLE : View.GONE);
+      v.findViewById(android.R.id.progress).setVisibility(shown ? View.GONE : View.VISIBLE);
+      v.findViewById(android.R.id.empty)
+          .setVisibility(shown && adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
   }
 
@@ -238,26 +252,30 @@ public class IconsFragment extends BasePageFragment implements
     }
     setListShown(false);
     final Handler handler = new Handler();
-    new Thread(new Runnable() {
-      @Override
-      public void run() {
-        int id = R.xml.drawable;
-        int drawableDashboard = getResources()
-            .getIdentifier("drawable_dashboard", "xml", getActivity().getPackageName());
-        if (drawableDashboard != 0) {
-          id = drawableDashboard;
-        }
-        final List<DrawableXmlParser.Category> categories = DrawableXmlParser
-            .parse(getActivity(), id);
-        handler.post(new Runnable() {
-          @Override
-          public void run() {
-            adapter.set(categories);
-            setListShown(true);
-          }
-        });
-      }
-    }).start();
+    new Thread(
+            new Runnable() {
+              @Override
+              public void run() {
+                int id = R.xml.drawable;
+                int drawableDashboard =
+                    getResources()
+                        .getIdentifier("drawable_dashboard", "xml", getActivity().getPackageName());
+                if (drawableDashboard != 0) {
+                  id = drawableDashboard;
+                }
+                final List<DrawableXmlParser.Category> categories =
+                    DrawableXmlParser.parse(getActivity(), id);
+                handler.post(
+                    new Runnable() {
+                      @Override
+                      public void run() {
+                        adapter.set(categories);
+                        setListShown(true);
+                      }
+                    });
+              }
+            })
+        .start();
   }
 
   @Override

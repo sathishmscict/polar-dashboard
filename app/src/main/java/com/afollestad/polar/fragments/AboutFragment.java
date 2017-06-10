@@ -19,11 +19,9 @@ import com.afollestad.polar.ui.MainActivity;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-
 public class AboutFragment extends BasePageFragment implements AboutAdapter.OptionsClickListener {
 
-  public AboutFragment() {
-  }
+  public AboutFragment() {}
 
   @Override
   public int getTitle() {
@@ -31,8 +29,8 @@ public class AboutFragment extends BasePageFragment implements AboutAdapter.Opti
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+  public View onCreateView(
+      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     final View v = inflater.inflate(R.layout.fragment_recyclerview_bare, container, false);
     final RecyclerView mRecyclerView = ButterKnife.findById(v, android.R.id.list);
 
@@ -79,15 +77,17 @@ public class AboutFragment extends BasePageFragment implements AboutAdapter.Opti
     new MaterialDialog.Builder(getActivity())
         .title(R.string.donate)
         .items(optionNames)
-        .itemsCallback(new MaterialDialog.ListCallback() {
-          @Override
-          public void onSelection(MaterialDialog dialog, View itemView, int which,
-              CharSequence text) {
-            MainActivity act = (MainActivity) getActivity();
-            if (act != null) {
-              act.purchase(optionIds[which]);
-            }
-          }
-        }).show();
+        .itemsCallback(
+            new MaterialDialog.ListCallback() {
+              @Override
+              public void onSelection(
+                  MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                MainActivity act = (MainActivity) getActivity();
+                if (act != null) {
+                  act.purchase(optionIds[which]);
+                }
+              }
+            })
+        .show();
   }
 }

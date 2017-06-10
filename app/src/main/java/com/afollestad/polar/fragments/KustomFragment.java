@@ -32,36 +32,36 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * @author Frank Monza (fmonza)
- */
-public class KustomFragment extends BasePageFragment implements
-    SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+/** @author Frank Monza (fmonza) */
+public class KustomFragment extends BasePageFragment
+    implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
   public static String ARG_FOLDER = "folder";
 
   @BindView(android.R.id.list)
   RecyclerView mRecyclerView;
+
   @BindView(android.R.id.empty)
   TextView mEmpty;
+
   @BindView(android.R.id.progress)
   View mProgress;
 
   private KustomAdapter mAdapter;
   private String mQueryText;
-  private final Runnable searchRunnable = new Runnable() {
-    @Override
-    public void run() {
-      mAdapter.filter(mQueryText);
-      setListShown(true);
-    }
-  };
+  private final Runnable searchRunnable =
+      new Runnable() {
+        @Override
+        public void run() {
+          mAdapter.filter(mQueryText);
+          setListShown(true);
+        }
+      };
   private ArrayList<PreviewItem> mPreviews;
   private Drawable mWallpaper;
   private Unbinder unbinder;
 
-  public KustomFragment() {
-  }
+  public KustomFragment() {}
 
   public static KustomFragment newInstance(@KustomUtil.KustomDir String folder) {
     KustomFragment myFragment = new KustomFragment();
@@ -87,8 +87,8 @@ public class KustomFragment extends BasePageFragment implements
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+  public View onCreateView(
+      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     return inflater.inflate(R.layout.fragment_recyclerview, container, false);
   }
 
@@ -105,20 +105,17 @@ public class KustomFragment extends BasePageFragment implements
 
     if (getActivity() != null) {
       final MainActivity act = (MainActivity) getActivity();
-      TintUtils.themeSearchView(act.getToolbar(), mSearchView,
-          DialogUtils.resolveColor(act, R.attr.tab_icon_color));
+      TintUtils.themeSearchView(
+          act.getToolbar(), mSearchView, DialogUtils.resolveColor(act, R.attr.tab_icon_color));
     }
   }
 
   private void setListShown(boolean shown) {
     final View v = getView();
     if (v != null) {
-      mRecyclerView.setVisibility(shown ?
-          View.VISIBLE : View.GONE);
-      mProgress.setVisibility(shown ?
-          View.GONE : View.VISIBLE);
-      mEmpty.setVisibility(shown && mAdapter.getItemCount() == 0 ?
-          View.VISIBLE : View.GONE);
+      mRecyclerView.setVisibility(shown ? View.VISIBLE : View.GONE);
+      mProgress.setVisibility(shown ? View.GONE : View.VISIBLE);
+      mEmpty.setVisibility(shown && mAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
   }
 
@@ -130,33 +127,36 @@ public class KustomFragment extends BasePageFragment implements
 
     final int kustomGridWidth = Config.get().gridWidthKustom();
     mAdapter = new KustomAdapter(getActivity(), getFolder());
-    mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(
-        kustomGridWidth, StaggeredGridLayoutManager.VERTICAL));
+    mRecyclerView.setLayoutManager(
+        new StaggeredGridLayoutManager(kustomGridWidth, StaggeredGridLayoutManager.VERTICAL));
     mRecyclerView.setAdapter(mAdapter);
 
-    KustomUtil.getPreviews(getActivity(), new KustomUtil.PreviewCallback() {
-      @Override
-      public void onPreviewsLoaded(ArrayList<PreviewItem> previews, Drawable wallpaper,
-          Exception error) {
-        if (getActivity() == null || getActivity().isFinishing() || !isAdded()) {
-          return;
-        } else if (error != null) {
-          error.printStackTrace();
-          setListShown(true);
-          mAdapter.setPreviews(null, null);
-          mEmpty.setVisibility(View.VISIBLE);
-          if (error.getMessage().trim().isEmpty()) {
-            mEmpty.setText(error.toString());
-          } else {
-            mEmpty.setText(error.getMessage());
+    KustomUtil.getPreviews(
+        getActivity(),
+        new KustomUtil.PreviewCallback() {
+          @Override
+          public void onPreviewsLoaded(
+              ArrayList<PreviewItem> previews, Drawable wallpaper, Exception error) {
+            if (getActivity() == null || getActivity().isFinishing() || !isAdded()) {
+              return;
+            } else if (error != null) {
+              error.printStackTrace();
+              setListShown(true);
+              mAdapter.setPreviews(null, null);
+              mEmpty.setVisibility(View.VISIBLE);
+              if (error.getMessage().trim().isEmpty()) {
+                mEmpty.setText(error.toString());
+              } else {
+                mEmpty.setText(error.getMessage());
+              }
+              return;
+            }
+            mPreviews = previews;
+            mWallpaper = wallpaper;
+            mAdapter.setPreviews(mPreviews, mWallpaper);
           }
-          return;
-        }
-        mPreviews = previews;
-        mWallpaper = wallpaper;
-        mAdapter.setPreviews(mPreviews, mWallpaper);
-      }
-    }, getFolder());
+        },
+        getFolder());
   }
 
   @Override
@@ -222,6 +222,5 @@ public class KustomFragment extends BasePageFragment implements
       this.previewPath = previewPath;
       this.title = info.getString("title");
     }
-
   }
 }

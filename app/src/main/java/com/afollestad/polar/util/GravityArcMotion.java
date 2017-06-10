@@ -26,16 +26,21 @@ import android.util.AttributeSet;
 /**
  * A tweak to {@link ArcMotion} which slightly alters the path calculation. In the real world
  * gravity slows upward motion and accelerates downward motion. This class emulates this behavior to
- * make motion paths appear more natural. <p> See https://www.google.com/design/spec/motion/movement.html#movement-movement-within-screen-bounds
- * <p> Taken from Plaid: https://github.com/nickbutcher/plaid/blob/master/app/src/main/java/io/plaidapp/ui/transitions/GravityArcMotion.java
+ * make motion paths appear more natural.
+ *
+ * <p>See
+ * https://www.google.com/design/spec/motion/movement.html#movement-movement-within-screen-bounds
+ *
+ * <p>Taken from Plaid:
+ * https://github.com/nickbutcher/plaid/blob/master/app/src/main/java/io/plaidapp/ui/transitions/GravityArcMotion.java
  */
 @TargetApi(VERSION_CODES.LOLLIPOP)
 public class GravityArcMotion extends ArcMotion {
 
-//  private static final float DEFAULT_MIN_ANGLE_DEGREES = 0;
+  //  private static final float DEFAULT_MIN_ANGLE_DEGREES = 0;
   private static final float DEFAULT_MAX_ANGLE_DEGREES = 70;
-  private static final float DEFAULT_MAX_TANGENT = (float)
-      Math.tan(Math.toRadians(DEFAULT_MAX_ANGLE_DEGREES / 2));
+  private static final float DEFAULT_MAX_TANGENT =
+      (float) Math.tan(Math.toRadians(DEFAULT_MAX_ANGLE_DEGREES / 2));
 
   private float mMinimumHorizontalAngle = 0;
   private float mMinimumVerticalAngle = 0;
@@ -44,59 +49,46 @@ public class GravityArcMotion extends ArcMotion {
   private float mMinimumVerticalTangent = 0;
   private float mMaximumTangent = DEFAULT_MAX_TANGENT;
 
-  public GravityArcMotion() {
-  }
+  public GravityArcMotion() {}
 
   public GravityArcMotion(Context context, AttributeSet attrs) {
     super(context, attrs);
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Override
   public void setMinimumHorizontalAngle(float angleInDegrees) {
     mMinimumHorizontalAngle = angleInDegrees;
     mMinimumHorizontalTangent = toTangent(angleInDegrees);
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Override
   public float getMinimumHorizontalAngle() {
     return mMinimumHorizontalAngle;
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Override
   public void setMinimumVerticalAngle(float angleInDegrees) {
     mMinimumVerticalAngle = angleInDegrees;
     mMinimumVerticalTangent = toTangent(angleInDegrees);
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Override
   public float getMinimumVerticalAngle() {
     return mMinimumVerticalAngle;
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Override
   public void setMaximumAngle(float angleInDegrees) {
     mMaximumAngle = angleInDegrees;
     mMaximumTangent = toTangent(angleInDegrees);
   }
 
-  /**
-   * @inheritDoc
-   */
+  /** @inheritDoc */
   @Override
   public float getMaximumAngle() {
     return mMaximumAngle;
@@ -141,18 +133,14 @@ public class GravityArcMotion extends ArcMotion {
     } else {
       float deltaX = endX - startX;
 
-      /**
-       * This is the only change to ArcMotion
-       */
+      /** This is the only change to ArcMotion */
       float deltaY;
       if (endY < startY) {
         deltaY = startY - endY; // Y is inverted compared to diagram above.
       } else {
         deltaY = endY - startY;
       }
-      /**
-       * End changes
-       */
+      /** End changes */
 
       // hypotenuse squared.
       float h2 = deltaX * deltaX + deltaY * deltaY;
@@ -176,16 +164,14 @@ public class GravityArcMotion extends ArcMotion {
         ey = endY + eDistY;
         ex = endX;
 
-        minimumArcDist2 = midDist2 * mMinimumVerticalTangent
-            * mMinimumVerticalTangent;
+        minimumArcDist2 = midDist2 * mMinimumVerticalTangent * mMinimumVerticalTangent;
       } else {
         // Same as above, but flip X & Y
         float eDistX = h2 / (2 * deltaX);
         ex = endX + eDistX;
         ey = endY;
 
-        minimumArcDist2 = midDist2 * mMinimumHorizontalTangent
-            * mMinimumHorizontalTangent;
+        minimumArcDist2 = midDist2 * mMinimumHorizontalTangent * mMinimumHorizontalTangent;
       }
       float arcDistX = dx - ex;
       float arcDistY = dy - ey;
@@ -213,5 +199,4 @@ public class GravityArcMotion extends ArcMotion {
     path.cubicTo(controlX1, controlY1, controlX2, controlY2, endX, endY);
     return path;
   }
-
 }
