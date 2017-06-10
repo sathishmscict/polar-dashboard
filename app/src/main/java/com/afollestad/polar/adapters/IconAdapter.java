@@ -24,6 +24,7 @@ import com.afollestad.polar.ui.base.ISelectionMode;
 import com.afollestad.polar.util.DrawableXmlParser;
 import com.afollestad.polar.util.Utils;
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
+import com.afollestad.sectionedrecyclerview.SectionedViewHolder;
 import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ import java.util.Locale;
 public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainViewHolder>
     implements View.OnClickListener, View.OnTouchListener {
 
-  public static final int SEARCH_RESULT_LIMIT = 20;
+  private static final int SEARCH_RESULT_LIMIT = 20;
 
   @Override
   public void onClick(View view) {
@@ -175,13 +176,13 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
     notifyDataSetChanged();
   }
 
-  public static class MainViewHolder extends RecyclerView.ViewHolder {
+  static class MainViewHolder extends SectionedViewHolder {
 
-    public MainViewHolder(View itemView) {
+    MainViewHolder(View itemView) {
       super(itemView);
-      image = (ImageView) itemView.findViewById(R.id.image);
-      title = (TextView) itemView.findViewById(R.id.title);
-      moreButton = (Button) itemView.findViewById(R.id.moreButton);
+      image = itemView.findViewById(R.id.image);
+      title = itemView.findViewById(R.id.title);
+      moreButton = itemView.findViewById(R.id.moreButton);
     }
 
     final ImageView image;
@@ -223,7 +224,7 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
   }
 
   @Override
-  public void onBindHeaderViewHolder(MainViewHolder holder, int section) {
+  public void onBindHeaderViewHolder(MainViewHolder holder, int section, boolean expanded) {
     final DrawableXmlParser.Category category =
         mFiltered != null ? mFiltered.get(section) : mCategories.get(section);
     holder.title.setText(category.getName());
@@ -243,6 +244,9 @@ public class IconAdapter extends SectionedRecyclerViewAdapter<IconAdapter.MainVi
       holder.moreButton.setOnClickListener(null);
     }
   }
+
+  @Override
+  public void onBindFooterViewHolder(MainViewHolder mainViewHolder, int section) {}
 
   @Override
   public void onBindViewHolder(
